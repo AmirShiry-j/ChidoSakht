@@ -5,6 +5,13 @@ using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Nlog configs
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+builder.Host.UseNLog();
+
+IConfiguration Configuration = builder.Configuration;
+
 // Add services to the container.
 
 //Config controller service
