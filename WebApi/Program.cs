@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using ExceptionHandling;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
@@ -59,6 +60,9 @@ builder.Services.AddSwaggerGen(c =>
                 });
 });
 
+//Service Handler
+builder.Services.AddSingleton<HandlerOptions>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -86,7 +90,8 @@ if (app.Environment.IsDevelopment())
 else
 if (app.Environment.IsProduction())
 {
-
+    //For takes exeption
+    app.UseMiddleware<ExceptionHandling.ExceptionHandlerMiddleware>();
 }
 
 app.UseHttpsRedirection();
