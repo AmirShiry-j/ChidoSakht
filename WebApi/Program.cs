@@ -17,6 +17,12 @@ IConfiguration Configuration = builder.Configuration;
 //Config controller service
 builder.Services.AddControllers();
 
+//Config Vesioning
+builder.Services.AddApiVersioning(option =>
+{
+    option.ReportApiVersions = true;
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
