@@ -1,4 +1,5 @@
 using Application.ConfigService;
+using Application.Messagers.EmailService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -15,17 +16,19 @@ namespace WebApi.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly IConfigService _configService;
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfigService configService)
+        private readonly IEmailService _emailService;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfigService configService, IEmailService emailService)
         {
             _logger = logger;
             _configService = configService;
+            _emailService = emailService;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             var config = _configService.Config;
-
+            var bb = _emailService.SendEmailAsync("AmirShiry06@gmail.com", "Test", "boddddy").Result;
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

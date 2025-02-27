@@ -31,5 +31,6 @@ namespace Application.ConfigService
         public bool EnableSsl { get; set; }
         public int Timeout { get; set; }
         public bool UseDefaultCredentials { get; set; }
+        public string SecureSocketOptions { get; set; }
     }
 }

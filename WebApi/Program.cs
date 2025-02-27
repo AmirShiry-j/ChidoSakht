@@ -1,5 +1,7 @@
 ﻿using Application.ConfigService;
 using Infrastructure.ConfigService;
+using Application.Messagers.EmailService;
+using Infrastructure.Messagers.EmailService;
 using ExceptionHandling;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
@@ -31,8 +33,11 @@ builder.Services.AddCors(options =>
 //Config controller service
 builder.Services.AddControllers();
 
-//Add Config service
+//Config service
 builder.Services.AddSingleton<IConfigService, ConfigService>();
+
+//Messagers Service
+builder.Services.AddScoped<IEmailService, MailKit_EmailService>();
 
 //Config Vesioning
 builder.Services.AddApiVersioning(option =>
