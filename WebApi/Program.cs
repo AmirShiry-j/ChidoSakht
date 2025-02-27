@@ -1,17 +1,19 @@
-﻿using ExceptionHandling;
+﻿using Application.ConfigService;
+using Infrastructure.ConfigService;
+using ExceptionHandling;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+
+IConfiguration Configuration = builder.Configuration;
 
 //Nlog configs
 builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
 builder.Host.UseNLog();
 
-IConfiguration Configuration = builder.Configuration;
 
 //Add CORS configs
 //Get origins cores in appsetting
@@ -28,6 +30,9 @@ builder.Services.AddCors(options =>
 
 //Config controller service
 builder.Services.AddControllers();
+
+//Add Config service
+builder.Services.AddSingleton<IConfigService, ConfigService>();
 
 //Config Vesioning
 builder.Services.AddApiVersioning(option =>

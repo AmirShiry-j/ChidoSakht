@@ -1,3 +1,4 @@
+using Application.ConfigService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -13,15 +14,19 @@ namespace WebApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly IConfigService _configService;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfigService configService)
         {
             _logger = logger;
+            _configService = configService;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            var config = _configService.Config;
+
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
