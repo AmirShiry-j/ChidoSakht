@@ -6,6 +6,9 @@ using ExceptionHandling;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
+using Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Application.Interfaces.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,17 +36,29 @@ builder.Services.AddCors(options =>
 //Config controller service
 builder.Services.AddControllers();
 
+//Config Vesioning
+builder.Services.AddApiVersioning(option =>
+{
+    option.ReportApiVersions = true;
+});
+
+//Config DataBase
+#region Connect To DataBase
+string connection = Configuration["DatabaseSettings:ConnectionString"];
+builder.Services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
+#endregion
+
 //Config service
 builder.Services.AddSingleton<IConfigService, ConfigService>();
 
 //Messagers Service
 builder.Services.AddScoped<IEmailService, MailKit_EmailService>();
 
-//Config Vesioning
-builder.Services.AddApiVersioning(option =>
-{
-    option.ReportApiVersions = true;
-});
+
+////Services of DB
+//Db service
+builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
