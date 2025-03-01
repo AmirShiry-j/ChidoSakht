@@ -9,6 +9,8 @@ using NLog.Web;
 using Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Application.Interfaces.Contexts;
+using Application.Messagers.SmsService;
+using Infrastructure.Messagers.SmsService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +54,7 @@ builder.Services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(c
 builder.Services.AddSingleton<IConfigService, ConfigService>();
 
 //Messagers Service
+builder.Services.AddScoped<ISmsService, FakeSmsService>();
 builder.Services.AddScoped<IEmailService, MailKit_EmailService>();
 
 
