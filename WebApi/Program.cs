@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Application.Interfaces.Contexts;
 using Application.Messagers.SmsService;
 using Infrastructure.Messagers.SmsService;
+using Domain.Users;
+using Microsoft.AspNetCore.Identity;
+using WebApi.Tools.PersianError;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +52,34 @@ builder.Services.AddApiVersioning(option =>
 string connection = Configuration["DatabaseSettings:ConnectionString"];
 builder.Services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
 #endregion
+
+
+//Config Identity and his option
+builder.Services.AddIdentity<User, Role>()
+    .AddEntityFrameworkStores<DataBaseContext>()
+    .AddDefaultTokenProviders()
+    .AddRoles<Role>()
+    .AddErrorDescriber<PersianIdentityErrors>();
+
+//Set Identity's Options
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    //options.Password.RequiredUniqueChars = 6;
+    options.Password.RequireUppercase = false;
+
+    options.Lockout.MaxFailedAccessAttempts = 3;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedPhoneNumber = true;
+    options.SignIn.RequireConfirmedAccount = true;
+});
 
 //Config service
 builder.Services.AddSingleton<IConfigService, ConfigService>();
