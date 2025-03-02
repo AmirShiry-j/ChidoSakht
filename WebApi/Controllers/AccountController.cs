@@ -74,7 +74,7 @@ namespace WebApi.Controllers
                 //Send code To user by PhoneNumber
                 //code...
                 string bodyMessage = $"کد زیر را جهت تایید حساب کاربری خود در قسمت مربوطه وارد کنید: {code}";
-                var resultSendEmail = await _smsService.SendSmsAsync(newUser.PhoneNumber, bodyMessage);
+                var resultSendPhoneNumber = await _smsService.SendSmsAsync(newUser.PhoneNumber, bodyMessage);
 
                 //HATEOAS links
                 Link link = new Link
@@ -97,6 +97,45 @@ namespace WebApi.Controllers
         }
 
 
+        /// <summary>
+        ///ارسال شماره موبایل برای تایید حساب کاربر
+        /// </summary>
+        /// <param name="PhoneNumber"></param>
+        /// <returns></returns>
+        [HttpGet("{PhoneNumber}")]
+        public async Task<IActionResult> ConfirmPhoneNumber(string PhoneNumber)
+        {
+            //Check bind phoneNumber
+            if (string.IsNullOrWhiteSpace(PhoneNumber))
+            {
+                return BadRequest();
+            }
+
+            //Find user
+            var user = await _userManager.FindByNameAsync(PhoneNumber);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            //Confirmation phoneNumber
+            string code = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider);
+
+            //Send code To user by phoneNumber
+            //code...
+            string bodyMessage = $"کد زیر را جهت تایید حساب کاربری خود در قسمت مربوطه وارد کنید<br/><h3>{code}</h3>";
+            var resultSendPhoneNumber = await _smsService.SendSmsAsync(PhoneNumber, bodyMessage);
+
+            //HATEOAS links
+            Link link = new Link
+            {
+                For = nameof(VerifyPhoneNumber),
+                HttpMethod = HttpMethod.Post.ToString(),
+                Url = Url.Action(nameof(VerifyPhoneNumber), "Account", null, protocol: Request.Scheme)
+            };
+
+            return Ok(new { Code = code, Link = link });
+        }
 
         /// <summary>
         /// تایید شماره موبایل با کد ارسال شده برای کاربر
@@ -113,11 +152,11 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            //Check verify PhoneNumber
+            //Check verify phoneNumber
             var resultConfirm = await _userManager.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider, model.Code);
             if (resultConfirm)
             {
-                //Set confirm PhoneNumber user and update it
+                //Set confirm phoneNumber user and update it
                 user.PhoneNumberConfirmed = true;
                 var resultConfirmedPhoneNumber = await _userManager.UpdateAsync(user);
 
