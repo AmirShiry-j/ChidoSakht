@@ -79,9 +79,9 @@ namespace WebApi.Controllers
                 //HATEOAS links
                 Link link = new Link
                 {
-                    Url = Url.Action("VerifyPhoneNumber", "Account", null, protocol: Request.Scheme),
+                    Url = Url.Action(nameof(VerifyPhoneNumber), "Account", null, protocol: Request.Scheme),
                     HttpMethod = HttpMethod.Post.ToString(),
-                    For = "VerifyPhoneNumber"
+                    For = nameof(VerifyPhoneNumber)
                 };
 
                 //Initial message
@@ -96,6 +96,42 @@ namespace WebApi.Controllers
             }
         }
 
+
+
+        /// <summary>
+        /// تایید شماره موبایل با کد ارسال شده برای کاربر
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> VerifyPhoneNumber(VerifyPhoneNumberDto model)
+        {
+            //Find user
+            var user = await _userManager.FindByNameAsync(model.PhoneNumber);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            //Check verify PhoneNumber
+            var resultConfirm = await _userManager.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider, model.Code);
+            if (resultConfirm)
+            {
+                //Set confirm PhoneNumber user and update it
+                user.PhoneNumberConfirmed = true;
+                var resultConfirmedPhoneNumber = await _userManager.UpdateAsync(user);
+
+
+                ////Build and Get tokes
+                //var tokens = await CreateNewTokenForUser(user);
+
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("کد وارد شده اشتباه است");
+            }
+        }
 
     }
 }
