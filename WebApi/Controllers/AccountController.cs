@@ -120,19 +120,26 @@ namespace WebApi.Controllers
             var resultLogin = await _signInManager.PasswordSignInAsync(user, model.Password, false, true);
             if (resultLogin.Succeeded)
             {
-                //Build and Get tokes
-                var tokens = await CreateNewTokenForUser(user);
+                if (await _userManager.IsPhoneNumberConfirmedAsync(user))
+                {
+                    //Build and Get tokes
+                    var tokens = await CreateNewTokenForUser(user);
 
-                return Ok(tokens);
+                    return Ok(tokens);
+                }
+                else
+                {
+                    return Unauthorized("حساب کاربری شما تایید نشده. لطفا ابتدا شماره موبایل خود را تایید کنید");
+                }
             }
             else if (resultLogin.IsLockedOut)
             {
                 return Unauthorized("حساب کاربری شما به علت وارد کردن رمز عبور اشتباه تا پنج دقیقه آینده قفل است");
             }
-            else if (resultLogin.IsNotAllowed)
-            {
-                return Unauthorized("حساب کاربری شما تایید نشده. لطفا ابتدا شماره موبایل خود را تایید کنید");
-            }
+            //else if (resultLogin.IsNotAllowed)
+            //{
+            //    return Unauthorized("حساب کاربری شما تایید نشده. لطفا ابتدا شماره موبایل خود را تایید کنید");
+            //}
             else
             {
                 return Unauthorized("رمز عبور وارد شده اشتباه است");

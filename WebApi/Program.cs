@@ -83,7 +83,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
     options.SignIn.RequireConfirmedEmail = false;
     options.SignIn.RequireConfirmedPhoneNumber = true;
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = false;
 });
 
 //Config service
