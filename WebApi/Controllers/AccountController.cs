@@ -101,9 +101,46 @@ namespace WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// ورود به حساب کاربری
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDto model)
+        {
+            //Find user
+            var user = await _userManager.FindByNameAsync(model.PhoneNumber);
+            if (user == null)
+            {
+                return Unauthorized("کاربری با این شماره موبایل یافت نشد");
+            }
+
+            //Login user
+            var resultLogin = await _signInManager.PasswordSignInAsync(user, model.Password, false, true);
+            if (resultLogin.Succeeded)
+            {
+                //Build and Get tokes
+                var tokens = await CreateNewTokenForUser(user);
+
+                return Ok(tokens);
+            }
+            else if (resultLogin.IsLockedOut)
+            {
+                return Unauthorized("حساب کاربری شما به علت وارد کردن رمز عبور اشتباه تا پنج دقیقه آینده قفل است");
+            }
+            else if (resultLogin.IsNotAllowed)
+            {
+                return Unauthorized("حساب کاربری شما تایید نشده. لطفا ابتدا شماره موبایل خود را تایید کنید");
+            }
+            else
+            {
+                return Unauthorized("رمز عبور وارد شده اشتباه است");
+            }
+        }
 
         /// <summary>
-        ///ارسال شماره موبایل برای تایید حساب کاربر
+        ///ارسال کد به شماره موبایل برای تایید حساب کاربر
         /// </summary>
         /// <param name="PhoneNumber"></param>
         /// <returns></returns>
@@ -164,7 +201,6 @@ namespace WebApi.Controllers
                 //Set confirm phoneNumber user and update it
                 user.PhoneNumberConfirmed = true;
                 var resultConfirmedPhoneNumber = await _userManager.UpdateAsync(user);
-
 
                 //Build and Get tokes
                 var tokens = await CreateNewTokenForUser(user);

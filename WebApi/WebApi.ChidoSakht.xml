@@ -11,9 +11,16 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.AccountController.Login(WebApi.ModelsAndDtoes.Account.LoginDto)">
+            <summary>
+            ورود به حساب کاربری
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.AccountController.ConfirmPhoneNumber(System.String)">
              <summary>
-            ارسال شماره موبایل برای تایید حساب کاربر
+            ارسال کد به شماره موبایل برای تایید حساب کاربر
              </summary>
              <param name="PhoneNumber"></param>
              <returns></returns>
