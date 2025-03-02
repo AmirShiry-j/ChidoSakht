@@ -4,5 +4,12 @@
         <name>WebApi</name>
     </assembly>
     <members>
+        <member name="M:WebApi.Controllers.AccountController.Register(WebApi.ModelsAndDtoes.Account.RegisterDto)">
+            <summary>
+            ساختن حساب کاربری
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
