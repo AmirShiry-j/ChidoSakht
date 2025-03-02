@@ -64,7 +64,7 @@ builder.Services.AddIdentity<User, Role>()
 //Set Identity's Options
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    options.User.RequireUniqueEmail = true;
+    options.User.RequireUniqueEmail = false;
 
     options.Password.RequireDigit = false;
     options.Password.RequiredLength = 6;

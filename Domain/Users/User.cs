@@ -4,11 +4,14 @@ namespace Domain.Users
 {
     public class User : IdentityUser
     {
+        public override string? Email { get; set; }
+        public override string PhoneNumber { get; set; }
+        private string _FullName;
         public string FullName
         {
             get
             {
-                return FullName;
+                return _FullName;
             }
             set
             {
@@ -17,7 +20,7 @@ namespace Domain.Users
                 if (value.Length > 50)
                     throw new InvalidDataException($"{nameof(FullName)} is more than 50 character");
 
-                FullName = value;
+                _FullName = value;
             }
         }
         public string ImageName { get; set; }
