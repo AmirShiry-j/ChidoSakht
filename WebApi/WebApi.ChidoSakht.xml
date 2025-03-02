@@ -25,5 +25,12 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.AccountController.CreateNewTokenForUser(Domain.Users.User)">
+            <summary>
+            متد ساخت توکن jwt و رفرش توکن
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

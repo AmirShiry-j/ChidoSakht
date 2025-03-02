@@ -1,4 +1,5 @@
 ﻿using Application.Messagers.SmsService;
+using Application.TokenService;
 using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,7 @@ using System.Text;
 using WebApi.Helpers;
 using WebApi.ModelsAndDtoes.Account;
 using WebApi.ModelsAndDtoes.Common;
+using WebApi.Tools.Hasher;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApi.Controllers
@@ -23,12 +25,14 @@ namespace WebApi.Controllers
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IUserTokenService _userTokenService;
         private readonly ILogger<AccountController> _logger;
         private readonly ISmsService _smsService;
         public AccountController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
             SignInManager<User> signInManager,
             ILogger<AccountController> logger,
+            IUserTokenService userTokenService,
             ISmsService smsService
             )
         {
@@ -37,6 +41,7 @@ namespace WebApi.Controllers
             _signInManager = signInManager;
             _logger = logger;
             _smsService = smsService;
+            _userTokenService = userTokenService;
         }
 
         /// <summary>
@@ -161,15 +166,92 @@ namespace WebApi.Controllers
                 var resultConfirmedPhoneNumber = await _userManager.UpdateAsync(user);
 
 
-                ////Build and Get tokes
-                //var tokens = await CreateNewTokenForUser(user);
+                //Build and Get tokes
+                var tokens = await CreateNewTokenForUser(user);
 
-                return Ok();
+                return Ok(tokens);
             }
             else
             {
                 return BadRequest("کد وارد شده اشتباه است");
             }
+        }
+
+
+        /// <summary>
+        /// متد ساخت توکن jwt و رفرش توکن
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [NonAction]
+        public async Task<TokenDto> CreateNewTokenForUser(User user)
+        {
+            ////Build token for user
+            //Initial claims
+            List<Claim> claims = new List<Claim>
+                {
+                    new Claim("UserId",user.Id),
+                    new Claim("Email",user.Email),
+                    new Claim("PhoneNumber",user.PhoneNumber),
+                    new Claim("FullName",user.FullName)
+                };
+
+            //Add Role claims if has user
+            var userRoles = await _userManager.GetRolesAsync(user);
+            if (userRoles != null && userRoles.Any())
+            {
+                foreach (var role in userRoles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+            }
+
+            //Add random value to clamis for build diffrent token in every time
+            string randomValue = Guid.NewGuid().ToString();
+            claims.Add(new Claim("RandomValue", randomValue));
+
+            //Initial credentials
+            var expireTime = JwtInfo.Expires;
+            string key = JwtInfo.SecretKey;
+            var hashKey = Encoding.UTF8.GetBytes(key);
+            var secretKey = new SymmetricSecurityKey(hashKey);
+            var credential = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            //Initial jwtSecurityToken
+            var token = new JwtSecurityToken(
+                issuer: JwtInfo.Issuer,
+                audience: JwtInfo.Audience,
+                expires: expireTime,
+                notBefore: JwtInfo.NotBefore,
+                claims: claims,
+                signingCredentials: credential
+                );
+
+            //Initial jwtSecurityTokenHandler
+            var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            //Create refresh token
+            var refreshToken = Guid.NewGuid().ToString();
+            var refreshTokenExpireTime = JwtInfo.ExpiresRefreshToken;
+
+            ////Save token in db
+            //Map data to dto
+            var hasherService = new SecurityHasher();
+            var userToken = new UserTokenDto
+            {
+                ExpireTime = expireTime,
+                UserId = user.Id,
+                TokenHash = hasherService.GetSha256Hash(jwtToken),
+                RefreshExpireTime = refreshTokenExpireTime,
+                RefreshTokenHash = hasherService.GetSha256Hash(refreshToken)
+            };
+            //Save in db
+            await _userTokenService.SaveToken(userToken);
+
+            //Map tokens for send
+            var tokens = new TokenDto() { Token = jwtToken, RefreshToken = refreshToken, TokenExpireTime = expireTime, RefreshTokenExpireTime = refreshTokenExpireTime };
+
+            return tokens;
         }
 
     }

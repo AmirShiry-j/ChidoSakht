@@ -14,6 +14,11 @@ using Infrastructure.Messagers.SmsService;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using WebApi.Tools.PersianError;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using WebApi.Helpers;
+using WebApi.Tools.TokenValidator;
+using Application.TokenService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -88,10 +93,15 @@ builder.Services.AddSingleton<IConfigService, ConfigService>();
 builder.Services.AddScoped<ISmsService, FakeSmsService>();
 builder.Services.AddScoped<IEmailService, MailKit_EmailService>();
 
-
 ////Services of DB
 //Db service
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
+
+//Services of token validator
+builder.Services.AddScoped<ITokenValidator, TokenValidator>();
+
+//Authorize and token services
+builder.Services.AddScoped<IUserTokenService, UserTokenService>();
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -129,6 +139,39 @@ builder.Services.AddSwaggerGen(c =>
                     { security , new string[]{ } }
                 });
 });
+
+
+//Config JWT Authenfication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(jwtConfig =>
+{
+    jwtConfig.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidIssuer = JwtInfo.Issuer,
+        ValidAudience = JwtInfo.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtInfo.SecretKey)),
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true
+    };
+    jwtConfig.SaveToken = true;
+    jwtConfig.Events = new JwtBearerEvents
+    {
+        OnTokenValidated = context =>
+        {
+            //Dependent service token validator
+            var tokenValidatorService = context.HttpContext.RequestServices.GetRequiredService<ITokenValidator>();
+
+            //Enable it
+            return tokenValidatorService.Execute(context);
+        }
+    };
+});
+
 
 //Service Handler
 builder.Services.AddSingleton<HandlerOptions>();
@@ -172,7 +215,9 @@ app.UseCors("CorsPolicy");
 app.UseRouting();
 
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 
