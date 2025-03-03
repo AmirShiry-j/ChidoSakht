@@ -116,21 +116,44 @@ namespace WebApi.Controllers
                 return Unauthorized("کاربری با این شماره موبایل یافت نشد");
             }
 
+            //Check confirmed Account by PhoneNumber
+            if (!await _userManager.IsPhoneNumberConfirmedAsync(user))
+            {
+                return Unauthorized("حساب کاربری شما تایید نشده. لطفا ابتدا شماره موبایل خود را تایید کنید");
+
+            }
+
+            if (model.LoginType == LoginType.ByOTP)
+            {
+                //Confirmation phoneNumber
+                string code = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider);
+
+                //Send code To user by phoneNumber
+                //code...
+                string bodyMessage = $"کد زیر را جهت تایید حساب کاربری خود در قسمت مربوطه وارد کنید<br/><h3>{code}</h3>";
+                var resultSendPhoneNumber = await _smsService.SendSmsAsync(model.PhoneNumber, bodyMessage);
+
+                //HATEOAS links
+                Link link = new Link
+                {
+                    For = nameof(VerifyOTP),
+                    HttpMethod = HttpMethod.Post.ToString(),
+                    Url = Url.Action(nameof(VerifyOTP), "Account", null, protocol: Request.Scheme)
+                };
+
+                return Ok(new { Code = code, Link = link });
+            }
+
             //Login user
             var resultLogin = await _signInManager.PasswordSignInAsync(user, model.Password, false, true);
             if (resultLogin.Succeeded)
             {
-                if (await _userManager.IsPhoneNumberConfirmedAsync(user))
-                {
-                    //Build and Get tokes
-                    var tokens = await CreateNewTokenForUser(user);
 
-                    return Ok(tokens);
-                }
-                else
-                {
-                    return Unauthorized("حساب کاربری شما تایید نشده. لطفا ابتدا شماره موبایل خود را تایید کنید");
-                }
+                //Build and Get tokes
+                var tokens = await CreateNewTokenForUser(user);
+
+                return Ok(tokens);
+
             }
             else if (resultLogin.IsLockedOut)
             {
@@ -147,7 +170,39 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        ///ارسال کد به شماره موبایل برای تایید حساب کاربر
+        /// چک کردن رمز یکبار مصرف
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> VerifyOTP(VerifyOTPDto model)
+        {
+            //Find user
+            var user = await _userManager.FindByNameAsync(model.PhoneNumber);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            //Check verify Code of OTP
+            var resultConfirm = await _userManager.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider, model.Code);
+            if (resultConfirm)
+            {
+                //Build and Get tokes
+                var tokens = await CreateNewTokenForUser(user);
+
+                return Ok(tokens);
+            }
+            else
+            {
+                return BadRequest("کد وارد شده اشتباه است");
+            }
+        }
+
+
+
+        /// <summary>
+        ///ارسال کد به شماره موبایل برای تایید حساب کاربری
         /// </summary>
         /// <param name="PhoneNumber"></param>
         /// <returns></returns>

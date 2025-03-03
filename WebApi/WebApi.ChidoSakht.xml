@@ -18,9 +18,16 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.AccountController.VerifyOTP(WebApi.ModelsAndDtoes.Account.VerifyOTPDto)">
+            <summary>
+            چک کردن رمز یکبار مصرف
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.AccountController.ConfirmPhoneNumber(System.String)">
              <summary>
-            ارسال کد به شماره موبایل برای تایید حساب کاربر
+            ارسال کد به شماره موبایل برای تایید حساب کاربری
              </summary>
              <param name="PhoneNumber"></param>
              <returns></returns>
@@ -37,6 +44,12 @@
             متد ساخت توکن jwt و رفرش توکن
             </summary>
             <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.WeatherForecastController.Get">
+            <summary>
+            ای پی آی برای تست اتنفیکشن (Auth)
+            </summary>
             <returns></returns>
         </member>
     </members>

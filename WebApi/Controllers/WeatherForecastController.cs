@@ -1,4 +1,4 @@
-using Application.ConfigService;
+﻿using Application.ConfigService;
 using Application.Messagers.EmailService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +27,10 @@ namespace WebApi.Controllers
             _emailService = emailService;
         }
 
+        /// <summary>
+        /// ای پی آی برای تست اتنفیکشن (Auth)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
