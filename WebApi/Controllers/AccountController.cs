@@ -276,6 +276,39 @@ namespace WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// رفرش توکن
+        /// </summary>
+        /// <param name="RefreshToken"></param>
+        /// <returns></returns>
+        [HttpGet("{RefreshToken}")]
+        public async Task<IActionResult> RefreshToken(string RefreshToken)
+        {
+            //Find token by refresh token
+            var securityHasher = new SecurityHasher();
+            var token = _userTokenService.FindTokenByRefreshToken(securityHasher.GetSha256Hash(RefreshToken));
+
+            ////Check refresh token
+            //Check exist refresh token
+            if (token == null)
+            {
+                return Unauthorized("رفرش توکن ارسال شده موجود نیست");
+            }
+            //Check expire refresh token
+            if (token.RefreshTokenExpireTime < DateTime.Now)
+            {
+                return Unauthorized("زمان انقضای رفرش توکن به اتمام رسیده");
+            }
+
+            //Delete old token
+            _userTokenService.DeleteToken(token);
+
+            //Create new Token
+            var tokens = await CreateNewTokenForUser(token.User);
+
+            return Ok(tokens);
+        }
+
 
         /// <summary>
         /// متد ساخت توکن jwt و رفرش توکن

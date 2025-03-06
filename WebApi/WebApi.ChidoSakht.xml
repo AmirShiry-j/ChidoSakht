@@ -39,6 +39,13 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.AccountController.RefreshToken(System.String)">
+            <summary>
+            رفرش توکن
+            </summary>
+            <param name="RefreshToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.AccountController.CreateNewTokenForUser(Domain.Users.User)">
             <summary>
             متد ساخت توکن jwt و رفرش توکن
