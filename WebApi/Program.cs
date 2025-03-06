@@ -72,7 +72,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = false;
 
     options.Password.RequireDigit = false;
-    options.Password.RequiredLength = 6;
+    options.Password.RequiredLength = 4;
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
     //options.Password.RequiredUniqueChars = 6;

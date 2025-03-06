@@ -17,12 +17,12 @@ namespace WebApi.ModelsAndDtoes.Account
         public string? Email { get; set; }
 
         [Required]
-        [MinLength(6)]
+        [MinLength(4)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
-        [MinLength(6)]
+        [MinLength(4)]
         [Compare(nameof(Password))]
         [DataType(DataType.Password)]
         public string RePassword { get; set; }

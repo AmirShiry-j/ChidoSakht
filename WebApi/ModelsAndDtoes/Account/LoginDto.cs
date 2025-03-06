@@ -9,7 +9,6 @@ namespace WebApi.ModelsAndDtoes.Account
         public string PhoneNumber { get; set; }
 
         [Required]
-        [MinLength(6)]
         [RequiredIfLoginTypeIsPassword]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
