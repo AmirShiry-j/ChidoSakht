@@ -74,7 +74,7 @@ namespace WebApi.Controllers
             if (resultRegister.Succeeded)
             {
                 //Confirmation PhoneNumber
-                string code = await _userManager.GenerateTwoFactorTokenAsync(newUser, TokenOptions.DefaultPhoneProvider);
+                string code = await _userManager.GenerateChangePhoneNumberTokenAsync(newUser, newUser.PhoneNumber);
 
                 //Send code To user by PhoneNumber
                 //code...
@@ -84,7 +84,7 @@ namespace WebApi.Controllers
                 //HATEOAS links
                 Link link = new Link
                 {
-                    Url = Url.Action(nameof(VerifyPhoneNumber), "Account", null, protocol: Request.Scheme),
+                    Url = Url.Action(nameof(VerifyPhoneNumber), nameof(AccountController).Replace("Controller", ""), null, protocol: Request.Scheme),
                     HttpMethod = HttpMethod.Post.ToString(),
                     For = nameof(VerifyPhoneNumber)
                 };
@@ -138,7 +138,7 @@ namespace WebApi.Controllers
                 {
                     For = nameof(VerifyOTP),
                     HttpMethod = HttpMethod.Post.ToString(),
-                    Url = Url.Action(nameof(VerifyOTP), "Account", null, protocol: Request.Scheme)
+                    Url = Url.Action(nameof(VerifyOTP), nameof(AccountController).Replace("Controller", ""), null, protocol: Request.Scheme)
                 };
 
                 return Ok(new { Code = code, Link = link });
@@ -188,6 +188,7 @@ namespace WebApi.Controllers
             var resultConfirm = await _userManager.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider, model.Code);
             if (resultConfirm)
             {
+
                 //Build and Get tokes
                 var tokens = await CreateNewTokenForUser(user);
 
@@ -223,7 +224,7 @@ namespace WebApi.Controllers
             }
 
             //Confirmation phoneNumber
-            string code = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider);
+            string code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, PhoneNumber);
 
             //Send code To user by phoneNumber
             //code...
@@ -235,7 +236,7 @@ namespace WebApi.Controllers
             {
                 For = nameof(VerifyPhoneNumber),
                 HttpMethod = HttpMethod.Post.ToString(),
-                Url = Url.Action(nameof(VerifyPhoneNumber), "Account", null, protocol: Request.Scheme)
+                Url = Url.Action(nameof(VerifyPhoneNumber), nameof(AccountController).Replace("Controller", ""), null, protocol: Request.Scheme)
             };
 
             return Ok(new { Code = code, Link = link });
@@ -257,7 +258,7 @@ namespace WebApi.Controllers
             }
 
             //Check verify phoneNumber
-            var resultConfirm = await _userManager.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider, model.Code);
+            var resultConfirm = await _userManager.VerifyChangePhoneNumberTokenAsync(user, model.Code, model.PhoneNumber);
             if (resultConfirm)
             {
                 //Set confirm phoneNumber user and update it
@@ -289,7 +290,7 @@ namespace WebApi.Controllers
             List<Claim> claims = new List<Claim>
                 {
                     new Claim("UserId",user.Id),
-                    new Claim("Email",user.Email),
+                    new Claim("Email",user.Email is null?"":user.Email),
                     new Claim("PhoneNumber",user.PhoneNumber),
                     new Claim("FullName",user.FullName)
                 };
