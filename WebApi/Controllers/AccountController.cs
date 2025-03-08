@@ -226,7 +226,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(PhoneNumber);
             if (user == null)
             {
-                return NotFound();
+                return NotFound("شماره موبایل یافت نشد");
             }
 
             //Confirmation phoneNumber
@@ -260,7 +260,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(model.PhoneNumber);
             if (user == null)
             {
-                return NotFound();
+                return NotFound("شماره موبایل یافت نشد");
             }
 
             //Check verify phoneNumber
@@ -395,7 +395,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(PhoneNumber);
             if (user == null)
             {
-                return NotFound();
+                return NotFound("شماره موبایل یافت نشد");
             }
 
             //Build new password by random class
