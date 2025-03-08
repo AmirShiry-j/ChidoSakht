@@ -123,6 +123,12 @@ namespace WebApi.Controllers
 
             }
 
+            //Check IsLockedOut
+            if (await _userManager.IsLockedOutAsync(user))
+            {
+                return Unauthorized("حساب کاربری شما به علت بیش از حد وارد کردن رمز عبور اشتباه تا پنج دقیقه قفل میباشد");
+            }
+
             if (model.LoginType == LoginType.ByOTP)
             {
                 //Confirmation phoneNumber
@@ -157,7 +163,7 @@ namespace WebApi.Controllers
             }
             else if (resultLogin.IsLockedOut)
             {
-                return Unauthorized("حساب کاربری شما به علت وارد کردن رمز عبور اشتباه تا پنج دقیقه آینده قفل است");
+                return Unauthorized("حساب کاربری شما به علت بیش از حد وارد کردن رمز عبور اشتباه تا پنج دقیقه قفل میباشد");
             }
             //else if (resultLogin.IsNotAllowed)
             //{
