@@ -331,7 +331,46 @@ namespace WebApi.Controllers
 
             return Ok();
         }
-        
+
+
+        /// <summary>
+        /// تغییر رمز عبور (Auth)
+        /// </summary>
+        /// <param name="changePasswordDto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            //Find user by claims
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
+            User user;
+            if (userId != null)
+            {
+                user = await _userManager.FindByIdAsync(userId);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+            //Change password user
+            var resultChangePassword = await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword,
+                                                                            changePasswordDto.NewPassword);
+            //Check success changes
+            if (resultChangePassword.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                //Return error if unsuccess
+                var error = resultChangePassword.Errors?.Select(p => p.Description)?.Aggregate((p1, p2) => p1 + "+" + p2);
+                return BadRequest(error);
+            }
+        }
+
+
         /// <summary>
         /// متد ساخت توکن jwt و رفرش توکن
         /// </summary>

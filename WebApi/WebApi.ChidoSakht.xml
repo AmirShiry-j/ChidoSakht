@@ -53,6 +53,13 @@
             <param name="UserId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.AccountController.ChangePassword(WebApi.ModelsAndDtoes.Account.ChangePasswordDto)">
+            <summary>
+            تغییر رمز عبور (Auth)
+            </summary>
+            <param name="changePasswordDto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.AccountController.CreateNewTokenForUser(Domain.Users.User)">
             <summary>
             متد ساخت توکن jwt و رفرش توکن
