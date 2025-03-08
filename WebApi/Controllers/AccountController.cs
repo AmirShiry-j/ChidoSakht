@@ -113,7 +113,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(model.PhoneNumber);
             if (user == null)
             {
-                return Unauthorized("کاربری با این شماره موبایل یافت نشد");
+                return Unauthorized("شماره موبایل یا رمز عبور اشتباه است");
             }
 
             //Check confirmed Account by PhoneNumber
@@ -171,7 +171,7 @@ namespace WebApi.Controllers
             //}
             else
             {
-                return Unauthorized("رمز عبور وارد شده اشتباه است");
+                return Unauthorized("شماره موبایل یا رمز عبور اشتباه است");
             }
         }
 
@@ -202,7 +202,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                return BadRequest("کد وارد شده اشتباه است");
+                return Unauthorized("شماره موبایل یا رمز موقت است");
             }
         }
 
