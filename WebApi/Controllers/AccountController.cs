@@ -309,7 +309,29 @@ namespace WebApi.Controllers
             return Ok(tokens);
         }
 
+        /// <summary>
+        /// برای خروج از حساب کاربری (Auth)
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Logout()
+        {
+            //For find token
+            var token = Request.Headers["Authorization"].ToString()?.Replace("Bearer", null)?.Trim();
 
+            if (string.IsNullOrEmpty(token))
+            {
+                return Ok();
+            }
+
+            //Delete it
+            _userTokenService.DeleteToken(new SecurityHasher().GetSha256Hash(token));
+
+            return Ok();
+        }
+        
         /// <summary>
         /// متد ساخت توکن jwt و رفرش توکن
         /// </summary>

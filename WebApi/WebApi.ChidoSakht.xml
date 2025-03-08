@@ -46,6 +46,13 @@
             <param name="RefreshToken"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.AccountController.Logout">
+            <summary>
+            برای خروج از حساب کاربری (Auth)
+            </summary>
+            <param name="UserId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.AccountController.CreateNewTokenForUser(Domain.Users.User)">
             <summary>
             متد ساخت توکن jwt و رفرش توکن
