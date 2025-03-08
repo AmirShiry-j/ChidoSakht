@@ -372,6 +372,82 @@ namespace WebApi.Controllers
 
 
         /// <summary>
+        /// فراموشی رمز عبور
+        /// </summary>
+        /// <param name="PhoneNumber"></param>
+        /// <returns></returns>
+        [HttpGet("{PhoneNumber}")]
+        public async Task<IActionResult> ForgetPassword(string PhoneNumber)
+        {
+            //Check bind phoneNumber
+            if (string.IsNullOrWhiteSpace(PhoneNumber))
+            {
+                return BadRequest();
+            }
+
+            //Find user
+            var user = await _userManager.FindByNameAsync(PhoneNumber);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            //Build new password by random class
+            int newPassword = new Random().Next(100000, 999999);
+
+            //Save in user account
+            var resultRemoveOldPass = await _userManager.RemovePasswordAsync(user);
+
+            //Check was successed
+            if (resultRemoveOldPass.Succeeded)
+            {
+                var resultAddNewPass = await _userManager.AddPasswordAsync(user, newPassword.ToString());
+
+                //Return error add new password if UnSuccess
+                if (resultAddNewPass.Succeeded == false)
+                {
+                    var error = resultAddNewPass.Errors.Select(p => p.Description).Aggregate((p1, p2) => p1 + "," + p2);
+                    return BadRequest(error);
+                }
+            }
+            else
+            {
+                //Return error remove old password
+                var error = resultRemoveOldPass.Errors.Select(p => p.Description).Aggregate((p1, p2) => p1 + "," + p2);
+                return BadRequest(error);
+            }
+
+            ////Changes was successed
+            //Send new password for user by PhoneNumber
+            //Code...
+            string bodyMessage = $"کد زیر رمز عبور جدید شما در سایت است. لطفا پس از ورود رمز خود را تغییر دهید   {newPassword}   ";
+            var resultSendSms = await _smsService.SendSmsAsync(user.PhoneNumber, bodyMessage);
+
+            //HATEOAS
+            List<Link> links = new List<Link>
+            {
+                new Link
+                {
+                    For="Login",
+                    HttpMethod=HttpMethod.Post.ToString(),
+                    Url= Url.Action(nameof(Login),"Account",null,Request.Scheme)
+                },
+                new Link
+                {
+                    For="ChangePassword",
+                    HttpMethod=HttpMethod.Post.ToString(),
+                    Url=Url.Action(nameof(ChangePassword),"Account",null,Request.Scheme)
+                }
+            };
+
+            //Message for user
+            string message = "رمز عبور جدید به شماره موبایل شما ارسال شد. لطفا پس از ورود رمز عبور خود را تغییر دهید" + newPassword;
+
+            return Ok(new { Message = message, Links = links });
+        }
+
+
+        /// <summary>
         /// متد ساخت توکن jwt و رفرش توکن
         /// </summary>
         /// <param name="user"></param>

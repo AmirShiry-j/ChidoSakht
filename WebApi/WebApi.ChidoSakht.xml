@@ -60,6 +60,13 @@
             <param name="changePasswordDto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.AccountController.ForgetPassword(System.String)">
+            <summary>
+            فراموشی رمز عبور
+            </summary>
+            <param name="PhoneNumber"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.AccountController.CreateNewTokenForUser(Domain.Users.User)">
             <summary>
             متد ساخت توکن jwt و رفرش توکن
