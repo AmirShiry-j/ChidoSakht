@@ -19,6 +19,9 @@ using System.Text;
 using WebApi.Helpers;
 using WebApi.Tools.TokenValidator;
 using Application.TokenService;
+using Application.Interfaces.Localization;
+using Infrastructure.Localization;
+using WebApi.Filters.Language;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +31,10 @@ IConfiguration Configuration = builder.Configuration;
 builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
 builder.Host.UseNLog();
+
+
+// Add Localization and set their configs
+builder.Services.AddLocalization(options => options.ResourcesPath = "Infrastructure/Localization");
 
 
 //Add CORS configs
@@ -88,10 +95,13 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 });
 
+// Localization service
+builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+
 //Config service
 builder.Services.AddSingleton<IConfigService, ConfigService>();
 
-//Messagers Service
+//Messagers service
 builder.Services.AddScoped<ISmsService, FakeSmsService>();
 builder.Services.AddScoped<IEmailService, MailKit_EmailService>();
 
@@ -119,6 +129,9 @@ builder.Services.AddSwaggerGen(c =>
 
     //برای نمایش Description کنترلر ها
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "WebApi.ChidoSakht.xml"), true);
+
+    //For Accept language
+    //c.OperationFilter<HiddenAcceptLanguageHeaderFilter>();
 
     //For configure Authentication in swaager Ui
     var security = new OpenApiSecurityScheme
@@ -183,6 +196,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Localization cofing
+var defaultCulture = Configuration.GetSection("Localization:DefaultCulture").Get<string>() ?? "fa";
+var supportedCultures = Configuration.GetSection("Localization:SupportedCultures").Get<string[]>() ?? new string[] { "fa" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(defaultCulture) // زبان پیش‌فرض فارسی
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
+
 
 //Swagger config
 app.UseSwagger(c =>

@@ -1,4 +1,5 @@
-﻿using Application.Messagers.SmsService;
+﻿using Application.Interfaces.Localization;
+using Application.Messagers.SmsService;
 using Application.TokenService;
 using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -28,12 +29,14 @@ namespace WebApi.Controllers
         private readonly IUserTokenService _userTokenService;
         private readonly ILogger<AccountController> _logger;
         private readonly ISmsService _smsService;
+        private readonly ILocalizationService _localizationService;
         public AccountController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
             SignInManager<User> signInManager,
             ILogger<AccountController> logger,
             IUserTokenService userTokenService,
-            ISmsService smsService
+            ISmsService smsService,
+            ILocalizationService localizationService
             )
         {
             _userManager = userManager;
@@ -42,6 +45,7 @@ namespace WebApi.Controllers
             _logger = logger;
             _smsService = smsService;
             _userTokenService = userTokenService;
+            _localizationService = localizationService;
         }
 
         /// <summary>
@@ -113,7 +117,8 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(model.PhoneNumber);
             if (user == null)
             {
-                return Unauthorized("شماره موبایل یا رمز عبور اشتباه است");
+                var test = _localizationService.GetMessage("PhoneNumberOrPasswordIsWrong");
+                return Unauthorized(test);
             }
 
             //Check confirmed Account by PhoneNumber

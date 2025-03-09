@@ -16,6 +16,7 @@ namespace Application.ConfigService
         public DatabaseSettings DatabaseSettings { get; set; }
         public EmailSetting EmailSetting { get; set; }
         public string[] CorsOrigins { get; set; }
+        public Localization Localization { get; set; }
     }
     public class DatabaseSettings
     {
@@ -32,5 +33,10 @@ namespace Application.ConfigService
         public int Timeout { get; set; }
         public bool UseDefaultCredentials { get; set; }
         public string SecureSocketOptions { get; set; }
+    }
+    public class Localization
+    {
+        public string DefaultCulture { get; set; } = "fa";
+        public string[] SupportedCultures { get; set; }
     }
 }
