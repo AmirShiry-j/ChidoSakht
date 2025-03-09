@@ -130,8 +130,9 @@ builder.Services.AddSwaggerGen(c =>
     //برای نمایش Description کنترلر ها
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "WebApi.ChidoSakht.xml"), true);
 
-    //For Accept language
-    //c.OperationFilter<HiddenAcceptLanguageHeaderFilter>();
+    //For Accept language -- Visible model
+    if (Configuration.GetSection("Localization:Visible_AcceptLanguageForSwagger").Get<bool>())
+        c.OperationFilter<AcceptLanguageHeaderFilter>();
 
     //For configure Authentication in swaager Ui
     var security = new OpenApiSecurityScheme

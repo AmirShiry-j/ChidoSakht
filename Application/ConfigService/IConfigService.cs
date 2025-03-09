@@ -37,6 +37,7 @@ namespace Application.ConfigService
     public class Localization
     {
         public string DefaultCulture { get; set; } = "fa";
-        public string[] SupportedCultures { get; set; }
+        public string[] SupportedCultures { get; set; } = { "fa" };
+        public bool Visible_AcceptLanguageForSwagger { get; set; } = false;
     }
 }
