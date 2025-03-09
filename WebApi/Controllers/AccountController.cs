@@ -29,14 +29,14 @@ namespace WebApi.Controllers
         private readonly IUserTokenService _userTokenService;
         private readonly ILogger<AccountController> _logger;
         private readonly ISmsService _smsService;
-        private readonly ILocalizationService _localizationService;
+        private readonly ILocalizationService _localization;
         public AccountController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
             SignInManager<User> signInManager,
             ILogger<AccountController> logger,
             IUserTokenService userTokenService,
             ISmsService smsService,
-            ILocalizationService localizationService
+            ILocalizationService localization
             )
         {
             _userManager = userManager;
@@ -45,7 +45,7 @@ namespace WebApi.Controllers
             _logger = logger;
             _smsService = smsService;
             _userTokenService = userTokenService;
-            _localizationService = localizationService;
+            _localization = localization;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace WebApi.Controllers
                 var resultExistEmail = await _userManager.FindByEmailAsync(model.Email);
                 if (resultExistEmail is not null)
                 {
-                    return BadRequest("ایمیل وارد شده قبلا برای کاربر دیگری ثبت شده است");
+                    return BadRequest(_localization.GetMessage(MessageKeys.EmailIsAlreadyUsed.ToString()));
                 }
             }
             var resultRegister = await _userManager.CreateAsync(newUser, model.Password);
@@ -117,21 +117,20 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(model.PhoneNumber);
             if (user == null)
             {
-                var test = _localizationService.GetMessage("PhoneNumberOrPasswordIsWrong");
-                return Unauthorized(test);
+                return Unauthorized(_localization.GetMessage(MessageKeys.PhoneNumberOrPasswordIsWrong.ToString()));
             }
 
             //Check confirmed Account by PhoneNumber
             if (!await _userManager.IsPhoneNumberConfirmedAsync(user))
             {
-                return Unauthorized("حساب کاربری شما تایید نشده. لطفا ابتدا شماره موبایل خود را تایید کنید");
+                return Unauthorized(_localization.GetMessage(MessageKeys.PhoneNumberAndAccountIsNotConfirmed.ToString()));
 
             }
 
             //Check IsLockedOut
             if (await _userManager.IsLockedOutAsync(user))
             {
-                return Unauthorized("حساب کاربری شما به علت بیش از حد وارد کردن رمز عبور اشتباه تا پنج دقیقه قفل میباشد");
+                return Unauthorized(_localization.GetMessage(MessageKeys.AccountIsLocked.ToString()));
             }
 
             if (model.LoginType == LoginType.ByOTP)
@@ -168,7 +167,7 @@ namespace WebApi.Controllers
             }
             else if (resultLogin.IsLockedOut)
             {
-                return Unauthorized("حساب کاربری شما به علت بیش از حد وارد کردن رمز عبور اشتباه تا پنج دقیقه قفل میباشد");
+                return Unauthorized(_localization.GetMessage(MessageKeys.AccountIsLocked.ToString()));
             }
             //else if (resultLogin.IsNotAllowed)
             //{
@@ -176,7 +175,7 @@ namespace WebApi.Controllers
             //}
             else
             {
-                return Unauthorized("شماره موبایل یا رمز عبور اشتباه است");
+                return Unauthorized(_localization.GetMessage(MessageKeys.PhoneNumberOrPasswordIsWrong.ToString()));
             }
         }
 
@@ -207,7 +206,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                return Unauthorized("شماره موبایل یا رمز موقت است");
+                return Unauthorized(_localization.GetMessage(MessageKeys.PhoneNumberOrOTPCodeIsWrong.ToString()));
             }
         }
 
@@ -231,7 +230,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(PhoneNumber);
             if (user == null)
             {
-                return NotFound("شماره موبایل یافت نشد");
+                return NotFound(_localization.GetMessage(MessageKeys.PhoneNumberIsNotFound.ToString()));
             }
 
             //Confirmation phoneNumber
@@ -265,7 +264,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(model.PhoneNumber);
             if (user == null)
             {
-                return NotFound("شماره موبایل یافت نشد");
+                return NotFound(_localization.GetMessage(MessageKeys.PhoneNumberIsNotFound.ToString()));
             }
 
             //Check verify phoneNumber
@@ -283,7 +282,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                return BadRequest("کد وارد شده اشتباه است");
+                return BadRequest(_localization.GetMessage(MessageKeys.CodeEnteredIsIncorrect.ToString()));
             }
         }
 
@@ -303,12 +302,12 @@ namespace WebApi.Controllers
             //Check exist refresh token
             if (token == null)
             {
-                return Unauthorized("رفرش توکن ارسال شده موجود نیست");
+                return Unauthorized(_localization.GetMessage(MessageKeys.RefreshTokenIsNotFound.ToString()));
             }
             //Check expire refresh token
             if (token.RefreshTokenExpireTime < DateTime.Now)
             {
-                return Unauthorized("زمان انقضای رفرش توکن به اتمام رسیده");
+                return Unauthorized(_localization.GetMessage(MessageKeys.RefreshTokenIsExpire.ToString()));
             }
 
             //Delete old token
@@ -400,7 +399,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(PhoneNumber);
             if (user == null)
             {
-                return NotFound("شماره موبایل یافت نشد");
+                return NotFound(_localization.GetMessage(MessageKeys.PhoneNumberIsNotFound.ToString()));
             }
 
             //Build new password by random class

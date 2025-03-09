@@ -36,7 +36,7 @@ namespace Infrastructure.Localization {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Infrastructure.Localization.Messages", typeof(Messages).Assembly);
@@ -61,7 +61,61 @@ namespace Infrastructure.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to حساب کاربری شما به علت بیش از حد وارد کردن رمز عبور اشتباه تا پنج دقیقه قفل میباشد.
+        /// </summary>
+        internal static string AccountIsLocked {
+            get {
+                return ResourceManager.GetString("AccountIsLocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد وارد شده اشتباه است.
+        /// </summary>
+        internal static string CodeEnteredIsIncorrect {
+            get {
+                return ResourceManager.GetString("CodeEnteredIsIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ایمیل وارد شده قبلا برای کاربر دیگری ثبت شده است.
+        /// </summary>
+        internal static string EmailIsAlreadyUsed {
+            get {
+                return ResourceManager.GetString("EmailIsAlreadyUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حساب کاربری شما تایید نشده. لطفا ابتدا شماره موبایل خود را تایید کنید.
+        /// </summary>
+        internal static string PhoneNumberAndAccountIsNotConfirmed {
+            get {
+                return ResourceManager.GetString("PhoneNumberAndAccountIsNotConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شماره موبایل یافت نشد.
+        /// </summary>
+        internal static string PhoneNumberIsNotFound {
+            get {
+                return ResourceManager.GetString("PhoneNumberIsNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره موبایل یا رمز موقت اشتباه است.
+        /// </summary>
+        internal static string PhoneNumberOrOTPCodeIsWrong {
+            get {
+                return ResourceManager.GetString("PhoneNumberOrOTPCodeIsWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره موبایل یا پسورد اشتباه است.
         /// </summary>
         internal static string PhoneNumberOrPasswordIsWrong {
             get {
@@ -70,11 +124,20 @@ namespace Infrastructure.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to عملیات با موفقیت انجام شد.
+        ///   Looks up a localized string similar to زمان انقضای رفرش توکن به اتمام رسیده.
         /// </summary>
-        internal static string SuccessMessage {
+        internal static string RefreshTokenIsExpire {
             get {
-                return ResourceManager.GetString("SuccessMessage", resourceCulture);
+                return ResourceManager.GetString("RefreshTokenIsExpire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رفرش توکن ارسال شده موجود نیست.
+        /// </summary>
+        internal static string RefreshTokenIsNotFound {
+            get {
+                return ResourceManager.GetString("RefreshTokenIsNotFound", resourceCulture);
             }
         }
     }
