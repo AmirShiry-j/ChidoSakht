@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Localization;
+﻿using Application.ConfigService;
+using Application.Interfaces.Localization;
 using Application.Messagers.SmsService;
 using Application.TokenService;
 using Domain.Users;
@@ -30,14 +31,15 @@ namespace WebApi.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly ISmsService _smsService;
         private readonly ILocalizationService _localization;
+        private readonly IConfigService _configService;
         public AccountController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
             SignInManager<User> signInManager,
             ILogger<AccountController> logger,
             IUserTokenService userTokenService,
             ISmsService smsService,
-            ILocalizationService localization
-            )
+            ILocalizationService localization,
+            IConfigService configService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -46,6 +48,7 @@ namespace WebApi.Controllers
             _smsService = smsService;
             _userTokenService = userTokenService;
             _localization = localization;
+            _configService = configService;
         }
 
         /// <summary>
@@ -490,7 +493,7 @@ namespace WebApi.Controllers
             claims.Add(new Claim("RandomValue", randomValue));
 
             //Initial credentials
-            var expireTime = JwtInfo.Expires;
+            var expireTime = DateTime.Now.AddDays(_configService.Config.MainJwtAuthenticationSetting.JWTExpires_ByDay);
             string key = JwtInfo.SecretKey;
             var hashKey = Encoding.UTF8.GetBytes(key);
             var secretKey = new SymmetricSecurityKey(hashKey);
@@ -498,8 +501,8 @@ namespace WebApi.Controllers
 
             //Initial jwtSecurityToken
             var token = new JwtSecurityToken(
-                issuer: JwtInfo.Issuer,
-                audience: JwtInfo.Audience,
+                issuer: _configService.Config.MainJwtAuthenticationSetting.Issuer,
+                audience: _configService.Config.MainJwtAuthenticationSetting.Audience,
                 expires: expireTime,
                 notBefore: JwtInfo.NotBefore,
                 claims: claims,
@@ -511,7 +514,7 @@ namespace WebApi.Controllers
 
             //Create refresh token
             var refreshToken = Guid.NewGuid().ToString();
-            var refreshTokenExpireTime = JwtInfo.ExpiresRefreshToken;
+            var refreshTokenExpireTime = DateTime.Now.AddDays(_configService.Config.MainJwtAuthenticationSetting.RefreshTokenExpires_ByDay);
 
             ////Save token in db
             //Map data to dto

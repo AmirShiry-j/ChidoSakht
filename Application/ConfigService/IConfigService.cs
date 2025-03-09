@@ -14,6 +14,7 @@ namespace Application.ConfigService
     public class AppSettings
     {
         public DatabaseSettings DatabaseSettings { get; set; }
+        public MainJwtAuthenticationSetting MainJwtAuthenticationSetting { get; set; }
         public IdentitySettings IdentitySettings { get; set; }  
         public EmailSetting EmailSetting { get; set; }
         public string[] CorsOrigins { get; set; }
@@ -51,5 +52,12 @@ namespace Application.ConfigService
         public int RequiredUniqueChars { get; set; }
         public int MaxFailedAccessAttempts { get; set; }
         public int DefaultLockoutTimeSpan    { get; set; }
+    }
+    public class MainJwtAuthenticationSetting
+    {
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
+        public int JWTExpires_ByDay { get; set; }
+        public int RefreshTokenExpires_ByDay { get; set; }
     }
 }
