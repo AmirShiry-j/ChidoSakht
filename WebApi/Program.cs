@@ -78,15 +78,14 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     options.User.RequireUniqueEmail = false;
 
-    options.Password.RequireDigit = false;
-    options.Password.RequiredLength = 4;
-    options.Password.RequireLowercase = false;
-    options.Password.RequireNonAlphanumeric = false;
-    //options.Password.RequiredUniqueChars = 6;
-    options.Password.RequireUppercase = false;
-
-    options.Lockout.MaxFailedAccessAttempts = 3;
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Password.RequireDigit = Configuration.GetSection("IdentitySettings:RequireDigit").Get<bool>();
+    options.Password.RequiredLength = Configuration.GetSection("IdentitySettings:RequiredLength").Get<int>(); 
+    options.Password.RequireLowercase = Configuration.GetSection("IdentitySettings:RequireLowercase").Get<bool>();
+    options.Password.RequireUppercase = Configuration.GetSection("IdentitySettings:RequireUppercase").Get<bool>(); 
+    options.Password.RequireNonAlphanumeric = Configuration.GetSection("IdentitySettings:RequireNonAlphanumeric").Get<bool>();
+    options.Password.RequiredUniqueChars = Configuration.GetSection("IdentitySettings:RequiredUniqueChars").Get<int>();
+    options.Lockout.MaxFailedAccessAttempts = Configuration.GetSection("IdentitySettings:MaxFailedAccessAttempts").Get<int>();
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(Configuration.GetSection("IdentitySettings:DefaultLockoutTimeSpan").Get<int>());
 
     options.SignIn.RequireConfirmedEmail = false;
     options.SignIn.RequireConfirmedPhoneNumber = true;
