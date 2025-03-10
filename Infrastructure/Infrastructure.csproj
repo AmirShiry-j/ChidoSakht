@@ -19,12 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Localization\Messages.Designer.cs">
+    <Compile Update="Localization\AccountMessages\MessagesAccount.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Messages.resx</DependentUpon>
+      <DependentUpon>MessagesAccount.resx</DependentUpon>
     </Compile>
-    <Compile Update="Localization\MessagesIdentity.Designer.cs">
+    <Compile Update="Localization\AccountMessages\MessagesIdentity.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MessagesIdentity.resx</DependentUpon>
@@ -32,11 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Localization\Messages.resx">
+    <EmbeddedResource Update="Localization\AccountMessages\MessagesAccount.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <LastGenOutput>MessagesAccount.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Localization\MessagesIdentity.resx">
+    <EmbeddedResource Update="Localization\AccountMessages\MessagesIdentity.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MessagesIdentity.Designer.cs</LastGenOutput>
     </EmbeddedResource>

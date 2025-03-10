@@ -1,5 +1,6 @@
 ﻿using Application.ConfigService;
 using Application.Interfaces.Localization;
+using Application.Interfaces.Localization.AllMessageKeys;
 using Application.Messagers.SmsService;
 using Application.TokenService;
 using Domain.Users;
@@ -78,7 +79,7 @@ namespace WebApi.Controllers
                 var resultExistEmail = await _userManager.FindByEmailAsync(model.Email);
                 if (resultExistEmail is not null)
                 {
-                    return BadRequest(_localization.GetMessage(MessageKeys.EmailIsAlreadyUsed.ToString()));
+                    return BadRequest(_localization.GetMessageAccount(MessageKeysAccount.EmailIsAlreadyUsed.ToString()));
                 }
             }
             var resultRegister = await _userManager.CreateAsync(newUser, model.Password);
@@ -89,7 +90,7 @@ namespace WebApi.Controllers
 
                 //Send code To user by PhoneNumber
                 //code...
-                string bodyMessage = string.Format(_localization.GetMessage(MessageKeys.BodySmsMessageToEnterTheCode.ToString()), code);
+                string bodyMessage = string.Format(_localization.GetMessageAccount(MessageKeysAccount.BodySmsMessageToEnterTheCode.ToString()), code);
                 var resultSendPhoneNumber = await _smsService.SendSmsAsync(newUser.PhoneNumber, bodyMessage);
 
                 //HATEOAS links
@@ -101,7 +102,7 @@ namespace WebApi.Controllers
                 };
 
                 //Initial message
-                string message = _localization.GetMessage(MessageKeys.VerificationCodeSentToPhoneNumber.ToString());
+                string message = _localization.GetMessageAccount(MessageKeysAccount.VerificationCodeSentToPhoneNumber.ToString());
 
                 if (!ReturnSecureCodes)
                     return Ok(new { Message = message, Link = link });
@@ -127,13 +128,13 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(model.PhoneNumber);
             if (user == null)
             {
-                return Unauthorized(_localization.GetMessage(MessageKeys.PhoneNumberOrPasswordIsWrong.ToString()));
+                return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberOrPasswordIsWrong.ToString()));
             }
 
             //Check confirmed Account by PhoneNumber
             if (!await _userManager.IsPhoneNumberConfirmedAsync(user))
             {
-                return Unauthorized(_localization.GetMessage(MessageKeys.PhoneNumberAndAccountIsNotConfirmed.ToString()));
+                return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberAndAccountIsNotConfirmed.ToString()));
 
             }
 
@@ -141,7 +142,7 @@ namespace WebApi.Controllers
             if (await _userManager.IsLockedOutAsync(user))
             {
                 var lockoutMinute = _configService.Config.IdentitySettings.DefaultLockoutTimeSpan;
-                return Unauthorized(string.Format(_localization.GetMessage(MessageKeys.AccountIsLocked.ToString()), lockoutMinute));
+                return Unauthorized(string.Format(_localization.GetMessageAccount(MessageKeysAccount.AccountIsLocked.ToString()), lockoutMinute));
             }
 
             if (model.LoginType == LoginType.ByOTP)
@@ -151,7 +152,7 @@ namespace WebApi.Controllers
 
                 //Send code To user by phoneNumber
                 //code...
-                string bodyMessage = string.Format(_localization.GetMessage(MessageKeys.BodySmsMessageToOTP.ToString()), code);
+                string bodyMessage = string.Format(_localization.GetMessageAccount(MessageKeysAccount.BodySmsMessageToOTP.ToString()), code);
                 var resultSendPhoneNumber = await _smsService.SendSmsAsync(model.PhoneNumber, bodyMessage);
 
                 //HATEOAS links
@@ -182,7 +183,7 @@ namespace WebApi.Controllers
             else if (resultLogin.IsLockedOut)
             {
                 var lockoutMinute = _configService.Config.IdentitySettings.DefaultLockoutTimeSpan;
-                return Unauthorized(string.Format(_localization.GetMessage(MessageKeys.AccountIsLocked.ToString()), lockoutMinute));
+                return Unauthorized(string.Format(_localization.GetMessageAccount(MessageKeysAccount.AccountIsLocked.ToString()), lockoutMinute));
             }
             //else if (resultLogin.IsNotAllowed)
             //{
@@ -190,7 +191,7 @@ namespace WebApi.Controllers
             //}
             else
             {
-                return Unauthorized(_localization.GetMessage(MessageKeys.PhoneNumberOrPasswordIsWrong.ToString()));
+                return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberOrPasswordIsWrong.ToString()));
             }
         }
 
@@ -221,7 +222,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                return Unauthorized(_localization.GetMessage(MessageKeys.PhoneNumberOrOTPCodeIsWrong.ToString()));
+                return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberOrOTPCodeIsWrong.ToString()));
             }
         }
 
@@ -245,7 +246,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(PhoneNumber);
             if (user == null)
             {
-                return NotFound(_localization.GetMessage(MessageKeys.PhoneNumberIsNotFound.ToString()));
+                return NotFound(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberIsNotFound.ToString()));
             }
 
             //Confirmation phoneNumber
@@ -253,7 +254,7 @@ namespace WebApi.Controllers
 
             //Send code To user by PhoneNumber
             //code...
-            string bodyMessage = string.Format(_localization.GetMessage(MessageKeys.BodySmsMessageToEnterTheCode.ToString()), code);
+            string bodyMessage = string.Format(_localization.GetMessageAccount(MessageKeysAccount.BodySmsMessageToEnterTheCode.ToString()), code);
             var resultSendPhoneNumber = await _smsService.SendSmsAsync(PhoneNumber, bodyMessage);
 
             //HATEOAS links
@@ -282,7 +283,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(model.PhoneNumber);
             if (user == null)
             {
-                return NotFound(_localization.GetMessage(MessageKeys.PhoneNumberIsNotFound.ToString()));
+                return NotFound(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberIsNotFound.ToString()));
             }
 
             //Check verify phoneNumber
@@ -300,7 +301,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                return BadRequest(_localization.GetMessage(MessageKeys.CodeEnteredIsIncorrect.ToString()));
+                return BadRequest(_localization.GetMessageAccount(MessageKeysAccount.CodeEnteredIsIncorrect.ToString()));
             }
         }
 
@@ -320,12 +321,12 @@ namespace WebApi.Controllers
             //Check exist refresh token
             if (token == null)
             {
-                return Unauthorized(_localization.GetMessage(MessageKeys.RefreshTokenIsNotFound.ToString()));
+                return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.RefreshTokenIsNotFound.ToString()));
             }
             //Check expire refresh token
             if (token.RefreshTokenExpireTime < DateTime.Now)
             {
-                return Unauthorized(_localization.GetMessage(MessageKeys.RefreshTokenIsExpire.ToString()));
+                return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.RefreshTokenIsExpire.ToString()));
             }
 
             //Delete old token
@@ -417,7 +418,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(PhoneNumber);
             if (user == null)
             {
-                return NotFound(_localization.GetMessage(MessageKeys.PhoneNumberIsNotFound.ToString()));
+                return NotFound(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberIsNotFound.ToString()));
             }
 
             //Build new password by random class
@@ -448,7 +449,7 @@ namespace WebApi.Controllers
             ////Changes was successed
             //Send new password for user by PhoneNumber
             //Code...
-            string bodyMessage = string.Format(_localization.GetMessage(MessageKeys.BodySmsMessageForgetPassword.ToString()), newPassword);
+            string bodyMessage = string.Format(_localization.GetMessageAccount(MessageKeysAccount.BodySmsMessageForgetPassword.ToString()), newPassword);
             var resultSendSms = await _smsService.SendSmsAsync(user.PhoneNumber, bodyMessage);
 
             //HATEOAS
@@ -469,7 +470,7 @@ namespace WebApi.Controllers
             };
 
             //Message for user
-            string message = _localization.GetMessage(MessageKeys.NewPasswordForForgetPasswordSentToPhoneNumber.ToString());
+            string message = _localization.GetMessageAccount(MessageKeysAccount.NewPasswordForForgetPasswordSentToPhoneNumber.ToString());
 
 
             if (!ReturnSecureCodes)

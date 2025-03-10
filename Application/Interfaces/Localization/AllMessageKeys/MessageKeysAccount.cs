@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.Localization
+namespace Application.Interfaces.Localization.AllMessageKeys
 {
     //For KeyName Localization
-    public enum MessageKeys
+    public enum MessageKeysAccount
     {
         PhoneNumberOrPasswordIsWrong,
         AccountIsLocked,

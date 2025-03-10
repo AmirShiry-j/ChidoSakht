@@ -8,7 +8,7 @@ namespace Application.Interfaces.Localization
 {
     public interface ILocalizationService
     {
-        string GetMessage(string key);
+        string GetMessageAccount(string key);
         string GetMessageIdentity(string key);
     }
 }
