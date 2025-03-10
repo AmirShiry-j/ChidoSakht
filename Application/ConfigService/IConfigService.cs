@@ -17,7 +17,7 @@ namespace Application.ConfigService
         public MainJwtAuthenticationSetting MainJwtAuthenticationSetting { get; set; }
         public IdentitySettings IdentitySettings { get; set; }  
         public EmailSetting EmailSetting { get; set; }
-        public string[] CorsOrigins { get; set; }
+        public CorsPolicy CorsPolicy { get; set; }
         public Localization Localization { get; set; }
     }
     public class DatabaseSettings
@@ -59,5 +59,14 @@ namespace Application.ConfigService
         public string Audience { get; set; }
         public int JWTExpires_ByDay { get; set; }
         public int RefreshTokenExpires_ByDay { get; set; }
+    }
+    public class CorsPolicy
+    {
+        public bool AllowAnyOrigins { get; set; }
+        public string[] Origins { get; set; }
+        public bool AllowAnyHeaders { get; set; }
+        public string[] Headers { get; set; }
+        public bool AllowAnyMethods { get; set; }
+        public string[] Methods { get; set; }
     }
 }

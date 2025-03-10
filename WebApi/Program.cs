@@ -39,13 +39,17 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Infrastruct
 
 //Add CORS configs
 //Get origins cores in appsetting
-var corsOrigins = Configuration.GetSection("CorsOrigins").Get<string[]>();
+var corsOrigins = Configuration.GetSection("CorsOrigins").Get<CorsPolicy>();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CorsPolicy",
-        b => b.WithOrigins(corsOrigins)
-        .AllowAnyHeader()
-        .AllowAnyMethod());
+    if (corsOrigins.AllowAnyOrigins) options.AddPolicy("CorsPolicy",b => b.AllowAnyOrigin());
+    else options.AddPolicy("CorsPolicy",b => b.WithOrigins(corsOrigins.Origins));
+
+    if (corsOrigins.AllowAnyMethods) options.AddPolicy("CorsPolicy",b => b.AllowAnyMethod());
+    else options.AddPolicy("CorsPolicy",b => b.WithMethods(corsOrigins.Methods));
+
+    if (corsOrigins.AllowAnyHeaders) options.AddPolicy("CorsPolicy",b => b.AllowAnyHeader());
+    else options.AddPolicy("CorsPolicy",b => b.WithHeaders(corsOrigins.Headers));
 });
 
 // Add services to the container.
@@ -79,9 +83,9 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = false;
 
     options.Password.RequireDigit = Configuration.GetSection("IdentitySettings:RequireDigit").Get<bool>();
-    options.Password.RequiredLength = Configuration.GetSection("IdentitySettings:RequiredLength").Get<int>(); 
+    options.Password.RequiredLength = Configuration.GetSection("IdentitySettings:RequiredLength").Get<int>();
     options.Password.RequireLowercase = Configuration.GetSection("IdentitySettings:RequireLowercase").Get<bool>();
-    options.Password.RequireUppercase = Configuration.GetSection("IdentitySettings:RequireUppercase").Get<bool>(); 
+    options.Password.RequireUppercase = Configuration.GetSection("IdentitySettings:RequireUppercase").Get<bool>();
     options.Password.RequireNonAlphanumeric = Configuration.GetSection("IdentitySettings:RequireNonAlphanumeric").Get<bool>();
     options.Password.RequiredUniqueChars = Configuration.GetSection("IdentitySettings:RequiredUniqueChars").Get<int>();
     options.Lockout.MaxFailedAccessAttempts = Configuration.GetSection("IdentitySettings:MaxFailedAccessAttempts").Get<int>();
