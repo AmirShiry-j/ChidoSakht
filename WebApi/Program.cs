@@ -103,7 +103,7 @@ builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
 });
 
 // Localization service
-builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
 
 //Config service
 builder.Services.AddSingleton<IConfigService, ConfigService>();
