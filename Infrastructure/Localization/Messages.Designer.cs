@@ -61,7 +61,7 @@ namespace Infrastructure.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to حساب کاربری شما به علت بیش از حد وارد کردن رمز عبور اشتباه تا پنج دقیقه قفل میباشد.
+        ///   Looks up a localized string similar to حساب کاربری شما به علت بیش از حد وارد کردن رمز عبور اشتباه تا {0} دقیقه قفل میباشد.
         /// </summary>
         internal static string AccountIsLocked {
             get {

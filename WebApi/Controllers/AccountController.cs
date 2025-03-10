@@ -133,7 +133,8 @@ namespace WebApi.Controllers
             //Check IsLockedOut
             if (await _userManager.IsLockedOutAsync(user))
             {
-                return Unauthorized(_localization.GetMessage(MessageKeys.AccountIsLocked.ToString()));
+                var lockoutMinute = _configService.Config.IdentitySettings.DefaultLockoutTimeSpan;
+                return Unauthorized(string.Format(_localization.GetMessage(MessageKeys.AccountIsLocked.ToString()), lockoutMinute));
             }
 
             if (model.LoginType == LoginType.ByOTP)
@@ -170,7 +171,8 @@ namespace WebApi.Controllers
             }
             else if (resultLogin.IsLockedOut)
             {
-                return Unauthorized(_localization.GetMessage(MessageKeys.AccountIsLocked.ToString()));
+                var lockoutMinute = _configService.Config.IdentitySettings.DefaultLockoutTimeSpan;
+                return Unauthorized(string.Format(_localization.GetMessage(MessageKeys.AccountIsLocked.ToString()), lockoutMinute));
             }
             //else if (resultLogin.IsNotAllowed)
             //{

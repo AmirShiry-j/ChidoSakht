@@ -52,6 +52,7 @@ namespace Application.ConfigService
         public int RequiredUniqueChars { get; set; }
         public int MaxFailedAccessAttempts { get; set; }
         public int DefaultLockoutTimeSpan    { get; set; }
+        public int DefaultTokenProviderLifeSpan { get; set; }
     }
     public class MainJwtAuthenticationSetting
     {

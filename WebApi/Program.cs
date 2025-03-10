@@ -78,24 +78,28 @@ builder.Services.AddIdentity<User, Role>()
     .AddErrorDescriber<PersianIdentityErrors>();
 
 //Set Identity's Options
+var identitySettings = Configuration.GetSection("IdentitySettings").Get<IdentitySettings>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.User.RequireUniqueEmail = false;
 
-    options.Password.RequireDigit = Configuration.GetSection("IdentitySettings:RequireDigit").Get<bool>();
-    options.Password.RequiredLength = Configuration.GetSection("IdentitySettings:RequiredLength").Get<int>();
-    options.Password.RequireLowercase = Configuration.GetSection("IdentitySettings:RequireLowercase").Get<bool>();
-    options.Password.RequireUppercase = Configuration.GetSection("IdentitySettings:RequireUppercase").Get<bool>();
-    options.Password.RequireNonAlphanumeric = Configuration.GetSection("IdentitySettings:RequireNonAlphanumeric").Get<bool>();
-    options.Password.RequiredUniqueChars = Configuration.GetSection("IdentitySettings:RequiredUniqueChars").Get<int>();
-    options.Lockout.MaxFailedAccessAttempts = Configuration.GetSection("IdentitySettings:MaxFailedAccessAttempts").Get<int>();
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(Configuration.GetSection("IdentitySettings:DefaultLockoutTimeSpan").Get<int>());
+    options.Password.RequireDigit = identitySettings.RequireDigit;
+    options.Password.RequiredLength = identitySettings.RequiredLength;
+    options.Password.RequireLowercase = identitySettings.RequireLowercase;
+    options.Password.RequireUppercase = identitySettings.RequireUppercase;
+    options.Password.RequireNonAlphanumeric = identitySettings.RequireNonAlphanumeric;
+    options.Password.RequiredUniqueChars = identitySettings.RequiredUniqueChars;
+    options.Lockout.MaxFailedAccessAttempts = identitySettings.MaxFailedAccessAttempts;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(identitySettings.DefaultLockoutTimeSpan);
 
     options.SignIn.RequireConfirmedEmail = false;
     options.SignIn.RequireConfirmedPhoneNumber = true;
     options.SignIn.RequireConfirmedAccount = false;
 
-
+});
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    options.TokenLifespan = TimeSpan.FromMinutes(identitySettings.DefaultTokenProviderLifeSpan);
 });
 
 // Localization service

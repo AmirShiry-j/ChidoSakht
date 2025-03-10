@@ -121,7 +121,7 @@
     <value>The mobile number or password is incorrect.</value>
   </data>
   <data name="AccountIsLocked" xml:space="preserve">
-    <value>Your account has been locked for up to five minutes due to multiple incorrect password attempts.</value>
+    <value>Your account has been locked for up to {0} minutes due to multiple incorrect password attempts.</value>
   </data>
   <data name="PhoneNumberAndAccountIsNotConfirmed" xml:space="preserve">
     <value>Your account has not been verified. Please verify your mobile number first.</value>
