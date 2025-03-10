@@ -15,7 +15,7 @@ namespace Application.ConfigService
     {
         public DatabaseSettings DatabaseSettings { get; set; }
         public MainJwtAuthenticationSetting MainJwtAuthenticationSetting { get; set; }
-        public IdentitySettings IdentitySettings { get; set; }  
+        public IdentitySettings IdentitySettings { get; set; }
         public EmailSetting EmailSetting { get; set; }
         public CorsPolicy CorsPolicy { get; set; }
         public Localization Localization { get; set; }
@@ -51,8 +51,9 @@ namespace Application.ConfigService
         public bool RequireNonAlphanumeric { get; set; }
         public int RequiredUniqueChars { get; set; }
         public int MaxFailedAccessAttempts { get; set; }
-        public int DefaultLockoutTimeSpan    { get; set; }
+        public int DefaultLockoutTimeSpan { get; set; }
         public int DefaultTokenProviderLifeSpan { get; set; }
+        public bool ReturnSecureCodesForDevelopEnvironment { get; set; }
     }
     public class MainJwtAuthenticationSetting
     {

@@ -33,6 +33,7 @@ namespace WebApi.Controllers
         private readonly ISmsService _smsService;
         private readonly ILocalizationService _localization;
         private readonly IConfigService _configService;
+        private readonly bool ReturnSecureCodes = false;
         public AccountController(UserManager<User> userManager,
             RoleManager<Role> roleManager,
             SignInManager<User> signInManager,
@@ -50,6 +51,8 @@ namespace WebApi.Controllers
             _userTokenService = userTokenService;
             _localization = localization;
             _configService = configService;
+
+            ReturnSecureCodes = _configService.Config.IdentitySettings.ReturnSecureCodesForDevelopEnvironment;
         }
 
         /// <summary>
@@ -100,7 +103,10 @@ namespace WebApi.Controllers
                 //Initial message
                 string message = _localization.GetMessage(MessageKeys.VerificationCodeSentToPhoneNumber.ToString());
 
-                return Ok(new { Message = message, Link = link, Code = code });
+                if (!ReturnSecureCodes)
+                    return Ok(new { Message = message, Link = link });
+                else
+                    return Ok(new { Message = message, Link = link, Code = code });
             }
             else
             {
@@ -156,7 +162,10 @@ namespace WebApi.Controllers
                     Url = Url.Action(nameof(VerifyOTP), nameof(AccountController).Replace("Controller", ""), null, protocol: Request.Scheme)
                 };
 
-                return Ok(new { Code = code, Link = link });
+                if (!ReturnSecureCodes)
+                    return Ok(new { Link = link });
+                else
+                    return Ok(new { Link = link, Code = code });
             }
 
             //Login user
@@ -255,7 +264,10 @@ namespace WebApi.Controllers
                 Url = Url.Action(nameof(VerifyPhoneNumber), nameof(AccountController).Replace("Controller", ""), null, protocol: Request.Scheme)
             };
 
-            return Ok(new { Code = code, Link = link });
+            if (!ReturnSecureCodes)
+                return Ok(new { Link = link });
+            else
+                return Ok(new { Link = link, Code = code });
         }
 
         /// <summary>
@@ -460,7 +472,10 @@ namespace WebApi.Controllers
             string message = _localization.GetMessage(MessageKeys.NewPasswordForForgetPasswordSentToPhoneNumber.ToString());
 
 
-            return Ok(new { Message = message, Links = links, NewPassword = newPassword });
+            if (!ReturnSecureCodes)
+                return Ok(new { Message = message, Links = links });
+            else
+                return Ok(new { Message = message, Links = links, NewPassword = newPassword });
         }
 
 
