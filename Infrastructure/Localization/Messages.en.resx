@@ -144,4 +144,19 @@
   <data name="EmailIsAlreadyUsed" xml:space="preserve">
     <value>The email address entered is already registered for another user.</value>
   </data>
+  <data name="BodySmsMessageToEnterTheCode" xml:space="preserve">
+    <value>Enter the following code in the appropriate field to verify your account: {0}</value>
+  </data>
+  <data name="BodySmsMessageToOTP" xml:space="preserve">
+    <value>Enter the following code in the appropriate field to log in to your account: {0}</value>
+  </data>
+  <data name="VerificationCodeSentToPhoneNumber" xml:space="preserve">
+    <value>An account verification code has been sent to your mobile number.</value>
+  </data>
+  <data name="BodySmsMessageForgetPassword" xml:space="preserve">
+    <value>The following code is your new password on the site. Please change your password after logging in: {0}</value>
+  </data>
+  <data name="NewPasswordForForgetPasswordSentToPhoneNumber" xml:space="preserve">
+    <value>A new password has been sent to your mobile number. Please change your password after logging in.</value>
+  </data>
 </root>

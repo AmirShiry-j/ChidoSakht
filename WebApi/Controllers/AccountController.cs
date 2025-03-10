@@ -15,6 +15,7 @@ using WebApi.Helpers;
 using WebApi.ModelsAndDtoes.Account;
 using WebApi.ModelsAndDtoes.Common;
 using WebApi.Tools.Hasher;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApi.Controllers
@@ -85,7 +86,7 @@ namespace WebApi.Controllers
 
                 //Send code To user by PhoneNumber
                 //code...
-                string bodyMessage = $"کد زیر را جهت تایید حساب کاربری خود در قسمت مربوطه وارد کنید: {code}";
+                string bodyMessage = string.Format(_localization.GetMessage(MessageKeys.BodySmsMessageToEnterTheCode.ToString()), code);
                 var resultSendPhoneNumber = await _smsService.SendSmsAsync(newUser.PhoneNumber, bodyMessage);
 
                 //HATEOAS links
@@ -97,7 +98,7 @@ namespace WebApi.Controllers
                 };
 
                 //Initial message
-                string message = "کد تایید حساب کاربری به شماره موبایل شما ارسال شد " + $"[کد برای محیط تست: {code}]";
+                string message = _localization.GetMessage(MessageKeys.VerificationCodeSentToPhoneNumber.ToString());
 
                 return Ok(new { Message = message, Link = link, Code = code });
             }
@@ -144,7 +145,7 @@ namespace WebApi.Controllers
 
                 //Send code To user by phoneNumber
                 //code...
-                string bodyMessage = $"کد زیر را جهت تایید حساب کاربری خود در قسمت مربوطه وارد کنید<br/><h3>{code}</h3>";
+                string bodyMessage = string.Format(_localization.GetMessage(MessageKeys.BodySmsMessageToOTP.ToString()), code);
                 var resultSendPhoneNumber = await _smsService.SendSmsAsync(model.PhoneNumber, bodyMessage);
 
                 //HATEOAS links
@@ -241,9 +242,9 @@ namespace WebApi.Controllers
             //Confirmation phoneNumber
             string code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, PhoneNumber);
 
-            //Send code To user by phoneNumber
+            //Send code To user by PhoneNumber
             //code...
-            string bodyMessage = $"کد زیر را جهت تایید حساب کاربری خود در قسمت مربوطه وارد کنید<br/><h3>{code}</h3>";
+            string bodyMessage = string.Format(_localization.GetMessage(MessageKeys.BodySmsMessageToEnterTheCode.ToString()), code);
             var resultSendPhoneNumber = await _smsService.SendSmsAsync(PhoneNumber, bodyMessage);
 
             //HATEOAS links
@@ -435,7 +436,7 @@ namespace WebApi.Controllers
             ////Changes was successed
             //Send new password for user by PhoneNumber
             //Code...
-            string bodyMessage = $"کد زیر رمز عبور جدید شما در سایت است. لطفا پس از ورود رمز خود را تغییر دهید   {newPassword}   ";
+            string bodyMessage = string.Format(_localization.GetMessage(MessageKeys.BodySmsMessageForgetPassword.ToString()), newPassword);
             var resultSendSms = await _smsService.SendSmsAsync(user.PhoneNumber, bodyMessage);
 
             //HATEOAS
@@ -456,9 +457,10 @@ namespace WebApi.Controllers
             };
 
             //Message for user
-            string message = "رمز عبور جدید به شماره موبایل شما ارسال شد. لطفا پس از ورود رمز عبور خود را تغییر دهید" + newPassword;
+            string message = _localization.GetMessage(MessageKeys.NewPasswordForForgetPasswordSentToPhoneNumber.ToString());
 
-            return Ok(new { Message = message, Links = links });
+
+            return Ok(new { Message = message, Links = links, NewPassword = newPassword });
         }
 
 

@@ -70,6 +70,33 @@ namespace Infrastructure.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد زیر رمز عبور جدید شما در سایت است. لطفا پس از ورود رمز خود را تغییر دهید: {0}.
+        /// </summary>
+        internal static string BodySmsMessageForgetPassword {
+            get {
+                return ResourceManager.GetString("BodySmsMessageForgetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد رو به رو را جهت تایید حساب کاربری خود در قسمت مربوطه وارد کنید: {0}.
+        /// </summary>
+        internal static string BodySmsMessageToEnterTheCode {
+            get {
+                return ResourceManager.GetString("BodySmsMessageToEnterTheCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد رو به رو را در قسمت مربوطه برای ورود به حساب کاربری خود وارد نمایید: {0}.
+        /// </summary>
+        internal static string BodySmsMessageToOTP {
+            get {
+                return ResourceManager.GetString("BodySmsMessageToOTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کد وارد شده اشتباه است.
         /// </summary>
         internal static string CodeEnteredIsIncorrect {
@@ -84,6 +111,15 @@ namespace Infrastructure.Localization {
         internal static string EmailIsAlreadyUsed {
             get {
                 return ResourceManager.GetString("EmailIsAlreadyUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رمز عبور جدید به شماره موبایل شما ارسال شد. لطفا پس از ورود رمز عبور خود را تغییر دهید.
+        /// </summary>
+        internal static string NewPasswordForForgetPasswordSentToPhoneNumber {
+            get {
+                return ResourceManager.GetString("NewPasswordForForgetPasswordSentToPhoneNumber", resourceCulture);
             }
         }
         
@@ -138,6 +174,15 @@ namespace Infrastructure.Localization {
         internal static string RefreshTokenIsNotFound {
             get {
                 return ResourceManager.GetString("RefreshTokenIsNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد تایید حساب کاربری به شماره موبایل شما ارسال شد.
+        /// </summary>
+        internal static string VerificationCodeSentToPhoneNumber {
+            get {
+                return ResourceManager.GetString("VerificationCodeSentToPhoneNumber", resourceCulture);
             }
         }
     }

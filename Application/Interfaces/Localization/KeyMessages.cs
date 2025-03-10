@@ -17,7 +17,12 @@ namespace Application.Interfaces.Localization
         CodeEnteredIsIncorrect,
         RefreshTokenIsNotFound,
         RefreshTokenIsExpire,
-        EmailIsAlreadyUsed
+        EmailIsAlreadyUsed,
+        BodySmsMessageToEnterTheCode,
+        BodySmsMessageToOTP,
+        VerificationCodeSentToPhoneNumber,
+        BodySmsMessageForgetPassword,
+        NewPasswordForForgetPasswordSentToPhoneNumber
 
     }
 }

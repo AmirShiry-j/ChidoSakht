@@ -144,4 +144,19 @@
   <data name="EmailIsAlreadyUsed" xml:space="preserve">
     <value>ایمیل وارد شده قبلا برای کاربر دیگری ثبت شده است</value>
   </data>
+  <data name="BodySmsMessageToEnterTheCode" xml:space="preserve">
+    <value>کد رو به رو را جهت تایید حساب کاربری خود در قسمت مربوطه وارد کنید: {0}</value>
+  </data>
+  <data name="BodySmsMessageToOTP" xml:space="preserve">
+    <value>کد رو به رو را در قسمت مربوطه برای ورود به حساب کاربری خود وارد نمایید: {0}</value>
+  </data>
+  <data name="VerificationCodeSentToPhoneNumber" xml:space="preserve">
+    <value>کد تایید حساب کاربری به شماره موبایل شما ارسال شد</value>
+  </data>
+  <data name="BodySmsMessageForgetPassword" xml:space="preserve">
+    <value>کد زیر رمز عبور جدید شما در سایت است. لطفا پس از ورود رمز خود را تغییر دهید: {0}</value>
+  </data>
+  <data name="NewPasswordForForgetPasswordSentToPhoneNumber" xml:space="preserve">
+    <value>رمز عبور جدید به شماره موبایل شما ارسال شد. لطفا پس از ورود رمز عبور خود را تغییر دهید</value>
+  </data>
 </root>
