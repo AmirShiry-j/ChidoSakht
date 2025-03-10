@@ -75,7 +75,7 @@ builder.Services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<DataBaseContext>()
     .AddDefaultTokenProviders()
     .AddRoles<Role>()
-    .AddErrorDescriber<PersianIdentityErrors>();
+    .AddErrorDescriber<CustomIdentityErrors>();
 
 //Set Identity's Options
 var identitySettings = Configuration.GetSection("IdentitySettings").Get<IdentitySettings>();

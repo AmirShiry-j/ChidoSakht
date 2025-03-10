@@ -19,8 +19,11 @@ namespace Infrastructure.Localization
 
         public string GetMessage(string key)
         {
-            return Messages.ResourceManager.GetString(key);//temp
-            return _localizer[key].Value; //temp
+            return Messages.ResourceManager.GetString(key);
+        }
+        public string GetMessageIdentity(string key)
+        {
+            return MessagesIdentity.ResourceManager.GetString(key);
         }
     }
 }
