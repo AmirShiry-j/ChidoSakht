@@ -4,7 +4,7 @@ using Domain.Users;
 using Infrastructure.Localization;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebApi.Tools.PersianError
+namespace WebApi.Tools.CustomIdentityError
 {
     public class CustomIdentityErrors : IdentityErrorDescriber
     {

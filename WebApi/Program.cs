@@ -13,7 +13,7 @@ using Application.Messagers.SmsService;
 using Infrastructure.Messagers.SmsService;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
-using WebApi.Tools.PersianError;
+using WebApi.Tools.CustomIdentityError;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApi.Helpers;
