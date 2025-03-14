@@ -8,7 +8,6 @@ namespace WebApi.ModelsAndDtoes.Account
         [RegularExpression("(09)[0-9]{9}")]
         public string PhoneNumber { get; set; }
 
-        [Required]
         [RequiredIfLoginTypeIsPassword]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
