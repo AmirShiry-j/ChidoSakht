@@ -128,7 +128,10 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(model.PhoneNumber);
             if (user == null)
             {
-                return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberOrPasswordIsWrong.ToString()));
+                if (model.LoginType == LoginType.ByPassword)
+                    return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberOrPasswordIsWrong.ToString()));
+                else //By OTP
+                    return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberIsNotFound.ToString()));
             }
 
             //Check confirmed Account by PhoneNumber
@@ -214,7 +217,7 @@ namespace WebApi.Controllers
             var user = await _userManager.FindByNameAsync(model.PhoneNumber);
             if (user == null)
             {
-                return NotFound();
+                return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberIsNotFound.ToString()));
             }
 
             //Check verify Code of OTP
@@ -236,7 +239,7 @@ namespace WebApi.Controllers
 
 
         /// <summary>
-        ///ارسال کد به شماره موبایل برای تایید حساب کاربری
+        /// ارسال کد به شماره موبایل جهت تایید حساب 
         /// </summary>
         /// <param name="PhoneNumber"></param>
         /// <returns></returns>

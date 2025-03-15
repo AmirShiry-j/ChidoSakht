@@ -26,11 +26,11 @@
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.AccountController.ConfirmPhoneNumber(System.String)">
-             <summary>
-            ارسال کد به شماره موبایل برای تایید حساب کاربری
-             </summary>
-             <param name="PhoneNumber"></param>
-             <returns></returns>
+            <summary>
+            ارسال کد به شماره موبایل جهت تایید حساب 
+            </summary>
+            <param name="PhoneNumber"></param>
+            <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.AccountController.VerifyPhoneNumber(WebApi.ModelsAndDtoes.Account.VerifyPhoneNumberDto)">
             <summary>
