@@ -134,8 +134,15 @@ namespace WebApi.Controllers
             //Check confirmed Account by PhoneNumber
             if (!await _userManager.IsPhoneNumberConfirmedAsync(user))
             {
-                return Unauthorized(_localization.GetMessageAccount(MessageKeysAccount.PhoneNumberAndAccountIsNotConfirmed.ToString()));
+                //HATEOAS links
+                Link linkForConfirmPhoneNumber = new Link
+                {
+                    For = nameof(ConfirmPhoneNumber),
+                    HttpMethod = HttpMethod.Get.ToString(),
+                    Url = Url.Action(nameof(ConfirmPhoneNumber), nameof(AccountController).Replace("Controller", ""), new { PhoneNumber = model.PhoneNumber }, protocol: Request.Scheme)
+                };
 
+                return Unauthorized(new { Message = _localization.GetMessageAccount(MessageKeysAccount.PhoneNumberAndAccountIsNotConfirmed.ToString()), Link = linkForConfirmPhoneNumber });
             }
 
             //Check IsLockedOut
