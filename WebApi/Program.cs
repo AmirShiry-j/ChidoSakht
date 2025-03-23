@@ -22,6 +22,8 @@ using Application.TokenService;
 using Application.Interfaces.Localization;
 using Infrastructure.Localization;
 using WebApi.Filters.Language;
+using Persistence.Categories.Commands;
+using Application.CategoryService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,14 +44,14 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Infrastruct
 var corsOrigins = Configuration.GetSection("CorsOrigins").Get<CorsPolicy>();
 builder.Services.AddCors(options =>
 {
-    if (corsOrigins.AllowAnyOrigins) options.AddPolicy("CorsPolicy",b => b.AllowAnyOrigin());
-    else options.AddPolicy("CorsPolicy",b => b.WithOrigins(corsOrigins.Origins));
+    if (corsOrigins.AllowAnyOrigins) options.AddPolicy("CorsPolicy", b => b.AllowAnyOrigin());
+    else options.AddPolicy("CorsPolicy", b => b.WithOrigins(corsOrigins.Origins));
 
-    if (corsOrigins.AllowAnyMethods) options.AddPolicy("CorsPolicy",b => b.AllowAnyMethod());
-    else options.AddPolicy("CorsPolicy",b => b.WithMethods(corsOrigins.Methods));
+    if (corsOrigins.AllowAnyMethods) options.AddPolicy("CorsPolicy", b => b.AllowAnyMethod());
+    else options.AddPolicy("CorsPolicy", b => b.WithMethods(corsOrigins.Methods));
 
-    if (corsOrigins.AllowAnyHeaders) options.AddPolicy("CorsPolicy",b => b.AllowAnyHeader());
-    else options.AddPolicy("CorsPolicy",b => b.WithHeaders(corsOrigins.Headers));
+    if (corsOrigins.AllowAnyHeaders) options.AddPolicy("CorsPolicy", b => b.AllowAnyHeader());
+    else options.AddPolicy("CorsPolicy", b => b.WithHeaders(corsOrigins.Headers));
 });
 
 // Add services to the container.
@@ -122,6 +124,12 @@ builder.Services.AddScoped<ITokenValidator, TokenValidator>();
 //Authorize and token services
 builder.Services.AddScoped<IUserTokenService, UserTokenService>();
 
+//Categories
+builder.Services.AddScoped<IFacadeCategoryService, FacadeCategoryService>();
+
+
+// Register MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
