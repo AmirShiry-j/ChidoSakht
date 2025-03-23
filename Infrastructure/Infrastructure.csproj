@@ -29,6 +29,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MessagesIdentity.resx</DependentUpon>
     </Compile>
+    <Compile Update="Localization\CategoryMessages\MessagesCategory.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessagesCategory.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +44,10 @@
     <EmbeddedResource Update="Localization\AccountMessages\MessagesIdentity.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MessagesIdentity.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\CategoryMessages\MessagesCategory.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessagesCategory.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

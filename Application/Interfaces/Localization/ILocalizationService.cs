@@ -10,5 +10,6 @@ namespace Application.Interfaces.Localization
     {
         string GetMessageAccount(string key);
         string GetMessageIdentity(string key);
+        string GetMessageCategory(string key);
     }
 }

@@ -51,6 +51,7 @@ namespace Application.CategoryService.Queries
         public string Name { get; set; }
         public int? ParentCategoryId { get; set; }
         public string? ParentCategoryName { get; set; }
+        public List<Link> Links { get; set; }
     }
     public class GetCategoryByIdQuery : IRequest<CategoryInfoDto>
     {

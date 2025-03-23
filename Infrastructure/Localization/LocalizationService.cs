@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Localization;
 using Infrastructure.Localization.AccountMessages;
+using Infrastructure.Localization.CategoryMessages;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ namespace Infrastructure.Localization
         public string GetMessageIdentity(string key)
         {
             return MessagesIdentity.ResourceManager.GetString(key);
+        }
+        public string GetMessageCategory(string key)
+        {
+            return MessagesCategory.ResourceManager.GetString(key);
         }
     }
 }

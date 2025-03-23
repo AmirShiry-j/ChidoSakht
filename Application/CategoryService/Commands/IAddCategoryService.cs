@@ -1,6 +1,8 @@
 ﻿using Application.CategoryService.Queries;
 using Application.Common;
 using Application.Interfaces.Contexts;
+using Application.Interfaces.Localization;
+using Application.Interfaces.Localization.AllMessageKeys;
 using AutoMapper;
 using Domain.Categories;
 using MediatR;
@@ -21,9 +23,11 @@ namespace Application.CategoryService.Commands
     public class AddCategoryService : IAddCategoryService
     {
         private readonly IMediator _mediator;
-        public AddCategoryService(IMediator mediator)
+        private readonly ILocalizationService _localizationService;
+        public AddCategoryService(IMediator mediator, ILocalizationService localizationService)
         {
             _mediator = mediator;
+            _localizationService = localizationService;
         }
 
         public async Task<ResultDto<int>> Execute(CreateCategoryDto dto)
@@ -35,7 +39,7 @@ namespace Application.CategoryService.Commands
                 if (category is null)
                     return new ResultDto<int>
                     {
-                        Message = "کتگوری والدی با آیدی ارسال شده موجود نیست"
+                        Message = _localizationService.GetMessageCategory(MessageKeysCategory.ParentCategoryNotFound.ToString())
                     };
             }
 

@@ -1,6 +1,7 @@
 ﻿using Application.CategoryService.Commands;
 using Application.CategoryService.Queries;
 using Application.Interfaces.Contexts;
+using Application.Interfaces.Localization;
 using AutoMapper;
 using MediatR;
 using System;
@@ -21,9 +22,11 @@ namespace Application.CategoryService
     public class FacadeCategoryService : IFacadeCategoryService
     {
         private readonly IMediator _mediator;
-        public FacadeCategoryService(IMediator mediator)
+        private readonly ILocalizationService _localizationService;
+        public FacadeCategoryService(IMediator mediator, ILocalizationService localizationService)
         {
             _mediator = mediator;
+            _localizationService = localizationService;
         }
         //Commands
         #region Commands
@@ -32,7 +35,7 @@ namespace Application.CategoryService
         {
             get
             {
-                return _addCategoryService = _addCategoryService ?? new AddCategoryService(_mediator);
+                return _addCategoryService = _addCategoryService ?? new AddCategoryService(_mediator, _localizationService);
             }
         }
         #endregion
