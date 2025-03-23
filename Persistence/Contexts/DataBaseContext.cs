@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Application.Interfaces.Contexts;
 using Persistence.Configurations.Users;
+using Domain.Categories;
+using Persistence.Configurations.Categories;
 
 namespace Persistence.Contexts
 {
@@ -17,6 +19,8 @@ namespace Persistence.Contexts
         public DbSet<Role> Roles { get; set; }
         public DbSet<Token> Tokens { get; set; }
 
+        //Categories
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,6 +38,12 @@ namespace Persistence.Contexts
                 .HasForeignKey(p => p.UserId)
                 .IsRequired(true);
 
+            //Categories
+            builder.Entity<Category>()
+                .HasOne(p => p.ParentCategory)
+                .WithOne()
+                .HasForeignKey<Category>(p => p.ParentCategoryId)
+                .IsRequired(false);
 
             SetConfigurations(builder);
 
@@ -46,6 +56,10 @@ namespace Persistence.Contexts
             builder.ApplyConfiguration(new UserConfig());
             builder.ApplyConfiguration(new RoleConfig());
             builder.ApplyConfiguration(new TokenConfig());
+
+            //Categories
+            builder.ApplyConfiguration(new CategoryConfig());
+
 
             base.OnModelCreating(builder);
         }
