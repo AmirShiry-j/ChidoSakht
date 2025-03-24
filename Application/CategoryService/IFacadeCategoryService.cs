@@ -15,7 +15,7 @@ namespace Application.CategoryService
     public interface IFacadeCategoryService
     {
         //Commands
-        IAddCategoryService AddCategoryService { get; }
+        ICreateCategoryService CreateCategoryService { get; }
         IUpdateCategoryService UpdateCategoryService { get; }
         IDeleteCategoryService DeleteCategoryService { get; }
         //Queries
@@ -33,12 +33,12 @@ namespace Application.CategoryService
         //Commands
         #region Commands
         //Create
-        private IAddCategoryService _addCategoryService;
-        public IAddCategoryService AddCategoryService
+        private ICreateCategoryService _createCategoryService;
+        public ICreateCategoryService CreateCategoryService
         {
             get
             {
-                return _addCategoryService = _addCategoryService ?? new AddCategoryService(_mediator, _localizationService);
+                return _createCategoryService = _createCategoryService ?? new CreateCategoryService(_mediator, _localizationService);
             }
         }
         //Update

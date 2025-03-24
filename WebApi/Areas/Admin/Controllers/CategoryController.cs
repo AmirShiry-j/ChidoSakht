@@ -42,7 +42,7 @@ namespace WebApi.Areas.Admin.Controllers
             };
 
             //Create Category by service
-            var resultService = await _facadeCategoryService.AddCategoryService.Execute(dtoService);
+            var resultService = await _facadeCategoryService.CreateCategoryService.Execute(dtoService);
             if (resultService.IsSuccess)
             {
                 return CreatedAtAction(nameof(GetCategoryById), new { CategoryId = resultService.Data }, _localizationService.GetMessageCategory(MessageKeysCategory.CategoryCreated.ToString()));

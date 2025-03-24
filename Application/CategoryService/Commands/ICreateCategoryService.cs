@@ -16,15 +16,15 @@ using System.Threading.Tasks;
 
 namespace Application.CategoryService.Commands
 {
-    public interface IAddCategoryService
+    public interface ICreateCategoryService
     {
         Task<ResultDto<int>> Execute(CreateCategoryDto dto);
     }
-    public class AddCategoryService : IAddCategoryService
+    public class CreateCategoryService : ICreateCategoryService
     {
         private readonly IMediator _mediator;
         private readonly ILocalizationService _localizationService;
-        public AddCategoryService(IMediator mediator, ILocalizationService localizationService)
+        public CreateCategoryService(IMediator mediator, ILocalizationService localizationService)
         {
             _mediator = mediator;
             _localizationService = localizationService;
