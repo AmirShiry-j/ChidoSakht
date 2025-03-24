@@ -43,7 +43,7 @@ namespace WebApi.Tools.TokenValidator
                 var jwtToken = context.SecurityToken as JwtSecurityToken;
 
                 //Find Token
-                var tokenEntity = _userTokenService.GetToken(new SecurityHasher().GetSha256Hash(jwtToken.RawData));
+                var tokenEntity = await _userTokenService.GetToken(new SecurityHasher().GetSha256Hash(jwtToken.RawData));
 
                 //Check exist token in db
                 if (tokenEntity == null)
