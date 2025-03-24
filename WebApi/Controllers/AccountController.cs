@@ -325,7 +325,7 @@ namespace WebApi.Controllers
         {
             //Find token by refresh token
             var securityHasher = new SecurityHasher();
-            var token = _userTokenService.FindTokenByRefreshToken(securityHasher.GetSha256Hash(RefreshToken));
+            var token = await _userTokenService.FindTokenByRefreshToken(securityHasher.GetSha256Hash(RefreshToken));
 
             ////Check refresh token
             //Check exist refresh token
@@ -340,7 +340,7 @@ namespace WebApi.Controllers
             }
 
             //Delete old token
-            _userTokenService.DeleteToken(token);
+            await _userTokenService.DeleteToken(token);
 
             //Create new Token
             var tokens = await CreateNewTokenForUser(token.User);
@@ -549,7 +549,7 @@ namespace WebApi.Controllers
             ////Save token in db
             //Map data to dto
             var hasherService = new SecurityHasher();
-            var userToken = new UserTokenDto
+            var userToken = new CreateUserTokenDto
             {
                 ExpireTime = expireTime,
                 UserId = user.Id,

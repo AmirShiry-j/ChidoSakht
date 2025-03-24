@@ -1,5 +1,11 @@
-﻿using Application.Interfaces.Contexts;
+﻿using Application.CategoryService.Commands;
+using Application.Interfaces.ConfigService;
+using Application.Interfaces.Contexts;
+using Application.Interfaces.Localization;
+using Application.TokenService.Commands;
+using Application.TokenService.Queries;
 using Domain.Users;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,100 +18,105 @@ namespace Application.TokenService
 {
     public interface IUserTokenService
     {
-        public Token GetToken(string TokenHash);
-        public void DeleteToken(Token token);
-        public void DeleteToken(string HashToken);
-        public Task SaveToken(UserTokenDto userToken);
-        public Token FindTokenByRefreshToken(string RefreshTokenHash);
+        Task<Token> GetToken(string TokenHash);
+        Task DeleteToken(Token token);
+        Task DeleteToken(string HashToken);
+        Task SaveToken(CreateUserTokenDto userToken);
+        Task<Token> FindTokenByRefreshToken(string HashRefreshToken);
     }
+
     public class UserTokenService : IUserTokenService
     {
-        private readonly IDataBaseContext _dbContext;
-        private readonly ILogger<UserTokenService> _logger;
-        public UserTokenService(IDataBaseContext dbContext, ILogger<UserTokenService> logger)
+        private readonly IMediator _mediator;
+        private readonly ILocalizationService _localizationService;
+        private readonly IConfigService _configService;
+        public UserTokenService(IMediator mediator, ILocalizationService localizationService, IConfigService configService)
         {
-            _dbContext = dbContext;
-            _logger = logger;
+            _mediator = mediator;
+            _localizationService = localizationService;
+            _configService = configService;
         }
 
-        public void DeleteToken(Token token)
+        public async Task DeleteToken(Token token)
         {
-            _dbContext.Tokens.Remove(token);
-            _dbContext.SaveChanges();
+            //Delete it
+            var deleteTokenByIdCommand = new
+                DeleteTokenByIdCommand(token.Id);
+            await _mediator.Send(deleteTokenByIdCommand);
         }
 
-        public Token FindTokenByRefreshToken(string RefreshTokenHash)
+        public async Task<Token> FindTokenByRefreshToken(string HashRefreshToken)
         {
-            return _dbContext.Tokens.Where(p => p.RefreshTokenHash == RefreshTokenHash)
-                                    .Include(include => include.User).FirstOrDefault();
+            //Find it
+            var getTokenByHashRefreshTokenQuery = new
+                GetTokenByHashRefreshTokenQuery(HashRefreshToken);
+            var token = await _mediator.Send(getTokenByHashRefreshTokenQuery);
+
+            return token;
         }
-        public void DeleteToken(string HashToken)
+        public async Task DeleteToken(string HashToken)
         {
-            //Find token
-            var token = _dbContext.Tokens.Where(p => p.TokenHash == HashToken).FirstOrDefault();
+            //Find it
+            var getTokenByHashTokenQuery = new
+                GetTokenByHashTokenQuery(HashToken);
+            var token = await _mediator.Send(getTokenByHashTokenQuery);
 
             //Delete it and save
             if (token != null)
             {
-                _dbContext.Tokens.Remove(token);
-                _dbContext.SaveChanges();
+                //Delete it
+                var deleteTokenByIdCommand = new
+                    DeleteTokenByIdCommand(token.Id);
+                await _mediator.Send(deleteTokenByIdCommand);
             }
         }
 
-        public Token GetToken(string TokenHash)
+        public async Task<Token> GetToken(string TokenHash)
         {
-            return _dbContext.Tokens.Where(p => p.TokenHash == TokenHash).FirstOrDefault();
+            //Find it
+            var getTokenByHashTokenQuery = new
+                GetTokenByHashTokenQuery(TokenHash);
+            var token = await _mediator.Send(getTokenByHashTokenQuery);
+            return token;
         }
 
-        public async Task SaveToken(UserTokenDto userToken)
+        public async Task SaveToken(CreateUserTokenDto userToken)
         {
-            try
+            //Check count tokens of user
+            int maxCountToken = _configService.Config.MainJwtAuthenticationSetting.MaxCountUserTokensAtMoment;
+
+            //Get count Tokens of user in db
+            var queryGetCountTokensOfUser = new
+                GetCountUserTokensQuery(userToken.UserId);
+            var countTokensUser = await _mediator.Send(queryGetCountTokensOfUser);
+
+            if (countTokensUser >= maxCountToken)
             {
-                //Check count tokens of user
-                int maxCountToken = 5;
-                int countTokensUser = _dbContext.Tokens.Where(p => p.UserId == userToken.UserId).Count();
-                if (countTokensUser >= maxCountToken)
-                {
-                    //Get count overflow
-                    int countOverflow = (countTokensUser - maxCountToken) + 1;
+                //Get count overflow
+                int countOverflow = (countTokensUser - maxCountToken) + 1;//+ 1 for space of new token
 
-                    //Get token overflow
-                    var tokens = _dbContext.Tokens.Where(p => p.UserId == userToken.UserId)
-                                                  .OrderBy(p => p.CreateTime)
-                                                  .Take(countOverflow)
-                                                  .ToList();
+                //Get Ids of overflow UserTokens
+                var queryGetOverflowUserTokenIds = new
+                    GetOverflowUserTokenIdsQuery(userToken.UserId, countOverflow);
+                var Ids = await _mediator.Send(queryGetOverflowUserTokenIds);
 
-                    //Delete them
-                    _dbContext.Tokens.RemoveRange(tokens);
-                }
-
-                //Map dto to Token 
-                var newToken = new Token
-                {
-                    TokenExpireTime = userToken.ExpireTime,
-                    TokenHash = userToken.TokenHash,
-                    UserId = userToken.UserId,
-                    RefreshTokenHash = userToken.RefreshTokenHash,
-                    RefreshTokenExpireTime = userToken.RefreshExpireTime,
-                    CreateTime = DateTime.Now
-                };
-
-                //Add to db 
-                _dbContext.Tokens.Add(newToken);
-
-                //Save all in db
-                _dbContext.SaveChanges();
+                //Delete them
+                var commandDeleteOverflowUserTokens = new
+                    DeleteOverflowUserTokensCommand(Ids);
+                await _mediator.Send(commandDeleteOverflowUserTokens);
             }
-            catch (Exception error)
-            {
-                _logger.LogError(error.ToString());
-            }
+
+
+            //Create Token
+            var commandCreate = new
+                CreateTokenCommand(userToken.UserId, userToken.ExpireTime, userToken.TokenHash, userToken.RefreshExpireTime, userToken.RefreshTokenHash, DateTime.Now);
+            await _mediator.Send(commandCreate);
+
 
             await Task.CompletedTask;
         }
     }
-
-    public class UserTokenDto
+    public class CreateUserTokenDto
     {
         public string UserId { get; set; }
         public DateTime ExpireTime { get; set; }

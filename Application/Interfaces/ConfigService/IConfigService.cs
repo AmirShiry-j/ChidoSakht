@@ -61,6 +61,7 @@ namespace Application.Interfaces.ConfigService
         public string Audience { get; set; }
         public int JWTExpires_ByDay { get; set; }
         public int RefreshTokenExpires_ByDay { get; set; }
+        public int MaxCountUserTokensAtMoment { get; set; }
     }
     public class CorsPolicy
     {
