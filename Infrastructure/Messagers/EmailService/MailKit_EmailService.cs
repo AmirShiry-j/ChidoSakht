@@ -1,5 +1,4 @@
-﻿using Application.Messagers.EmailService;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,8 @@ using MimeKit;
 using System.Threading.Tasks;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Application.ConfigService;
+using Application.Interfaces.ConfigService;
+using Application.Interfaces.Messagers.EmailService;
 
 namespace Infrastructure.Messagers.EmailService
 {

@@ -1,4 +1,4 @@
-﻿using Application.ConfigService;
+﻿using Application.Interfaces.ConfigService;
 using Application.Interfaces.Localization;
 using Domain.Users;
 using Infrastructure.Localization;

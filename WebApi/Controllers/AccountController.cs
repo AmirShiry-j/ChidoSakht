@@ -1,7 +1,7 @@
-﻿using Application.ConfigService;
+﻿using Application.Interfaces.ConfigService;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
-using Application.Messagers.SmsService;
+using Application.Interfaces.Messagers.SmsService;
 using Application.TokenService;
 using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

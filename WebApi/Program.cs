@@ -1,6 +1,4 @@
-﻿using Application.ConfigService;
-using Infrastructure.ConfigService;
-using Application.Messagers.EmailService;
+﻿using Infrastructure.ConfigService;
 using Infrastructure.Messagers.EmailService;
 using ExceptionHandling;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,7 +7,6 @@ using NLog.Web;
 using Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Application.Interfaces.Contexts;
-using Application.Messagers.SmsService;
 using Infrastructure.Messagers.SmsService;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +21,9 @@ using Infrastructure.Localization;
 using WebApi.Filters.Language;
 using Persistence.Categories.Commands;
 using Application.CategoryService;
+using Application.Interfaces.ConfigService;
+using Application.Interfaces.Messagers.EmailService;
+using Application.Interfaces.Messagers.SmsService;
 
 var builder = WebApplication.CreateBuilder(args);
 

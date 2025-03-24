@@ -1,4 +1,4 @@
-﻿using Application.ConfigService;
+﻿using Application.Interfaces.ConfigService;
 using Microsoft.Extensions.Configuration;
 
 

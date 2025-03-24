@@ -1,9 +1,9 @@
-﻿using Application.Messagers.EmailService;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using Application.ConfigService;
 using System.Net.Mail;
+using Application.Interfaces.ConfigService;
+using Application.Interfaces.Messagers.EmailService;
 
 namespace Infrastructure.Messagers.EmailService
 {
