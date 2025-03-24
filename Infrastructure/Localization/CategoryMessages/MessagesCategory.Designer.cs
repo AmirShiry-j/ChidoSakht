@@ -70,6 +70,15 @@ namespace Infrastructure.Localization.CategoryMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to دسته بندی با آیدی ارسال شده موجود نیست.
+        /// </summary>
+        internal static string CategoryIdNotFound {
+            get {
+                return ResourceManager.GetString("CategoryIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کتگوری والدی با آیدی ارسال شده موجود نیست.
         /// </summary>
         internal static string ParentCategoryNotFound {

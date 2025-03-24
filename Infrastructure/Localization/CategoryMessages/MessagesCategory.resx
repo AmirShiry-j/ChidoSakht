@@ -120,6 +120,9 @@
   <data name="CategoryCreated" xml:space="preserve">
     <value>دسته بندی شما ثبت شد</value>
   </data>
+  <data name="CategoryIdNotFound" xml:space="preserve">
+    <value>دسته بندی با آیدی ارسال شده موجود نیست</value>
+  </data>
   <data name="ParentCategoryNotFound" xml:space="preserve">
     <value>کتگوری والدی با آیدی ارسال شده موجود نیست</value>
   </data>

@@ -52,6 +52,20 @@ namespace WebApi.Areas.Admin.Controllers
                 return BadRequest(resultService.Message);
             }
         }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCategory(int CategoryId)
+        {
+            //Delete Category by service
+            var resultService = await _facadeCategoryService.DeleteCategoryService.Execute(CategoryId);
+            if (resultService.IsSuccess)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
 
         [HttpGet("{CategoryId}")]
         public async Task<IActionResult> GetCategoryById(int CategoryId)

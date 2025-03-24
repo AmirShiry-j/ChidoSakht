@@ -8,12 +8,16 @@ namespace Domain.Categories
 {
     public class Category
     {
+        public Category()
+        {
+                
+        }
         public Category(string Name, int? ParentCategoryId)
         {
             _Name = Name;
             this.ParentCategoryId = ParentCategoryId;
         }
-        public int Id { get; private set; }
+        public int Id { get; set; }
         private string _Name;
         public string Name
         {

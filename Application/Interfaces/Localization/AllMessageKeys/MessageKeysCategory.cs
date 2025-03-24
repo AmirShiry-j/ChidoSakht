@@ -9,6 +9,7 @@ namespace Application.Interfaces.Localization.AllMessageKeys
     public enum MessageKeysCategory
     {
         CategoryCreated,
-        ParentCategoryNotFound
+        ParentCategoryNotFound,
+        CategoryIdNotFound
     }
 }
