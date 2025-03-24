@@ -16,6 +16,7 @@ namespace Application.CategoryService
     {
         //Commands
         IAddCategoryService AddCategoryService { get; }
+        IUpdateCategoryService UpdateCategoryService { get; }
         IDeleteCategoryService DeleteCategoryService { get; }
         //Queries
         IGetCategoryInfoByIdService GetCategoryInfoByIdService { get; }
@@ -31,6 +32,7 @@ namespace Application.CategoryService
         }
         //Commands
         #region Commands
+        //Create
         private IAddCategoryService _addCategoryService;
         public IAddCategoryService AddCategoryService
         {
@@ -39,6 +41,16 @@ namespace Application.CategoryService
                 return _addCategoryService = _addCategoryService ?? new AddCategoryService(_mediator, _localizationService);
             }
         }
+        //Update
+        private IUpdateCategoryService _updateCategoryService;
+        public IUpdateCategoryService UpdateCategoryService
+        {
+            get
+            {
+                return _updateCategoryService = _updateCategoryService ?? new UpdateCategoryService(_mediator, _localizationService);
+            }
+        }
+        //Delete
         private IDeleteCategoryService _deleteCategoryService;
         public IDeleteCategoryService DeleteCategoryService
         {

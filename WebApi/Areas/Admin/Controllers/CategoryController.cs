@@ -52,6 +52,29 @@ namespace WebApi.Areas.Admin.Controllers
                 return BadRequest(resultService.Message);
             }
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateCategory(UpdateCategoryApiDto updateCategoryApiDto)
+        {
+            //Map
+            var model = new UpdateCategoryDto
+            {
+                Id = updateCategoryApiDto.Id,
+                Name = updateCategoryApiDto.Name,
+                ParentCategoryId = updateCategoryApiDto.ParentCategoryId
+            };
+
+            //Update Category by service
+            var resultService = await _facadeCategoryService.UpdateCategoryService.Execute(model);
+
+            if (resultService.IsSuccess)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
         [HttpDelete]
         public async Task<IActionResult> DeleteCategory(int CategoryId)
         {
