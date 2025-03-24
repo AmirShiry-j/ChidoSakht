@@ -25,7 +25,7 @@ namespace Persistence.Categories.Commands
             await _context.SaveChangesAsync(cancellationToken);
 
             //finish
-            return;
+            await Task.CompletedTask;
         }
     }
 }
