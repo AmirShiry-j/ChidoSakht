@@ -25,7 +25,7 @@ namespace Persistence.Categories.Commands
             var category = new Category(request.Name, request.ParentCategoryId);
 
             //Add and save in DB
-            _context.Categories.Add(category);
+            await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync(cancellationToken);
 
             //Retrun Id
