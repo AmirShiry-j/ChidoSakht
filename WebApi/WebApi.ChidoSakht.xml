@@ -4,6 +4,34 @@
         <name>WebApi</name>
     </assembly>
     <members>
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Get(System.Int32)">
+            <summary>
+            برگشت اطلاعات مربوط ب یک دسته بندی (Auth)
+            </summary>
+            <param name="CategoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Post(WebApi.ModelsAndDtoes.Categories.CreateCategoryApiDto)">
+            <summary>
+            اضافه کردن یک دسته بندی جدید (Auth)
+            </summary>
+            <param name="createCategoryApiDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Put(WebApi.ModelsAndDtoes.Categories.UpdateCategoryApiDto)">
+            <summary>
+            آپدیت اطلاعات یک دسته بندی (Auth)
+            </summary>
+            <param name="updateCategoryApiDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Delete(System.Int32)">
+            <summary>
+            حذف یک دسته بندی (Auth)
+            </summary>
+            <param name="CategoryId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.AccountController.Register(WebApi.ModelsAndDtoes.Account.RegisterDto)">
             <summary>
             ساختن حساب کاربری

@@ -30,9 +30,58 @@ namespace WebApi.Areas.Admin.Controllers
             _facadeCategoryService = facadeCategoryService;
             _localizationService = localizationService;
         }
+        /// <summary>
+        /// برگشت اطلاعات مربوط ب یک دسته بندی (Auth)
+        /// </summary>
+        /// <param name="CategoryId"></param>
+        /// <returns></returns>
+        [HttpGet("{CategoryId}")]
+        public async Task<IActionResult> Get(int CategoryId)
+        {
+            //Get by service
+            var resultService = await _facadeCategoryService.GetCategoryInfoByIdService.Execute(CategoryId);
 
+            if (resultService.IsSuccess)
+            {
+                if (resultService.Data is not null)
+                {
+                    //HATEOAS links
+                    resultService.Data.Links = new List<Link>
+                    {
+                        new Link
+                        {
+                            For="Update",
+                            HttpMethod=HttpMethod.Put.ToString(),
+                            Url=Url.Action(nameof(Put),nameof(CategoryController).Replace("Controller", ""),new { Area="Admin" },Request.Scheme)
+                        },
+                        new Link
+                        {
+                            For="Delete",
+                            HttpMethod=HttpMethod.Delete.ToString(),
+                            Url=Url.Action(nameof(Delete),nameof(CategoryController).Replace("Controller", ""),new { Area="Admin" ,CategoryId=resultService.Data.Id },Request.Scheme)
+                        },
+                    };
+
+                    return Ok(resultService.Data);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// اضافه کردن یک دسته بندی جدید (Auth)
+        /// </summary>
+        /// <param name="createCategoryApiDto"></param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryApiDto createCategoryApiDto)
+        public async Task<IActionResult> Post(CreateCategoryApiDto createCategoryApiDto)
         {
             //Map
             var dtoService = new CreateCategoryDto
@@ -45,15 +94,21 @@ namespace WebApi.Areas.Admin.Controllers
             var resultService = await _facadeCategoryService.CreateCategoryService.Execute(dtoService);
             if (resultService.IsSuccess)
             {
-                return CreatedAtAction(nameof(GetCategoryById), new { CategoryId = resultService.Data }, _localizationService.GetMessageCategory(MessageKeysCategory.CategoryCreated.ToString()));
+                return CreatedAtAction(nameof(Get), new { CategoryId = resultService.Data }, _localizationService.GetMessageCategory(MessageKeysCategory.CategoryCreated.ToString()));
             }
             else
             {
                 return BadRequest(resultService.Message);
             }
         }
+
+        /// <summary>
+        /// آپدیت اطلاعات یک دسته بندی (Auth)
+        /// </summary>
+        /// <param name="updateCategoryApiDto"></param>
+        /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateCategory(UpdateCategoryApiDto updateCategoryApiDto)
+        public async Task<IActionResult> Put(UpdateCategoryApiDto updateCategoryApiDto)
         {
             //Map
             var model = new UpdateCategoryDto
@@ -75,54 +130,20 @@ namespace WebApi.Areas.Admin.Controllers
                 return BadRequest(resultService.Message);
             }
         }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteCategory(int CategoryId)
+
+        /// <summary>
+        /// حذف یک دسته بندی (Auth)
+        /// </summary>
+        /// <param name="CategoryId"></param>
+        /// <returns></returns>
+        [HttpDelete("{CategoryId}")]
+        public async Task<IActionResult> Delete(int CategoryId)
         {
             //Delete Category by service
             var resultService = await _facadeCategoryService.DeleteCategoryService.Execute(CategoryId);
             if (resultService.IsSuccess)
             {
                 return Ok();
-            }
-            else
-            {
-                return BadRequest(resultService.Message);
-            }
-        }
-
-        [HttpGet("{CategoryId}")]
-        public async Task<IActionResult> GetCategoryById(int CategoryId)
-        {
-            //Get by service
-            var resultService = await _facadeCategoryService.GetCategoryInfoByIdService.Execute(CategoryId);
-
-            if (resultService.IsSuccess)
-            {
-                if (resultService.Data is not null)
-                {
-                    //HATEOAS links
-                    //    resultService.Data.Links = new List<Link>
-                    //{
-                    //    new Link
-                    //    {
-                    //        For="Edit",
-                    //        HttpMethod=HttpMethod.Put.ToString(),
-                    //        Url=Url.Action(nameof(Put),nameof(CategoryController).Replace("Controller", ""),new { Area="Admin" },Request.Scheme)
-                    //    },
-                    //    new Link
-                    //    {
-                    //        For="Delete",
-                    //        HttpMethod=HttpMethod.Delete.ToString(),
-                    //        Url=Url.Action(nameof(Delete),nameof(CategoryController).Replace("Controller", ""),new { Area="Admin" },Request.Scheme)
-                    //    },
-                    //};
-
-                    return Ok(resultService.Data);
-                }
-                else
-                {
-                    return NotFound();
-                }
             }
             else
             {
