@@ -29,7 +29,7 @@ namespace Application.CategoryService.Commands
         public async Task<ResultDto> Execute(UpdateCategoryDto Dto)
         {
             //Check Exist Category
-            var category = await _mediator.Send(new GetCategoryDetailsByIdQuery(Dto.Id));
+            var category = await _mediator.Send(new GetCategoryByIdQuery(Dto.Id));
             if (category is null)
                 return new ResultDto
                 {
@@ -39,7 +39,7 @@ namespace Application.CategoryService.Commands
             if (Dto.ParentCategoryId is not null)
             {
                 //Check Exist ParentCategory
-                var parentCategory = await _mediator.Send(new GetCategoryDetailsByIdQuery((int)Dto.ParentCategoryId));
+                var parentCategory = await _mediator.Send(new GetCategoryByIdQuery((int)Dto.ParentCategoryId));
                 if (parentCategory is null)
                     return new ResultDto
                     {
