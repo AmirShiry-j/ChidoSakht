@@ -17,6 +17,7 @@ namespace Persistence.Categories.Commands
         {
             //Define update model
             var category = request.Category;
+            category.LastUpdateTime = DateTime.Now;
 
             //Update and save in DB
             _context.Categories.Update(category);
