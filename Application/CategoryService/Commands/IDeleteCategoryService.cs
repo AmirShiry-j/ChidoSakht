@@ -27,7 +27,7 @@ namespace Application.CategoryService.Commands
         public async Task<ResultDto> Execute(int CategoryId)
         {
             //Check Exist Category
-            var category = await _mediator.Send(new GetCategoryByIdQuery(CategoryId));
+            var category = await _mediator.Send(new GetCategoryDetailsByIdQuery(CategoryId));
             if (category is null)
                 return new ResultDto
                 {

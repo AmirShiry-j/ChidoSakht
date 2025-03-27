@@ -33,7 +33,7 @@ namespace Application.CategoryService.Commands
             if (dto.ParentCategoryId is not null)
             {
                 //Check Exist ParentCategory
-                var category = await _mediator.Send(new GetCategoryByIdQuery((int)dto.ParentCategoryId));
+                var category = await _mediator.Send(new GetCategoryDetailsByIdQuery((int)dto.ParentCategoryId));
                 if (category is null)
                     return new ResultDto<int>
                     {

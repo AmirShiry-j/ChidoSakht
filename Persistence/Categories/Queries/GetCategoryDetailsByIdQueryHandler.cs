@@ -10,21 +10,21 @@ using System.Threading.Tasks;
 
 namespace Persistence.Categories.Queries
 {
-    public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, CategoryInfoDto>
+    public class GetCategoryDetailsByIdQueryHandler : IRequestHandler<GetCategoryDetailsByIdQuery, CategoryDetailsDto>
     {
         private readonly DataBaseContext _context;
 
-        public GetCategoryByIdQueryHandler(DataBaseContext context)
+        public GetCategoryDetailsByIdQueryHandler(DataBaseContext context)
         {
             _context = context;
         }
 
-        public async Task<CategoryInfoDto> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
+        public async Task<CategoryDetailsDto> Handle(GetCategoryDetailsByIdQuery request, CancellationToken cancellationToken)
         {
             //Find and return
             return await _context.Categories
                 .Where(c => c.Id == request.Id)
-                .Select(c => new CategoryInfoDto { Id = c.Id, Name = c.Name, ParentCategoryId = c.ParentCategoryId, ParentCategoryName = c.ParentCategory.Name ?? null })
+                .Select(c => new CategoryDetailsDto { Id = c.Id, Name = c.Name, ParentCategoryId = c.ParentCategoryId, ParentCategoryName = c.ParentCategory.Name ?? null })
                 .FirstOrDefaultAsync(cancellationToken);
         }
     }

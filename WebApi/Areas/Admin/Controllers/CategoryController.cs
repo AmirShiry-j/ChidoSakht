@@ -39,7 +39,7 @@ namespace WebApi.Areas.Admin.Controllers
         public async Task<IActionResult> Get(int CategoryId)
         {
             //Get by service
-            var resultService = await _facadeCategoryService.GetCategoryInfoByIdService.Execute(CategoryId);
+            var resultService = await _facadeCategoryService.GetCategoryDetailsByIdService.Execute(CategoryId);
 
             if (resultService.IsSuccess)
             {

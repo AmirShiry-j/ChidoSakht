@@ -18,7 +18,7 @@ namespace Application.CategoryService
         IUpdateCategoryService UpdateCategoryService { get; }
         IDeleteCategoryService DeleteCategoryService { get; }
         //Queries
-        IGetCategoryInfoByIdService GetCategoryInfoByIdService { get; }
+        IGetCategoryDetailsByIdService GetCategoryDetailsByIdService { get; }
     }
     public class FacadeCategoryService : IFacadeCategoryService
     {
@@ -62,12 +62,12 @@ namespace Application.CategoryService
 
         //Queries
         #region Queries
-        private IGetCategoryInfoByIdService _getCategoryInfoByIdService;
-        public IGetCategoryInfoByIdService GetCategoryInfoByIdService
+        private IGetCategoryDetailsByIdService _getCategoryDetailsByIdService;
+        public IGetCategoryDetailsByIdService GetCategoryDetailsByIdService
         {
             get
             {
-                return _getCategoryInfoByIdService = _getCategoryInfoByIdService ?? new GetCategoryInfoByIdService(_mediator);
+                return _getCategoryDetailsByIdService = _getCategoryDetailsByIdService ?? new GetCategoryDetailsByIdService(_mediator);
             }
         }
         #endregion

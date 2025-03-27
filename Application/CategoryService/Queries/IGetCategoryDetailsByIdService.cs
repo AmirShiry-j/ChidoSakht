@@ -9,35 +9,35 @@ using System.Threading.Tasks;
 
 namespace Application.CategoryService.Queries
 {
-    public interface IGetCategoryInfoByIdService
+    public interface IGetCategoryDetailsByIdService
     {
-        Task<ResultDto<CategoryInfoDto>> Execute(int CategoryId);
+        Task<ResultDto<CategoryDetailsDto>> Execute(int CategoryId);
     }
-    public class GetCategoryInfoByIdService : IGetCategoryInfoByIdService
+    public class GetCategoryDetailsByIdService : IGetCategoryDetailsByIdService
     {
         private readonly IMediator _mediator;
-        public GetCategoryInfoByIdService(IMediator mediator)
+        public GetCategoryDetailsByIdService(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        public async Task<ResultDto<CategoryInfoDto>> Execute(int CategoryId)
+        public async Task<ResultDto<CategoryDetailsDto>> Execute(int CategoryId)
         {
             //Get category from db
-            var categoryInfo = await _mediator.Send(new GetCategoryByIdQuery(CategoryId));
+            var categoryDetails = await _mediator.Send(new GetCategoryDetailsByIdQuery(CategoryId));
 
             //Check exist and return
-            if (categoryInfo is not null)
+            if (categoryDetails is not null)
             {
-                return new ResultDto<CategoryInfoDto>
+                return new ResultDto<CategoryDetailsDto>
                 {
                     IsSuccess = true,
-                    Data = categoryInfo,
+                    Data = categoryDetails,
                 };
             }
             else
             {
-                return new ResultDto<CategoryInfoDto>
+                return new ResultDto<CategoryDetailsDto>
                 {
                     IsSuccess = true,
                     Data = null,
@@ -45,7 +45,7 @@ namespace Application.CategoryService.Queries
             }
         }
     }
-    public class CategoryInfoDto
+    public class CategoryDetailsDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -53,11 +53,11 @@ namespace Application.CategoryService.Queries
         public string? ParentCategoryName { get; set; }
         public List<Link> Links { get; set; }
     }
-    public class GetCategoryByIdQuery : IRequest<CategoryInfoDto>
+    public class GetCategoryDetailsByIdQuery : IRequest<CategoryDetailsDto>
     {
         public int Id { get; }
 
-        public GetCategoryByIdQuery(int id)
+        public GetCategoryDetailsByIdQuery(int id)
         {
             Id = id;
         }
