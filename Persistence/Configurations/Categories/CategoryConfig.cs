@@ -15,6 +15,7 @@ namespace Persistence.Configurations.Categories
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
+            builder.Property(p => p.CreateTime).HasDefaultValueSql("getdate()");
             //builder.Property(p=>p.ParentCategory).
         }
     }

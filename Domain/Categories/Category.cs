@@ -35,6 +35,8 @@ namespace Domain.Categories
                 _Name = value;
             }
         }
+        public DateTime CreateTime { get; set; }
+        public DateTime? LastUpdateTime { get; set; }
         //Navigations
         public Category ParentCategory { get; set; }
         public int? ParentCategoryId { get; set; }
