@@ -16,13 +16,7 @@ namespace Persistence.Categories.Commands
         public async Task Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             //Define update model
-            var category = new Category
-            {
-                Id = request.Id,
-                Name = request.Name,
-                ParentCategoryId = request.ParentCategoryId,
-                LastUpdateTime = DateTime.Now
-            };
+            var category = request.Category;
 
             //Update and save in DB
             _context.Categories.Update(category);

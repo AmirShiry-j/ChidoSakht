@@ -48,7 +48,7 @@ namespace Application.CategoryService.Commands
             }
 
             //Update Category
-            await _mediator.Send(new UpdateCategoryCommand(Dto.Id, Dto.Name, Dto.ParentCategoryId));
+            await _mediator.Send(new UpdateCategoryCommand(category));
 
             return new ResultDto
             {

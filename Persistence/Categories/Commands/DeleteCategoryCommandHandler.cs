@@ -21,7 +21,7 @@ namespace Persistence.Categories.Commands
         public async Task Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
             //Delete and save in DB
-            _context.Categories.Remove(new Category() { Id = request.Id });
+            _context.Categories.Remove(request.Category);
             await _context.SaveChangesAsync(cancellationToken);
 
             //finish

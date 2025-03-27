@@ -38,7 +38,7 @@ namespace Application.CategoryService.Commands
             //...
 
             //Delete Category
-            await _mediator.Send(new DeleteCategoryCommand(CategoryId));
+            await _mediator.Send(new DeleteCategoryCommand(category));
 
             return new ResultDto
             {

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Categories;
+using MediatR;
 
 namespace Application.CategoryService.Commands
 {
@@ -15,24 +16,18 @@ namespace Application.CategoryService.Commands
     }
     public class DeleteCategoryCommand : IRequest
     {
-        public int Id { get; }
-
-        public DeleteCategoryCommand(int id)
+        public Category Category { get; set; }
+        public DeleteCategoryCommand(Category category)
         {
-            Id = id;
+            Category = category;
         }
     }
     public class UpdateCategoryCommand : IRequest
     {
-        public int Id { get; }
-        public string Name { get; set; }
-        public int? ParentCategoryId { get; set; }
-
-        public UpdateCategoryCommand(int id, string name, int? parentCategoryId)
+        public Category Category { get; set; }
+        public UpdateCategoryCommand(Category category)
         {
-            Id = id;
-            Name = name;
-            ParentCategoryId = parentCategoryId;
+            Category = category;
         }
     }
 }
