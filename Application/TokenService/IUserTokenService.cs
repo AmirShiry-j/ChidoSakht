@@ -1,12 +1,10 @@
 ﻿using Application.CategoryService.Commands;
 using Application.Interfaces.ConfigService;
-using Application.Interfaces.Contexts;
 using Application.Interfaces.Localization;
 using Application.TokenService.Commands;
 using Application.TokenService.Queries;
 using Domain.Users;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

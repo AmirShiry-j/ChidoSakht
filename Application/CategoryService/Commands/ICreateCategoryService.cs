@@ -1,12 +1,10 @@
 ﻿using Application.CategoryService.Queries;
 using Application.Common;
-using Application.Interfaces.Contexts;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using AutoMapper;
 using Domain.Categories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

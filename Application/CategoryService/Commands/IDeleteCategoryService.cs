@@ -34,6 +34,9 @@ namespace Application.CategoryService.Commands
                     Message = _localizationService.GetMessageCategory(MessageKeysCategory.CategoryIdNotFound.ToString())
                 };
 
+            //Check cateogory has any products
+            //...
+
             //Delete Category
             await _mediator.Send(new DeleteCategoryCommand(CategoryId));
 

@@ -1,6 +1,5 @@
 ﻿using Application.CategoryService.Commands;
 using Application.CategoryService.Queries;
-using Application.Interfaces.Contexts;
 using Application.Interfaces.Localization;
 using AutoMapper;
 using MediatR;

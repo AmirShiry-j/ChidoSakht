@@ -6,7 +6,6 @@ using Microsoft.OpenApi.Models;
 using NLog.Web;
 using Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Application.Interfaces.Contexts;
 using Infrastructure.Messagers.SmsService;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
@@ -114,9 +113,6 @@ builder.Services.AddSingleton<IConfigService, ConfigService>();
 builder.Services.AddScoped<ISmsService, FakeSmsService>();
 builder.Services.AddScoped<IEmailService, MailKit_EmailService>();
 
-////Services of DB
-//Db service
-builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 
 //Services of token validator
 builder.Services.AddScoped<ITokenValidator, TokenValidator>();
