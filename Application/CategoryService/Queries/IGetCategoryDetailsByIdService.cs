@@ -1,6 +1,5 @@
 ﻿using Application.Common;
 using AutoMapper;
-using Domain.Categories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -53,23 +52,5 @@ namespace Application.CategoryService.Queries
         public int? ParentCategoryId { get; set; }
         public string? ParentCategoryName { get; set; }
         public List<Link> Links { get; set; }
-    }
-    public class GetCategoryDetailsByIdQuery : IRequest<CategoryDetailsDto>
-    {
-        public int Id { get; }
-
-        public GetCategoryDetailsByIdQuery(int id)
-        {
-            Id = id;
-        }
-    }
-    public class GetCategoryByIdQuery : IRequest<Category>
-    {
-        public int Id { get; }
-
-        public GetCategoryByIdQuery(int id)
-        {
-            Id = id;
-        }
     }
 }

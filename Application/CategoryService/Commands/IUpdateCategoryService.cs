@@ -62,17 +62,4 @@ namespace Application.CategoryService.Commands
         public string Name { get; set; }
         public int? ParentCategoryId { get; set; }
     }
-    public class UpdateCategoryCommand : IRequest
-    {
-        public int Id { get; }
-        public string Name { get; set; }
-        public int? ParentCategoryId { get; set; }
-
-        public UpdateCategoryCommand(int id, string name, int? parentCategoryId)
-        {
-            Id = id;
-            Name = name;
-            ParentCategoryId = parentCategoryId;
-        }
-    }
 }

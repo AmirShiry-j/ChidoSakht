@@ -46,13 +46,4 @@ namespace Application.CategoryService.Commands
             };
         }
     }
-    public class DeleteCategoryCommand : IRequest
-    {
-        public int Id { get; }
-
-        public DeleteCategoryCommand(int id)
-        {
-            Id = id;
-        }
-    }
 }

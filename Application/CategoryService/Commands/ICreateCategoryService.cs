@@ -58,15 +58,4 @@ namespace Application.CategoryService.Commands
         public string Name { get; set; }
         public int? ParentCategoryId { get; set; }
     }
-    public class CreateCategoryCommand : IRequest<int>
-    {
-        public string Name { get; }
-        public int? ParentCategoryId { get; }
-
-        public CreateCategoryCommand(string Name, int? ParentCategoryId)
-        {
-            this.Name = Name;
-            this.ParentCategoryId = ParentCategoryId;
-        }
-    }
 }
