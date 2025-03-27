@@ -123,7 +123,7 @@ namespace WebApi.Areas.Admin.Controllers
 
             if (resultService.IsSuccess)
             {
-                return Ok();
+                return NoContent();
             }
             else
             {
@@ -143,7 +143,7 @@ namespace WebApi.Areas.Admin.Controllers
             var resultService = await _facadeCategoryService.DeleteCategoryService.Execute(CategoryId);
             if (resultService.IsSuccess)
             {
-                return Ok();
+                return NoContent();
             }
             else
             {
