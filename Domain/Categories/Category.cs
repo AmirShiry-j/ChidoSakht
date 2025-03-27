@@ -35,7 +35,9 @@ namespace Domain.Categories
                 _Name = value;
             }
         }
+        //Navigations
         public Category ParentCategory { get; set; }
         public int? ParentCategoryId { get; set; }
+        public ICollection<Category> ChildCategories { get; set; }
     }
 }

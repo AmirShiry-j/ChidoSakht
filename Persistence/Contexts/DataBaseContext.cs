@@ -1,14 +1,13 @@
 ﻿using Domain.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Application.Interfaces.Contexts;
 using Persistence.Configurations.Users;
 using Domain.Categories;
 using Persistence.Configurations.Categories;
 
 namespace Persistence.Contexts
 {
-    public class DataBaseContext : IdentityDbContext<User, Role, string>, IDataBaseContext
+    public class DataBaseContext : IdentityDbContext<User, Role, string>
     {
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
@@ -43,6 +42,12 @@ namespace Persistence.Contexts
                 .HasOne(p => p.ParentCategory)
                 .WithOne()
                 .HasForeignKey<Category>(p => p.ParentCategoryId)
+                .IsRequired(false);
+
+            builder.Entity<Category>()
+                .HasOne<Category>(p => p.ParentCategory)
+                .WithMany(p=>p.ChildCategories)                
+                .HasForeignKey(p => p.ParentCategoryId)
                 .IsRequired(false);
 
             SetConfigurations(builder);
