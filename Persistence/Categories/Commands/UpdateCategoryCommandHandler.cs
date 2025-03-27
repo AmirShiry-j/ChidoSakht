@@ -20,7 +20,8 @@ namespace Persistence.Categories.Commands
             {
                 Id = request.Id,
                 Name = request.Name,
-                ParentCategoryId = request.ParentCategoryId
+                ParentCategoryId = request.ParentCategoryId,
+                LastUpdateTime = DateTime.Now
             };
 
             //Update and save in DB
