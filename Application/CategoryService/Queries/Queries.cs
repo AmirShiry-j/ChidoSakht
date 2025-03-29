@@ -30,4 +30,10 @@ namespace Application.CategoryService.Queries
             Id = id;
         }
     }
+    public class GetAllCategoriesAsTreeQuery : IRequest<List<BriefCategoryDto>>
+    {
+        public GetAllCategoriesAsTreeQuery()
+        {
+        }
+    }
 }

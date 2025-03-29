@@ -31,6 +31,27 @@ namespace WebApi.Areas.Admin.Controllers
             _facadeCategoryService = facadeCategoryService;
             _localizationService = localizationService;
         }
+
+        /// <summary>
+        /// برگردوندن همه دسته بندی ها به شکل درخت (Auth)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            //Get by service
+            var resultService = await _facadeCategoryService.GetAllCategoriesAsTreeService.Execute();
+
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
+
         /// <summary>
         /// برگشت اطلاعات مربوط ب یک دسته بندی (Auth)
         /// </summary>
@@ -151,7 +172,7 @@ namespace WebApi.Areas.Admin.Controllers
             var resultService = await _facadeCategoryService.DeleteCategoryService.Execute(CategoryId);
             if (resultService.IsSuccess)
             {
-                if(resultService.Data is not null)
+                if (resultService.Data is not null)
                 {
                     return NoContent();
                 }
@@ -159,7 +180,7 @@ namespace WebApi.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
-            } 
+            }
             else
             {
                 return BadRequest(resultService.Message);

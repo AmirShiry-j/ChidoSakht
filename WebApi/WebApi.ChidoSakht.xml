@@ -4,6 +4,12 @@
         <name>WebApi</name>
     </assembly>
     <members>
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Get">
+            <summary>
+            برگردوندن همه دسته بندی ها به شکل درخت (Auth)
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Get(System.Int32)">
             <summary>
             برگشت اطلاعات مربوط ب یک دسته بندی (Auth)
