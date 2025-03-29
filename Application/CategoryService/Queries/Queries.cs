@@ -21,4 +21,13 @@ namespace Application.CategoryService.Queries
             Id = id;
         }
     }
+    public class CheckCategoryHasAnyChildrenByIdQuery : IRequest<bool>
+    {
+        public int Id { get; }
+
+        public CheckCategoryHasAnyChildrenByIdQuery(int id)
+        {
+            Id = id;
+        }
+    }
 }

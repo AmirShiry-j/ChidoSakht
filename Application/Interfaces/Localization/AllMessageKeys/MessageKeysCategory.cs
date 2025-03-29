@@ -10,6 +10,7 @@ namespace Application.Interfaces.Localization.AllMessageKeys
     {
         CategoryCreated,
         ParentCategoryNotFound,
-        CategoryIdNotFound
+        CategoryIdNotFound,
+        ForDelete_CategoryHasChilren
     }
 }

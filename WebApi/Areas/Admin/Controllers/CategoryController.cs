@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 using WebApi.Controllers;
 using WebApi.ModelsAndDtoes.Categories;
 
@@ -123,7 +124,14 @@ namespace WebApi.Areas.Admin.Controllers
 
             if (resultService.IsSuccess)
             {
-                return NoContent();
+                if (resultService.Data is not null)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {
@@ -143,8 +151,15 @@ namespace WebApi.Areas.Admin.Controllers
             var resultService = await _facadeCategoryService.DeleteCategoryService.Execute(CategoryId);
             if (resultService.IsSuccess)
             {
-                return NoContent();
-            }
+                if(resultService.Data is not null)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            } 
             else
             {
                 return BadRequest(resultService.Message);

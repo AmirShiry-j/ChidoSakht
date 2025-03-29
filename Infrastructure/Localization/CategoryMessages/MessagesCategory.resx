@@ -123,6 +123,9 @@
   <data name="CategoryIdNotFound" xml:space="preserve">
     <value>دسته بندی با آیدی ارسال شده موجود نیست</value>
   </data>
+  <data name="ForDelete_CategoryHasChilren" xml:space="preserve">
+    <value>کتگوری داری زیر شاخه هست. ابتدا باید آنها را حذف کنید</value>
+  </data>
   <data name="ParentCategoryNotFound" xml:space="preserve">
     <value>کتگوری والدی با آیدی ارسال شده موجود نیست</value>
   </data>

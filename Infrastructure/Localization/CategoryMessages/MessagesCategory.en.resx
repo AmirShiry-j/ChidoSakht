@@ -123,6 +123,9 @@
   <data name="CategoryIdNotFound" xml:space="preserve">
     <value>Category with submitted ID does not exist.</value>
   </data>
+  <data name="ForDelete_CategoryHasChilren" xml:space="preserve">
+    <value>Your category has subcategories. You must delete them first.</value>
+  </data>
   <data name="ParentCategoryNotFound" xml:space="preserve">
     <value>The parent category with the submitted ID does not exist.</value>
   </data>

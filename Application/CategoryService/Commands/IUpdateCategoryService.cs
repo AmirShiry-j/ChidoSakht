@@ -14,7 +14,7 @@ namespace Application.CategoryService.Commands
 {
     public interface IUpdateCategoryService
     {
-        Task<ResultDto> Execute(UpdateCategoryDto Dto);
+        Task<ResultDto<int?>> Execute(UpdateCategoryDto Dto);
     }
     public class UpdateCategoryService : IUpdateCategoryService
     {
@@ -26,14 +26,15 @@ namespace Application.CategoryService.Commands
             _localizationService = localizationService;
         }
 
-        public async Task<ResultDto> Execute(UpdateCategoryDto Dto)
+        public async Task<ResultDto<int?>> Execute(UpdateCategoryDto Dto)
         {
             //Check Exist Category
             var category = await _mediator.Send(new GetCategoryByIdQuery(Dto.Id));
             if (category is null)
-                return new ResultDto
+                return new ResultDto<int?>
                 {
-                    Message = _localizationService.GetMessageCategory(MessageKeysCategory.CategoryIdNotFound.ToString())
+                    IsSuccess = true,
+                    Data = null,//IsSuccess = true and Data = null mean record is not exist
                 };
 
             if (Dto.ParentCategoryId is not null)
@@ -41,7 +42,7 @@ namespace Application.CategoryService.Commands
                 //Check Exist ParentCategory
                 var parentCategory = await _mediator.Send(new GetCategoryByIdQuery((int)Dto.ParentCategoryId));
                 if (parentCategory is null)
-                    return new ResultDto
+                    return new ResultDto<int?>
                     {
                         Message = _localizationService.GetMessageCategory(MessageKeysCategory.ParentCategoryNotFound.ToString())
                     };
@@ -50,9 +51,10 @@ namespace Application.CategoryService.Commands
             //Update Category
             await _mediator.Send(new UpdateCategoryCommand(category));
 
-            return new ResultDto
+            return new ResultDto<int?>
             {
-                IsSuccess = true
+                IsSuccess = true,
+                Data = Dto.Id//mean exist
             };
         }
     }

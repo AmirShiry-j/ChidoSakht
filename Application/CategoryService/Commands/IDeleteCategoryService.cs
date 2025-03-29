@@ -13,7 +13,7 @@ namespace Application.CategoryService.Commands
 {
     public interface IDeleteCategoryService
     {
-        Task<ResultDto> Execute(int CategoryId);
+        Task<ResultDto<int?>> Execute(int CategoryId);
     }
     public class DeleteCategoryService : IDeleteCategoryService
     {
@@ -24,14 +24,23 @@ namespace Application.CategoryService.Commands
             _mediator = mediator;
             _localizationService = localizationService;
         }
-        public async Task<ResultDto> Execute(int CategoryId)
+        public async Task<ResultDto<int?>> Execute(int CategoryId)
         {
             //Check Exist Category
             var category = await _mediator.Send(new GetCategoryByIdQuery(CategoryId));
             if (category is null)
-                return new ResultDto
+                return new ResultDto<int?>
                 {
-                    Message = _localizationService.GetMessageCategory(MessageKeysCategory.CategoryIdNotFound.ToString())
+                    IsSuccess = true,
+                    Data = null,//IsSuccess = true and Data = null mean record is not exist
+                };
+
+            //Check cateogory has any Children
+            var checkCategoryHasAnyChildren = await _mediator.Send(new CheckCategoryHasAnyChildrenByIdQuery(CategoryId));
+            if (checkCategoryHasAnyChildren)
+                return new ResultDto<int?>
+                {
+                    Message = _localizationService.GetMessageCategory(MessageKeysCategory.ForDelete_CategoryHasChilren.ToString())
                 };
 
             //Check cateogory has any products
@@ -40,9 +49,10 @@ namespace Application.CategoryService.Commands
             //Delete Category
             await _mediator.Send(new DeleteCategoryCommand(category));
 
-            return new ResultDto
+            return new ResultDto<int?>
             {
-                IsSuccess = true
+                IsSuccess = true,
+                Data = CategoryId//mean exist
             };
         }
     }

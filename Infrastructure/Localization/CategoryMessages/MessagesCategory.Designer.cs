@@ -79,6 +79,15 @@ namespace Infrastructure.Localization.CategoryMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کتگوری داری زیر شاخه هست. ابتدا باید آنها را حذف کنید.
+        /// </summary>
+        internal static string ForDelete_CategoryHasChilren {
+            get {
+                return ResourceManager.GetString("ForDelete_CategoryHasChilren", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کتگوری والدی با آیدی ارسال شده موجود نیست.
         /// </summary>
         internal static string ParentCategoryNotFound {
