@@ -51,6 +51,15 @@ namespace Application.CategoryService.Queries
         public string Name { get; set; }
         public int? ParentCategoryId { get; set; }
         public string? ParentCategoryName { get; set; }
+        public DateTime CreateTime { get; set; }
+        public DateTime? LastUpdateTime { get; set; }
+        public List<ChildCategoryDto> ChildCategories { get; set; }
         public List<Link> Links { get; set; }
+    }
+    public class ChildCategoryDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<ChildCategoryDto> ChildCategories { get; set; }
     }
 }
