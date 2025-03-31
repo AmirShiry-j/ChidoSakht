@@ -13,13 +13,6 @@ namespace Infrastructure.Localization
 {
     public class LocalizationService : ILocalizationService
     {
-        private readonly IStringLocalizer<MessagesAccount> _localizer;
-
-        public LocalizationService(IStringLocalizer<MessagesAccount> localizer)
-        {
-            _localizer = localizer;
-        }
-
         public string GetMessageAccount(string key)
         {
             return MessagesAccount.ResourceManager.GetString(key);
