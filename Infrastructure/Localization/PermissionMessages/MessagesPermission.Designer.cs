@@ -61,6 +61,15 @@ namespace Infrastructure.Localization.PermissionMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to دسترسی با آیدی ارسالی موجود نیست.
+        /// </summary>
+        internal static string PermissionIdNotFound {
+            get {
+                return ResourceManager.GetString("PermissionIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نقش از قبل دارای این دسترسی نیست.
         /// </summary>
         internal static string RoleDoesntHavePermissionBefore {
@@ -75,6 +84,15 @@ namespace Infrastructure.Localization.PermissionMessages {
         internal static string RoleHasPermissionBefore {
             get {
                 return ResourceManager.GetString("RoleHasPermissionBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نقشی با آیدی ارسالی موجود نیست.
+        /// </summary>
+        internal static string RoleIdNotFound {
+            get {
+                return ResourceManager.GetString("RoleIdNotFound", resourceCulture);
             }
         }
     }

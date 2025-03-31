@@ -3,6 +3,7 @@ using Application.Interfaces.Localization.AllMessageKeys;
 using Application.Interfaces.Localization;
 using Application.PermissionService.Queries;
 using MediatR;
+using Application.RoleService.Queries;
 
 namespace Application.PermissionService.Commands
 {
@@ -22,6 +23,26 @@ namespace Application.PermissionService.Commands
 
         public async Task<ResultDto> Execute(RolePermissionDto dto)
         {
+            //check exist Permission 
+            var permission = await _mediator.Send(new GetPermissionByIdQuery(dto.PermissionId));
+            if (permission is null)
+            {
+                return new ResultDto
+                {
+                    Message = _localizationService.GetMessagePermission(MessageKeysPermission.PermissionIdNotFound.ToString())
+                };
+            }
+
+            //check exist Role 
+            var role = await _mediator.Send(new GetRoleByIdQuery(dto.RoleId));
+            if (role is null)
+            {
+                return new ResultDto
+                {
+                    Message = _localizationService.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString())
+                };
+            }
+
             //get recored from db
             var rolePermission = await _mediator.Send(new GetRolePermissionQuery(dto.RoleId, dto.PermissionId));
             if (rolePermission is null)

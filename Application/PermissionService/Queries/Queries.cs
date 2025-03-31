@@ -32,4 +32,13 @@ namespace Application.PermissionService.Queries
             PermissionId = permissionId;
         }
     }
+    public class GetPermissionByIdQuery : IRequest<Permission>
+    {
+        public int PermissionId { get; set; }
+
+        public GetPermissionByIdQuery(int permissionId)
+        {
+            PermissionId = permissionId;
+        }
+    }
 }

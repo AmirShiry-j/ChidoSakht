@@ -117,10 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PermissionIdNotFound" xml:space="preserve">
+    <value>Access is not available with the submitted ID.</value>
+  </data>
   <data name="RoleDoesntHavePermissionBefore" xml:space="preserve">
     <value>The role does not already have this access.</value>
   </data>
   <data name="RoleHasPermissionBefore" xml:space="preserve">
     <value>This access has already been assigned to the role.</value>
+  </data>
+  <data name="RoleIdNotFound" xml:space="preserve">
+    <value>The painting with the submitted ID is not available.</value>
   </data>
 </root>

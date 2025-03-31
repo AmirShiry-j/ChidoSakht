@@ -117,10 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PermissionIdNotFound" xml:space="preserve">
+    <value>دسترسی با آیدی ارسالی موجود نیست</value>
+  </data>
   <data name="RoleDoesntHavePermissionBefore" xml:space="preserve">
     <value>نقش از قبل دارای این دسترسی نیست</value>
   </data>
   <data name="RoleHasPermissionBefore" xml:space="preserve">
     <value>این دسترسی قبلا به نقش اختصاص یافته است</value>
+  </data>
+  <data name="RoleIdNotFound" xml:space="preserve">
+    <value>نقشی با آیدی ارسالی موجود نیست</value>
   </data>
 </root>
