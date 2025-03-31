@@ -1,4 +1,6 @@
-﻿using Domain.Users;
+﻿using Application.Interfaces.Localization;
+using Application.Interfaces.Localization.AllMessageKeys;
+using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,9 +23,11 @@ namespace WebApi.Areas.Admin.Controllers
     public class RoleController : ControllerBase
     {
         private readonly RoleManager<Role> _roleManager;
-        public RoleController(RoleManager<Role> roleManager)
+        private readonly ILocalizationService _localization;
+        public RoleController(RoleManager<Role> roleManager, ILocalizationService localization)
         {
             _roleManager = roleManager;
+            _localization = localization;
         }
 
         /// <summary>
@@ -180,7 +184,7 @@ namespace WebApi.Areas.Admin.Controllers
             if (role.Name == "Admin" && role.Name != model.Name)
             {
                 //Return error its cant edit admin name
-                return BadRequest("نام نقش ادمین قابل ادیت نیست");
+                return BadRequest(_localization.GetMessagePermission(MessageKeysPermission.CantEditNameRoleAdmin.ToString()));
             }
 
 
@@ -224,7 +228,7 @@ namespace WebApi.Areas.Admin.Controllers
             if (role.Name == "Admin")
             {
                 //Return error its cat not delete admin role
-                return BadRequest("نقش ادمین از سایت قابل حذف نیست");
+                return BadRequest(_localization.GetMessagePermission(MessageKeysPermission.CantDeleteRoleAdmin.ToString()));
             }
 
             //Delete Role

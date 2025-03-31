@@ -21,7 +21,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiController]
     [ApiVersion("1")]
     [Area("Admin")]
-    [Route("api/v{version:apiVersion}/[Area]/Category/")]
+    [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
     [Authorize]
     public class CategoryController : ControllerBase
     {

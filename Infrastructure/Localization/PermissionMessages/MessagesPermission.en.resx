@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AtleastOneAdmin" xml:space="preserve">
+    <value>You cannot take the Admin role from the only site Admin user.</value>
+  </data>
+  <data name="CantDeleteRoleAdmin" xml:space="preserve">
+    <value>The admin role cannot be removed from the site.</value>
+  </data>
+  <data name="CantEditNameRoleAdmin" xml:space="preserve">
+    <value>The admin role name is not editable.</value>
+  </data>
   <data name="PermissionIdNotFound" xml:space="preserve">
     <value>Access is not available with the submitted ID.</value>
   </data>

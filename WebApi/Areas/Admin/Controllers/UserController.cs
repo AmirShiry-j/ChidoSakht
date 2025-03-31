@@ -17,7 +17,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiController]
     [ApiVersion("1")]
     [Area("Admin")]
-    [Route("api/v{version:apiVersion}/[Area]/User/")]
+    [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
     [Authorize]
     [PermissionAuthorize("User", "View", "Admin")]
     public class UserController : ControllerBase

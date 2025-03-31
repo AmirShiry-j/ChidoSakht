@@ -61,7 +61,34 @@ namespace Infrastructure.Localization.PermissionMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to دسترسی با آیدی ارسالی موجود نیست.
+        ///   Looks up a localized string similar to شما نمیتوانید نقش Admin رو از تنها کاربر Admin سایت بگیرید.
+        /// </summary>
+        internal static string AtleastOneAdmin {
+            get {
+                return ResourceManager.GetString("AtleastOneAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نقش ادمین از سایت قابل حذف نیست.
+        /// </summary>
+        internal static string CantDeleteRoleAdmin {
+            get {
+                return ResourceManager.GetString("CantDeleteRoleAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام نقش ادمین قابل ادیت نیست.
+        /// </summary>
+        internal static string CantEditNameRoleAdmin {
+            get {
+                return ResourceManager.GetString("CantEditNameRoleAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to دسترسی با آیدی ارسال شده موجود نیست.
         /// </summary>
         internal static string PermissionIdNotFound {
             get {
@@ -88,7 +115,7 @@ namespace Infrastructure.Localization.PermissionMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to نقشی با آیدی ارسالی موجود نیست.
+        ///   Looks up a localized string similar to نقشی با آیدی ارسال شده موجود نیست.
         /// </summary>
         internal static string RoleIdNotFound {
             get {

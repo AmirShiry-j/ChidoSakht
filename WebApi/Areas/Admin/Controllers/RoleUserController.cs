@@ -1,4 +1,6 @@
-﻿using Domain.Users;
+﻿using Application.Interfaces.Localization;
+using Application.Interfaces.Localization.AllMessageKeys;
+using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,10 +22,12 @@ namespace WebApi.Areas.Admin.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
-        public RoleUserController(UserManager<User> userManager, RoleManager<Role> roleManager)
+        private readonly ILocalizationService _localization;
+        public RoleUserController(UserManager<User> userManager, RoleManager<Role> roleManager, ILocalizationService localization)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _localization = localization;
         }
 
         /// <summary>
@@ -39,14 +43,14 @@ namespace WebApi.Areas.Admin.Controllers
             var role = await _roleManager.FindByIdAsync(RoleId);
             if (role == null)
             {
-                return NotFound("نقش مورد نظر یافت نشد");
+                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
             }
 
             //Find user
             var user = await _userManager.FindByIdAsync(UserId);
             if (user == null)
             {
-                return NotFound("کاربر مورد نظر یافت نشد");
+                return NotFound(_localization.GetMessageAccount(MessageKeysAccount.UserIdNotFound.ToString()));
             }
 
             //Add role to user
@@ -76,14 +80,14 @@ namespace WebApi.Areas.Admin.Controllers
             var role = await _roleManager.FindByIdAsync(RoleId);
             if (role == null)
             {
-                return NotFound("نقش مورد نظر یافت نشد");
+                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
             }
 
             //Find user
             var user = await _userManager.FindByIdAsync(UserId);
             if (user == null)
             {
-                return NotFound("کاربر مورد نظر یافت نشد");
+                return NotFound(_localization.GetMessageAccount(MessageKeysAccount.UserIdNotFound.ToString()));
             }
 
             //Check how many Admin is exist
@@ -92,7 +96,7 @@ namespace WebApi.Areas.Admin.Controllers
                 _userManager.IsInRoleAsync(user, "Admin").Result)
             {
                 //Return error for cant delete only admin in site
-                return BadRequest("شما نمیتوانید نقش Admin رو از تنها کاربر Admin سایت بگیرید");
+                return BadRequest(_localization.GetMessagePermission(MessageKeysPermission.AtleastOneAdmin.ToString()));
             }
 
             //Remove role to user

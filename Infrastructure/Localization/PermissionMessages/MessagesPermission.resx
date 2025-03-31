@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AtleastOneAdmin" xml:space="preserve">
+    <value>شما نمیتوانید نقش Admin رو از تنها کاربر Admin سایت بگیرید</value>
+  </data>
+  <data name="CantDeleteRoleAdmin" xml:space="preserve">
+    <value>نقش ادمین از سایت قابل حذف نیست</value>
+  </data>
+  <data name="CantEditNameRoleAdmin" xml:space="preserve">
+    <value>نام نقش ادمین قابل ادیت نیست</value>
+  </data>
   <data name="PermissionIdNotFound" xml:space="preserve">
-    <value>دسترسی با آیدی ارسالی موجود نیست</value>
+    <value>دسترسی با آیدی ارسال شده موجود نیست</value>
   </data>
   <data name="RoleDoesntHavePermissionBefore" xml:space="preserve">
     <value>نقش از قبل دارای این دسترسی نیست</value>
@@ -127,6 +136,6 @@
     <value>این دسترسی قبلا به نقش اختصاص یافته است</value>
   </data>
   <data name="RoleIdNotFound" xml:space="preserve">
-    <value>نقشی با آیدی ارسالی موجود نیست</value>
+    <value>نقشی با آیدی ارسال شده موجود نیست</value>
   </data>
 </root>

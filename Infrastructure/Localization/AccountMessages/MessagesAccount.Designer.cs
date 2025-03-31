@@ -22,7 +22,7 @@ namespace Infrastructure.Localization.AccountMessages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class MessagesAccount {
+    internal class MessagesAccount {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Infrastructure.Localization.AccountMessages {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Infrastructure.Localization.AccountMessages.MessagesAccount", typeof(MessagesAccount).Assembly);
@@ -174,6 +174,15 @@ namespace Infrastructure.Localization.AccountMessages {
         internal static string RefreshTokenIsNotFound {
             get {
                 return ResourceManager.GetString("RefreshTokenIsNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کاربری با آیدی ارسال شده موجود نیست.
+        /// </summary>
+        internal static string UserIdNotFound {
+            get {
+                return ResourceManager.GetString("UserIdNotFound", resourceCulture);
             }
         }
         

@@ -159,4 +159,7 @@
   <data name="NewPasswordForForgetPasswordSentToPhoneNumber" xml:space="preserve">
     <value>رمز عبور جدید به شماره موبایل شما ارسال شد. لطفا پس از ورود رمز عبور خود را تغییر دهید</value>
   </data>
+  <data name="UserIdNotFound" xml:space="preserve">
+    <value>کاربری با آیدی ارسال شده موجود نیست</value>
+  </data>
 </root>

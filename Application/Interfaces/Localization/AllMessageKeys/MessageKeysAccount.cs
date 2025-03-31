@@ -22,7 +22,8 @@ namespace Application.Interfaces.Localization.AllMessageKeys
         BodySmsMessageToOTP,
         VerificationCodeSentToPhoneNumber,
         BodySmsMessageForgetPassword,
-        NewPasswordForForgetPasswordSentToPhoneNumber
+        NewPasswordForForgetPasswordSentToPhoneNumber,
+        UserIdNotFound
 
     }
 }
