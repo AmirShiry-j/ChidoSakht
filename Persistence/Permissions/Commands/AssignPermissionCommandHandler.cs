@@ -24,7 +24,7 @@ public class AssignPermissionCommandHandler : IRequestHandler<AssignPermissionCo
             PermissionId = request.PermissionId
         };
 
-        _context.RolePermissions.Add(rolePermission);
+        await _context.RolePermissions.AddAsync(rolePermission);
         await _context.SaveChangesAsync();
 
         await Task.CompletedTask;

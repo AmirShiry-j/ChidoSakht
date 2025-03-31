@@ -22,7 +22,7 @@ namespace Infrastructure.Localization.PermissionMessages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class MessagesPermission {
+    internal class MessagesPermission {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -57,6 +57,15 @@ namespace Infrastructure.Localization.PermissionMessages {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نقش از قبل دارای این دسترسی نیست.
+        /// </summary>
+        internal static string RoleDoesntHavePermissionBefore {
+            get {
+                return ResourceManager.GetString("RoleDoesntHavePermissionBefore", resourceCulture);
             }
         }
         

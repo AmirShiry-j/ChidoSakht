@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Users;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,15 @@ namespace Application.PermissionService.Commands
         {
             RoleId = roleId;
             PermissionId = permissionId;
+        }
+    }
+    public class UnAssignPermissionCommand : IRequest
+    {
+        public RolePermission RolePermission { get; set; }
+
+        public UnAssignPermissionCommand(RolePermission rolePermission)
+        {
+            RolePermission = rolePermission;
         }
     }
 }

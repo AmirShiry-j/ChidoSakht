@@ -2,6 +2,7 @@
 {
     public enum MessageKeysPermission
     {
-        RoleHasPermissionBefore
+        RoleHasPermissionBefore,
+        RoleDoesntHavePermissionBefore
     }
 }

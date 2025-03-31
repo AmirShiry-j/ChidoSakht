@@ -46,7 +46,15 @@
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Post(System.Int32,System.String)">
             <summary>
-            اختصاص دادن یک دسترسی به نقش (Auth)
+            اضافه کردن یک دسترسی به نقش (Auth)
+            </summary>
+            <param name="PermissionId"></param>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Delete(System.Int32,System.String)">
+            <summary>
+            ریمو کردن یک دسترسی از نقش (Auth)
             </summary>
             <param name="PermissionId"></param>
             <param name="RoleId"></param>
@@ -88,7 +96,7 @@
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleUserController.Post(System.String,System.String)">
             <summary>
-            اضافه کردن نقش به یک کاربر (Auth)
+            اختصاص دادن یک نقش به کاربر (Auth)
             </summary>
             <param name="RoleId"></param>
             <param name="UserId"></param>
@@ -96,7 +104,7 @@
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleUserController.Delete(System.String,System.String)">
             <summary>
-            ریمو کردن یک نقش از کاربر (Auth)
+            برداشتن یک نقش از کاربر (Auth)
             </summary>
             <param name="RoleId"></param>
             <param name="UserId"></param>

@@ -17,6 +17,7 @@ namespace Application.CategoryService
     {
         //Commands
         IAssignPermissionService AssignPermissionService { get; }
+        IUnAssignPermissionService UnAssignPermissionService { get; }
         //Queries
         IGetPermissionsService GetPermissionsService { get; }
     }
@@ -36,6 +37,14 @@ namespace Application.CategoryService
             get
             {
                 return _AssignPermissionService = _AssignPermissionService ?? new AssignPermissionService(_mediator, _localizationService);
+            }
+        }
+        private IUnAssignPermissionService _UnAssignPermissionService;
+        public IUnAssignPermissionService UnAssignPermissionService
+        {
+            get
+            {
+                return _UnAssignPermissionService = _UnAssignPermissionService ?? new UnAssignPermissionService(_mediator, _localizationService);
             }
         }
         //Queries

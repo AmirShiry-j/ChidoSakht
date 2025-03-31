@@ -29,16 +29,42 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// اختصاص دادن یک دسترسی به نقش (Auth)
+        /// اضافه کردن یک دسترسی به نقش (Auth)
         /// </summary>
         /// <param name="PermissionId"></param>
         /// <param name="RoleId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<bool>> Post(int PermissionId, string RoleId)
+        public async Task<ActionResult> Post(int PermissionId, string RoleId)
         {
             //Map
             var resultService = await _FacadePermissionService.AssignPermissionService.Execute(new RolePermissionDto
+            {
+                PermissionId = PermissionId,
+                RoleId = RoleId,
+            });
+
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// ریمو کردن یک دسترسی از نقش (Auth)
+        /// </summary>
+        /// <param name="PermissionId"></param>
+        /// <param name="RoleId"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int PermissionId, string RoleId)
+        {
+            //Map
+            var resultService = await _FacadePermissionService.UnAssignPermissionService.Execute(new RolePermissionDto
             {
                 PermissionId = PermissionId,
                 RoleId = RoleId,
