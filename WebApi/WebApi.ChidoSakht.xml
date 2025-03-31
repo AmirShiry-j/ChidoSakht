@@ -38,6 +38,20 @@
             <param name="CategoryId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.PermissionController.Get">
+            <summary>
+            برگردوندن لیست دسترسی ها (Auth)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Post(System.Int32,System.String)">
+            <summary>
+            اختصاص دادن یک دسترسی به نقش (Auth)
+            </summary>
+            <param name="PermissionId"></param>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">
             <summary>
             برگردوندن لیست نقش ها در سایت (Auth)

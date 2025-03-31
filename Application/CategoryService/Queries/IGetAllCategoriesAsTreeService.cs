@@ -25,23 +25,11 @@ namespace Application.CategoryService.Queries
             //Get all categories from db
             var allCategories = await _mediator.Send(new GetAllCategoriesAsTreeQuery());
 
-            //Check exist and return
-            if (allCategories is not null)
+            return new ResultDto<List<BriefCategoryDto>>
             {
-                return new ResultDto<List<BriefCategoryDto>>
-                {
-                    IsSuccess = true,
-                    Data = allCategories,
-                };
-            }
-            else
-            {
-                return new ResultDto<List<BriefCategoryDto>>
-                {
-                    IsSuccess = true,
-                    Data = new List<BriefCategoryDto>(),
-                };
-            }
+                IsSuccess = true,
+                Data = allCategories,
+            };
         }
     }
 

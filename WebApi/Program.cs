@@ -127,6 +127,8 @@ builder.Services.AddScoped<IFacadeCategoryService, FacadeCategoryService>();
 //Users
 builder.Services.AddScoped<IFacadeUserService, FacadeUserService>();
 
+//Permissions
+builder.Services.AddScoped<IFacadePermissionService, FacadePermissionService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));
