@@ -38,6 +38,62 @@
             <param name="CategoryId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">
+            <summary>
+            برگردوندن لیست نقش ها در سایت (Auth)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get(System.String)">
+            <summary>
+            برگشت یک نقش سایت به وسیله آیدی اون (Auth)
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Create(WebApi.Areas.Admin.ModelsAndDtoes.Roles.CreateRoleDto)">
+            <summary>
+            اضافه کردن نقش جدید به سایت (Auth)
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Update(WebApi.Areas.Admin.ModelsAndDtoes.Roles.EditRoleDto)">
+            <summary>
+            ویرایش اطلاعات نقش  (Auth)
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Delete(System.String)">
+            <summary>
+            حذف یک نقش از سایت (Auth)
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RoleUserController.Post(System.String,System.String)">
+            <summary>
+            اضافه کردن نقش به یک کاربر (Auth)
+            </summary>
+            <param name="RoleId"></param>
+            <param name="UserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RoleUserController.Delete(System.String,System.String)">
+            <summary>
+            ریمو کردن یک نقش از کاربر (Auth)
+            </summary>
+            <param name="RoleId"></param>
+            <param name="UserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.UserController.Get">
+            <summary>
+            برگردوندن لیست تمام کاربران (موقت) (Auth)
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.AccountController.Register(WebApi.ModelsAndDtoes.Account.RegisterDto)">
             <summary>
             ساختن حساب کاربری

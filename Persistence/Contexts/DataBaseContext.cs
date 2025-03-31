@@ -20,6 +20,9 @@ namespace Persistence.Contexts
 
         //Categories
         public DbSet<Category> Categories { get; set; }
+        //Permissions
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -49,6 +52,20 @@ namespace Persistence.Contexts
                 .WithMany(p=>p.ChildCategories)                
                 .HasForeignKey(p => p.ParentCategoryId)
                 .IsRequired(false);
+
+        //Permissions
+            builder.Entity<RolePermission>()
+    .HasKey(rp => new { rp.RoleId, rp.PermissionId });
+
+            builder.Entity<RolePermission>()
+                .HasOne(rp => rp.Role)
+                .WithMany()
+                .HasForeignKey(rp => rp.RoleId);
+
+            builder.Entity<RolePermission>()
+                .HasOne(rp => rp.Permission)
+                .WithMany()
+                .HasForeignKey(rp => rp.PermissionId);
 
             SetConfigurations(builder);
 

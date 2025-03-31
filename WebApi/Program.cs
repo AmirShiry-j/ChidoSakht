@@ -23,6 +23,7 @@ using Application.CategoryService;
 using Application.Interfaces.ConfigService;
 using Application.Interfaces.Messagers.EmailService;
 using Application.Interfaces.Messagers.SmsService;
+using Persistence.Seeds;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -123,6 +124,9 @@ builder.Services.AddScoped<IUserTokenService, UserTokenService>();
 //Categories
 builder.Services.AddScoped<IFacadeCategoryService, FacadeCategoryService>();
 
+//Users
+builder.Services.AddScoped<IFacadeUserService, FacadeUserService>();
+
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));
@@ -208,6 +212,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+//DataBase Seed
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DataBaseContext>();
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var roleManager = services.GetRequiredService<RoleManager<Role>>();
+
+    await DbInitializer.SeedPermissionsAsync(context, userManager, roleManager);
+}
 
 // Localization cofing
 var defaultCulture = Configuration.GetSection("Localization:DefaultCulture").Get<string>() ?? "fa";

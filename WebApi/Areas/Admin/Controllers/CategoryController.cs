@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
 using WebApi.Controllers;
+using WebApi.Filters.Permissions;
 using WebApi.ModelsAndDtoes.Categories;
 
 namespace WebApi.Areas.Admin.Controllers
@@ -21,7 +22,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiVersion("1")]
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/Category/")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly IFacadeCategoryService _facadeCategoryService;
@@ -36,6 +37,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// برگردوندن همه دسته بندی ها به شکل درخت (Auth)
         /// </summary>
         /// <returns></returns>
+        [PermissionAuthorize("Category", "View", "Admin")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -57,6 +59,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="CategoryId"></param>
         /// <returns></returns>
+        [PermissionAuthorize("Category", "View", "Admin")]
         [HttpGet("{CategoryId}")]
         public async Task<IActionResult> Get(int CategoryId)
         {
@@ -102,6 +105,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="createCategoryApiDto"></param>
         /// <returns></returns>
+        [PermissionAuthorize("Category", "Add", "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post(CreateCategoryApiDto createCategoryApiDto)
         {
@@ -129,6 +133,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="updateCategoryApiDto"></param>
         /// <returns></returns>
+        [PermissionAuthorize("Category", "Edit", "Admin")]
         [HttpPut]
         public async Task<IActionResult> Put(UpdateCategoryApiDto updateCategoryApiDto)
         {
@@ -165,6 +170,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="CategoryId"></param>
         /// <returns></returns>
+        [PermissionAuthorize("Category", "Delete", "Admin")]
         [HttpDelete("{CategoryId}")]
         public async Task<IActionResult> Delete(int CategoryId)
         {
