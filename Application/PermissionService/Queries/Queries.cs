@@ -8,7 +8,14 @@ using System.Threading.Tasks;
 
 namespace Application.PermissionService.Queries
 {
-    public class GetPermissionsQuery : IRequest<List<PermissionDto>> { }
+    public class GetPermissionsQuery : IRequest<List<PermissionDto>>
+    {
+        public PermissionFilterDto FilterDto { get; set; }
+        public GetPermissionsQuery(PermissionFilterDto filterDto)
+        {
+            FilterDto = filterDto;
+        }
+    }
     public class GetRolePermissionQuery : IRequest<RolePermission>
     {
         public string RoleId { get; set; }

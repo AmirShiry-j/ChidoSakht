@@ -38,7 +38,7 @@
             <param name="CategoryId"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.PermissionController.Get">
+        <member name="M:WebApi.Areas.Admin.Controllers.PermissionController.Get(System.String,System.String,System.String)">
             <summary>
             برگردوندن لیست دسترسی ها (Auth)
             </summary>

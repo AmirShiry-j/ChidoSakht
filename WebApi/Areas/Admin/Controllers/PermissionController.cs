@@ -35,10 +35,15 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<List<PermissionDto>>> Get()
+        public async Task<ActionResult<List<PermissionDto>>> Get(string? Area, string? Controller, string? Action)
         {
             //get from service
-            var resultService = await _FacadePermissionService.GetPermissionsService.Execute();
+            var resultService = await _FacadePermissionService.GetPermissionsService.Execute(new PermissionFilterDto
+            {
+                Area = Area,
+                Controller = Controller,
+                Action = Action
+            });
 
             if (resultService.IsSuccess)
             {

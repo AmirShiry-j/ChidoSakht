@@ -11,7 +11,7 @@ namespace Application.PermissionService.Queries
 {
     public interface IGetPermissionsService
     {
-        Task<ResultDto<List<PermissionDto>>> Execute();
+        Task<ResultDto<List<PermissionDto>>> Execute(PermissionFilterDto FilterDto);
     }
     public class GetPermissionsService : IGetPermissionsService
     {
@@ -21,10 +21,10 @@ namespace Application.PermissionService.Queries
             _mediator = mediator;
         }
 
-        public async Task<ResultDto<List<PermissionDto>>> Execute()
+        public async Task<ResultDto<List<PermissionDto>>> Execute(PermissionFilterDto FilterDto)
         {
             //get them from db
-            var permissions = await _mediator.Send(new GetPermissionsQuery());
+            var permissions = await _mediator.Send(new GetPermissionsQuery(FilterDto));
 
             //Check exist and return
             if (permissions is not null)
@@ -57,5 +57,11 @@ namespace Application.PermissionService.Queries
     {
         public string RoleId { get; set; }
         public int PermissionId { get; set; }
+    }
+    public class PermissionFilterDto
+    {
+        public string? Area { get; set; }
+        public string? Controller { get; set; }
+        public string? Action { get; set; }
     }
 }
