@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.ConfigService;
+﻿using Application.Interfaces.AppKeyNames;
+using Application.Interfaces.ConfigService;
 using Domain.Users;
 using Infrastructure.ConfigService;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +18,16 @@ namespace WebApi.Filters.Permissions
             : base(typeof(PermissionAuthorizeFilter))
         {
             Arguments = new object[] { area, controller, action };
+        }
+        public PermissionAuthorizeAttribute(KeyNameController controller, KeyNameAction action)
+    : base(typeof(PermissionAuthorizeFilter))
+        {
+            Arguments = new object[] { null, controller.ToString(), action.ToString() };
+        }
+        public PermissionAuthorizeAttribute(KeyNameController controller, KeyNameAction action, KeyNameArea area)
+: base(typeof(PermissionAuthorizeFilter))
+        {
+            Arguments = new object[] { area.ToString(), controller.ToString(), action.ToString() };
         }
     }
 
@@ -37,7 +48,7 @@ namespace WebApi.Filters.Permissions
         {
             _userManager = userManager;
             _context = context;
-            _configService=configService;
+            _configService = configService;
             _area = area;
             _controller = controller;
             _action = action;

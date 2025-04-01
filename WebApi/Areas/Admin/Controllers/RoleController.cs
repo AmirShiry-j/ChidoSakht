@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Localization;
+﻿using Application.Interfaces.AppKeyNames;
+using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,7 +36,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// برگردوندن لیست نقش ها در سایت (Auth)
         /// </summary>
         /// <returns></returns>
-        [PermissionAuthorize("Role", "View", "Admin")]
+        [PermissionAuthorize(KeyNameController.Role, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -77,7 +78,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="RoleId"></param>
         /// <returns></returns>
-        [PermissionAuthorize("Role", "View", "Admin")]
+        [PermissionAuthorize(KeyNameController.Role, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet("{RoleId}")]
         public async Task<IActionResult> Get(string RoleId)
         {
@@ -126,7 +127,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [PermissionAuthorize("Role", "Add", "Admin")]
+        [PermissionAuthorize(KeyNameController.Role, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoleDto model)
         {
@@ -159,8 +160,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// ویرایش اطلاعات نقش  (Auth)
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
-        [PermissionAuthorize("Role", "Edit", "Admin")]
+        [PermissionAuthorize(KeyNameController.Role, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut]
         public async Task<IActionResult> Update(EditRoleDto model)
         {
@@ -209,7 +209,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="RoleId"></param>
         /// <returns></returns>
-        [PermissionAuthorize("Role", "Delete", "Admin")]
+        [PermissionAuthorize(KeyNameController.Role, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete("{RoleId}")]
         public async Task<IActionResult> Delete(string RoleId)
         {

@@ -1,4 +1,5 @@
 ﻿using Application.CategoryService;
+using Application.Interfaces.AppKeyNames;
 using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +20,7 @@ namespace WebApi.Areas.Admin.Controllers
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
     [Authorize]
-    [PermissionAuthorize("User", "View", "Admin")]
+    [PermissionAuthorize(KeyNameController.User, KeyNameAction.View, KeyNameArea.Admin)]
     public class UserController : ControllerBase
     {
         private readonly IFacadeUserService _facadeUserService;

@@ -1,5 +1,6 @@
 ﻿using Application.CategoryService;
 using Application.CategoryService.Commands;
+using Application.Interfaces.AppKeyNames;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Application.PermissionService.Commands;
@@ -17,7 +18,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiVersion("1")]
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
-    [PermissionAuthorize("Permission", "View", "Admin")]
+    [PermissionAuthorize(KeyNameController.Permission, KeyNameAction.View, KeyNameArea.Admin)]
     [Authorize]
     public class PermissionController : ControllerBase
     {

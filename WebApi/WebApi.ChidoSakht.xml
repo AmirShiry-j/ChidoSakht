@@ -85,7 +85,6 @@
             ویرایش اطلاعات نقش  (Auth)
             </summary>
             <param name="model"></param>
-            <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Delete(System.String)">
             <summary>

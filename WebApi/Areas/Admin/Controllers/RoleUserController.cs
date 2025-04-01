@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Localization;
+﻿using Application.Interfaces.AppKeyNames;
+using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -37,7 +38,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="RoleId"></param>
         /// <param name="UserId"></param>
         /// <returns></returns>
-        [PermissionAuthorize("RoleUser", "Add", "Admin")]
+        [PermissionAuthorize(KeyNameController.RoleUser, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
         public async Task<IActionResult> Post(string RoleId, string UserId)
         {
@@ -75,7 +76,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="RoleId"></param>
         /// <param name="UserId"></param>
         /// <returns></returns>
-        [PermissionAuthorize("RoleUser", "Delete", "Admin")]
+        [PermissionAuthorize(KeyNameController.RoleUser, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete]
         public async Task<IActionResult> Delete(string RoleId, string UserId)
         {

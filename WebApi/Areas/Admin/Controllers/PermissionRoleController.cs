@@ -1,5 +1,6 @@
 ﻿using Application.CategoryService;
 using Application.CategoryService.Commands;
+using Application.Interfaces.AppKeyNames;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Application.PermissionService.Commands;
@@ -35,7 +36,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="PermissionId"></param>
         /// <param name="RoleId"></param>
         /// <returns></returns>
-        [PermissionAuthorize("PermissionRole", "Add", "Admin")]
+        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
         public async Task<ActionResult> Post(int PermissionId, string RoleId)
         {
@@ -62,7 +63,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="PermissionId"></param>
         /// <param name="RoleId"></param>
         /// <returns></returns>
-        [PermissionAuthorize("PermissionRole", "Delete", "Admin")]
+        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete]
         public async Task<ActionResult> Delete(int PermissionId, string RoleId)
         {
