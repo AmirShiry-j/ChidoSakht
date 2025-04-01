@@ -1,4 +1,4 @@
-﻿namespace Application.Interfaces.AppKeyNames
+﻿namespace Application.Common.AppKeyNames
 {
     public enum KeyNameController
     {

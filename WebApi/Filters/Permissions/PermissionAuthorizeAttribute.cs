@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.AppKeyNames;
+﻿using Application.Common.AppKeyNames;
 using Application.Interfaces.ConfigService;
 using Domain.Users;
 using Infrastructure.ConfigService;

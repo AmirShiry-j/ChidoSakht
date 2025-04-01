@@ -1,6 +1,6 @@
 ﻿using Application.CategoryService;
 using Application.CategoryService.Commands;
-using Application.Interfaces.AppKeyNames;
+using Application.Common.AppKeyNames;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Application.PermissionService.Commands;

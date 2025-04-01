@@ -2,7 +2,7 @@
 using Application.CategoryService.Commands;
 using Application.CategoryService.Queries;
 using Application.Common;
-using Application.Interfaces.AppKeyNames;
+using Application.Common.AppKeyNames;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Domain.Categories;

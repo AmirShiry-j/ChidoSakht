@@ -1,5 +1,5 @@
 ﻿using Application.CategoryService;
-using Application.Interfaces.AppKeyNames;
+using Application.Common.AppKeyNames;
 using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

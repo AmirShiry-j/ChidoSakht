@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.AppKeyNames
+namespace Application.Common.AppKeyNames
 {
     public enum KeyNameAction
     {
