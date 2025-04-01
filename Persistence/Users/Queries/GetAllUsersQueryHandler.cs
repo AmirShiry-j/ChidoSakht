@@ -22,6 +22,7 @@ namespace Persistence.Users.Queries
             var users = _context.Users.Select(p => new UserDto
             {
                 Id = p.Id,
+                PhoneNumber = p.PhoneNumber,
                 FullName = p.FullName,
                 Email = p.Email,
             }).ToList();

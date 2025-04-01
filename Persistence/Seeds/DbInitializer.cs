@@ -15,11 +15,11 @@ namespace Persistence.Seeds
     {
         public static async Task SeedPermissionsAsync(DataBaseContext context, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
-            context.RolePermissions.RemoveRange(context.RolePermissions.ToList());
-            context.Permissions.RemoveRange(context.Permissions.ToList());
-            context.UserRoles.RemoveRange(context.UserRoles.ToList());
-            context.Roles.RemoveRange(context.Roles.ToList());
-            await context.SaveChangesAsync();
+            //context.RolePermissions.RemoveRange(context.RolePermissions.ToList());
+            //context.Permissions.RemoveRange(context.Permissions.ToList());
+            //context.UserRoles.RemoveRange(context.UserRoles.ToList());
+            //context.Roles.RemoveRange(context.Roles.ToList());
+            //await context.SaveChangesAsync();
 
             //Add Permissions
             if (!await context.Permissions.AnyAsync())
