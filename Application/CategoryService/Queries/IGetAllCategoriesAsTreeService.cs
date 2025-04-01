@@ -1,4 +1,4 @@
-﻿using Application.Common;
+﻿using Application.Common.Dtoes;
 using MediatR;
 using System;
 using System.Collections.Generic;

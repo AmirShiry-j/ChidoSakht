@@ -1,4 +1,4 @@
-﻿using Application.Common;
+﻿using Application.Common.Dtoes;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Application.PermissionService.Queries;

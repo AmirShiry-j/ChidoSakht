@@ -1,9 +1,9 @@
-﻿using Application.Common;
-using Application.Interfaces.Localization.AllMessageKeys;
+﻿using Application.Interfaces.Localization.AllMessageKeys;
 using Application.Interfaces.Localization;
 using Application.PermissionService.Queries;
 using MediatR;
 using Application.RoleService.Queries;
+using Application.Common.Dtoes;
 
 namespace Application.PermissionService.Commands
 {

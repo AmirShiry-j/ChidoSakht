@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Common
+namespace Application.Common.Dtoes
 {
     public static class PredicateBuilder
     {
