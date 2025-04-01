@@ -19,6 +19,20 @@ namespace Persistence.Seeds
             {
                 var permissions = new List<Permission>
             {
+                // Permissions
+                new Permission { Area = "Admin", Controller = "Permission", Action = "View", Description = "مشاهده همه دسترسی ها" },
+                new Permission { Area = "Admin", Controller = "PermissionRole", Action = "Add", Description = "اضافه کردن یک دسترسی به نقش" },
+                new Permission { Area = "Admin", Controller = "PermissionRole", Action = "Delete", Description = "ریمو کردن یک دسترسی از نقش" },
+
+                //Roles
+                new Permission { Area = "Admin", Controller = "Role", Action = "View", Description = "دیدن همه نقش ها" },
+                new Permission { Area = "Admin", Controller = "Role", Action = "Add", Description = "ایجاد یک نقش" },
+                new Permission { Area = "Admin", Controller = "Role", Action = "Edit", Description = "ویرایش یک نقش" },
+                new Permission { Area = "Admin", Controller = "Role", Action = "Delete", Description = "حذف یک نقش" },
+                new Permission { Area = "Admin", Controller = "RoleUser", Action = "Add", Description = "اختصاص دادن یک نقش به کاربر" },
+                new Permission { Area = "Admin", Controller = "RoleUser", Action = "Delete", Description =  "برداشتن یک نقش از کاربر" },
+
+
                 // Users manager
                 new Permission { Area = "Admin", Controller = "User", Action = "View", Description = "مشاهده کاربران" },
 
@@ -60,15 +74,6 @@ namespace Persistence.Seeds
                     }
                 }
                 await context.SaveChangesAsync();
-            }
-
-            // Add Admin Role to a user 
-            var users = await userManager.GetUsersInRoleAsync("Admin");
-            if (!users.Any())
-            {
-                var aUserForAdmin = await userManager.Users.Where(p => p.UserName == "09304243717").FirstOrDefaultAsync();
-                if (aUserForAdmin is not null)
-                    await userManager.AddToRoleAsync(aUserForAdmin, "Admin");
             }
         }
     }

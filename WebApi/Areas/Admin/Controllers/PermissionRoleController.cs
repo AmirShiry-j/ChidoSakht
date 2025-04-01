@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Roles;
+using WebApi.Filters.Permissions;
 using WebApi.ModelsAndDtoes.Categories;
 
 namespace WebApi.Areas.Admin.Controllers
@@ -34,6 +35,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="PermissionId"></param>
         /// <param name="RoleId"></param>
         /// <returns></returns>
+        [PermissionAuthorize("PermissionRole", "Add", "Admin")]
         [HttpPost]
         public async Task<ActionResult> Post(int PermissionId, string RoleId)
         {
@@ -60,6 +62,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="PermissionId"></param>
         /// <param name="RoleId"></param>
         /// <returns></returns>
+        [PermissionAuthorize("PermissionRole", "Delete", "Admin")]
         [HttpDelete]
         public async Task<ActionResult> Delete(int PermissionId, string RoleId)
         {

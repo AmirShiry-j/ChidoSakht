@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Roles;
+using WebApi.Filters.Permissions;
 using WebApi.ModelsAndDtoes.Categories;
 
 namespace WebApi.Areas.Admin.Controllers
@@ -16,6 +17,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiVersion("1")]
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
+    [PermissionAuthorize("Permission", "View", "Admin")]
     [Authorize]
     public class PermissionController : ControllerBase
     {

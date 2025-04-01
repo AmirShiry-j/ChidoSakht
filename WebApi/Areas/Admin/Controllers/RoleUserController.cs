@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Filters.Permissions;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -17,7 +18,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiVersion("1")]
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/Role/{RoleId}/User/{UserId}")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+    [Authorize]
     public class RoleUserController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -36,6 +37,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="RoleId"></param>
         /// <param name="UserId"></param>
         /// <returns></returns>
+        [PermissionAuthorize("RoleUser", "Add", "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post(string RoleId, string UserId)
         {
@@ -73,6 +75,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="RoleId"></param>
         /// <param name="UserId"></param>
         /// <returns></returns>
+        [PermissionAuthorize("RoleUser", "Delete", "Admin")]
         [HttpDelete]
         public async Task<IActionResult> Delete(string RoleId, string UserId)
         {
@@ -88,15 +91,6 @@ namespace WebApi.Areas.Admin.Controllers
             if (user == null)
             {
                 return NotFound(_localization.GetMessageAccount(MessageKeysAccount.UserIdNotFound.ToString()));
-            }
-
-            //Check how many Admin is exist
-            if (role.Name == "Admin" &&
-                _userManager.GetUsersInRoleAsync("Admin").Result.Count == 1 &&
-                _userManager.IsInRoleAsync(user, "Admin").Result)
-            {
-                //Return error for cant delete only admin in site
-                return BadRequest(_localization.GetMessagePermission(MessageKeysPermission.AtleastOneAdmin.ToString()));
             }
 
             //Remove role to user

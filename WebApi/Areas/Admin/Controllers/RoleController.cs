@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Areas.Admin.ModelsAndDtoes.Roles;
+using WebApi.Filters.Permissions;
 using WebApi.ModelsAndDtoes.Common;
 
 namespace WebApi.Areas.Admin.Controllers
@@ -19,7 +20,7 @@ namespace WebApi.Areas.Admin.Controllers
     [Area("Admin")]
     [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+    [Authorize]
     public class RoleController : ControllerBase
     {
         private readonly RoleManager<Role> _roleManager;
@@ -34,6 +35,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// برگردوندن لیست نقش ها در سایت (Auth)
         /// </summary>
         /// <returns></returns>
+        [PermissionAuthorize("Role", "View", "Admin")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -75,6 +77,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="RoleId"></param>
         /// <returns></returns>
+        [PermissionAuthorize("Role", "View", "Admin")]
         [HttpGet("{RoleId}")]
         public async Task<IActionResult> Get(string RoleId)
         {
@@ -123,6 +126,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [PermissionAuthorize("Role", "Add", "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoleDto model)
         {
@@ -156,6 +160,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [PermissionAuthorize("Role", "Edit", "Admin")]
         [HttpPut]
         public async Task<IActionResult> Update(EditRoleDto model)
         {
@@ -179,14 +184,6 @@ namespace WebApi.Areas.Admin.Controllers
 
                 return Created(link, null);
             }
-
-            //Chech Can not edit Admin role name
-            if (role.Name == "Admin" && role.Name != model.Name)
-            {
-                //Return error its cant edit admin name
-                return BadRequest(_localization.GetMessagePermission(MessageKeysPermission.CantEditNameRoleAdmin.ToString()));
-            }
-
 
             //Initail edits
             role.Name = model.Name;
@@ -212,6 +209,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="RoleId"></param>
         /// <returns></returns>
+        [PermissionAuthorize("Role", "Delete", "Admin")]
         [HttpDelete("{RoleId}")]
         public async Task<IActionResult> Delete(string RoleId)
         {
@@ -222,13 +220,6 @@ namespace WebApi.Areas.Admin.Controllers
             if (role == null)
             {
                 return NotFound();
-            }
-
-            //Check it is not Admin role
-            if (role.Name == "Admin")
-            {
-                //Return error its cat not delete admin role
-                return BadRequest(_localization.GetMessagePermission(MessageKeysPermission.CantDeleteRoleAdmin.ToString()));
             }
 
             //Delete Role
