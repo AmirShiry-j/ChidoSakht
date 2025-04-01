@@ -19,6 +19,7 @@ namespace Application.Interfaces.ConfigService
         public EmailSetting EmailSetting { get; set; }
         public CorsPolicy CorsPolicy { get; set; }
         public Localization Localization { get; set; }
+        public SuperAdmins SuperAdmins { get; set; }
     }
     public class DatabaseSettings
     {
@@ -71,5 +72,9 @@ namespace Application.Interfaces.ConfigService
         public string[] Headers { get; set; }
         public bool AllowAnyMethods { get; set; }
         public string[] Methods { get; set; }
+    }
+    public class SuperAdmins
+    {
+        public string[] UserNames { get; set; }
     }
 }
