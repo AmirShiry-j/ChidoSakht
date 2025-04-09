@@ -185,6 +185,12 @@
             <param name="user"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.ProfileController.Get">
+            <summary>
+            بر گردوندن اطلاعات پروفایل (Auth)
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.WeatherForecastController.Get">
             <summary>
             ای پی آی برای تست اتنفیکشن (Auth)

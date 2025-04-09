@@ -17,6 +17,7 @@ namespace Application.CategoryService
         //Commands
         //Queries
         IGetAllUserService GetAllUserService { get; }
+        IGetUserProfileService GetUserProfileService { get; }
     }
     public class FacadeUserService : IFacadeUserService
     {
@@ -37,6 +38,14 @@ namespace Application.CategoryService
             get
             {
                 return _getAllUserService = _getAllUserService ?? new GetAllUserService(_mediator);
+            }
+        }
+        private IGetUserProfileService _GetUserProfileService;
+        public IGetUserProfileService GetUserProfileService
+        {
+            get
+            {
+                return _GetUserProfileService = _GetUserProfileService ?? new GetUserProfileService(_mediator);
             }
         }
         #endregion

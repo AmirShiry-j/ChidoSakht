@@ -15,4 +15,12 @@ namespace Application.UserService.Queries
         {
         }
     }
+    public class GetUserProfileQuery :IRequest<ProfileDto>
+    {
+        public string UserId { get; set; }
+        public GetUserProfileQuery(string userId)
+        {
+            UserId = userId;
+        }
+    }
 }
