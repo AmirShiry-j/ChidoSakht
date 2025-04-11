@@ -34,8 +34,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <summary>
         /// اضافه کردن دسترسی ها به نقش (Auth)
         /// </summary>
-        /// <param name="PermissionId"></param>
-        /// <param name="RoleId"></param>
+        /// <param name="Dto"></param>
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
@@ -59,10 +58,35 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// ریست کردن و اختصاص دادن دوباره دسترسی ها به نقش (Auth)
+        /// </summary>
+        /// <param name="Dto"></param>
+        /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Add, KeyNameArea.Admin)]
+        [HttpPut]
+        public async Task<ActionResult> Put(PermissionsRoleApiDto Dto)
+        {
+            //Map
+            var resultService = await _FacadePermissionService.ResetAndAssignPermissionsService.Execute(new PermissionsRoleDto
+            {
+                PermissionIds = Dto.PermissionIds,
+                RoleId = Dto.RoleId,
+            });
+
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
         /// ریمو کردن دسترسی ها از نقش (Auth)
         /// </summary>
-        /// <param name="PermissionId"></param>
-        /// <param name="RoleId"></param>
+        /// <param name="Dto"></param>
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete]

@@ -18,6 +18,7 @@ namespace Application.CategoryService
         //Commands
         IAssignPermissionsService AssignPermissionsService { get; }
         IUnAssignPermissionsService UnAssignPermissionsService { get; }
+        IResetAndAssignPermissionsService ResetAndAssignPermissionsService { get; }
         //Queries
         IGetPermissionsService GetPermissionsService { get; }
     }
@@ -47,6 +48,14 @@ namespace Application.CategoryService
                 return _UnAssignPermissionsService = _UnAssignPermissionsService ?? new UnAssignPermissionService(_mediator, _localizationService);
             }
         }
+        private IResetAndAssignPermissionsService _ResetAndAssignPermissionsService;
+        public IResetAndAssignPermissionsService ResetAndAssignPermissionsService
+        {
+            get
+            {
+                return _ResetAndAssignPermissionsService = _ResetAndAssignPermissionsService ?? new ResetAndAssignPermissionsService(_mediator, _localizationService);
+            }
+        }
         //Queries
         #region Queries
         private IGetPermissionsService _GetPermissionsService;
@@ -57,6 +66,8 @@ namespace Application.CategoryService
                 return _GetPermissionsService = _GetPermissionsService ?? new GetPermissionsService(_mediator);
             }
         }
+
+
         #endregion
     }
 }

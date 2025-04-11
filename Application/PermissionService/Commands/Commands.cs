@@ -28,4 +28,17 @@ namespace Application.PermissionService.Commands
             RolePermissions = rolePermissions;
         }
     }
+    public class ResetAndAssignPermissionsCommand : IRequest
+    {
+        public List<RolePermission> BeforeRolePermissions { get; set; }
+        public string RoleId { get; set; }
+        public int[] PermissionIds { get; set; }
+
+        public ResetAndAssignPermissionsCommand(List<RolePermission> beforeRolePermissions,string roleId, int[] permissionIds)
+        {
+            BeforeRolePermissions = beforeRolePermissions;
+            RoleId = roleId;
+            PermissionIds = permissionIds;
+        }
+    }
 }

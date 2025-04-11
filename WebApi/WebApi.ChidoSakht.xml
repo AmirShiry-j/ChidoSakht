@@ -48,16 +48,21 @@
             <summary>
             اضافه کردن دسترسی ها به نقش (Auth)
             </summary>
-            <param name="PermissionId"></param>
-            <param name="RoleId"></param>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
+            <summary>
+            ریست کردن و اختصاص دادن دوباره دسترسی ها به نقش (Auth)
+            </summary>
+            <param name="Dto"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Delete(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
             <summary>
             ریمو کردن دسترسی ها از نقش (Auth)
             </summary>
-            <param name="PermissionId"></param>
-            <param name="RoleId"></param>
+            <param name="Dto"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">
