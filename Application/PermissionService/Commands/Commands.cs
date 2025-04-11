@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace Application.PermissionService.Commands
 {
-    public class AssignPermissionCommand : IRequest
+    public class AssignPermissionsCommand : IRequest
     {
         public string RoleId { get; set; }
-        public int PermissionId { get; set; }
+        public int[] PermissionIds { get; set; }
 
-        public AssignPermissionCommand(string roleId, int permissionId)
+        public AssignPermissionsCommand(string roleId, int[] permissionIds)
         {
             RoleId = roleId;
-            PermissionId = permissionId;
+            PermissionIds = permissionIds;
         }
     }
-    public class UnAssignPermissionCommand : IRequest
+    public class UnAssignPermissionsCommand : IRequest
     {
-        public RolePermission RolePermission { get; set; }
+        public List<RolePermission> RolePermissions { get; set; }
 
-        public UnAssignPermissionCommand(RolePermission rolePermission)
+        public UnAssignPermissionsCommand(List<RolePermission> rolePermissions)
         {
-            RolePermission = rolePermission;
+            RolePermissions = rolePermissions;
         }
     }
 }

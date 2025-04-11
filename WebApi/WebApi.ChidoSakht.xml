@@ -44,17 +44,17 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Post(System.Int32,System.String)">
+        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
             <summary>
-            اضافه کردن یک دسترسی به نقش (Auth)
+            اضافه کردن دسترسی ها به نقش (Auth)
             </summary>
             <param name="PermissionId"></param>
             <param name="RoleId"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Delete(System.Int32,System.String)">
+        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Delete(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
             <summary>
-            ریمو کردن یک دسترسی از نقش (Auth)
+            ریمو کردن دسترسی ها از نقش (Auth)
             </summary>
             <param name="PermissionId"></param>
             <param name="RoleId"></param>

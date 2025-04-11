@@ -30,20 +30,20 @@ namespace Persistence.Permissions.Queries
             //Filter Area
             if (string.IsNullOrWhiteSpace(FilterDto.Area) == false)
             {
-                prPermi = prPermi.And(x => x.Area.Contains(FilterDto.Area));
+                prPermi = prPermi.And(x => x.Area.Equals(FilterDto.Area));
             }
 
             //Filter Controller
             if (string.IsNullOrWhiteSpace(FilterDto.Controller) == false)
             {
-                prPermi = prPermi.And(x => x.Controller.Contains(FilterDto.Controller));
+                prPermi = prPermi.And(x => x.Controller.Equals(FilterDto.Controller));
             }
 
 
             //Filter Action
             if (string.IsNullOrWhiteSpace(FilterDto.Action) == false)
             {
-                prPermi = prPermi.And(x => x.Action.Contains(FilterDto.Action));
+                prPermi = prPermi.And(x => x.Action.Equals(FilterDto.Action));
             }
 
             return await _context.Permissions

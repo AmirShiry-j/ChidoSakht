@@ -9,6 +9,7 @@ using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Areas.Admin.ModelsAndDtoes.Permissions;
 using WebApi.Areas.Admin.ModelsAndDtoes.Roles;
 using WebApi.Filters.Permissions;
 using WebApi.ModelsAndDtoes.Categories;
@@ -18,7 +19,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiController]
     [ApiVersion("1")]
     [Area("Admin")]
-    [Route("api/v{version:apiVersion}/[Area]/Permission/{PermissionId}/Role/{RoleId}")]
+    [Route("api/v{version:apiVersion}/[Area]/PermissionRole/")]
     [Authorize]
     public class PermissionRoleController : ControllerBase
     {
@@ -31,20 +32,20 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// اضافه کردن یک دسترسی به نقش (Auth)
+        /// اضافه کردن دسترسی ها به نقش (Auth)
         /// </summary>
         /// <param name="PermissionId"></param>
         /// <param name="RoleId"></param>
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
-        public async Task<ActionResult> Post(int PermissionId, string RoleId)
+        public async Task<ActionResult> Post(PermissionsRoleApiDto Dto)
         {
             //Map
-            var resultService = await _FacadePermissionService.AssignPermissionService.Execute(new RolePermissionDto
+            var resultService = await _FacadePermissionService.AssignPermissionsService.Execute(new PermissionsRoleDto
             {
-                PermissionId = PermissionId,
-                RoleId = RoleId,
+                PermissionIds = Dto.PermissionIds,
+                RoleId = Dto.RoleId,
             });
 
             if (resultService.IsSuccess)
@@ -58,20 +59,20 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// ریمو کردن یک دسترسی از نقش (Auth)
+        /// ریمو کردن دسترسی ها از نقش (Auth)
         /// </summary>
         /// <param name="PermissionId"></param>
         /// <param name="RoleId"></param>
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete]
-        public async Task<ActionResult> Delete(int PermissionId, string RoleId)
+        public async Task<ActionResult> Delete(PermissionsRoleApiDto Dto)
         {
             //Map
-            var resultService = await _FacadePermissionService.UnAssignPermissionService.Execute(new RolePermissionDto
+            var resultService = await _FacadePermissionService.UnAssignPermissionsService.Execute(new PermissionsRoleDto
             {
-                PermissionId = PermissionId,
-                RoleId = RoleId,
+                PermissionIds = Dto.PermissionIds,
+                RoleId = Dto.RoleId,
             });
 
             if (resultService.IsSuccess)

@@ -28,24 +28,24 @@ namespace Application.PermissionService.Queries
         }
     }
 
-    public class CheckRoleHasPermissionQuery : IRequest<bool>
+    public class GetAssignedPermissionIdsQuery : IRequest<List<RolePermission>>
     {
         public string RoleId { get; set; }
-        public int PermissionId { get; set; }
+        public int[] PermissionsIds { get; set; }
 
-        public CheckRoleHasPermissionQuery(string roleId, int permissionId)
+        public GetAssignedPermissionIdsQuery(string roleId, int[] permissionsIds)
         {
             RoleId = roleId;
-            PermissionId = permissionId;
+            PermissionsIds = permissionsIds;
         }
     }
-    public class GetPermissionByIdQuery : IRequest<Permission>
+    public class GetExitingPermissionsByIdsQuery : IRequest<List<Permission>>
     {
-        public int PermissionId { get; set; }
+        public int[] PermissionsIds { get; set; }
 
-        public GetPermissionByIdQuery(int permissionId)
+        public GetExitingPermissionsByIdsQuery(int[] permissionsIds)
         {
-            PermissionId = permissionId;
+            PermissionsIds = permissionsIds;
         }
     }
 }

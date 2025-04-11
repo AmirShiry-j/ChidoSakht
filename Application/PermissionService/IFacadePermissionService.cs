@@ -16,8 +16,8 @@ namespace Application.CategoryService
     public interface IFacadePermissionService
     {
         //Commands
-        IAssignPermissionService AssignPermissionService { get; }
-        IUnAssignPermissionService UnAssignPermissionService { get; }
+        IAssignPermissionsService AssignPermissionsService { get; }
+        IUnAssignPermissionsService UnAssignPermissionsService { get; }
         //Queries
         IGetPermissionsService GetPermissionsService { get; }
     }
@@ -31,20 +31,20 @@ namespace Application.CategoryService
             _localizationService = localizationService;
         }
         //Commands
-        private IAssignPermissionService _AssignPermissionService;
-        public IAssignPermissionService AssignPermissionService
+        private IAssignPermissionsService _AssignPermissionsService;
+        public IAssignPermissionsService AssignPermissionsService
         {
             get
             {
-                return _AssignPermissionService = _AssignPermissionService ?? new AssignPermissionService(_mediator, _localizationService);
+                return _AssignPermissionsService = _AssignPermissionsService ?? new AssignPermissionService(_mediator, _localizationService);
             }
         }
-        private IUnAssignPermissionService _UnAssignPermissionService;
-        public IUnAssignPermissionService UnAssignPermissionService
+        private IUnAssignPermissionsService _UnAssignPermissionsService;
+        public IUnAssignPermissionsService UnAssignPermissionsService
         {
             get
             {
-                return _UnAssignPermissionService = _UnAssignPermissionService ?? new UnAssignPermissionService(_mediator, _localizationService);
+                return _UnAssignPermissionsService = _UnAssignPermissionsService ?? new UnAssignPermissionService(_mediator, _localizationService);
             }
         }
         //Queries
