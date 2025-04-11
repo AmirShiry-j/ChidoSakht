@@ -48,4 +48,13 @@ namespace Application.PermissionService.Queries
             PermissionsIds = permissionsIds;
         }
     }
+    public class GetAssignedPermissionsInARoleQuery : IRequest<List<PermissionDto>>
+    {
+        public string RoleId { get; set; }
+
+        public GetAssignedPermissionsInARoleQuery(string roleId)
+        {
+            RoleId = roleId;
+        }
+    }
 }

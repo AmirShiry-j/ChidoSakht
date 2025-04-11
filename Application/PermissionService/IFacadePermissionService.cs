@@ -21,6 +21,7 @@ namespace Application.CategoryService
         IResetAndAssignPermissionsService ResetAndAssignPermissionsService { get; }
         //Queries
         IGetPermissionsService GetPermissionsService { get; }
+        IGetAssignedPermissionsInARoleService GetAssignedPermissionsInARoleService { get; }
     }
     public class FacadePermissionService : IFacadePermissionService
     {
@@ -66,7 +67,14 @@ namespace Application.CategoryService
                 return _GetPermissionsService = _GetPermissionsService ?? new GetPermissionsService(_mediator);
             }
         }
-
+        private IGetAssignedPermissionsInARoleService _GetAssignedPermissionsInARoleService;
+        public IGetAssignedPermissionsInARoleService GetAssignedPermissionsInARoleService
+        {
+            get
+            {
+                return _GetAssignedPermissionsInARoleService = _GetAssignedPermissionsInARoleService ?? new GetAssignedPermissionsInARoleService(_mediator, _localizationService);
+            }
+        }
 
         #endregion
     }

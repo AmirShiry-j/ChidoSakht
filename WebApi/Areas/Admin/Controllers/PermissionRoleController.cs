@@ -32,6 +32,29 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// برگردوندن دسترسی های اختصاص داده شده به یک نقش (Auth)
+        /// </summary>
+        /// <param name="RoleId"></param>
+        /// <returns></returns>
+
+        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.View, KeyNameArea.Admin)]
+        [HttpGet("{RoleId}")]
+        public async Task<ActionResult> Get(string RoleId)
+        {
+            //Map
+            var resultService = await _FacadePermissionService.GetAssignedPermissionsInARoleService.Execute(RoleId);
+
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
         /// اضافه کردن دسترسی ها به نقش (Auth)
         /// </summary>
         /// <param name="Dto"></param>
@@ -62,7 +85,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="Dto"></param>
         /// <returns></returns>
-        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Add, KeyNameArea.Admin)]
+        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut]
         public async Task<ActionResult> Put(PermissionsRoleApiDto Dto)
         {

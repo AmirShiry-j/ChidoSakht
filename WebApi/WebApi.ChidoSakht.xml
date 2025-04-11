@@ -44,6 +44,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Get(System.String)">
+            <summary>
+            برگردوندن دسترسی های اختصاص داده شده به یک نقش (Auth)
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
             <summary>
             اضافه کردن دسترسی ها به نقش (Auth)
