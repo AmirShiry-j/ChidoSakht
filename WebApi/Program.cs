@@ -44,14 +44,23 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Infrastruct
 var corsOrigins = Configuration.GetSection("CorsOrigins").Get<CorsPolicy>();
 builder.Services.AddCors(options =>
 {
-    if (corsOrigins.AllowAnyOrigins) options.AddPolicy("CorsPolicy", b => b.AllowAnyOrigin());
-    else options.AddPolicy("CorsPolicy", b => b.WithOrigins(corsOrigins.Origins));
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        if (corsOrigins.AllowAnyOrigins)
+            policy.AllowAnyOrigin();
+        else
+            policy.WithOrigins(corsOrigins.Origins);
 
-    if (corsOrigins.AllowAnyMethods) options.AddPolicy("CorsPolicy", b => b.AllowAnyMethod());
-    else options.AddPolicy("CorsPolicy", b => b.WithMethods(corsOrigins.Methods));
+        if (corsOrigins.AllowAnyMethods)
+            policy.AllowAnyMethod();
+        else
+            policy.WithMethods(corsOrigins.Methods);
 
-    if (corsOrigins.AllowAnyHeaders) options.AddPolicy("CorsPolicy", b => b.AllowAnyHeader());
-    else options.AddPolicy("CorsPolicy", b => b.WithHeaders(corsOrigins.Headers));
+        if (corsOrigins.AllowAnyHeaders)
+            policy.AllowAnyHeader();
+        else
+            policy.WithHeaders(corsOrigins.Headers);
+    });
 });
 
 // Add services to the container.
@@ -266,9 +275,9 @@ if (app.Environment.IsProduction())
 app.UseHsts();
 app.UseHttpsRedirection();
 
-app.UseCors("CorsPolicy");
 app.UseRouting();
 
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
