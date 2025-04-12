@@ -49,11 +49,11 @@ namespace Persistence.Contexts
 
             builder.Entity<Category>()
                 .HasOne<Category>(p => p.ParentCategory)
-                .WithMany(p=>p.ChildCategories)                
+                .WithMany(p => p.ChildCategories)
                 .HasForeignKey(p => p.ParentCategoryId)
                 .IsRequired(false);
 
-        //Permissions
+            //Permissions
             builder.Entity<RolePermission>()
     .HasKey(rp => new { rp.RoleId, rp.PermissionId });
 

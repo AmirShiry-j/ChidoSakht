@@ -22,6 +22,7 @@ namespace Application.CategoryService
         //Queries
         IGetPermissionsService GetPermissionsService { get; }
         IGetAssignedPermissionsInARoleService GetAssignedPermissionsInARoleService { get; }
+        IGetAssignedPermissionsInAllRoleService GetAssignedPermissionsInAllRoleService { get; }
     }
     public class FacadePermissionService : IFacadePermissionService
     {
@@ -33,6 +34,8 @@ namespace Application.CategoryService
             _localizationService = localizationService;
         }
         //Commands
+        #region Commands
+        //IAssignPermissionsService
         private IAssignPermissionsService _AssignPermissionsService;
         public IAssignPermissionsService AssignPermissionsService
         {
@@ -41,6 +44,7 @@ namespace Application.CategoryService
                 return _AssignPermissionsService = _AssignPermissionsService ?? new AssignPermissionService(_mediator, _localizationService);
             }
         }
+        //IUnAssignPermissionsService
         private IUnAssignPermissionsService _UnAssignPermissionsService;
         public IUnAssignPermissionsService UnAssignPermissionsService
         {
@@ -49,6 +53,7 @@ namespace Application.CategoryService
                 return _UnAssignPermissionsService = _UnAssignPermissionsService ?? new UnAssignPermissionService(_mediator, _localizationService);
             }
         }
+        //IResetAndAssignPermissionsService
         private IResetAndAssignPermissionsService _ResetAndAssignPermissionsService;
         public IResetAndAssignPermissionsService ResetAndAssignPermissionsService
         {
@@ -57,8 +62,11 @@ namespace Application.CategoryService
                 return _ResetAndAssignPermissionsService = _ResetAndAssignPermissionsService ?? new ResetAndAssignPermissionsService(_mediator, _localizationService);
             }
         }
+        #endregion
+
         //Queries
         #region Queries
+        //IGetPermissionsService
         private IGetPermissionsService _GetPermissionsService;
         public IGetPermissionsService GetPermissionsService
         {
@@ -67,6 +75,7 @@ namespace Application.CategoryService
                 return _GetPermissionsService = _GetPermissionsService ?? new GetPermissionsService(_mediator);
             }
         }
+        //IGetAssignedPermissionsInARoleService
         private IGetAssignedPermissionsInARoleService _GetAssignedPermissionsInARoleService;
         public IGetAssignedPermissionsInARoleService GetAssignedPermissionsInARoleService
         {
@@ -75,7 +84,15 @@ namespace Application.CategoryService
                 return _GetAssignedPermissionsInARoleService = _GetAssignedPermissionsInARoleService ?? new GetAssignedPermissionsInARoleService(_mediator, _localizationService);
             }
         }
-
+        //IGetAssignedPermissionsInAllRoleService
+        private IGetAssignedPermissionsInAllRoleService _GetAssignedPermissionsInAllRoleService;
+        public IGetAssignedPermissionsInAllRoleService GetAssignedPermissionsInAllRoleService
+        {
+            get
+            {
+                return _GetAssignedPermissionsInAllRoleService = _GetAssignedPermissionsInAllRoleService ?? new GetAssignedPermissionsInAllRoleService(_mediator, _localizationService);
+            }
+        }
         #endregion
     }
 }

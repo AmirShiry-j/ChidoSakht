@@ -50,7 +50,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Users.Permission", b =>
@@ -78,7 +78,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions");
+                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Users.Role", b =>
@@ -129,7 +129,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.ToTable("RolePermissions");
+                    b.ToTable("RolePermissions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Users.Token", b =>
@@ -167,7 +167,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tokens");
+                    b.ToTable("Tokens", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Users.User", b =>

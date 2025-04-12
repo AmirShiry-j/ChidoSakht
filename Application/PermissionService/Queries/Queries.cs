@@ -57,4 +57,11 @@ namespace Application.PermissionService.Queries
             RoleId = roleId;
         }
     }
+    public class GetAssignedPermissionsInAllRoleQuery : IRequest<List<RoleDto>>
+    {
+        public GetAssignedPermissionsInAllRoleQuery()
+        {
+
+        }
+    }
 }
