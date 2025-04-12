@@ -44,6 +44,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Get">
+            <summary>
+            برگردوندن همه نقش ها با دسترسی های اختصاص داده شده بهشون (Auth)
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Get(System.String)">
             <summary>
             برگردوندن دسترسی های اختصاص داده شده به یک نقش (Auth)

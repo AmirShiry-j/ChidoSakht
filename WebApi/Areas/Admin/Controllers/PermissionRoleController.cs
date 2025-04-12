@@ -31,6 +31,10 @@ namespace WebApi.Areas.Admin.Controllers
             _localizationService = localizationService;
         }
 
+        /// <summary>
+        /// برگردوندن همه نقش ها با دسترسی های اختصاص داده شده بهشون (Auth)
+        /// </summary>
+        /// <returns></returns>
         [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet]
         public async Task<ActionResult> Get()
