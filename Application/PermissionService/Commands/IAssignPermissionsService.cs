@@ -41,15 +41,15 @@ namespace Application.PermissionService.Commands
             }
 
             //get existing Permissions
-            var existingPermissions = await _mediator.Send(new GetExitingPermissionsByIdsQuery(dto.PermissionIds));
-            if (existingPermissions is null && !existingPermissions.Any())
+            var receivedPermissionsThatExist = await _mediator.Send(new GetExitingPermissionsByIdsQuery(dto.PermissionIds));
+            if (receivedPermissionsThatExist is null && !receivedPermissionsThatExist.Any())
             {
                 return new ResultDto
                 {
                     IsSuccess = true
                 };
             }
-            var existingPermissionIds = existingPermissions.Select(p => p.Id).ToArray();
+            var existingPermissionIds = receivedPermissionsThatExist.Select(p => p.Id).ToArray();
 
             //Get AssignedPermissionRoles
             var assignedPermissions = await _mediator.Send(new GetAssignedPermissionIdsQuery(dto.RoleId));
