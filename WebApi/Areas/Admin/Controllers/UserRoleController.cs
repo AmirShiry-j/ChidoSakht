@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Areas.Admin.ModelsAndDtoes.Permissions;
 using WebApi.Filters.Permissions;
 
 namespace WebApi.Areas.Admin.Controllers
@@ -18,7 +19,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiController]
     [ApiVersion("1")]
     [Area("Admin")]
-    [Route("api/v{version:apiVersion}/[Area]/User/{UserId}/Role/{RoleId}")]
+    [Route("api/v{version:apiVersion}/[Area]/[Controller]")]
     [Authorize]
     public class UserRoleController : ControllerBase
     {
@@ -33,27 +34,26 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// اختصاص دادن یک نقش به کاربر (Auth)
+        /// اختصاص دادن نقش ها به یک کاربر (Auth)
         /// </summary>
-        /// <param name="UserId"></param>
-        /// <param name="RoleId"></param>
+        /// <param name="Dto"></param>
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.UserRole, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
-        public async Task<IActionResult> Post(string UserId, string RoleId)
+        public async Task<IActionResult> Post(UserRolesApiDto Dto)
         {
-            //Find role
-            var role = await _roleManager.FindByIdAsync(RoleId);
-            if (role == null)
-            {
-                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
-            }
-
             //Find user
-            var user = await _userManager.FindByIdAsync(UserId);
+            var user = await _userManager.FindByIdAsync(Dto.UserId);
             if (user == null)
             {
                 return NotFound(_localization.GetMessageAccount(MessageKeysAccount.UserIdNotFound.ToString()));
+            }
+
+            //Find role
+            var role = await _roleManager.FindByIdAsync(Dto.RoleIds[0]);
+            if (role == null)
+            {
+                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
             }
 
             //Add role to user
@@ -71,27 +71,26 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// برداشتن یک نقش از کاربر (Auth)
+        /// برداشتن نقش ها از یک کاربر (Auth)
         /// </summary>
-        /// <param name="UserId"></param>
-        /// <param name="RoleId"></param>
+        /// <param name="Dto"></param>
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.UserRole, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete]
-        public async Task<IActionResult> Delete(string UserId, string RoleId)
+        public async Task<IActionResult> Delete(UserRolesApiDto Dto)
         {
-            //Find role
-            var role = await _roleManager.FindByIdAsync(RoleId);
-            if (role == null)
-            {
-                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
-            }
-
             //Find user
-            var user = await _userManager.FindByIdAsync(UserId);
+            var user = await _userManager.FindByIdAsync(Dto.UserId);
             if (user == null)
             {
                 return NotFound(_localization.GetMessageAccount(MessageKeysAccount.UserIdNotFound.ToString()));
+            }
+
+            //Find role
+            var role = await _roleManager.FindByIdAsync(Dto.RoleIds[0]);
+            if (role == null)
+            {
+                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
             }
 
             //Remove role to user

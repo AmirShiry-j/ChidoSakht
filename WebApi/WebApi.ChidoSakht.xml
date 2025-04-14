@@ -117,20 +117,18 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.UserRoleController.Post(System.String,System.String)">
+        <member name="M:WebApi.Areas.Admin.Controllers.UserRoleController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.UserRolesApiDto)">
             <summary>
-            اختصاص دادن یک نقش به کاربر (Auth)
+            اختصاص دادن نقش ها به یک کاربر (Auth)
             </summary>
-            <param name="UserId"></param>
-            <param name="RoleId"></param>
+            <param name="Dto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.UserRoleController.Delete(System.String,System.String)">
+        <member name="M:WebApi.Areas.Admin.Controllers.UserRoleController.Delete(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.UserRolesApiDto)">
             <summary>
-            برداشتن یک نقش از کاربر (Auth)
+            برداشتن نقش ها از یک کاربر (Auth)
             </summary>
-            <param name="UserId"></param>
-            <param name="RoleId"></param>
+            <param name="Dto"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.AccountController.Register(WebApi.ModelsAndDtoes.Account.RegisterDto)">
