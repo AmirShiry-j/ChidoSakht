@@ -36,8 +36,8 @@ namespace Persistence.Seeds
                 new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.Add.ToString(), Description = "ایجاد یک نقش" },
                 new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.Edit.ToString(), Description = "ویرایش یک نقش" },
                 new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.Delete.ToString(), Description = "حذف یک نقش" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.RoleUser.ToString(), Action = KeyNameAction.Add.ToString(), Description = "اختصاص دادن یک نقش به کاربر" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.RoleUser.ToString(), Action = KeyNameAction.Delete.ToString(), Description =  "برداشتن یک نقش از کاربر" },
+                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.UserRole.ToString(), Action = KeyNameAction.Add.ToString(), Description = "اختصاص دادن یک نقش به کاربر" },
+                new Permission { Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.UserRole.ToString(), Action = KeyNameAction.Delete.ToString(), Description =  "برداشتن یک نقش از کاربر" },
 
 
                 // Users manager

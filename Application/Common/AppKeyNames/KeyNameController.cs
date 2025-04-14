@@ -3,10 +3,10 @@
     public enum KeyNameController
     {
         Permission,
-        RolePermission,
         Role,
-        RoleUser,
+        RolePermission,
         User,
+        UserRole,
         Category,
     }
 }

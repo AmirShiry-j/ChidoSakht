@@ -111,26 +111,26 @@
             <param name="Dto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.RoleUserController.Post(System.String,System.String)">
-            <summary>
-            اختصاص دادن یک نقش به کاربر (Auth)
-            </summary>
-            <param name="RoleId"></param>
-            <param name="UserId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.RoleUserController.Delete(System.String,System.String)">
-            <summary>
-            برداشتن یک نقش از کاربر (Auth)
-            </summary>
-            <param name="RoleId"></param>
-            <param name="UserId"></param>
-            <returns></returns>
-        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.UserController.Get">
             <summary>
             برگردوندن لیست تمام کاربران (موقت) (Auth)
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.UserRoleController.Post(System.String,System.String)">
+            <summary>
+            اختصاص دادن یک نقش به کاربر (Auth)
+            </summary>
+            <param name="UserId"></param>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.UserRoleController.Delete(System.String,System.String)">
+            <summary>
+            برداشتن یک نقش از کاربر (Auth)
+            </summary>
+            <param name="UserId"></param>
+            <param name="RoleId"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.AccountController.Register(WebApi.ModelsAndDtoes.Account.RegisterDto)">

@@ -18,14 +18,14 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiController]
     [ApiVersion("1")]
     [Area("Admin")]
-    [Route("api/v{version:apiVersion}/[Area]/Role/{RoleId}/User/{UserId}")]
+    [Route("api/v{version:apiVersion}/[Area]/User/{UserId}/Role/{RoleId}")]
     [Authorize]
-    public class RoleUserController : ControllerBase
+    public class UserRoleController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly ILocalizationService _localization;
-        public RoleUserController(UserManager<User> userManager, RoleManager<Role> roleManager, ILocalizationService localization)
+        public UserRoleController(UserManager<User> userManager, RoleManager<Role> roleManager, ILocalizationService localization)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -35,12 +35,12 @@ namespace WebApi.Areas.Admin.Controllers
         /// <summary>
         /// اختصاص دادن یک نقش به کاربر (Auth)
         /// </summary>
-        /// <param name="RoleId"></param>
         /// <param name="UserId"></param>
+        /// <param name="RoleId"></param>
         /// <returns></returns>
-        [PermissionAuthorize(KeyNameController.RoleUser, KeyNameAction.Add, KeyNameArea.Admin)]
+        [PermissionAuthorize(KeyNameController.UserRole, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
-        public async Task<IActionResult> Post(string RoleId, string UserId)
+        public async Task<IActionResult> Post(string UserId, string RoleId)
         {
             //Find role
             var role = await _roleManager.FindByIdAsync(RoleId);
@@ -73,12 +73,12 @@ namespace WebApi.Areas.Admin.Controllers
         /// <summary>
         /// برداشتن یک نقش از کاربر (Auth)
         /// </summary>
-        /// <param name="RoleId"></param>
         /// <param name="UserId"></param>
+        /// <param name="RoleId"></param>
         /// <returns></returns>
-        [PermissionAuthorize(KeyNameController.RoleUser, KeyNameAction.Delete, KeyNameArea.Admin)]
+        [PermissionAuthorize(KeyNameController.UserRole, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete]
-        public async Task<IActionResult> Delete(string RoleId, string UserId)
+        public async Task<IActionResult> Delete(string UserId, string RoleId)
         {
             //Find role
             var role = await _roleManager.FindByIdAsync(RoleId);
