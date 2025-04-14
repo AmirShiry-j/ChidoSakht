@@ -90,21 +90,21 @@
             <param name="RoleId"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.RolePermissionsApiDto)">
             <summary>
             اضافه کردن دسترسی ها به نقش (Auth)
             </summary>
             <param name="Dto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.RolePermissionsApiDto)">
             <summary>
             ریست کردن و اختصاص دادن دوباره دسترسی ها به نقش (Auth)
             </summary>
             <param name="Dto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Delete(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Delete(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.RolePermissionsApiDto)">
             <summary>
             ریمو کردن دسترسی ها از نقش (Auth)
             </summary>

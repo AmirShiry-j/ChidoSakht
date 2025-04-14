@@ -82,10 +82,10 @@ namespace WebApi.Areas.Admin.Controllers
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.RolePermission, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
-        public async Task<ActionResult> Post(PermissionsRoleApiDto Dto)
+        public async Task<ActionResult> Post(RolePermissionsApiDto Dto)
         {
             //Map
-            var resultService = await _FacadePermissionService.AssignPermissionsService.Execute(new PermissionsRoleDto
+            var resultService = await _FacadePermissionService.AssignPermissionsService.Execute(new RolePermissionsDto
             {
                 PermissionIds = Dto.PermissionIds,
                 RoleId = Dto.RoleId,
@@ -108,10 +108,10 @@ namespace WebApi.Areas.Admin.Controllers
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.RolePermission, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut]
-        public async Task<ActionResult> Put(PermissionsRoleApiDto Dto)
+        public async Task<ActionResult> Put(RolePermissionsApiDto Dto)
         {
             //Map
-            var resultService = await _FacadePermissionService.ResetAndAssignPermissionsService.Execute(new PermissionsRoleDto
+            var resultService = await _FacadePermissionService.ResetAndAssignPermissionsService.Execute(new RolePermissionsDto
             {
                 PermissionIds = Dto.PermissionIds,
                 RoleId = Dto.RoleId,
@@ -134,10 +134,10 @@ namespace WebApi.Areas.Admin.Controllers
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.RolePermission, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete]
-        public async Task<ActionResult> Delete(PermissionsRoleApiDto Dto)
+        public async Task<ActionResult> Delete(RolePermissionsApiDto Dto)
         {
             //Map
-            var resultService = await _FacadePermissionService.UnAssignPermissionsService.Execute(new PermissionsRoleDto
+            var resultService = await _FacadePermissionService.UnAssignPermissionsService.Execute(new RolePermissionsDto
             {
                 PermissionIds = Dto.PermissionIds,
                 RoleId = Dto.RoleId,

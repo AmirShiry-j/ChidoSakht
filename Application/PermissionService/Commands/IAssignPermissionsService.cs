@@ -16,7 +16,7 @@ namespace Application.PermissionService.Commands
 {
     public interface IAssignPermissionsService
     {
-        Task<ResultDto> Execute(PermissionsRoleDto dto);
+        Task<ResultDto> Execute(RolePermissionsDto dto);
     }
     public class AssignPermissionService : IAssignPermissionsService
     {
@@ -28,7 +28,7 @@ namespace Application.PermissionService.Commands
             _localizationService = localizationService;
         }
 
-        public async Task<ResultDto> Execute(PermissionsRoleDto dto)
+        public async Task<ResultDto> Execute(RolePermissionsDto dto)
         {
             //check exist Role 
             var role = await _mediator.Send(new GetRoleByIdQuery(dto.RoleId));
@@ -65,7 +65,7 @@ namespace Application.PermissionService.Commands
             };
         }
     }
-    public class PermissionsRoleDto
+    public class RolePermissionsDto
     {
         public string RoleId { get; set; }
         public int[] PermissionIds { get; set; }
