@@ -44,40 +44,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Get">
-            <summary>
-            برگردوندن همه نقش ها با دسترسی های اختصاص داده شده بهشون (Auth)
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Get(System.String)">
-            <summary>
-            برگردوندن دسترسی های اختصاص داده شده به یک نقش (Auth)
-            </summary>
-            <param name="RoleId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
-            <summary>
-            اضافه کردن دسترسی ها به نقش (Auth)
-            </summary>
-            <param name="Dto"></param>
-            <returns></returns>
-        </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
-            <summary>
-            ریست کردن و اختصاص دادن دوباره دسترسی ها به نقش (Auth)
-            </summary>
-            <param name="Dto"></param>
-            <returns></returns>
-        </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.PermissionRoleController.Delete(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
-            <summary>
-            ریمو کردن دسترسی ها از نقش (Auth)
-            </summary>
-            <param name="Dto"></param>
-            <returns></returns>
-        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">
             <summary>
             برگردوندن لیست نقش ها در سایت (Auth)
@@ -109,6 +75,40 @@
             حذف یک نقش از سایت (Auth)
             </summary>
             <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Get">
+            <summary>
+            برگردوندن همه نقش ها با دسترسی های اختصاص داده شده بهشون (Auth)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Get(System.String)">
+            <summary>
+            برگردوندن دسترسی های اختصاص داده شده به یک نقش (Auth)
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
+            <summary>
+            اضافه کردن دسترسی ها به نقش (Auth)
+            </summary>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
+            <summary>
+            ریست کردن و اختصاص دادن دوباره دسترسی ها به نقش (Auth)
+            </summary>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RolePermissionController.Delete(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.PermissionsRoleApiDto)">
+            <summary>
+            ریمو کردن دسترسی ها از نقش (Auth)
+            </summary>
+            <param name="Dto"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleUserController.Post(System.String,System.String)">

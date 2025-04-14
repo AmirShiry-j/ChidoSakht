@@ -28,8 +28,8 @@ namespace Persistence.Seeds
             {
                 // Permissions
                 new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Permission.ToString(), Action = KeyNameAction.View.ToString(), Description = "مشاهده همه دسترسی ها" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.PermissionRole.ToString(), Action =  KeyNameAction.Add.ToString(), Description = "اضافه کردن یک دسترسی به نقش" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.PermissionRole.ToString(), Action = KeyNameAction.Delete.ToString(), Description = "ریمو کردن یک دسترسی از نقش" },
+                new Permission { Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.RolePermission.ToString(), Action =  KeyNameAction.Add.ToString(), Description = "اضافه کردن یک دسترسی به نقش" },
+                new Permission { Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.RolePermission.ToString(), Action = KeyNameAction.Delete.ToString(), Description = "ریمو کردن یک دسترسی از نقش" },
 
                 //Roles
                 new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.View.ToString(), Description = "دیدن همه نقش ها" },

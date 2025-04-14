@@ -19,13 +19,13 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiController]
     [ApiVersion("1")]
     [Area("Admin")]
-    [Route("api/v{version:apiVersion}/[Area]/PermissionRole/")]
+    [Route("api/v{version:apiVersion}/[Area]/[Controller]/")]
     [Authorize]
-    public class PermissionRoleController : ControllerBase
+    public class RolePermissionController : ControllerBase
     {
         private readonly IFacadePermissionService _FacadePermissionService;
         private readonly ILocalizationService _localizationService;
-        public PermissionRoleController(IFacadePermissionService FacadePermissionService, ILocalizationService localizationService)
+        public RolePermissionController(IFacadePermissionService FacadePermissionService, ILocalizationService localizationService)
         {
             _FacadePermissionService = FacadePermissionService;
             _localizationService = localizationService;
@@ -35,7 +35,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// برگردوندن همه نقش ها با دسترسی های اختصاص داده شده بهشون (Auth)
         /// </summary>
         /// <returns></returns>
-        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.View, KeyNameArea.Admin)]
+        [PermissionAuthorize(KeyNameController.RolePermission, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet]
         public async Task<ActionResult> Get()
         {
@@ -58,7 +58,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="RoleId"></param>
         /// <returns></returns>
 
-        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.View, KeyNameArea.Admin)]
+        [PermissionAuthorize(KeyNameController.RolePermission, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet("{RoleId}")]
         public async Task<ActionResult> Get(string RoleId)
         {
@@ -80,7 +80,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="Dto"></param>
         /// <returns></returns>
-        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Add, KeyNameArea.Admin)]
+        [PermissionAuthorize(KeyNameController.RolePermission, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
         public async Task<ActionResult> Post(PermissionsRoleApiDto Dto)
         {
@@ -106,7 +106,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="Dto"></param>
         /// <returns></returns>
-        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Edit, KeyNameArea.Admin)]
+        [PermissionAuthorize(KeyNameController.RolePermission, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut]
         public async Task<ActionResult> Put(PermissionsRoleApiDto Dto)
         {
@@ -132,7 +132,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="Dto"></param>
         /// <returns></returns>
-        [PermissionAuthorize(KeyNameController.PermissionRole, KeyNameAction.Delete, KeyNameArea.Admin)]
+        [PermissionAuthorize(KeyNameController.RolePermission, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete]
         public async Task<ActionResult> Delete(PermissionsRoleApiDto Dto)
         {
