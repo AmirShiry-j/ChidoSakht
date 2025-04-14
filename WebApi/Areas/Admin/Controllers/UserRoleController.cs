@@ -44,30 +44,37 @@ namespace WebApi.Areas.Admin.Controllers
         {
             //Find user
             var user = await _userManager.FindByIdAsync(Dto.UserId);
-            if (user == null)
+            if (user is null)
             {
                 return NotFound(_localization.GetMessageAccount(MessageKeysAccount.UserIdNotFound.ToString()));
             }
 
-            //Find role
-            var role = await _roleManager.FindByIdAsync(Dto.RoleIds[0]);
-            if (role == null)
+            //Find roles
+            var notFoundRoleIds = new List<string>();
+            var roles = new List<Role>();
             {
-                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
+                foreach (var roleId in Dto.RoleIds)
+                {
+                    var role = await _roleManager.FindByIdAsync(roleId);
+                    if (role is not null)
+                        roles.Add(role);
+                    else
+                        notFoundRoleIds.Add(roleId);
+                }
+                if (notFoundRoleIds.Any())
+                {
+                    var str = notFoundRoleIds.Select(p => "'" + p + "'").Aggregate((p1, p2) => p1 + "," + p2);
+                    return NotFound(string.Format(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()), str));
+                }
             }
 
             //Add role to user
-            var resultAddRoleToUser = await _userManager.AddToRoleAsync(user, role.Name);
-            if (resultAddRoleToUser.Succeeded)
+            foreach (var role in roles)
             {
-                return Ok();
+                var resultAddRoleToUser = await _userManager.AddToRoleAsync(user, role.Name);
             }
-            else
-            {
-                //Return error
-                var error = resultAddRoleToUser.Errors.Select(p => p.Description).Aggregate((p1, p2) => p1 + "," + p2);
-                return BadRequest(error);
-            }
+
+            return NoContent();
         }
 
         /// <summary>
@@ -86,25 +93,32 @@ namespace WebApi.Areas.Admin.Controllers
                 return NotFound(_localization.GetMessageAccount(MessageKeysAccount.UserIdNotFound.ToString()));
             }
 
-            //Find role
-            var role = await _roleManager.FindByIdAsync(Dto.RoleIds[0]);
-            if (role == null)
+            //Find roles
+            var notFoundRoleIds = new List<string>();
+            var roles = new List<Role>();
             {
-                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
+                foreach (var roleId in Dto.RoleIds)
+                {
+                    var role = await _roleManager.FindByIdAsync(roleId);
+                    if (role is not null)
+                        roles.Add(role);
+                    else
+                        notFoundRoleIds.Add(roleId);
+                }
+                if (notFoundRoleIds.Any())
+                {
+                    var str = notFoundRoleIds.Select(p => "'" + p + "'").Aggregate((p1, p2) => p1 + "," + p2);
+                    return NotFound(string.Format(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()), str));
+                }
             }
 
             //Remove role to user
-            var resultRemoveRoleToUser = await _userManager.RemoveFromRoleAsync(user, role.Name);
-            if (resultRemoveRoleToUser.Succeeded)
+            foreach (var role in roles)
             {
-                return Ok();
+                var resultAddRoleToUser = await _userManager.RemoveFromRoleAsync(user, role.Name);
             }
-            else
-            {
-                //Return error
-                var error = resultRemoveRoleToUser.Errors.Select(p => p.Description).Aggregate((p1, p2) => p1 + "," + p2);
-                return BadRequest(error);
-            }
+
+            return NoContent();
         }
     }
 }

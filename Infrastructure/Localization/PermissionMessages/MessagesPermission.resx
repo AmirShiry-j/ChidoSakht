@@ -136,6 +136,6 @@
     <value>این دسترسی قبلا به نقش اختصاص یافته است</value>
   </data>
   <data name="RoleIdNotFound" xml:space="preserve">
-    <value>نقشی با آیدی ارسال شده موجود نیست</value>
+    <value>نقشی با آیدی های {0} موجود نیست</value>
   </data>
 </root>

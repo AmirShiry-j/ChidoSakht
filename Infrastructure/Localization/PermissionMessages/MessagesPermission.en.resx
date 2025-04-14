@@ -136,6 +136,6 @@
     <value>This access has already been assigned to the role.</value>
   </data>
   <data name="RoleIdNotFound" xml:space="preserve">
-    <value>The painting with the submitted ID is not available.</value>
+    <value>There are no roles with IDs {0}.</value>
   </data>
 </root>

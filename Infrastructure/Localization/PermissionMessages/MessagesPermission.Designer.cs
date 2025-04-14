@@ -115,7 +115,7 @@ namespace Infrastructure.Localization.PermissionMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to نقشی با آیدی ارسال شده موجود نیست.
+        ///   Looks up a localized string similar to نقشی با آیدی های {0} موجود نیست.
         /// </summary>
         internal static string RoleIdNotFound {
             get {
