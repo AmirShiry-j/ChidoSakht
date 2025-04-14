@@ -31,12 +31,10 @@ namespace Application.PermissionService.Queries
     public class GetAssignedPermissionIdsQuery : IRequest<List<RolePermission>>
     {
         public string RoleId { get; set; }
-        public int[] PermissionsIds { get; set; }
 
-        public GetAssignedPermissionIdsQuery(string roleId, int[] permissionsIds)
+        public GetAssignedPermissionIdsQuery(string roleId)
         {
             RoleId = roleId;
-            PermissionsIds = permissionsIds;
         }
     }
     public class GetExitingPermissionsByIdsQuery : IRequest<List<Permission>>

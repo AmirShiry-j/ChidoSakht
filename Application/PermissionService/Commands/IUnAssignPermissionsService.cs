@@ -45,17 +45,11 @@ namespace Application.PermissionService.Commands
             var existingPermissionIds = existingPermissions.Select(p => p.Id).ToArray();
 
             //Get AssignedPermissionRoles
-            var assignedPermissions = await _mediator.Send(new GetAssignedPermissionIdsQuery(dto.RoleId, existingPermissionIds));
-            if (assignedPermissions is not null && assignedPermissions.Count == dto.PermissionIds.Count())
-            {
-                return new ResultDto
-                {
-                    IsSuccess = true
-                };
-            }
+            var assignedPermissions = await _mediator.Send(new GetAssignedPermissionIdsQuery(dto.RoleId));
+            var assignedPermissionsForDelete = assignedPermissions.Where(p => existingPermissionIds.Contains(p.PermissionId)).ToList();
 
             //UnAssign Permissions to Role
-            await _mediator.Send(new UnAssignPermissionsCommand(assignedPermissions));
+            await _mediator.Send(new UnAssignPermissionsCommand(assignedPermissionsForDelete));
             return new ResultDto
             {
                 IsSuccess = true

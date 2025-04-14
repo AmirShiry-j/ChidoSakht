@@ -52,19 +52,13 @@ namespace Application.PermissionService.Commands
             var existingPermissionIds = existingPermissions.Select(p => p.Id).ToArray();
 
             //Get AssignedPermissionRoles
-            var assignedPermissions = await _mediator.Send(new GetAssignedPermissionIdsQuery(dto.RoleId, existingPermissionIds));
-            if (assignedPermissions is not null && assignedPermissions.Count == dto.PermissionIds.Count())
-            {
-                return new ResultDto
-                {
-                    IsSuccess = true
-                };
-            }
+            var assignedPermissions = await _mediator.Send(new GetAssignedPermissionIdsQuery(dto.RoleId));
             var assinedPermissionsIds = assignedPermissions.Select(p => p.PermissionId).ToArray();
 
             //UnAssign Permissions to Role
             var newPermissonIdsForAssign = existingPermissionIds.Where(p => !assinedPermissionsIds.Contains(p)).ToArray();
-            await _mediator.Send(new AssignPermissionsCommand(dto.RoleId, newPermissonIdsForAssign));
+            if (newPermissonIdsForAssign.Count() > 0)
+                await _mediator.Send(new AssignPermissionsCommand(dto.RoleId, newPermissonIdsForAssign));
             return new ResultDto
             {
                 IsSuccess = true

@@ -22,7 +22,7 @@ namespace Persistence.Permissions.Queries
         {
             //check has any record
             return await _context.RolePermissions
-                .Where(p=>p.RoleId.Equals(request.RoleId)&&request.PermissionsIds.Contains(p.PermissionId))
+                .Where(p => p.RoleId.Equals(request.RoleId))
                 .ToListAsync(cancellationToken);
         }
     }
