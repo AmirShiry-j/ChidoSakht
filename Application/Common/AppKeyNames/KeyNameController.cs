@@ -5,6 +5,7 @@
         Permission,
         Role,
         RolePermission,
+        RoleUser,
         User,
         UserRole,
         Category,

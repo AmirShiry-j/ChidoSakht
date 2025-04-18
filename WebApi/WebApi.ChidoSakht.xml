@@ -111,6 +111,19 @@
             <param name="Dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RoleUserController.Get">
+            <summary>
+            برگردوندن همه نقش ها و کاربران موجود در اونها (Auth)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RoleUserController.Get(System.String)">
+            <summary>
+            برگردوندن کاربران موجود در یک نقش (Auth)
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.UserController.Get">
             <summary>
             برگردوندن لیست تمام کاربران (موقت) (Auth)
