@@ -117,6 +117,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.UserRoleController.Get(System.String)">
+            <summary>
+            برگردوندن نقش های اختصاص داده شده به یک کاربر (Auth)
+            </summary>
+            <param name="UserId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.UserRoleController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.UserRolesApiDto)">
             <summary>
             اختصاص دادن نقش ها به یک کاربر (Auth)

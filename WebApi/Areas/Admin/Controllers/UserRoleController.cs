@@ -1,4 +1,5 @@
 ﻿using Application.Common.AppKeyNames;
+using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Domain.Users;
@@ -7,11 +8,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Areas.Admin.ModelsAndDtoes.Permissions;
+using WebApi.Areas.Admin.ModelsAndDtoes.Roles;
 using WebApi.Filters.Permissions;
 
 namespace WebApi.Areas.Admin.Controllers
@@ -31,6 +34,38 @@ namespace WebApi.Areas.Admin.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
             _localization = localization;
+        }
+
+        /// <summary>
+        /// برگردوندن نقش های اختصاص داده شده به یک کاربر (Auth)
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.UserRole, KeyNameAction.View, KeyNameArea.Admin)]
+        [HttpGet("{UserId}")]
+        public async Task<ActionResult> Get(string UserId)
+        {
+            //Find user
+            var user = await _userManager.FindByIdAsync(UserId);
+            if (user is null)
+            {
+                return NotFound(_localization.GetMessageAccount(MessageKeysAccount.UserIdNotFound.ToString()));
+            }
+
+            //find roles
+            var roleNames = await _userManager.GetRolesAsync(user);
+            var roles = new List<RoleApiDto>();
+            if (roleNames.Any())
+            {
+                roles = await _roleManager.Roles.Where(p => roleNames.Contains(p.Name)).Select(p => new RoleApiDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description
+                }).ToListAsync();
+            }
+
+            return Ok(roles);
         }
 
         /// <summary>
