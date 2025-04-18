@@ -120,5 +120,54 @@ namespace WebApi.Areas.Admin.Controllers
 
             return NoContent();
         }
+
+        /// <summary>
+        /// ریست کردن کردن و اختصاص دادن دوباره نقش ها به کاربر (Auth)
+        /// </summary>
+        /// <param name="Dto"></param>
+        /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.UserRole, KeyNameAction.Edit, KeyNameArea.Admin)]
+        [HttpPut]
+        public async Task<IActionResult> Put(UserRolesApiDto Dto)
+        {
+            //Find user
+            var user = await _userManager.FindByIdAsync(Dto.UserId);
+            if (user == null)
+            {
+                return NotFound(_localization.GetMessageAccount(MessageKeysAccount.UserIdNotFound.ToString()));
+            }
+
+            //Find roles
+            var notFoundRoleIds = new List<string>();
+            var roles = new List<Role>();
+            foreach (var roleId in Dto.RoleIds)
+            {
+                var role = await _roleManager.FindByIdAsync(roleId);
+                if (role is not null)
+                    roles.Add(role);
+                else
+                    notFoundRoleIds.Add(roleId);
+            }
+            if (notFoundRoleIds.Any())
+            {
+                var str = notFoundRoleIds.Select(p => "'" + p + "'").Aggregate((p1, p2) => p1 + "," + p2);
+                return NotFound(string.Format(_localization.GetMessagePermission(MessageKeysPermission.RoleIdsNotFound.ToString()), str));
+            }
+
+            //Remove existing roles from this user
+            var existingAssinedRoles = await _userManager.GetRolesAsync(user);
+            foreach (var roleName in existingAssinedRoles)
+            {
+                var resultAddRoleToUser = await _userManager.RemoveFromRoleAsync(user, roleName);
+            }
+
+            //Assing again roles to user
+            foreach (var role in roles)
+            {
+                var resultAddRoleToUser = await _userManager.AddToRoleAsync(user, role.Name);
+            }
+
+            return NoContent();
+        }
     }
 }

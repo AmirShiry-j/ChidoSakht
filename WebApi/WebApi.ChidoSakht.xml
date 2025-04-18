@@ -131,6 +131,13 @@
             <param name="Dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.UserRoleController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Permissions.UserRolesApiDto)">
+            <summary>
+            ریست کردن کردن و اختصاص دادن دوباره نقش ها به کاربر (Auth)
+            </summary>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.AccountController.Register(WebApi.ModelsAndDtoes.Account.RegisterDto)">
             <summary>
             ساختن حساب کاربری
