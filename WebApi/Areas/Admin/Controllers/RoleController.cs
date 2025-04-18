@@ -82,8 +82,12 @@ namespace WebApi.Areas.Admin.Controllers
         [HttpGet("{RoleId}")]
         public async Task<IActionResult> Get(string RoleId)
         {
-            //Get one role by id
+            //Find Role
             var role = await _roleManager.FindByIdAsync(RoleId);
+            if (role is null)
+            {
+                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
+            }
 
             //Map to model
             RoleDto model = null;
@@ -164,8 +168,14 @@ namespace WebApi.Areas.Admin.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(EditRoleDto model)
         {
-            //Find role by id
+            //Find Role
             var role = await _roleManager.FindByIdAsync(model.Id);
+            if (role is null)
+            {
+                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
+            }
+
+            //Check exist role
             if (role == null)
             {
                 ////Create new role for not founding role 
@@ -213,8 +223,12 @@ namespace WebApi.Areas.Admin.Controllers
         [HttpDelete("{RoleId}")]
         public async Task<IActionResult> Delete(string RoleId)
         {
-            //Find role
+            //Find Role
             var role = await _roleManager.FindByIdAsync(RoleId);
+            if (role is null)
+            {
+                return NotFound(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()));
+            }
 
             //Check exist role
             if (role == null)

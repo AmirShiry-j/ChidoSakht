@@ -362,13 +362,13 @@ namespace WebApi.Controllers
 
             if (string.IsNullOrEmpty(token))
             {
-                return Ok();
+                return NoContent();
             }
 
             //Delete it
             _userTokenService.DeleteToken(new SecurityHasher().GetSha256Hash(token));
 
-            return Ok();
+            return NoContent();
         }
 
 
@@ -399,7 +399,7 @@ namespace WebApi.Controllers
             //Check success changes
             if (resultChangePassword.Succeeded)
             {
-                return Ok();
+                return NoContent();
             }
             else
             {
