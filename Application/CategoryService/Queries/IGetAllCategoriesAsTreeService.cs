@@ -10,7 +10,7 @@ namespace Application.CategoryService.Queries
 {
     public interface IGetAllCategoriesAsTreeService
     {
-        Task<ResultDto<List<BriefCategoryDto>>> Execute();
+        Task<ResultDto<AllCategoryDto>> Execute();
     }
     public class GetAllCategoriesAsTreeService : IGetAllCategoriesAsTreeService
     {
@@ -20,15 +20,18 @@ namespace Application.CategoryService.Queries
             _mediator = mediator;
         }
 
-        public async Task<ResultDto<List<BriefCategoryDto>>> Execute()
+        public async Task<ResultDto<AllCategoryDto>> Execute()
         {
             //Get all categories from db
             var allCategories = await _mediator.Send(new GetAllCategoriesAsTreeQuery());
 
-            return new ResultDto<List<BriefCategoryDto>>
+            return new ResultDto<AllCategoryDto>
             {
                 IsSuccess = true,
-                Data = allCategories,
+                Data = new AllCategoryDto
+                {
+                    AllCategories = allCategories
+                },
             };
         }
     }
@@ -38,5 +41,10 @@ namespace Application.CategoryService.Queries
         public int Id { get; set; }
         public string Name { get; set; }
         public List<BriefCategoryDto> ChildCategories { get; set; }
+    }
+    public class AllCategoryDto
+    {
+        public List<BriefCategoryDto> AllCategories { get; set; }
+        public List<Link> Links { get; set; }
     }
 }

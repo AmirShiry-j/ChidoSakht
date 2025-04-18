@@ -47,6 +47,22 @@ namespace WebApi.Areas.Admin.Controllers
 
             if (resultService.IsSuccess)
             {
+                resultService.Data.Links = new List<Link>
+                    {
+                        new Link
+                        {
+                            For="sample link for Update",
+                            HttpMethod=HttpMethod.Put.ToString(),
+                            Url=Url.Action(nameof(Put),nameof(CategoryController).Replace("Controller", ""),new { Area="Admin" },Request.Scheme)
+                        },
+                        new Link
+                        {
+                            For="sample link for Delete",
+                            HttpMethod=HttpMethod.Delete.ToString(),
+                            Url=Url.Action(nameof(Delete),nameof(CategoryController).Replace("Controller", ""),new { Area="Admin" ,CategoryId=(0).ToString() },Request.Scheme)
+                        },
+                    };
+
                 return Ok(resultService.Data);
             }
             else
