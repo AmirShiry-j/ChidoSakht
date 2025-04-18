@@ -78,6 +78,7 @@ namespace Persistence.Contexts
             builder.ApplyConfiguration(new UserConfig());
             builder.ApplyConfiguration(new RoleConfig());
             builder.ApplyConfiguration(new TokenConfig());
+            builder.ApplyConfiguration(new PermissionConfig());
 
             //Categories
             builder.ApplyConfiguration(new CategoryConfig());

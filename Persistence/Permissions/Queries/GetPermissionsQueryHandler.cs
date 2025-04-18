@@ -48,9 +48,10 @@ namespace Persistence.Permissions.Queries
 
             return await _context.Permissions
                 .Where(prPermi)
-                .OrderBy(p => p.Area)
-                .ThenBy(p => p.Controller)
-                .ThenBy(p => p.Action)
+                .OrderBy(p => p.Id)
+                //.OrderBy(p => p.Area)
+                //.ThenBy(p => p.Controller)
+                //.ThenBy(p => p.Action)
                 .Select(p => new PermissionDto
                 {
                     Id = p.Id,

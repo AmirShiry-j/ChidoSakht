@@ -22,66 +22,80 @@ namespace Persistence.Seeds
             //await context.SaveChangesAsync();
 
             //Add Permissions
-            if (!await context.Permissions.AnyAsync())
+            var permissions = new List<Permission>
             {
-                var permissions = new List<Permission>
-            {
-                // Permissions
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Permission.ToString(), Action = KeyNameAction.View.ToString(), Description = "مشاهده همه دسترسی ها" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.RolePermission.ToString(), Action =  KeyNameAction.Add.ToString(), Description = "اضافه کردن یک دسترسی به نقش" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.RolePermission.ToString(), Action = KeyNameAction.Delete.ToString(), Description = "ریمو کردن یک دسترسی از نقش" },
-
-                //Roles
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.View.ToString(), Description = "دیدن همه نقش ها" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.Add.ToString(), Description = "ایجاد یک نقش" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.Edit.ToString(), Description = "ویرایش یک نقش" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.Delete.ToString(), Description = "حذف یک نقش" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.UserRole.ToString(), Action = KeyNameAction.Add.ToString(), Description = "اختصاص دادن یک نقش به کاربر" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.UserRole.ToString(), Action = KeyNameAction.Delete.ToString(), Description =  "برداشتن یک نقش از کاربر" },
-
-
-                // Users manager
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.User.ToString(), Action = KeyNameAction.View.ToString(), Description = "مشاهده کاربران" },
-
-                // Categories
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.View.ToString(), Description = "مشاهده دسته بندی ها" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Add.ToString(), Description = "ایجاد دسته بندی" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Edit.ToString(), Description = "ویرایش دسته بندی" },
-                new Permission { Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Delete.ToString(), Description = "حذف دسته بندی" }
+                // User
+                new Permission { Id=1, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.User.ToString(), Action = KeyNameAction.View.ToString(), Description = "مشاهده کاربران" },
+                                 
+                // Permission    
+                new Permission { Id=2, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Permission.ToString(), Action = KeyNameAction.View.ToString(), Description = "مشاهده دسترسی ها" },
+                                 
+                //Role           
+                new Permission { Id=3, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.View.ToString(), Description = "دیدن نقش ها" },
+                new Permission { Id=4, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.Add.ToString(), Description = "ایجاد یک نقش" },
+                new Permission { Id=5, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.Edit.ToString(), Description = "ویرایش یک نقش" },
+                new Permission { Id=6, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Role.ToString(), Action = KeyNameAction.Delete.ToString(), Description = "حذف یک نقش" },
+                                 
+                //RolePermission 
+                new Permission { Id=7, Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.RolePermission.ToString(), Action =  KeyNameAction.View.ToString(), Description = "دیدن دسترسی های اختصاص داده شده به نقش ها" },
+                new Permission { Id=8, Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.RolePermission.ToString(), Action =  KeyNameAction.Add.ToString(), Description = "اضافه کردن دسترسی ها به نقش" },
+                new Permission { Id=9, Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.RolePermission.ToString(), Action =  KeyNameAction.Edit.ToString(), Description = "ریست کردن و اختصاص دادن دوباره دسترسی های به نقش" },
+                new Permission { Id=10, Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.RolePermission.ToString(), Action = KeyNameAction.Delete.ToString(), Description = "ریمو کردن دسترسی ها از نقش" },
+                                 
+                //UserRole       
+                new Permission { Id=11, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.UserRole.ToString(), Action = KeyNameAction.View.ToString(), Description = "دیدن نقش های اختصاص داده شده به یک کاربر" },
+                new Permission { Id=12, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.UserRole.ToString(), Action = KeyNameAction.Add.ToString(), Description = "اختصاص دادن نقش ها به یک کاربر" },
+                new Permission { Id=13, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.UserRole.ToString(), Action = KeyNameAction.Edit.ToString(), Description = "ریست کردن و اختصاص دادن دوباره نقش ها به کاربر" },
+                new Permission { Id=14, Area = KeyNameArea.Admin.ToString(), Controller =  KeyNameController.UserRole.ToString(), Action = KeyNameAction.Delete.ToString(), Description =  "برداشتن نقش ها از یک کاربر" },
+                                 
+                //RoleUser       
+                new Permission { Id=15, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.RoleUser.ToString(), Action = KeyNameAction.View.ToString(), Description = "دیدن کاربران موجود در نقش ها" },
+                                 
+                // Categories    
+                new Permission { Id=16, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.View.ToString(), Description = "مشاهده دسته بندی ها" },
+                new Permission { Id=17, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Add.ToString(), Description = "ایجاد دسته بندی" },
+                new Permission { Id=18, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Edit.ToString(), Description = "ویرایش دسته بندی" },
+                new Permission { Id=19, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Delete.ToString(), Description = "حذف دسته بندی" }
             };
 
-                await context.Permissions.AddRangeAsync(permissions);
+            //Insert new permissions in list if does exist in db
+            var existingPermissionIdsInDb = await context.Permissions.Select(p => p.Id).ToListAsync();
+            var newPermissionsForInsert = permissions.Where(p => !existingPermissionIdsInDb.Contains(p.Id)).ToList();
+            if (newPermissionsForInsert.Any())
+            {
+                await context.Permissions.AddRangeAsync(newPermissionsForInsert);
                 await context.SaveChangesAsync();
             }
 
-            // Add Roles
-            if (!await context.Roles.AnyAsync())
-            {
-                var role = new Role { Name = "Admin", Description = "ادمین" };
-                await roleManager.CreateAsync(role);
-            }
 
-            // add Permissions to Roles
-            var adminRole = await roleManager.FindByNameAsync("Admin");
-            if (adminRole != null)
-            {
-                var adminPermissions = await context.Permissions.ToListAsync();
-                foreach (var permission in adminPermissions)
-                {
-                    var exists = await context.RolePermissions
-                        .AnyAsync(rp => rp.RoleId == adminRole.Id && rp.PermissionId == permission.Id);
+            //// Add Roles
+            //if (!await context.Roles.AnyAsync())
+            //{
+            //    var role = new Role { Name = "Admin", Description = "ادمین" };
+            //    await roleManager.CreateAsync(role);
+            //}
 
-                    if (!exists)
-                    {
-                        context.RolePermissions.Add(new RolePermission
-                        {
-                            RoleId = adminRole.Id,
-                            PermissionId = permission.Id
-                        });
-                    }
-                }
-                await context.SaveChangesAsync();
-            }
+            //// add Permissions to Roles
+            //var adminRole = await roleManager.FindByNameAsync("Admin");
+            //if (adminRole != null)
+            //{
+            //    var adminPermissions = await context.Permissions.ToListAsync();
+            //    foreach (var permission in adminPermissions)
+            //    {
+            //        var exists = await context.RolePermissions
+            //            .AnyAsync(rp => rp.RoleId == adminRole.Id && rp.PermissionId == permission.Id);
+
+            //        if (!exists)
+            //        {
+            //            context.RolePermissions.Add(new RolePermission
+            //            {
+            //                RoleId = adminRole.Id,
+            //                PermissionId = permission.Id
+            //            });
+            //        }
+            //    }
+            //    await context.SaveChangesAsync();
+            //}
         }
     }
 }
