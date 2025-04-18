@@ -1,6 +1,7 @@
 ﻿using Application.CategoryService;
 using Application.CategoryService.Commands;
 using Application.Common.AppKeyNames;
+using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Application.PermissionService.Commands;
@@ -65,13 +66,21 @@ namespace WebApi.Areas.Admin.Controllers
             //Map
             var resultService = await _FacadePermissionService.GetAssignedPermissionsInARoleService.Execute(RoleId);
 
+            //return result
             if (resultService.IsSuccess)
             {
                 return Ok(resultService.Data);
             }
             else
             {
-                return BadRequest(resultService.Message);
+                if (resultService.MessageEventType.HasValue && resultService.MessageEventType.Value.Equals(MessageEventType.NotFound))
+                {
+                    return NotFound(resultService.Message);
+                }
+                else
+                {
+                    return BadRequest(resultService.Message);
+                }
             }
         }
 
@@ -91,13 +100,21 @@ namespace WebApi.Areas.Admin.Controllers
                 RoleId = Dto.RoleId,
             });
 
+            //return result
             if (resultService.IsSuccess)
             {
                 return NoContent();
             }
             else
             {
-                return BadRequest(resultService.Message);
+                if (resultService.MessageEventType.HasValue && resultService.MessageEventType.Value.Equals(MessageEventType.NotFound))
+                {
+                    return NotFound(resultService.Message);
+                }
+                else
+                {
+                    return BadRequest(resultService.Message);
+                }
             }
         }
 
@@ -117,13 +134,21 @@ namespace WebApi.Areas.Admin.Controllers
                 RoleId = Dto.RoleId,
             });
 
+            //return result
             if (resultService.IsSuccess)
             {
                 return NoContent();
             }
             else
             {
-                return BadRequest(resultService.Message);
+                if (resultService.MessageEventType.HasValue && resultService.MessageEventType.Value.Equals(MessageEventType.NotFound))
+                {
+                    return NotFound(resultService.Message);
+                }
+                else
+                {
+                    return BadRequest(resultService.Message);
+                }
             }
         }
 
@@ -143,13 +168,21 @@ namespace WebApi.Areas.Admin.Controllers
                 RoleId = Dto.RoleId,
             });
 
+            //return result
             if (resultService.IsSuccess)
             {
                 return NoContent();
             }
             else
             {
-                return BadRequest(resultService.Message);
+                if (resultService.MessageEventType.HasValue && resultService.MessageEventType.Value.Equals(MessageEventType.NotFound))
+                {
+                    return NotFound(resultService.Message);
+                }
+                else
+                {
+                    return BadRequest(resultService.Message);
+                }
             }
         }
     }

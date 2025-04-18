@@ -6,8 +6,10 @@
         RoleDoesntHavePermissionBefore,
         PermissionIdNotFound,
         RoleIdNotFound,
+        RoleIdsNotFound,
         AtleastOneAdmin,
         CantEditNameRoleAdmin,//موق
-        CantDeleteRoleAdmin
+        CantDeleteRoleAdmin,
+        PermissionIdsNotFound,
     }
 }

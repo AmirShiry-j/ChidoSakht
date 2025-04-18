@@ -64,7 +64,7 @@ namespace WebApi.Areas.Admin.Controllers
                 if (notFoundRoleIds.Any())
                 {
                     var str = notFoundRoleIds.Select(p => "'" + p + "'").Aggregate((p1, p2) => p1 + "," + p2);
-                    return NotFound(string.Format(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()), str));
+                    return NotFound(string.Format(_localization.GetMessagePermission(MessageKeysPermission.RoleIdsNotFound.ToString()), str));
                 }
             }
 
@@ -108,7 +108,7 @@ namespace WebApi.Areas.Admin.Controllers
                 if (notFoundRoleIds.Any())
                 {
                     var str = notFoundRoleIds.Select(p => "'" + p + "'").Aggregate((p1, p2) => p1 + "," + p2);
-                    return NotFound(string.Format(_localization.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()), str));
+                    return NotFound(string.Format(_localization.GetMessagePermission(MessageKeysPermission.RoleIdsNotFound.ToString()), str));
                 }
             }
 

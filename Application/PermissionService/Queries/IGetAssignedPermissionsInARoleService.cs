@@ -1,5 +1,6 @@
 ﻿using Application.CategoryService.Queries;
 using Application.Common.Dtoes;
+using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Application.PermissionService.Commands;
@@ -36,7 +37,8 @@ namespace Application.PermissionService.Queries
             {
                 return new ResultDto<List<PermissionDto>>
                 {
-                    Message = _localizationService.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString())
+                    Message = _localizationService.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()),
+                    MessageEventType = MessageEventType.NotFound
                 };
             }
 
@@ -57,7 +59,7 @@ namespace Application.PermissionService.Queries
                 return new ResultDto<List<PermissionDto>>
                 {
                     IsSuccess = true,
-                    Data = new List<PermissionDto> { } ,
+                    Data = new List<PermissionDto> { },
                 };
             }
         }

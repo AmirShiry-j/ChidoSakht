@@ -88,11 +88,11 @@ namespace Infrastructure.Localization.PermissionMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to دسترسی با آیدی ارسال شده موجود نیست.
+        ///   Looks up a localized string similar to دسترسی با آیدی های {0} موجود نیست..
         /// </summary>
-        internal static string PermissionIdNotFound {
+        internal static string PermissionIdsNotFound {
             get {
-                return ResourceManager.GetString("PermissionIdNotFound", resourceCulture);
+                return ResourceManager.GetString("PermissionIdsNotFound", resourceCulture);
             }
         }
         
@@ -115,11 +115,20 @@ namespace Infrastructure.Localization.PermissionMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to نقشی با آیدی های {0} موجود نیست.
+        ///   Looks up a localized string similar to نقشی با آیدی ارسال شده موجود نیست..
         /// </summary>
         internal static string RoleIdNotFound {
             get {
                 return ResourceManager.GetString("RoleIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نقشی با آیدی های {0} موجود نیست..
+        /// </summary>
+        internal static string RoleIdsNotFound {
+            get {
+                return ResourceManager.GetString("RoleIdsNotFound", resourceCulture);
             }
         }
     }

@@ -126,8 +126,8 @@
   <data name="CantEditNameRoleAdmin" xml:space="preserve">
     <value>نام نقش ادمین قابل ادیت نیست</value>
   </data>
-  <data name="PermissionIdNotFound" xml:space="preserve">
-    <value>دسترسی با آیدی ارسال شده موجود نیست</value>
+  <data name="PermissionIdsNotFound" xml:space="preserve">
+    <value>دسترسی با آیدی های {0} موجود نیست.</value>
   </data>
   <data name="RoleDoesntHavePermissionBefore" xml:space="preserve">
     <value>نقش از قبل دارای این دسترسی نیست</value>
@@ -136,6 +136,9 @@
     <value>این دسترسی قبلا به نقش اختصاص یافته است</value>
   </data>
   <data name="RoleIdNotFound" xml:space="preserve">
-    <value>نقشی با آیدی های {0} موجود نیست</value>
+    <value>نقشی با آیدی ارسال شده موجود نیست.</value>
+  </data>
+  <data name="RoleIdsNotFound" xml:space="preserve">
+    <value>نقشی با آیدی های {0} موجود نیست.</value>
   </data>
 </root>

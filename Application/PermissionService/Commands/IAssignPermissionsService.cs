@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.PermissionService.Queries;
 using Domain.Users;
+using Application.Common.MessageEventTypes;
 
 namespace Application.PermissionService.Commands
 {
@@ -36,20 +37,27 @@ namespace Application.PermissionService.Commands
             {
                 return new ResultDto
                 {
-                    Message = _localizationService.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString())
+                    Message = _localizationService.GetMessagePermission(MessageKeysPermission.RoleIdNotFound.ToString()),
+                    MessageEventType = MessageEventType.NotFound
                 };
             }
 
             //get existing Permissions
             var receivedPermissionsThatExist = await _mediator.Send(new GetExitingPermissionsByIdsQuery(dto.PermissionIds));
-            if (receivedPermissionsThatExist is null && !receivedPermissionsThatExist.Any())
+            var existingPermissionIds = receivedPermissionsThatExist.Select(p => p.Id).ToArray();
+
+            //Check for not existsing received PermisionsIds
+            var notFoundPermissionIds = dto.PermissionIds.Where(p => !existingPermissionIds.Contains(p)).ToList();
+            if (notFoundPermissionIds.Any())
             {
-                return new ResultDto
+                var str = notFoundPermissionIds.Select(p => "'" + p + "'").Aggregate((p1, p2) => p1 + "," + p2);
+                return new ResultDto()
                 {
-                    IsSuccess = true
+                    IsSuccess = false,
+                    Message = string.Format(_localizationService.GetMessagePermission(MessageKeysPermission.PermissionIdsNotFound.ToString()), str),
+                    MessageEventType = MessageEventType.NotFound
                 };
             }
-            var existingPermissionIds = receivedPermissionsThatExist.Select(p => p.Id).ToArray();
 
             //Get AssignedPermissionRoles
             var assignedPermissions = await _mediator.Send(new GetAssignedPermissionIdsQuery(dto.RoleId));

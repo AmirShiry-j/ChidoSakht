@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Common.MessageEventTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Application.Common.Dtoes
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
+        public MessageEventType? MessageEventType { get; set; }
     }
 
     public class ResultDto<T>
@@ -17,6 +19,7 @@ namespace Application.Common.Dtoes
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
         public T Data { get; set; }
+        public MessageEventType? MessageEventType { get; set; }
     }
 }
 

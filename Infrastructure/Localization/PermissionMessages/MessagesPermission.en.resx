@@ -126,8 +126,8 @@
   <data name="CantEditNameRoleAdmin" xml:space="preserve">
     <value>The admin role name is not editable.</value>
   </data>
-  <data name="PermissionIdNotFound" xml:space="preserve">
-    <value>Access is not available with the submitted ID.</value>
+  <data name="PermissionIdsNotFound" xml:space="preserve">
+    <value>Access is not available with IDs {0}</value>
   </data>
   <data name="RoleDoesntHavePermissionBefore" xml:space="preserve">
     <value>The role does not already have this access.</value>
@@ -136,6 +136,9 @@
     <value>This access has already been assigned to the role.</value>
   </data>
   <data name="RoleIdNotFound" xml:space="preserve">
+    <value>No role exists with the submitted ID.</value>
+  </data>
+  <data name="RoleIdsNotFound" xml:space="preserve">
     <value>There are no roles with IDs {0}.</value>
   </data>
 </root>
