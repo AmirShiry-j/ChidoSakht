@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Products
 {
-
     public class Product
     {
         public int Id { get; set; }
-        public string UniCode { get; set; } 
+        public string UniCode { get; set; } // شناسه یکتا برای محصول
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsVariable { get; set; }
@@ -20,19 +19,19 @@ namespace Domain.Products
         public ICollection<ProductAttribute> Attributes { get; set; } = new List<ProductAttribute>();
     }
 
-
     public class ProductVariant
     {
         public int Id { get; set; }
+        public string UniCode { get; set; } // شناسه یکتا برای ورییشن (در صورت نیاز)
+
         public int ProductId { get; set; }
         public Product Product { get; set; }
 
-        public long Price { get; set; } 
+        public long Price { get; set; } // قیمت به صورت عدد صحیح
         public int Stock { get; set; }
 
         public ICollection<VariantAttributeValue> AttributeValues { get; set; } = new List<VariantAttributeValue>();
     }
-
 
     public class ProductAttribute
     {
@@ -41,6 +40,9 @@ namespace Domain.Products
         public Product Product { get; set; }
 
         public string Name { get; set; }
+        public bool IsUsedForVariants { get; set; } // آیا این ویژگی برای محصولات متغیر استفاده می‌شود؟
+        public bool IsUsedInHeader { get; set; } // آیا این ویژگی برای نمایش در سر برگ استفاده می‌شود؟
+
         public ICollection<ProductAttributeValue> Values { get; set; } = new List<ProductAttributeValue>();
     }
 
@@ -57,13 +59,11 @@ namespace Domain.Products
     {
         public int Id { get; set; }
 
-        public int ProductVariantId { get; set; }
-        public ProductVariant ProductVariant { get; set; }
+        public int VariantId { get; set; }
+        public ProductVariant Variant { get; set; }
 
         public int AttributeValueId { get; set; }
         public ProductAttributeValue AttributeValue { get; set; }
     }
-
-
 
 }
