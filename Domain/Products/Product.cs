@@ -13,6 +13,10 @@ namespace Domain.Products
         //public string UniCode { get; set; } // شناسه یکتا برای محصول
         public string Name { get; set; }
         public string? Description { get; set; }
+
+        public DateTime CreateTime { get; set; }
+        public DateTime? LastUpdateTime { get; set; }
+
         //public bool IsVariable { get; set; }
 
         //public ICollection<ProductVariant> Variants { get; set; } = new List<ProductVariant>();

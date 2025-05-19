@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Users;
 using Domain.Categories;
 using Persistence.Configurations.Categories;
+using Domain.Products;
+using Persistence.Configurations.Products;
 
 namespace Persistence.Contexts
 {
@@ -23,6 +25,8 @@ namespace Persistence.Contexts
         //Permissions
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
+        //Products
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -82,6 +86,9 @@ namespace Persistence.Contexts
 
             //Categories
             builder.ApplyConfiguration(new CategoryConfig());
+
+            //Products
+            builder.ApplyConfiguration(new ProductConfig());
 
 
             base.OnModelCreating(builder);
