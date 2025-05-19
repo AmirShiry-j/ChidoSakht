@@ -10,13 +10,13 @@ namespace Domain.Products
     public class Product
     {
         public int Id { get; set; }
-        public string UniCode { get; set; } // شناسه یکتا برای محصول
+        //public string UniCode { get; set; } // شناسه یکتا برای محصول
         public string Name { get; set; }
-        public string Description { get; set; }
-        public bool IsVariable { get; set; }
+        public string? Description { get; set; }
+        //public bool IsVariable { get; set; }
 
-        public ICollection<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
-        public ICollection<ProductAttribute> Attributes { get; set; } = new List<ProductAttribute>();
+        //public ICollection<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
+        //public ICollection<ProductAttribute> Attributes { get; set; } = new List<ProductAttribute>();
     }
 
     public class ProductVariant
