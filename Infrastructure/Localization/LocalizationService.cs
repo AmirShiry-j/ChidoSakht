@@ -30,5 +30,10 @@ namespace Infrastructure.Localization
         {
             return MessagesPermission.ResourceManager.GetString(key);
         }
+
+        public string GetMessageProduct(string key)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

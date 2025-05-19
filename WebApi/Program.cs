@@ -24,6 +24,7 @@ using Application.Interfaces.ConfigService;
 using Application.Interfaces.Messagers.EmailService;
 using Application.Interfaces.Messagers.SmsService;
 using Persistence.Seeds;
+using Application.ProductService.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -138,6 +139,9 @@ builder.Services.AddScoped<IFacadeUserService, FacadeUserService>();
 
 //Permissions
 builder.Services.AddScoped<IFacadePermissionService, FacadePermissionService>();
+
+//Prdoucts
+builder.Services.AddScoped<IProductCommandsService, ProductCommandsService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));

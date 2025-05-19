@@ -9,6 +9,10 @@ namespace Domain.Products
 {
     public class Product
     {
+        public Product(string name)
+        {
+            Name = name;
+        }
         public int Id { get; set; }
         //public string UniCode { get; set; } // شناسه یکتا برای محصول
         public string Name { get; set; }
