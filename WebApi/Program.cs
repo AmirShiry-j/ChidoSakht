@@ -26,6 +26,8 @@ using Application.Interfaces.Messagers.SmsService;
 using Persistence.Seeds;
 using Application.ProductService.Commands;
 using Application.ProductService;
+using Application.ProductImageService;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -143,6 +145,7 @@ builder.Services.AddScoped<IFacadePermissionService, FacadePermissionService>();
 
 //Prdoucts
 builder.Services.AddScoped<IFacadeProductService, FacadeProductService>();
+builder.Services.AddScoped<IFacadeProductImageService, FacadeProductImageService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));
@@ -260,6 +263,15 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
     c.RoutePrefix = string.Empty;
+});
+
+//Create Static files
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Images/ProductImage")
+    ),
+    RequestPath = "/Images/ProductImage"
 });
 
 // Configure the HTTP request pipeline.

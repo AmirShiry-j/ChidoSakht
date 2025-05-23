@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Categories\" />
+    <Folder Include="ProductImageService\Queries\" />
   </ItemGroup>
 
 </Project>

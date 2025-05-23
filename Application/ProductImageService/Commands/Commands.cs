@@ -1,0 +1,21 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.ProductImageService.Commands
+{
+    public class CreateProductImageCommand : IRequest<int>
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+
+        public CreateProductImageCommand(int productId, string name)
+        {
+            ProductId = productId;
+            Name = name;
+        }
+    }
+}
