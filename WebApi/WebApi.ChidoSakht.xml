@@ -44,7 +44,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpsertProductDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Get(System.Int32)">
+            <summary>
+            گرفتن اطلاعات یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpsertProductDto)">
             <summary>
             ایجاد اولیه و ویرایش نام محصول (Auth)
             </summary>

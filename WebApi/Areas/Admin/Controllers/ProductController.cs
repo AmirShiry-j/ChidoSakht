@@ -1,11 +1,15 @@
 ﻿using Application.CategoryService;
+using Application.Common.AppKeyNames;
+using Application.Common.Dtoes;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
+using Application.ProductService;
 using Application.ProductService.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Products;
-using WebApi.ModelsAndDtoes.Common;
+using WebApi.Filters.Permissions;
+using Application.Common.MessageEventTypes;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -16,12 +20,51 @@ namespace WebApi.Areas.Admin.Controllers
     //[Authorize]
     public class ProductController : Controller
     {
-        private readonly IProductCommandsService _productService;
+        private readonly IFacadeProductService _facadeProductService;
         private readonly ILocalizationService _localizationService;
-        public ProductController(IProductCommandsService productService, ILocalizationService localizationService)
+        public ProductController(IFacadeProductService facadeProductService, ILocalizationService localizationService)
         {
-            _productService = productService;
+            _facadeProductService = facadeProductService;
             _localizationService = localizationService;
+        }
+
+        /// <summary>
+        /// گرفتن اطلاعات یک محصول (Auth)
+        /// </summary>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
+        [HttpGet("{ProductId}")]
+        public async Task<IActionResult> Get(int ProductId)
+        {
+            //Get by service
+            var resultService = await _facadeProductService.ProductQueriesService.GetOneProduct(ProductId);
+
+            if (resultService.IsSuccess)
+            {
+                if (resultService.Data is not null)
+                {
+                    //HATEOAS links
+                    resultService.Data.Links = new List<Link>
+                    {
+                        new Link
+                        {
+                            For="For Create and Update Name",
+                            HttpMethod=HttpMethod.Post.ToString(),
+                            Url=Url.Action(nameof(Post),nameof(ProductController).Replace("Controller", ""),new { Area="Admin" },Request.Scheme)
+                        },
+                    };
+
+                    return Ok(resultService.Data);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
         }
 
         /// <summary>
@@ -29,22 +72,27 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        [HttpPut]
-        public async Task<IActionResult> Put(UpsertProductDto dto)
+        [HttpPost]
+        public async Task<IActionResult> Post(UpsertProductDto dto)
         {
-            var resultService = await _productService.Upsert(dto.Id, dto.Name);
+            var resultService = await _facadeProductService.ProductCommandsService.Upsert(dto.Id, dto.Name);
             if (resultService.IsSuccess)
             {
-                //var link = Url.Action(nameof(Put), nameof(ProductController).Replace("Controller", ""), new { Area = "Admin" }, Request.Scheme);
-                //return CreatedAtAction(nameof(Put), new { CategoryId = resultService.Data }, _localizationService.GetMessageCategory(MessageKeysCategory.CategoryCreated.ToString()));
-                //HATEOAS link for new item
-                //var link = Url.Action(nameof(Get), "Role", new { RoleId = newRole.Id, Area = "Admin" }, protocol: Request.Scheme);
-
-                return Ok(resultService.Data);
+                if (resultService.MessageEventType == MessageEventType.Created)
+                {
+                    return CreatedAtAction(nameof(Get), new { ProductId = resultService.Data }, null);
+                }
+                else//Updated
+                {
+                    return Ok();
+                }
             }
             else
             {
-                return BadRequest(resultService.Message);
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
             }
         }
     }

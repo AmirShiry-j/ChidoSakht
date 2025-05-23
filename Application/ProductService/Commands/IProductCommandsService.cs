@@ -34,6 +34,13 @@ namespace Application.ProductService.Commands
             {
                 //get from db
                 var product = await _mediator.Send(new GetProductByIdQuery((int)Id));
+                if (product is null)
+                {
+                    return new ResultDto<int>
+                    {
+                        MessageEventType = MessageEventType.NotFound
+                    };
+                }
 
                 //set new Name
                 product.Name = Name;

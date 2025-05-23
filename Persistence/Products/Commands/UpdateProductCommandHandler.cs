@@ -23,6 +23,7 @@ namespace Persistence.Products.Commands
 
         public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
+            request.Product.LastUpdateTime = DateTime.Now;
             _context.Update(request.Product);
             _context.SaveChanges();
         }
