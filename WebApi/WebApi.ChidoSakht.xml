@@ -44,6 +44,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Get(WebApi.Areas.Admin.ModelsAndDtoes.Products.ProductFilterApiDto)">
+            <summary>
+            برگردوندن محصولات (Auth)
+            </summary>
+            <param name="searchProductApiDto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Get(System.Int32)">
             <summary>
             گرفتن اطلاعات یک محصول (Auth)

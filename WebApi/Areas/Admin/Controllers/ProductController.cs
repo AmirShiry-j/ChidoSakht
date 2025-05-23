@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Products;
 using WebApi.Filters.Permissions;
 using Application.Common.MessageEventTypes;
+using Microsoft.AspNetCore.Http.Extensions;
+using Application.ProductService.Queries;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -29,6 +31,49 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// برگردوندن محصولات (Auth)
+        /// </summary>
+        /// <param name="searchProductApiDto"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] ProductFilterApiDto searchProductApiDto)
+        {
+            //map
+            var inputService = new ProductFilterDto
+            {
+                Name = searchProductApiDto.Name,
+                CountInPage = searchProductApiDto.CountInPage,
+                Page = searchProductApiDto.Page,
+            };
+
+            //Get data from service
+            var resultService = await _facadeProductService.ProductQueriesService.GetProducts(inputService);
+
+            //HATEAOS
+            //Build url of image
+            //string url = Request.GetDisplayUrl();
+            //string domainName = url.Substring(0, url.IndexOf("/api"));
+
+            foreach (var product in resultService.Data.Products)
+            {
+                //if (salon.ImageName != null)
+                //{
+                //    string imageUrl = domainName + "/Images/SalonImage/" + salon.ImageName;
+                //    salon.UrlImageName = imageUrl;
+                //}
+
+                product.Link = new Link
+                {
+                    For = "Details",
+                    HttpMethod = HttpMethod.Get.ToString(),
+                    Url = Url.Action(nameof(Get), nameof(ProductController).Replace("Controller", ""), new { ProductId = product.Id }, Request.Scheme)
+                };
+            }
+            
+            return Ok(resultService.Data);
+        }
+
+        /// <summary>
         /// گرفتن اطلاعات یک محصول (Auth)
         /// </summary>
         /// <param name="ProductId"></param>
@@ -41,10 +86,8 @@ namespace WebApi.Areas.Admin.Controllers
 
             if (resultService.IsSuccess)
             {
-                if (resultService.Data is not null)
-                {
-                    //HATEOAS links
-                    resultService.Data.Links = new List<Link>
+                //HATEOAS links
+                resultService.Data.Links = new List<Link>
                     {
                         new Link
                         {
@@ -54,16 +97,14 @@ namespace WebApi.Areas.Admin.Controllers
                         },
                     };
 
-                    return Ok(resultService.Data);
-                }
-                else
-                {
-                    return NotFound();
-                }
+                return Ok(resultService.Data);
             }
             else
             {
-                return BadRequest(resultService.Message);
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                return
+                    BadRequest(resultService.Message);
             }
         }
 

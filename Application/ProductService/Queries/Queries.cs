@@ -17,4 +17,12 @@ namespace Application.ProductService.Queries
             Id = id;
         }
     }
+    public class GetProductsByFilterQuery : IRequest<ResultSearchDto>
+    {
+        public ProductFilterDto Filter { get; set; }
+        public GetProductsByFilterQuery(ProductFilterDto filter)
+        {
+            Filter = filter;
+        }
+    }
 }

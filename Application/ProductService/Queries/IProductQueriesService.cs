@@ -11,7 +11,8 @@ namespace Application.ProductService.Queries
 {
     public interface IProductQueriesService
     {
-        Task<ResultDto<ProductDto>> GetOneProduct(int Id);
+        Task<ResultDto<ProductDetailsDto>> GetOneProduct(int Id);
+        Task<ResultDto<ResultSearchDto>> GetProducts(ProductFilterDto filterDto);
 
     }
     public class ProductQueriesService : IProductQueriesService
@@ -23,13 +24,18 @@ namespace Application.ProductService.Queries
             _mediator = mediator;
             _localizationService = localizationService;
         }
-        public async Task<ResultDto<ProductDto>> GetOneProduct(int Id)
+        public async Task<ResultDto<ProductDetailsDto>> GetOneProduct(int Id)
         {
             //get from db
             var product = await _mediator.Send(new GetProductByIdQuery((int)Id));
+            if (product is null)
+                return new ResultDto<ProductDetailsDto>
+                {
+                    MessageEventType = Common.MessageEventTypes.MessageEventType.NotFound
+                };
 
             //map to model
-            var dto = new ProductDto
+            var dto = new ProductDetailsDto
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -38,14 +44,34 @@ namespace Application.ProductService.Queries
                 Description = product.Description,
             };
 
-            return new ResultDto<ProductDto>
+            return new ResultDto<ProductDetailsDto>
             {
                 IsSuccess = true,
                 Data = dto
             };
         }
+
+        public async Task<ResultDto<ResultSearchDto>> GetProducts(ProductFilterDto filterDto)
+        {
+            //get from db
+            var products = await _mediator.Send(new GetProductsByFilterQuery(filterDto));
+
+            //return
+            return new ResultDto<ResultSearchDto>
+            {
+                IsSuccess = true,
+                Data = products
+            };
+        }
     }
-    public class ProductDto
+    public class ProductFilterDto
+    {
+        public string? Name { get; set; }
+
+        public int? Page { get; set; } = 1;
+        public int? CountInPage { get; set; } = 10;
+    }
+    public class ProductDetailsDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -54,5 +80,20 @@ namespace Application.ProductService.Queries
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }
         public List<Link> Links { get; set; }
+    }
+    public class ProductDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Link Link { get; set; }
+
+    }
+    public class ResultSearchDto
+    {
+        public int Page { get; set; }
+        public int CountInPage { get; set; }
+        public int CountAllPages { get; set; }
+        public int CountAllItems { get; set; }
+        public List<ProductDto> Products { get; set; }
     }
 }
