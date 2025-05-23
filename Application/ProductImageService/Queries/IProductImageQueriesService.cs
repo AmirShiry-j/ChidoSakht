@@ -51,7 +51,7 @@ namespace Application.ProductImageService.Queries
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool IsMain { get; set; }
+        public bool IsIndex { get; set; }
         public string Url { get; set; }
     }
 }

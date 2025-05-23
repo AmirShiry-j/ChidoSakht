@@ -22,7 +22,8 @@ namespace Persistence.ProductImages.Queries
                 new ProductImageDto
                 {
                     Id = p.Id,
-                    Name = p.Name
+                    Name = p.Name,
+                    IsIndex = p.IsIndex
                 }).ToList();
 
             return images;

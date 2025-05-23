@@ -28,4 +28,13 @@ namespace Application.ProductImageService.Commands
             ProductImage = productImage;
         }
     }
+
+    public class SetIndexImageForPrdouctCommand : IRequest
+    {
+        public ProductImage ProductImage { get; set; }
+        public SetIndexImageForPrdouctCommand(ProductImage productImage)
+        {
+            ProductImage = productImage;
+        }
+    }
 }

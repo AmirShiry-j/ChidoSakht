@@ -16,6 +16,7 @@ namespace Application.ProductImageService.Commands
     {
         Task<ResultDto<int>> CreateAImage(int ProductId, string Name);
         Task<ResultDto> DeleteAImage(string Name);
+        Task<ResultDto> SetIndexImage(int ProductId, string Name);
     }
     public class ProductImageCommandsService : IProductImageCommandsService
     {
@@ -71,5 +72,37 @@ namespace Application.ProductImageService.Commands
             };
         }
 
+        public async Task<ResultDto> SetIndexImage(int ProductId, string Name)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //check exist product
+            var image = await _mediator.Send(new GetAProductImageByNameQuery(Name));
+            if (image is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //set index
+            image.IsIndex = true;
+            await _mediator.Send(new SetIndexImageForPrdouctCommand(image));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+
+            };
+        }
     }
 }

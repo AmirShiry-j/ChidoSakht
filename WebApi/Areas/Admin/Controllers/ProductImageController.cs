@@ -1,10 +1,13 @@
-﻿using Application.Interfaces.Localization;
+﻿using Application.Common.MessageEventTypes;
+using Application.Interfaces.Localization;
 using Application.ProductImageService;
 using Application.ProductService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using WebApi.Areas.Admin.ModelsAndDtoes.Products;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -103,7 +106,7 @@ namespace WebApi.Areas.Admin.Controllers
                 //Build url of image
                 string url = Request.GetDisplayUrl();
                 string domainName = url.Substring(0, url.IndexOf("/api"));
-                string imageUrl = domainName + "/Images/ProductImage/" + resultService.Data;
+                string imageUrl = domainName + "/Images/ProductImage/" + imageName;
 
                 return Created(imageUrl, null);
             }
@@ -137,6 +140,23 @@ namespace WebApi.Areas.Admin.Controllers
             else
             {
                 return BadRequest(resultService.Message);
+            }
+        }
+
+        [HttpPut(nameof(SetIndexImage))]
+        public async Task<IActionResult> SetIndexImage([Required]int ProductId, [Required] string Name)
+        {
+            var resultService = await _facadeProductImageService.ProductImageCommandsService.SetIndexImage(ProductId, Name);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
             }
         }
     }
