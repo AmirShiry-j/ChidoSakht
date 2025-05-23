@@ -13,6 +13,7 @@ using Application.Common.MessageEventTypes;
 using Microsoft.AspNetCore.Http.Extensions;
 using Application.ProductService.Queries;
 using System.ComponentModel.DataAnnotations;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -52,16 +53,16 @@ namespace WebApi.Areas.Admin.Controllers
 
             //HATEAOS
             //Build url of image
-            //string url = Request.GetDisplayUrl();
-            //string domainName = url.Substring(0, url.IndexOf("/api"));
+            string url = Request.GetDisplayUrl();
+            string domainName = url.Substring(0, url.IndexOf("/api"));
 
             foreach (var product in resultService.Data.Products)
             {
-                //if (salon.ImageName != null)
-                //{
-                //    string imageUrl = domainName + "/Images/SalonImage/" + salon.ImageName;
-                //    salon.UrlImageName = imageUrl;
-                //}
+                if (product.NameIndexImage != null)
+                {
+                    string imageUrl = domainName + "/Images/ProductImage/" + product.NameIndexImage;
+                    product.UrlNameIndexImage = imageUrl;
+                }
 
                 product.Link = new Link
                 {
@@ -85,9 +86,22 @@ namespace WebApi.Areas.Admin.Controllers
             //Get by service
             var resultService = await _facadeProductService.ProductQueriesService.GetOneProduct(ProductId);
 
+            //HATEAOS
+            //Build url of image
+
+
             if (resultService.IsSuccess)
             {
                 //HATEOAS links
+                if (resultService.Data.NameIndexImage is not null)
+                {
+                    string url = Request.GetDisplayUrl();
+                    string domainName = url.Substring(0, url.IndexOf("/api"));
+                    string mainProductImageUrl = domainName + "/Images/ProductImage/" + resultService.Data.NameIndexImage;
+
+                    resultService.Data.UrlNameIndexImage = mainProductImageUrl;
+                }
+
                 resultService.Data.Links = new List<Link>
                     {
                         new Link
@@ -191,9 +205,9 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="UniqeLink"></param>
         /// <returns></returns>
         [HttpGet(nameof(ValidateUniqeLink))]
-        public async Task<IActionResult> ValidateUniqeLink([Required] int ProductId,[Required]string UniqeLink)
+        public async Task<IActionResult> ValidateUniqeLink([Required] int ProductId, [Required] string UniqeLink)
         {
-            var resultService = await _facadeProductService.ProductQueriesService.ValidateUniqeLink(ProductId,UniqeLink);
+            var resultService = await _facadeProductService.ProductQueriesService.ValidateUniqeLink(ProductId, UniqeLink);
             if (resultService.IsSuccess)
             {
                 return Ok(resultService.Data);

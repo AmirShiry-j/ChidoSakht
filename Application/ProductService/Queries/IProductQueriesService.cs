@@ -83,6 +83,7 @@ namespace Application.ProductService.Queries
         public string? UniqeLink { get; set; }
         public string? ImageAltText { get; set; }
         public string? NameIndexImage { get; set; }
+        public string? UrlNameIndexImage { get; set; }
 
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }
@@ -93,6 +94,7 @@ namespace Application.ProductService.Queries
         public int Id { get; set; }
         public string Name { get; set; }
         public string? NameIndexImage { get; set; }
+        public string? UrlNameIndexImage { get; set; }
         public Link Link { get; set; }
 
     }
