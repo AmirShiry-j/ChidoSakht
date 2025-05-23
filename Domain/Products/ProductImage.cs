@@ -10,6 +10,7 @@ namespace Domain.Products
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsIndex { get; set; }
         //Nav rel
         public int ProductId { get; set; }
     }
