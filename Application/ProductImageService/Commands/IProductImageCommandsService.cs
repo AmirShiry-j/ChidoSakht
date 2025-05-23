@@ -96,7 +96,8 @@ namespace Application.ProductImageService.Commands
 
             //set index
             image.IsIndex = true;
-            await _mediator.Send(new SetIndexImageForPrdouctCommand(image));
+            product.NameIndexImage = image.Name;
+            await _mediator.Send(new SetIndexImageForPrdouctCommand(image, product));
 
             return new ResultDto
             {

@@ -1,5 +1,7 @@
 ﻿using Application.ProductImageService.Commands;
+using Domain.Products;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,14 @@ namespace Persistence.ProductImages.Commands
         }
         public async Task Handle(DeleteProductImageCommand request, CancellationToken cancellationToken)
         {
+            //Update product if image was set for Index
+            if (request.ProductImage.IsIndex)
+            {
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.Id.Equals(request.ProductImage.ProductId));
+                product.NameIndexImage = null;
+                _context.Products.Update(product);
+            }
+
             _context.ProductImages.Remove(request.ProductImage);
             _context.SaveChanges();
 

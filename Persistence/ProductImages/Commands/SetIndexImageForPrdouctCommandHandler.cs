@@ -19,6 +19,7 @@ namespace Persistence.ProductImages.Commands
         public async Task Handle(SetIndexImageForPrdouctCommand request, CancellationToken cancellationToken)
         {
             _context.Update(request.ProductImage);
+            _context.Update(request.Product);
             _context.SaveChanges();
 
             await Task.CompletedTask;

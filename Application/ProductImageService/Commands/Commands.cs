@@ -32,9 +32,11 @@ namespace Application.ProductImageService.Commands
     public class SetIndexImageForPrdouctCommand : IRequest
     {
         public ProductImage ProductImage { get; set; }
-        public SetIndexImageForPrdouctCommand(ProductImage productImage)
+        public Product Product { get; set; }
+        public SetIndexImageForPrdouctCommand(ProductImage productImage, Product product)
         {
             ProductImage = productImage;
+            Product = product;
         }
     }
 }

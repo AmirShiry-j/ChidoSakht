@@ -30,7 +30,8 @@ namespace Persistence.Products.Queries
                 Description = product.Description,
                 LastUpdateTime = product.LastUpdateTime,
                 UniqeLink = product.UniqeLink,
-                ImageAltText = product.ImageAltText
+                ImageAltText = product.ImageAltText,
+                NameIndexImage = product.NameIndexImage,
             };
 
             //Retrun It
