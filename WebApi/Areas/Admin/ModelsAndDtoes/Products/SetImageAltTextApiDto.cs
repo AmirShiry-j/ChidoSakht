@@ -10,4 +10,13 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [MaxLength(100)]
         public string? ImageAltText { get; set; }
     }
+
+    public class SetIndexImageApiDto
+    {
+        [Required]
+        public int ProductId { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+    }
 }

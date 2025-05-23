@@ -79,18 +79,47 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetImageAltText(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetImageAltTextApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.ValidateUniqeLink(System.Int32,System.String)">
+            <summary>
+            بررسی یکتا بودن پیوند محصول (Auth)
+            </summary>
+            <param name="UniqeLink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Get(System.Int32)">
+            <summary>
+            برگردوندن تصاویر یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Post(Microsoft.AspNetCore.Http.IFormFile,System.Int32)">
+            <summary>
+            اضافه کردن یک تصویر (Auth)
+            </summary>
+            <param name="file"></param>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Delete(System.String)">
+            <summary>
+            حذف یک تصویر (Auth)
+            </summary>
+            <param name="Name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.SetImageAltText(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetImageAltTextApiDto)">
             <summary>
             ست کردن یک متن جایگزین تصویر برای محصول (Auth)
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.ValidateUniqeLink(System.Int32,System.String)">
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.SetIndexImage(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetIndexImageApiDto)">
             <summary>
-            بررسی یکتا بودن پیوند محصول (Auth)
+            قرار دادن یک تصویر به عنوان شاخص (Auth)
             </summary>
-            <param name="UniqeLink"></param>
+            <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">

@@ -19,14 +19,20 @@ namespace WebApi.Areas.Admin.Controllers
     public class ProductImageController : ControllerBase
     {
         private readonly IFacadeProductImageService _facadeProductImageService;
+        private readonly IFacadeProductService _facadeProductService;
         private readonly ILocalizationService _localizationService;
-        public ProductImageController(IFacadeProductImageService facadeProductImageService, ILocalizationService localizationService)
+        public ProductImageController(IFacadeProductImageService facadeProductImageService, ILocalizationService localizationService, IFacadeProductService facadeProductService)
         {
             _facadeProductImageService = facadeProductImageService;
             _localizationService = localizationService;
+            _facadeProductService = facadeProductService;
         }
 
-
+        /// <summary>
+        /// برگردوندن تصاویر یک محصول (Auth)
+        /// </summary>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
         [HttpGet("{ProductId}")]
         public async Task<IActionResult> Get(int ProductId)
         {
@@ -63,6 +69,12 @@ namespace WebApi.Areas.Admin.Controllers
             }
         }
 
+        /// <summary>
+        /// اضافه کردن یک تصویر (Auth)
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
         [HttpPost("{ProductId}")]
         public async Task<IActionResult> Post(IFormFile file, int ProductId)
         {
@@ -119,6 +131,11 @@ namespace WebApi.Areas.Admin.Controllers
             }
         }
 
+        /// <summary>
+        /// حذف یک تصویر (Auth)
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
         [HttpDelete("{Name}")]
         public async Task<IActionResult> Delete(string Name)
         {
@@ -143,10 +160,37 @@ namespace WebApi.Areas.Admin.Controllers
             }
         }
 
-        [HttpPut(nameof(SetIndexImage))]
-        public async Task<IActionResult> SetIndexImage([Required]int ProductId, [Required] string Name)
+        /// <summary>
+        /// ست کردن یک متن جایگزین تصویر برای محصول (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut(nameof(SetImageAltText))]
+        public async Task<IActionResult> SetImageAltText(SetImageAltTextApiDto dto)
         {
-            var resultService = await _facadeProductImageService.ProductImageCommandsService.SetIndexImage(ProductId, Name);
+            var resultService = await _facadeProductService.ProductCommandsService.SetImageAltText(dto.ProductId, dto.ImageAltText);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// قرار دادن یک تصویر به عنوان شاخص (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut(nameof(SetIndexImage))]
+        public async Task<IActionResult> SetIndexImage(SetIndexImageApiDto dto)
+        {
+            var resultService = await _facadeProductImageService.ProductImageCommandsService.SetIndexImage(dto.ProductId, dto.Name);
             if (resultService.IsSuccess)
             {
                 return NoContent();
