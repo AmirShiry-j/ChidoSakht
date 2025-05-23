@@ -184,6 +184,28 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// ست کردن یک متن جایگزین تصویر برای محصول (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut(nameof(SetImageAltText))]
+        public async Task<IActionResult> SetImageAltText(SetImageAltTextApiDto dto)
+        {
+            var resultService = await _facadeProductService.ProductCommandsService.SetImageAltText(dto.ProductId, dto.ImageAltText);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
         /// بررسی یکتا بودن پیوند محصول (Auth)
         /// </summary>
         /// <param name="UniqeLink"></param>

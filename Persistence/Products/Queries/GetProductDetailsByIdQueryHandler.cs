@@ -29,7 +29,8 @@ namespace Persistence.Products.Queries
                 CreateTime = product.CreateTime,
                 Description = product.Description,
                 LastUpdateTime = product.LastUpdateTime,
-                UniqeLink = product.UniqeLink
+                UniqeLink = product.UniqeLink,
+                ImageAltText = product.ImageAltText
             };
 
             //Retrun It

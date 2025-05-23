@@ -20,6 +20,7 @@ namespace Application.ProductService.Commands
         Task<ResultDto<int>> Upsert(int? ProductId, string Name);
         Task<ResultDto> SetDescription(int ProductId, string? Description);
         Task<ResultDto> SetUniqeLink(int ProductId, string? UniqeLink);
+        Task<ResultDto> SetImageAltText(int ProductId, string? ImageAltText);
 
     }
     public class ProductCommandsService : IProductCommandsService
@@ -131,6 +132,32 @@ namespace Application.ProductService.Commands
 
             //set new value
             product.UniqeLink = UniqeLink;
+
+            //Update in db
+            await _mediator.Send(new UpdateProductCommand(product));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+                MessageEventType = MessageEventType.Ok
+            };
+        }
+
+
+        public async Task<ResultDto> SetImageAltText(int ProductId, string? ImageAltText)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //set new value
+            product.ImageAltText = ImageAltText;
 
             //Update in db
             await _mediator.Send(new UpdateProductCommand(product));

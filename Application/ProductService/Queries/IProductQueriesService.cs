@@ -81,6 +81,7 @@ namespace Application.ProductService.Queries
         public string Name { get; set; }
         public string? Description { get; set; }
         public string? UniqeLink { get; set; }
+        public string? ImageAltText { get; set; }
 
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }

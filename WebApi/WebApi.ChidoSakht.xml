@@ -79,6 +79,13 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetImageAltText(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetImageAltTextApiDto)">
+            <summary>
+            ست کردن یک متن جایگزین تصویر برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductController.ValidateUniqeLink(System.Int32,System.String)">
             <summary>
             بررسی یکتا بودن پیوند محصول (Auth)
