@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Products;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,15 @@ namespace Application.ProductService.Commands
         public InsertProductCommand(string name)
         {
             Name = name;
+        }
+    }
+    public class UpdateProductCommand : IRequest
+    {
+        public Product Product { get; set; }
+
+        public UpdateProductCommand(Product product)
+        {
+            Product = product;
         }
     }
 }

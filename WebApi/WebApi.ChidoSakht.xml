@@ -44,7 +44,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.PNameDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpsertProductDto)">
             <summary>
             ایجاد اولیه و ویرایش نام محصول (Auth)
             </summary>

@@ -2,6 +2,7 @@
 using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
+using Application.ProductService.Queries;
 using Application.RoleService.Queries;
 using MediatR;
 using System;
@@ -28,20 +29,41 @@ namespace Application.ProductService.Commands
         }
         public async Task<ResultDto<int>> Upsert(int? Id, string Name)
         {
-            //Insert product
-            var productId = await _mediator.Send(new InsertProductCommand(Name));
-            if (productId is null)
+
+            if (Id is not null)
             {
+                //get from db
+                var product = await _mediator.Send(new GetProductByIdQuery((int)Id));
+
+                //set new Name
+                product.Name = Name;
+
+                //Update in db
+                await _mediator.Send(new UpdateProductCommand(product));
+
                 return new ResultDto<int>
                 {
-                    Message = _localizationService.GetMessageProduct(MessageKeysProduct.CreatedWasUnSuccess.ToString()),
+                    IsSuccess = true,
+                    MessageEventType = MessageEventType.Ok
                 };
             }
+
+
+            //Insert product
+            var productId = await _mediator.Send(new InsertProductCommand(Name));
+            //if (productId is null)
+            //{
+            //    return new ResultDto<int>
+            //    {
+            //        Message = _localizationService.GetMessageProduct(MessageKeysProduct.CreatedWasUnSuccess.ToString()),
+            //    };
+            //}
 
             return new ResultDto<int>
             {
                 IsSuccess = true,
-                Data = (int)productId
+                Data = (int)productId,
+                MessageEventType = MessageEventType.Created
             };
         }
     }

@@ -37,6 +37,8 @@ namespace WebApi.Areas.Admin.Controllers
             {
                 //var link = Url.Action(nameof(Put), nameof(ProductController).Replace("Controller", ""), new { Area = "Admin" }, Request.Scheme);
                 //return CreatedAtAction(nameof(Put), new { CategoryId = resultService.Data }, _localizationService.GetMessageCategory(MessageKeysCategory.CategoryCreated.ToString()));
+                //HATEOAS link for new item
+                //var link = Url.Action(nameof(Get), "Role", new { RoleId = newRole.Id, Area = "Admin" }, protocol: Request.Scheme);
 
                 return Ok(resultService.Data);
             }
