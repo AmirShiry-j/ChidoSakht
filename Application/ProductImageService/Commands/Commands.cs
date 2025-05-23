@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Products;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,15 @@ namespace Application.ProductImageService.Commands
         {
             ProductId = productId;
             Name = name;
+        }
+    }
+
+    public class DeleteProductImageCommand : IRequest
+    {
+        public ProductImage ProductImage { get; set; }
+        public DeleteProductImageCommand(ProductImage productImage)
+        {
+            ProductImage = productImage;
         }
     }
 }

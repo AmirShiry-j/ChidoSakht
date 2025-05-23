@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Localization;
 using Application.ProductImageService.Commands;
+using Application.ProductImageService.Queries;
 using Application.ProductService.Commands;
 using MediatR;
 using System;
@@ -14,6 +15,7 @@ namespace Application.ProductImageService
     {
         //Commands
         IProductImageCommandsService ProductImageCommandsService { get; }
+        IProductImageQueriesService ProductImageQueriesService { get; }
     }
     public class FacadeProductImageService : IFacadeProductImageService
     {
@@ -32,6 +34,16 @@ namespace Application.ProductImageService
             get
             {
                 return _productImageCommandsService = _productImageCommandsService ?? new ProductImageCommandsService(_mediator, _localizationService);
+            }
+        }
+
+        //Queries
+        private IProductImageQueriesService _productImageQueriesService;
+        public IProductImageQueriesService ProductImageQueriesService
+        {
+            get
+            {
+                return _productImageQueriesService = _productImageQueriesService ?? new ProductImageQueriesService(_mediator, _localizationService);
             }
         }
     }

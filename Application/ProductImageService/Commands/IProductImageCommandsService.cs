@@ -1,6 +1,7 @@
 ﻿using Application.Common.Dtoes;
 using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
+using Application.ProductImageService.Queries;
 using Application.ProductService.Queries;
 using MediatR;
 using System;
@@ -14,6 +15,7 @@ namespace Application.ProductImageService.Commands
     public interface IProductImageCommandsService
     {
         Task<ResultDto<int>> CreateAImage(int ProductId, string Name);
+        Task<ResultDto> DeleteAImage(string Name);
     }
     public class ProductImageCommandsService : IProductImageCommandsService
     {
@@ -47,5 +49,27 @@ namespace Application.ProductImageService.Commands
                 Data = imageId
             };
         }
+
+        public async Task<ResultDto> DeleteAImage(string Name)
+        {
+            //check exist product
+            var image = await _mediator.Send(new GetAProductImageByNameQuery(Name));
+            if (image is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //get image
+            await _mediator.Send(new DeleteProductImageCommand(image));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+            };
+        }
+
     }
 }

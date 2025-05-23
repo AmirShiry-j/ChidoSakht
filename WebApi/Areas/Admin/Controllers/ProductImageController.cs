@@ -23,6 +23,43 @@ namespace WebApi.Areas.Admin.Controllers
             _localizationService = localizationService;
         }
 
+
+        [HttpGet("{ProductId}")]
+        public async Task<IActionResult> Get(int ProductId)
+        {
+            //Find user
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
+
+            //Get Images by service
+            var resultService = await _facadeProductImageService.ProductImageQueriesService.GetImages(ProductId);
+            if (resultService.IsSuccess)
+            {
+                if (resultService.Data.Any() == false)
+                {
+                    return Ok(resultService.Data);
+                }
+
+                //HATEAOS
+                //Build url of image
+                string url = Request.GetDisplayUrl();
+                string domainName = url.Substring(0, url.IndexOf("/api"));
+                foreach (var imageOb in resultService.Data)
+                {
+                    string imageUrl = domainName + "/Images/ProductImage/" + imageOb.Name;
+                    imageOb.Url = imageUrl;
+                }
+
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == Application.Common.MessageEventTypes.MessageEventType.NotFound)
+                    return NotFound();
+                else
+                    return BadRequest(resultService.Message);
+            }
+        }
+
         [HttpPost("{ProductId}")]
         public async Task<IActionResult> Post(IFormFile file, int ProductId)
         {
@@ -76,6 +113,30 @@ namespace WebApi.Areas.Admin.Controllers
                     return NotFound();
                 else
                     return BadRequest(resultService.Message);
+            }
+        }
+
+        [HttpDelete("{Name}")]
+        public async Task<IActionResult> Delete(string Name)
+        {
+            var resultService = await _facadeProductImageService.ProductImageCommandsService.DeleteAImage(Name);
+            if (resultService.IsSuccess)
+            {
+                //Base Path Image
+                string basePath = Path.Combine(Directory.GetCurrentDirectory(), "Images/ProductImage");
+
+                //Delete old image file
+                string pathOldFile = Path.Combine(basePath, Name);
+                if (System.IO.File.Exists(pathOldFile))
+                {
+                    System.IO.File.Delete(pathOldFile);
+                }
+
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
             }
         }
     }
