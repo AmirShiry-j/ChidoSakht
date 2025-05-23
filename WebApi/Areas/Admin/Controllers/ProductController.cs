@@ -92,7 +92,7 @@ namespace WebApi.Areas.Admin.Controllers
                     {
                         new Link
                         {
-                            For="For Create and Update Name",
+                            For="For Update Name",
                             HttpMethod=HttpMethod.Post.ToString(),
                             Url=Url.Action(nameof(Post),nameof(ProductController).Replace("Controller", ""),new { Area="Admin" },Request.Scheme)
                         },
