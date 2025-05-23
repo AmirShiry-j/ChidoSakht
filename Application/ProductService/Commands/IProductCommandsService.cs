@@ -16,7 +16,9 @@ namespace Application.ProductService.Commands
 {
     public interface IProductCommandsService
     {
-        Task<ResultDto<int>> Upsert(int? Id, string Name);
+        Task<ResultDto<int>> Upsert(int? ProductId, string Name);
+        Task<ResultDto> SetDescription(int ProductId, string? Description);
+
     }
     public class ProductCommandsService : IProductCommandsService
     {
@@ -27,13 +29,13 @@ namespace Application.ProductService.Commands
             _mediator = mediator;
             _localizationService = localizationService;
         }
-        public async Task<ResultDto<int>> Upsert(int? Id, string Name)
+        public async Task<ResultDto<int>> Upsert(int? ProductId, string Name)
         {
 
-            if (Id is not null)
+            if (ProductId is not null)
             {
                 //get from db
-                var product = await _mediator.Send(new GetProductByIdQuery((int)Id));
+                var product = await _mediator.Send(new GetProductByIdQuery((int)ProductId));
                 if (product is null)
                 {
                     return new ResultDto<int>
@@ -73,5 +75,33 @@ namespace Application.ProductService.Commands
                 MessageEventType = MessageEventType.Created
             };
         }
+
+        public async Task<ResultDto> SetDescription(int ProductId, string? Description)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //set new value
+            product.Description=Description;
+
+            //Update in db
+            await _mediator.Send(new UpdateProductCommand(product));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+                MessageEventType = MessageEventType.Ok
+            };
+        }
+
+
+
     }
 }

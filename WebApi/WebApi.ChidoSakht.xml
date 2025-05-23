@@ -58,9 +58,16 @@
             <param name="ProductId"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpsertProductDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpsertProductApiDto)">
             <summary>
-            ایجاد اولیه و ویرایش نام محصول (Auth)
+            ایجاد اولیه محصول و یا ویرایش نام آن (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetDescription(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetDescriptionApiDto)">
+            <summary>
+            ست کردن یک توضیح (Auth)
             </summary>
             <param name="dto"></param>
             <returns></returns>

@@ -2,9 +2,9 @@
 
 namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
 {
-    public class UpsertProductDto
+    public class UpsertProductApiDto
     {
-        public int? Id { get; set; }
+        public int? ProductId { get; set; }
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }

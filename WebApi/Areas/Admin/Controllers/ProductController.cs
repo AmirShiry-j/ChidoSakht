@@ -69,7 +69,7 @@ namespace WebApi.Areas.Admin.Controllers
                     Url = Url.Action(nameof(Get), nameof(ProductController).Replace("Controller", ""), new { ProductId = product.Id }, Request.Scheme)
                 };
             }
-            
+
             return Ok(resultService.Data);
         }
 
@@ -109,14 +109,14 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// ایجاد اولیه و ویرایش نام محصول (Auth)
+        /// ایجاد اولیه محصول و یا ویرایش نام آن (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post(UpsertProductDto dto)
+        public async Task<IActionResult> Post(UpsertProductApiDto dto)
         {
-            var resultService = await _facadeProductService.ProductCommandsService.Upsert(dto.Id, dto.Name);
+            var resultService = await _facadeProductService.ProductCommandsService.Upsert(dto.ProductId, dto.Name);
             if (resultService.IsSuccess)
             {
                 if (resultService.MessageEventType == MessageEventType.Created)
@@ -125,7 +125,7 @@ namespace WebApi.Areas.Admin.Controllers
                 }
                 else//Updated
                 {
-                    return Ok();
+                    return NoContent();
                 }
             }
             else
@@ -136,5 +136,29 @@ namespace WebApi.Areas.Admin.Controllers
                     return BadRequest(resultService.Message);
             }
         }
+
+        /// <summary>
+        /// ست کردن یک توضیح (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut(nameof(SetDescription))]
+        public async Task<IActionResult> SetDescription(SetDescriptionApiDto dto)
+        {
+            var resultService = await _facadeProductService.ProductCommandsService.SetDescription(dto.ProductId, dto.Description);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+
     }
 }
