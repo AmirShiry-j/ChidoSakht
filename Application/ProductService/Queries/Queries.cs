@@ -17,6 +17,16 @@ namespace Application.ProductService.Queries
             Id = id;
         }
     }
+
+    public class GetProductDetailsByIdQuery : IRequest<ProductDetailsDto>
+    {
+        public int Id { get; set; }
+
+        public GetProductDetailsByIdQuery(int id)
+        {
+            Id = id;
+        }
+    }
     public class GetProductsByFilterQuery : IRequest<ResultSearchDto>
     {
         public ProductFilterDto Filter { get; set; }

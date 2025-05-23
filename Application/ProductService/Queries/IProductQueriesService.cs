@@ -28,27 +28,17 @@ namespace Application.ProductService.Queries
         public async Task<ResultDto<ProductDetailsDto>> GetOneProduct(int Id)
         {
             //get from db
-            var product = await _mediator.Send(new GetProductByIdQuery((int)Id));
-            if (product is null)
+            var productDto = await _mediator.Send(new GetProductDetailsByIdQuery((int)Id));
+            if (productDto is null)
                 return new ResultDto<ProductDetailsDto>
                 {
                     MessageEventType = Common.MessageEventTypes.MessageEventType.NotFound
                 };
 
-            //map to model
-            var dto = new ProductDetailsDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                LastUpdateTime = product.LastUpdateTime,
-                CreateTime = product.CreateTime,
-                Description = product.Description,
-            };
-
             return new ResultDto<ProductDetailsDto>
             {
                 IsSuccess = true,
-                Data = dto
+                Data = productDto
             };
         }
 
@@ -90,6 +80,7 @@ namespace Application.ProductService.Queries
         public int Id { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
+        public string? UniqeLink { get; set; }
 
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }
