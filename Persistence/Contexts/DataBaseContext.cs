@@ -27,6 +27,7 @@ namespace Persistence.Contexts
         public DbSet<RolePermission> RolePermissions { get; set; }
         //Products
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -71,6 +72,13 @@ namespace Persistence.Contexts
                 .WithMany()
                 .HasForeignKey(rp => rp.PermissionId);
 
+            //Products
+            builder.Entity<Product>()
+    .HasMany(p => p.ProductImages)
+    .WithOne()
+    .HasForeignKey(p => p.ProductId)
+    .IsRequired(true);
+
             SetConfigurations(builder);
 
             base.OnModelCreating(builder);
@@ -89,6 +97,7 @@ namespace Persistence.Contexts
 
             //Products
             builder.ApplyConfiguration(new ProductConfig());
+            builder.ApplyConfiguration(new ProductImageConfig());
 
 
             base.OnModelCreating(builder);

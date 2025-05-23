@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Domain.Products
 {
@@ -18,6 +19,7 @@ namespace Domain.Products
         public string Name { get; set; }
         public string? Description { get; set; }
         public string? UniqeLink { get; set; }
+        public string? ImageAltText { get; set; }
 
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }
@@ -26,6 +28,10 @@ namespace Domain.Products
 
         //public ICollection<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
         //public ICollection<ProductAttribute> Attributes { get; set; } = new List<ProductAttribute>();
+
+        //naves
+        public ICollection<ProductImage> ProductImages { get; set; }
+
     }
 
     public class ProductVariant
