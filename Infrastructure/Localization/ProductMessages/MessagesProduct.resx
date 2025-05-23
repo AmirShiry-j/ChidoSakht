@@ -120,4 +120,7 @@
   <data name="CreatedWasUnSuccess" xml:space="preserve">
     <value>ایجاد محصول با مشکل مواجه شد</value>
   </data>
+  <data name="LinkNotUniqe" xml:space="preserve">
+    <value>پیوند ارسال شده یکتا نیست</value>
+  </data>
 </root>

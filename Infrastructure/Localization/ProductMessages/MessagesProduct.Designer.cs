@@ -68,5 +68,14 @@ namespace Infrastructure.Localization.ProductMessages {
                 return ResourceManager.GetString("CreatedWasUnSuccess", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پیوند ارسال شده یکتا نیست.
+        /// </summary>
+        internal static string LinkNotUniqe {
+            get {
+                return ResourceManager.GetString("LinkNotUniqe", resourceCulture);
+            }
+        }
     }
 }

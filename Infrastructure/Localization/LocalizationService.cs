@@ -2,6 +2,7 @@
 using Infrastructure.Localization.AccountMessages;
 using Infrastructure.Localization.CategoryMessages;
 using Infrastructure.Localization.PermissionMessages;
+using Infrastructure.Localization.ProductMessages;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Infrastructure.Localization
 
         public string GetMessageProduct(string key)
         {
-            throw new NotImplementedException();
+            return MessagesProduct.ResourceManager.GetString(key);
         }
     }
 }

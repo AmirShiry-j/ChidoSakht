@@ -27,11 +27,13 @@ namespace Application.ProductService.Queries
     }
     public class ValidateUniqeLinkQuery : IRequest<bool>
     {
+        public int ProductId { get; set; }
         public string UniqeLink { get; set; }
 
-        public ValidateUniqeLinkQuery(string uniqeLink)
+        public ValidateUniqeLinkQuery(int productId, string uniqeLink)
         {
             UniqeLink = uniqeLink;
+            ProductId = productId;
         }
     }
 }

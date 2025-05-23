@@ -160,15 +160,38 @@ namespace WebApi.Areas.Admin.Controllers
             }
         }
 
+
+        /// <summary>
+        /// ست کردن یک پیوند یکتا برای محصول (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut(nameof(SetUniqeLink))]
+        public async Task<IActionResult> SetUniqeLink(SetUniqeLinkApiDto dto)
+        {
+            var resultService = await _facadeProductService.ProductCommandsService.SetUniqeLink(dto.ProductId, dto.UniqeLink);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
         /// <summary>
         /// بررسی یکتا بودن پیوند محصول (Auth)
         /// </summary>
         /// <param name="UniqeLink"></param>
         /// <returns></returns>
         [HttpGet(nameof(ValidateUniqeLink))]
-        public async Task<IActionResult> ValidateUniqeLink([Required]string UniqeLink)
+        public async Task<IActionResult> ValidateUniqeLink([Required] int ProductId,[Required]string UniqeLink)
         {
-            var resultService = await _facadeProductService.ProductQueriesService.ValidateUniqeLink(UniqeLink);
+            var resultService = await _facadeProductService.ProductQueriesService.ValidateUniqeLink(ProductId,UniqeLink);
             if (resultService.IsSuccess)
             {
                 return Ok(resultService.Data);

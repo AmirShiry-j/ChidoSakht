@@ -21,7 +21,8 @@ namespace Persistence.Categories.Queries
 
         public async Task<bool> Handle(ValidateUniqeLinkQuery request, CancellationToken cancellationToken)
         {
-            return ! await _context.Products.AnyAsync(p => p.UniqeLink == request.UniqeLink,cancellationToken);
+            return !await _context.Products
+                .AnyAsync(p => !p.Id.Equals(request.ProductId) && p.UniqeLink != null && p.UniqeLink.Equals(request.UniqeLink));
         }
     }
 }

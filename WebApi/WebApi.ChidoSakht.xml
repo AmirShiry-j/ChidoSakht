@@ -72,7 +72,14 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.ValidateUniqeLink(System.String)">
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetUniqeLink(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetUniqeLinkApiDto)">
+            <summary>
+            ست کردن یک پیوند یکتا برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.ValidateUniqeLink(System.Int32,System.String)">
             <summary>
             بررسی یکتا بودن پیوند محصول (Auth)
             </summary>
