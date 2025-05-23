@@ -12,6 +12,7 @@ using WebApi.Filters.Permissions;
 using Application.Common.MessageEventTypes;
 using Microsoft.AspNetCore.Http.Extensions;
 using Application.ProductService.Queries;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -138,7 +139,7 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// ست کردن یک توضیح (Auth)
+        /// ست کردن یک توضیح برای محصول (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -159,6 +160,24 @@ namespace WebApi.Areas.Admin.Controllers
             }
         }
 
+        /// <summary>
+        /// بررسی یکتا بودن پیوند محصول (Auth)
+        /// </summary>
+        /// <param name="UniqeLink"></param>
+        /// <returns></returns>
+        [HttpGet(nameof(ValidateUniqeLink))]
+        public async Task<IActionResult> ValidateUniqeLink([Required]string UniqeLink)
+        {
+            var resultService = await _facadeProductService.ProductQueriesService.ValidateUniqeLink(UniqeLink);
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
 
     }
 }

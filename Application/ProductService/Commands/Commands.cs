@@ -26,4 +26,6 @@ namespace Application.ProductService.Commands
             Product = product;
         }
     }
+
+
 }

@@ -67,9 +67,16 @@
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetDescription(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetDescriptionApiDto)">
             <summary>
-            ست کردن یک توضیح (Auth)
+            ست کردن یک توضیح برای محصول (Auth)
             </summary>
             <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.ValidateUniqeLink(System.String)">
+            <summary>
+            بررسی یکتا بودن پیوند محصول (Auth)
+            </summary>
+            <param name="UniqeLink"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">

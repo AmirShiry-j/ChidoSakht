@@ -102,6 +102,5 @@ namespace Application.ProductService.Commands
         }
 
 
-
     }
 }

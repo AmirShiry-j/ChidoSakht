@@ -13,6 +13,7 @@ namespace Application.ProductService.Queries
     {
         Task<ResultDto<ProductDetailsDto>> GetOneProduct(int Id);
         Task<ResultDto<ResultSearchDto>> GetProducts(ProductFilterDto filterDto);
+        Task<ResultDto<bool>> ValidateUniqeLink(string? UniqeLink);
 
     }
     public class ProductQueriesService : IProductQueriesService
@@ -61,6 +62,19 @@ namespace Application.ProductService.Queries
             {
                 IsSuccess = true,
                 Data = products
+            };
+        }
+
+        public async Task<ResultDto<bool>> ValidateUniqeLink(string UniqeLink)
+        {
+            //is exist in db?
+            var isValid = await _mediator.Send(new ValidateUniqeLinkQuery(UniqeLink));
+
+            //return
+            return new ResultDto<bool>
+            {
+                IsSuccess = true,
+                Data = isValid
             };
         }
     }

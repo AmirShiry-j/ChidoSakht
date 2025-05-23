@@ -25,4 +25,13 @@ namespace Application.ProductService.Queries
             Filter = filter;
         }
     }
+    public class ValidateUniqeLinkQuery : IRequest<bool>
+    {
+        public string UniqeLink { get; set; }
+
+        public ValidateUniqeLinkQuery(string uniqeLink)
+        {
+            UniqeLink = uniqeLink;
+        }
+    }
 }

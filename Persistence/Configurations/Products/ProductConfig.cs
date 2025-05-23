@@ -16,6 +16,7 @@ namespace Persistence.Configurations.Products
         {
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Property(p => p.CreateTime).HasDefaultValueSql("getdate()");
+            builder.HasIndex(p => p.UniqeLink).IsUnique();
             //builder.Property(p=>p.ParentCategory).
         }
     }
