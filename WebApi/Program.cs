@@ -28,6 +28,8 @@ using Application.ProductService.Commands;
 using Application.ProductService;
 using Application.ProductImageService;
 using Microsoft.Extensions.FileProviders;
+using Application.ProductAttribute;
+using Application.ProductVariant;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -146,6 +148,8 @@ builder.Services.AddScoped<IFacadePermissionService, FacadePermissionService>();
 //Prdoucts
 builder.Services.AddScoped<IFacadeProductService, FacadeProductService>();
 builder.Services.AddScoped<IFacadeProductImageService, FacadeProductImageService>();
+builder.Services.AddScoped<IFacadeProductAttributeService, FacadeProductAttributeService>();
+builder.Services.AddScoped<IFacadeProductVariantService, FacadeProductVariantService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));

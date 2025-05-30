@@ -22,7 +22,7 @@ namespace WebApi.Areas.Admin.Controllers
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
     //[Authorize]
-    public class ProductController : Controller
+    public class ProductController : ControllerBase
     {
         private readonly IFacadeProductService _facadeProductService;
         private readonly ILocalizationService _localizationService;
