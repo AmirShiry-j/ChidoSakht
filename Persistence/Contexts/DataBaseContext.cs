@@ -6,6 +6,7 @@ using Domain.Categories;
 using Persistence.Configurations.Categories;
 using Domain.Products;
 using Persistence.Configurations.Products;
+using System.Reflection.Emit;
 
 namespace Persistence.Contexts
 {
@@ -28,7 +29,12 @@ namespace Persistence.Contexts
         //Products
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
-
+        //
+        public DbSet<ProductAttribute> ProductAttributes { get; set; }
+        public DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
+        public DbSet<ProductVariant> ProductVariants { get; set; }
+        public DbSet<VariantAttributeValue> VariantAttributeValues { get; set; }
+        //
         protected override void OnModelCreating(ModelBuilder builder)
         {
             ////Relations
@@ -77,7 +83,14 @@ namespace Persistence.Contexts
     .HasMany(p => p.ProductImages)
     .WithOne()
     .HasForeignKey(p => p.ProductId)
-    .IsRequired(true);
+            .IsRequired(true);
+
+
+            builder.Entity<VariantAttributeValue>()
+    .HasOne(v => v.ProductVariant)
+    .WithMany(pv => pv.VariantAttributeValues)
+    .HasForeignKey(v => v.ProductVariantId)
+    .OnDelete(DeleteBehavior.NoAction); // یا DeleteBehavior.NoAction
 
             SetConfigurations(builder);
 

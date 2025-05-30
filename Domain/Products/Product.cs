@@ -28,8 +28,8 @@ namespace Domain.Products
 
         //naves
         public ICollection<ProductImage> ProductImages { get; set; }
-        public ICollection<ProductVariant> ProductVariants { get; set; }
         public ICollection<ProductAttribute> ProductAttributes { get; set; }
+        public ICollection<ProductVariant> ProductVariants { get; set; }
     }
 
 
@@ -50,8 +50,8 @@ namespace Domain.Products
     public class ProductAttributeValue
     {
         public int Id { get; set; }
-        public int AttributeId { get; set; }
-        public Attribute Attribute { get; set; }
+        public int ProductAttributeId { get; set; }
+        public ProductAttribute ProductAttribute { get; set; }
         public string Value { get; set; }
     }
 
@@ -72,8 +72,8 @@ namespace Domain.Products
     {
         public int Id { get; set; }
 
-        public int VariantId { get; set; }
-        public ProductVariant Variant { get; set; }
+        public int ProductVariantId { get; set; }
+        public ProductVariant ProductVariant { get; set; }
 
         public int ProductAttributeValueId { get; set; }
         public ProductAttributeValue ProductAttributeValue { get; set; }
