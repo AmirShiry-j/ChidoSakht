@@ -44,6 +44,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductAttributeApiDto)">
+            <summary>
+            ایجاد یک خصوصیت جدید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Get(WebApi.Areas.Admin.ModelsAndDtoes.Products.ProductFilterApiDto)">
             <summary>
             برگردوندن محصولات (Auth)

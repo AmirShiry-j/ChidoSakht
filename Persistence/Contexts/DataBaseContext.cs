@@ -30,7 +30,7 @@ namespace Persistence.Contexts
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         //
-        public DbSet<ProductAttribute> ProductAttributes { get; set; }
+        public DbSet<Domain.Products.ProductAttribute> ProductAttributes { get; set; }
         public DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<VariantAttributeValue> VariantAttributeValues { get; set; }
@@ -111,6 +111,7 @@ namespace Persistence.Contexts
             //Products
             builder.ApplyConfiguration(new ProductConfig());
             builder.ApplyConfiguration(new ProductImageConfig());
+            builder.ApplyConfiguration(new ProductAttributeConfig());
 
 
             base.OnModelCreating(builder);

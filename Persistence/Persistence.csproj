@@ -21,4 +21,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ProductAttribute\Queries\" />
+    <Folder Include="ProductVariant\Commands\" />
+    <Folder Include="ProductVariant\Queries\" />
+  </ItemGroup>
+
 </Project>

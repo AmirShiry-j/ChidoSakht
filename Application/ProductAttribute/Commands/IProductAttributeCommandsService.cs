@@ -1,15 +1,23 @@
-﻿using Application.Interfaces.Localization;
+﻿using Application.Common.Dtoes;
+using Application.Common.MessageEventTypes;
+using Application.Interfaces.Localization;
+using Application.ProductService.Commands;
+using Application.ProductService.Queries;
+using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Application.ProductAttribute.Commands
 {
     public interface IProductAttributeCommandsService
     {
+        Task<ResultDto<int>> Create(CreateProductAttributeDto dto);
     }
     public class ProductAttributeCommandsService : IProductAttributeCommandsService
     {
@@ -20,5 +28,35 @@ namespace Application.ProductAttribute.Commands
             _mediator = mediator;
             _localizationService = localizationService;
         }
+
+        public async Task<ResultDto<int>> Create(CreateProductAttributeDto dto)
+        {
+            //get from db
+            var product = await _mediator.Send(new GetProductByIdQuery((int)dto.ProductId));
+            if (product is null)
+            {
+                return new ResultDto<int>
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Create
+            var productAttributeId = await _mediator.Send(new CreateProductAttributeCommand(dto.ProductId, dto.Name, dto.AttributeType));
+
+            return new ResultDto<int>
+            {
+                IsSuccess = true,
+                Data = productAttributeId,
+                MessageEventType = MessageEventType.Created
+            };
+        }
+    }
+
+    public class CreateProductAttributeDto
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+        public AttributeType AttributeType { get; set; }
     }
 }

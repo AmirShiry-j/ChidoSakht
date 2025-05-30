@@ -1,7 +1,9 @@
 ﻿using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.ProductAttribute;
+using Application.ProductAttribute.Commands;
 using Application.ProductVariant;
+using Domain.Products;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Products;
@@ -23,29 +25,33 @@ namespace WebApi.Areas.Admin.Controllers
             _localizationService = localizationService;
         }
 
-
+        /// <summary>
+        /// ایجاد یک خصوصیت جدید (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post(CreateProductAttributeApiDto dto)
         {
-            //var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Upsert(dto.ProductId, dto.Name);
-            //if (resultService.IsSuccess)
-            //{
-            //    if (resultService.MessageEventType == MessageEventType.Created)
-            //    {
-            //        return CreatedAtAction(nameof(Get), new { ProductId = resultService.Data }, null);
-            //    }
-            //    else//Updated
-            //    {
-                    return NoContent();
-            //    }
-            //}
-            //else
-            //{
-            //    if (resultService.MessageEventType == MessageEventType.NotFound)
-            //        return NotFound();
-            //    else //bad request
-            //        return BadRequest(resultService.Message);
-            //}
+            var inputModel = new CreateProductAttributeDto
+            {
+                Name = dto.Name,
+                ProductId = dto.ProductId,
+                AttributeType = (AttributeType)dto.AttributeType
+            };
+            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Create(inputModel);
+            if (resultService.IsSuccess)
+            {
+                //return CreatedAtAction(nameof(Get), new { ProductAttributeId = resultService.Data }, null);
+                return Created();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
         }
     }
 }
