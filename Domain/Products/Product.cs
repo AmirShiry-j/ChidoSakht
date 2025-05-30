@@ -25,52 +25,49 @@ namespace Domain.Products
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }
 
-        //public bool IsVariable { get; set; }
-
-        //public ICollection<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
-        //public ICollection<ProductAttribute> Attributes { get; set; } = new List<ProductAttribute>();
 
         //naves
         public ICollection<ProductImage> ProductImages { get; set; }
-
+        public ICollection<ProductVariant> ProductVariants { get; set; }
+        public ICollection<ProductAttribute> ProductAttributes { get; set; }
     }
 
-    public class ProductVariant
-    {
-        public int Id { get; set; }
-        public string UniCode { get; set; } // شناسه یکتا برای ورییشن (در صورت نیاز)
-
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
-
-        public long Price { get; set; } // قیمت به صورت عدد صحیح
-        public int Stock { get; set; }
-
-        public ICollection<VariantAttributeValue> AttributeValues { get; set; } = new List<VariantAttributeValue>();
-    }
 
     public class ProductAttribute
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
-
+        public AttributeType AttributeType { get; set; }
         public string Name { get; set; }
-        public bool IsUsedForVariants { get; set; } // آیا این ویژگی برای محصولات متغیر استفاده می‌شود؟
-        public bool IsUsedInHeader { get; set; } // آیا این ویژگی برای نمایش در سر برگ استفاده می‌شود؟
-
-        public ICollection<ProductAttributeValue> Values { get; set; } = new List<ProductAttributeValue>();
+        public ICollection<ProductAttributeValue> ProductAttributeValues { get; set; }
     }
-
+    public enum AttributeType
+    {
+        Selective,
+        Colored
+    }
     public class ProductAttributeValue
     {
         public int Id { get; set; }
         public int AttributeId { get; set; }
-        public ProductAttribute Attribute { get; set; }
-
+        public Attribute Attribute { get; set; }
         public string Value { get; set; }
     }
 
+    public class ProductVariant
+    {
+        public int Id { get; set; }
+
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+
+        public long Price { get; set; }
+        public long SpecialPrice { get; set; }
+        public int Stock { get; set; }
+
+        public ICollection<VariantAttributeValue> VariantAttributeValues { get; set; }
+    }
     public class VariantAttributeValue
     {
         public int Id { get; set; }
@@ -78,8 +75,7 @@ namespace Domain.Products
         public int VariantId { get; set; }
         public ProductVariant Variant { get; set; }
 
-        public int AttributeValueId { get; set; }
-        public ProductAttributeValue AttributeValue { get; set; }
+        public int ProductAttributeValueId { get; set; }
+        public ProductAttributeValue ProductAttributeValue { get; set; }
     }
-
 }
