@@ -19,4 +19,22 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         public string Name { get; set; }
     }
+
+    public class CreateProductAttributeApiDto
+    {
+        [Required]
+        public int ProductId { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public AttributeTypeApi AttributeType { get; set; }
+    }
+
+    public enum AttributeTypeApi
+    {
+        Selective=1,
+        Colored=2
+    }
+
+
 }

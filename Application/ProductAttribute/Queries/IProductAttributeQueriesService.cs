@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Application.Interfaces.Localization;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +13,12 @@ namespace Application.ProductAttribute.Queries
     }
     public class ProductAttributeQueriesService : IProductAttributeQueriesService
     {
+        private readonly IMediator _mediator;
+        private readonly ILocalizationService _localizationService;
+        public ProductAttributeQueriesService(IMediator mediator, ILocalizationService localizationService)
+        {
+            _mediator = mediator;
+            _localizationService = localizationService;
+        }
     }
 }
