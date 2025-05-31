@@ -40,4 +40,16 @@ namespace Application.ProductAttribute.Commands
             ProductAttribute = productAttribute;
         }
     }
+
+
+    public class CreateValueForProductAttributeCommand : IRequest<int>
+    {
+        public int ProductAttributeId { get; set; }
+        public string Value { get; set; }
+        public CreateValueForProductAttributeCommand(int productAttributeId, string value)
+        {
+            ProductAttributeId = productAttributeId;
+            Value = value;
+        }
+    }
 }

@@ -83,7 +83,7 @@ namespace WebApi.Areas.Admin.Controllers
                 ProductId = dto.ProductId,
                 AttributeType = (AttributeType)dto.AttributeType
             };
-            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Create(inputModel);
+            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.CreateAttrbite(inputModel);
             if (resultService.IsSuccess)
             {
                 return CreatedAtAction(nameof(Get), new { ProductAttributeId = resultService.Data }, null);
@@ -111,7 +111,7 @@ namespace WebApi.Areas.Admin.Controllers
                 Name = dto.Name,
                 ProductAttributeId = dto.ProductAttributeId
             };
-            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Update(inputModel);
+            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.UpdateAttrbite(inputModel);
             if (resultService.IsSuccess)
             {
                 return NoContent();
@@ -133,7 +133,7 @@ namespace WebApi.Areas.Admin.Controllers
         [HttpDelete("{ProductAttributeId}")]
         public async Task<IActionResult> Delete(int ProductAttributeId)
         {
-            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Delete(ProductAttributeId);
+            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.DeleteAttrbite(ProductAttributeId);
             if (resultService.IsSuccess)
             {
                 return NoContent();

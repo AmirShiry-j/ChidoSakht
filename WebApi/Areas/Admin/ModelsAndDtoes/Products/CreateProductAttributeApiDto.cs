@@ -28,4 +28,13 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         public string Name { get; set; }
     }
 
+    public class CreateValueForAttributeApiDto
+    {
+        [Required]
+        public int ProductAttributeId { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Value { get; set; }
+    }
+
 }
