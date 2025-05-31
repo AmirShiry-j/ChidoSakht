@@ -22,6 +22,8 @@ namespace Application.ProductAttribute.Commands
         Task<ResultDto> UpdateAttrbite(UpdateProductAttributeDto dto);
         Task<ResultDto> DeleteAttrbite(int ProductAttributeId);
         Task<ResultDto<int>> AddValueForAtribute(CreateValueForAttributeDto dto);
+        Task<ResultDto> DeleteValueForAtribute(int ProductAttributeValueId);
+        Task<ResultDto> UpdateAValueForAtribute(UpdateProductAttributeValueDto dto);
     }
     public class ProductAttributeCommandsService : IProductAttributeCommandsService
     {
@@ -92,7 +94,7 @@ namespace Application.ProductAttribute.Commands
                 };
             }
 
-            //update
+            //Delete
             await _mediator.Send(new DeleteProductAttributeCommand(productAttribute));
 
             return new ResultDto
@@ -114,13 +116,58 @@ namespace Application.ProductAttribute.Commands
             }
 
             //Create
-            var productAttributeValueId = await _mediator.Send(new CreateValueForProductAttributeCommand(dto.ProductAttributeId, dto.Value));
+            var productAttributeValueId = await _mediator.Send(new CreateProductAttributeValueCommand(dto.ProductAttributeId, dto.Value));
 
             return new ResultDto<int>
             {
                 IsSuccess = true,
                 Data = productAttributeValueId,
                 MessageEventType = MessageEventType.Created
+            };
+        }
+
+        public async Task<ResultDto> DeleteValueForAtribute(int ProductAttributeValueId)
+        {
+            //check id exist in db
+            var productAttributeValue = await _mediator.Send(new GetProductAttributeValueByIdQuery(ProductAttributeValueId));
+            if (productAttributeValue is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Delete
+            await _mediator.Send(new DeleteProductAttributeValueCommand(productAttributeValue));
+
+            return new ResultDto
+            {
+                IsSuccess = true
+            };
+        }
+
+        public async Task<ResultDto> UpdateAValueForAtribute(UpdateProductAttributeValueDto dto)
+        {
+            //check id exist in db
+            var productAttributeValue = await _mediator.Send(new GetProductAttributeValueByIdQuery((int)dto.ProductAttributeValueId));
+            if (productAttributeValue is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //changes
+            productAttributeValue.Value = dto.Value;
+
+            //update
+            await _mediator.Send(new UpdateProductAttributeValueCommand(productAttributeValue));
+
+            return new ResultDto
+            {
+                IsSuccess = true
             };
         }
     }
@@ -140,6 +187,12 @@ namespace Application.ProductAttribute.Commands
     public class CreateValueForAttributeDto
     {
         public int ProductAttributeId { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class UpdateProductAttributeValueDto
+    {
+        public int ProductAttributeValueId { get; set; }
         public string Value { get; set; }
     }
 }

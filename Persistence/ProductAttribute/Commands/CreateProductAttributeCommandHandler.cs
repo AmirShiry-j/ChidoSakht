@@ -8,7 +8,6 @@ namespace Persistence.ProductAttribute.Commands
     public class CreateProductAttributeCommandHandler : IRequestHandler<CreateProductAttributeCommand, int>
     {
         private readonly DataBaseContext _context;
-
         public CreateProductAttributeCommandHandler(DataBaseContext context)
         {
             _context = context;

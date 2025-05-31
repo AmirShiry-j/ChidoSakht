@@ -79,6 +79,20 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeValueController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateProductAttributeValueApiDto)">
+            <summary>
+            ویرایش یکی از مقادیر خصوصیت (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeValueController.Delete(System.Int32)">
+            <summary>
+            حذف یک مقدار از خصوصیت (Auth)
+            </summary>
+            <param name="ProductAttributeValueId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Get(WebApi.Areas.Admin.ModelsAndDtoes.Products.ProductFilterApiDto)">
             <summary>
             برگردوندن محصولات (Auth)

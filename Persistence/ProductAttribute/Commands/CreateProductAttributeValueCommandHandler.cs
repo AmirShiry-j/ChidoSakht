@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Persistence.ProductAttribute.Commands
 {
-    public class CreateValueForProductAttributeCommandHandler : IRequestHandler<CreateValueForProductAttributeCommand, int>
+    public class CreateProductAttributeValueCommandHandler : IRequestHandler<CreateProductAttributeValueCommand, int>
     {
         private readonly DataBaseContext _context;
-        public CreateValueForProductAttributeCommandHandler(DataBaseContext context)
+        public CreateProductAttributeValueCommandHandler(DataBaseContext context)
         {
             _context = context;
         }
-        public async Task<int> Handle(CreateValueForProductAttributeCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateProductAttributeValueCommand request, CancellationToken cancellationToken)
         {
             //Define
             var newValue = new Domain.Products.ProductAttributeValue();

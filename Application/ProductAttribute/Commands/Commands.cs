@@ -42,14 +42,34 @@ namespace Application.ProductAttribute.Commands
     }
 
 
-    public class CreateValueForProductAttributeCommand : IRequest<int>
+    public class CreateProductAttributeValueCommand : IRequest<int>
     {
         public int ProductAttributeId { get; set; }
         public string Value { get; set; }
-        public CreateValueForProductAttributeCommand(int productAttributeId, string value)
+        public CreateProductAttributeValueCommand(int productAttributeId, string value)
         {
             ProductAttributeId = productAttributeId;
             Value = value;
+        }
+    }
+
+    public class DeleteProductAttributeValueCommand : IRequest
+    {
+        public Domain.Products.ProductAttributeValue ProductAttributeValue { get; set; }
+
+        public DeleteProductAttributeValueCommand(Domain.Products.ProductAttributeValue productAttributeValue)
+        {
+            ProductAttributeValue = productAttributeValue;
+        }
+    }
+
+    public class UpdateProductAttributeValueCommand : IRequest
+    {
+        public Domain.Products.ProductAttributeValue ProductAttributeValue { get; set; }
+
+        public UpdateProductAttributeValueCommand(Domain.Products.ProductAttributeValue productAttributeValue)
+        {
+            ProductAttributeValue = productAttributeValue;
         }
     }
 }

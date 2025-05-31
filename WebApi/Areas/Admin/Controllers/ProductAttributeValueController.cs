@@ -51,5 +51,54 @@ namespace WebApi.Areas.Admin.Controllers
             }
         }
 
+        /// <summary>
+        /// ویرایش یکی از مقادیر خصوصیت (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> Put(UpdateProductAttributeValueApiDto dto)
+        {
+            var inputModel = new UpdateProductAttributeValueDto
+            {
+                Value = dto.Value,
+                ProductAttributeValueId = dto.ProductAttributeValueId
+            };
+            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.UpdateAValueForAtribute(inputModel);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// حذف یک مقدار از خصوصیت (Auth)
+        /// </summary>
+        /// <param name="ProductAttributeValueId"></param>
+        /// <returns></returns>
+        [HttpDelete("{ProductAttributeValueId}")]
+        public async Task<IActionResult> Delete(int ProductAttributeValueId)
+        {
+            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.DeleteValueForAtribute(ProductAttributeValueId);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
     }
 }

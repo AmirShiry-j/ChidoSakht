@@ -37,4 +37,12 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         public string Value { get; set; }
     }
 
+    public class UpdateProductAttributeValueApiDto
+    {
+        [Required]
+        public int ProductAttributeValueId { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Value { get; set; }
+    }
 }
