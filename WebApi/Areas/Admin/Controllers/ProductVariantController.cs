@@ -1,7 +1,11 @@
-﻿using Application.Interfaces.Localization;
+﻿using Application.Common.MessageEventTypes;
+using Application.Interfaces.Localization;
+using Application.ProductAttribute.Commands;
 using Application.ProductService;
 using Application.ProductVariant;
+using Application.ProductVariant.Commands;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Areas.Admin.ModelsAndDtoes.Products;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -18,6 +22,37 @@ namespace WebApi.Areas.Admin.Controllers
         {
             _facadeProductVariantService = facadeProductVariantService;
             _localizationService = localizationService;
+        }
+
+        /// <summary>
+        /// اضافه کردن یک واریانت (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateProductVariantApiDto dto)
+        {
+            var inputModel = new CreateProductVariantDto
+            {
+                Price = dto.Price,
+                ProductAttributeValueIds = dto.ProductAttributeValueIds,
+                ProductId = dto.ProductId,
+                SpecialPrice = dto.SpecialPrice,
+                Stock = dto.Stock
+            };
+            var resultService = await _facadeProductVariantService.ProductVariantCommandsService.CreateProductVariant(inputModel);
+            if (resultService.IsSuccess)
+            {
+                //return CreatedAtAction(nameof(Get), new { ProductAttributeId = resultService.Data }, null);
+                return Created();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
         }
     }
 }

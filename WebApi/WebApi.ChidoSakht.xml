@@ -185,6 +185,13 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductVariantApiDto)">
+            <summary>
+            اضافه کردن یک واریانت (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">
             <summary>
             برگردوندن لیست نقش ها در سایت (Auth)

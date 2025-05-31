@@ -17,7 +17,6 @@ namespace Persistence.Products.Queries
     public class GetProductsByFilterQueryHandler : IRequestHandler<GetProductsByFilterQuery, ResultSearchDto>
     {
         private readonly DataBaseContext _context;
-
         public GetProductsByFilterQueryHandler(DataBaseContext context)
         {
             _context = context;

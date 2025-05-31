@@ -32,8 +32,8 @@ namespace Persistence.Contexts
         //
         public DbSet<Domain.Products.ProductAttribute> ProductAttributes { get; set; }
         public DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
-        public DbSet<ProductVariant> ProductVariants { get; set; }
-        public DbSet<VariantAttributeValue> VariantAttributeValues { get; set; }
+        public DbSet<Domain.Products.ProductVariant> ProductVariants { get; set; }
+        public DbSet<Domain.Products.ProductVariantAttributeValue> VariantAttributeValues { get; set; }
         //
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -86,9 +86,9 @@ namespace Persistence.Contexts
             .IsRequired(true);
 
 
-            builder.Entity<VariantAttributeValue>()
+            builder.Entity<ProductVariantAttributeValue>()
     .HasOne(v => v.ProductVariant)
-    .WithMany(pv => pv.VariantAttributeValues)
+    .WithMany(pv => pv.ProductVariantAttributeValues)
     .HasForeignKey(v => v.ProductVariantId)
     .OnDelete(DeleteBehavior.NoAction); // یا DeleteBehavior.NoAction
 

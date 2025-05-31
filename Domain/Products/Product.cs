@@ -66,9 +66,9 @@ namespace Domain.Products
         public long SpecialPrice { get; set; }
         public int Stock { get; set; }
 
-        public ICollection<VariantAttributeValue> VariantAttributeValues { get; set; }
+        public ICollection<ProductVariantAttributeValue> ProductVariantAttributeValues { get; set; }
     }
-    public class VariantAttributeValue
+    public class ProductVariantAttributeValue
     {
         public int Id { get; set; }
 

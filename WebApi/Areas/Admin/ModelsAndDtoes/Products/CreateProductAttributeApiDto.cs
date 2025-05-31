@@ -45,4 +45,13 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [MaxLength(50)]
         public string Value { get; set; }
     }
+
+    public class CreateProductVariantApiDto
+    {
+        public int ProductId { get; set; }
+        public long Price { get; set; }
+        public long SpecialPrice { get; set; }
+        public int Stock { get; set; }
+        public List<int> ProductAttributeValueIds { get; set; }
+    }
 }
