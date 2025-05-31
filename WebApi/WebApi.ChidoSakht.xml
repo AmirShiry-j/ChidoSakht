@@ -65,6 +65,13 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Delete(System.Int32)">
+            <summary>
+            حذف یک خصوصیت (Auth)
+            </summary>
+            <param name="ProductAttributeId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Get(WebApi.Areas.Admin.ModelsAndDtoes.Products.ProductFilterApiDto)">
             <summary>
             برگردوندن محصولات (Auth)

@@ -30,4 +30,14 @@ namespace Application.ProductAttribute.Commands
             ProductAttribute = productAttribute;
         }
     }
+
+    public class DeleteProductAttributeCommand : IRequest
+    {
+        public Domain.Products.ProductAttribute ProductAttribute { get; set; }
+
+        public DeleteProductAttributeCommand(Domain.Products.ProductAttribute productAttribute)
+        {
+            ProductAttribute = productAttribute;
+        }
+    }
 }

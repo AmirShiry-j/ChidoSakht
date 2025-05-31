@@ -50,6 +50,12 @@ namespace WebApi.Areas.Admin.Controllers
                             HttpMethod=HttpMethod.Put.ToString(),
                             Url=Url.Action(nameof(Put),nameof(ProductAttributeController).Replace("Controller", ""),new { Area="Admin" },Request.Scheme)
                         },
+                        new Link
+                        {
+                            For="For Delete",
+                            HttpMethod=HttpMethod.Delete.ToString(),
+                            Url=Url.Action(nameof(Delete),nameof(ProductAttributeController).Replace("Controller", ""),new { Area="Admin" , ProductAttributeId=resultService.Data.ProductAttributeId },Request.Scheme)
+                        },
                     };
 
                 return Ok(resultService.Data);
@@ -106,6 +112,28 @@ namespace WebApi.Areas.Admin.Controllers
                 ProductAttributeId = dto.ProductAttributeId
             };
             var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Update(inputModel);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// حذف یک خصوصیت (Auth)
+        /// </summary>
+        /// <param name="ProductAttributeId"></param>
+        /// <returns></returns>
+        [HttpDelete("{ProductAttributeId}")]
+        public async Task<IActionResult> Delete(int ProductAttributeId)
+        {
+            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Delete(ProductAttributeId);
             if (resultService.IsSuccess)
             {
                 return NoContent();

@@ -20,6 +20,7 @@ namespace Application.ProductAttribute.Commands
     {
         Task<ResultDto<int>> Create(CreateProductAttributeDto dto);
         Task<ResultDto> Update(UpdateProductAttributeDto dto);
+        Task<ResultDto> Delete(int ProductAttributeId);
     }
     public class ProductAttributeCommandsService : IProductAttributeCommandsService
     {
@@ -71,6 +72,27 @@ namespace Application.ProductAttribute.Commands
 
             //update
             await _mediator.Send(new UpdateProductAttributeCommand(productAttribute));
+
+            return new ResultDto
+            {
+                IsSuccess = true
+            };
+        }
+
+        public async Task<ResultDto> Delete(int ProductAttributeId)
+        {
+            //check id exist in db
+            var productAttribute = await _mediator.Send(new GetProductAttributeByIdQuery(ProductAttributeId));
+            if (productAttribute is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //update
+            await _mediator.Send(new DeleteProductAttributeCommand(productAttribute));
 
             return new ResultDto
             {
