@@ -28,36 +28,19 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// برگردوندن اطلاعات یک خصوصیت (Auth)
+        /// برگردوندن تمام خصوصیات یک محصول (Auth)
         /// </summary>
-        /// <param name="ProductAttributeId"></param>
+        /// <param name="ProductId"></param>
         /// <returns></returns>
-        [HttpGet("{ProductAttributeId}")]
-        public async Task<IActionResult> Get(int ProductAttributeId)
+        [HttpGet("{ProductId}")]
+        public async Task<IActionResult> Get(int ProductId)
         {
             //Get by service
-            var resultService = await _facadeProductAttributeService.ProductAttributeQueriesService.GetOnProductAttribute(ProductAttributeId);
+            var resultService = await _facadeProductAttributeService.ProductAttributeQueriesService.GetProductAttributesByProductId(ProductId);
 
             //HATEAOS
             if (resultService.IsSuccess)
             {
-
-                resultService.Data.Links = new List<Link>
-                    {
-                        new Link
-                        {
-                            For="For Update",
-                            HttpMethod=HttpMethod.Put.ToString(),
-                            Url=Url.Action(nameof(Put),nameof(ProductAttributeController).Replace("Controller", ""),new { Area="Admin" },Request.Scheme)
-                        },
-                        new Link
-                        {
-                            For="For Delete",
-                            HttpMethod=HttpMethod.Delete.ToString(),
-                            Url=Url.Action(nameof(Delete),nameof(ProductAttributeController).Replace("Controller", ""),new { Area="Admin" , ProductAttributeId=resultService.Data.ProductAttributeId },Request.Scheme)
-                        },
-                    };
-
                 return Ok(resultService.Data);
             }
             else
@@ -86,7 +69,7 @@ namespace WebApi.Areas.Admin.Controllers
             var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.CreateAttrbite(inputModel);
             if (resultService.IsSuccess)
             {
-                return CreatedAtAction(nameof(Get), new { ProductAttributeId = resultService.Data }, null);
+                return Created();
             }
             else
             {

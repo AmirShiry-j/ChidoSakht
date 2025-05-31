@@ -46,9 +46,9 @@
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Get(System.Int32)">
             <summary>
-            برگردوندن اطلاعات یک خصوصیت (Auth)
+            برگردوندن تمام خصوصیات یک محصول (Auth)
             </summary>
-            <param name="ProductAttributeId"></param>
+            <param name="ProductId"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductAttributeApiDto)">

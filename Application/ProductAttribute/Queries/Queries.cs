@@ -23,12 +23,12 @@ namespace Application.ProductAttribute.Queries
             Id = id;
         }
     }
-    public class GetProductAttributeDetailsByIdQuery : IRequest<ProductAttributeDetailsDto>
+    public class GetProductAttributesByProductIdQuery : IRequest<List<ProductAttributeDto>>
     {
-        public int Id { get; set; }
-        public GetProductAttributeDetailsByIdQuery(int id)
+        public int ProductId { get; set; }
+        public GetProductAttributesByProductIdQuery(int productId)
         {
-            Id = id;
+            ProductId = productId;
         }
     }
 }

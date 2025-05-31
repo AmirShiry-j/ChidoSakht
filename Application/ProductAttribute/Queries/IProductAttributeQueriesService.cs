@@ -14,7 +14,7 @@ namespace Application.ProductAttribute.Queries
 {
     public interface IProductAttributeQueriesService
     {
-        Task<ResultDto<ProductAttributeDetailsDto>> GetOnProductAttribute(int ProductAttributeId);
+        Task<ResultDto<List<ProductAttributeDto>>> GetProductAttributesByProductId(int ProductId);
     }
     public class ProductAttributeQueriesService : IProductAttributeQueriesService
     {
@@ -26,29 +26,27 @@ namespace Application.ProductAttribute.Queries
             _localizationService = localizationService;
         }
 
-        public async Task<ResultDto<ProductAttributeDetailsDto>> GetOnProductAttribute(int ProductAttributeId)
+        public async Task<ResultDto<List<ProductAttributeDto>>> GetProductAttributesByProductId(int ProductId)
         {
             //get from db
-            var productAttributeDetailsDto = await _mediator.Send(new GetProductAttributeDetailsByIdQuery((int)ProductAttributeId));
-            if (productAttributeDetailsDto is null)
-                return new ResultDto<ProductAttributeDetailsDto>
+            var productAttributes = await _mediator.Send(new GetProductAttributesByProductIdQuery(ProductId));
+            if (productAttributes is null || !productAttributes.Any())
+                return new ResultDto<List<ProductAttributeDto>>
                 {
                     MessageEventType = Common.MessageEventTypes.MessageEventType.NotFound
                 };
 
-            return new ResultDto<ProductAttributeDetailsDto>
+            return new ResultDto<List<ProductAttributeDto>>
             {
                 IsSuccess = true,
-                Data = productAttributeDetailsDto
+                Data = productAttributes
             };
         }
     }
-    public class ProductAttributeDetailsDto
+    public class ProductAttributeDto
     {
         public int ProductAttributeId { get; set; }
         public string Name { get; set; }
         public AttributeType AttributeType { get; set; }
-        public int ProductId { get; set; }
-        public List<Link> Links { get; set; }
     }
 }
