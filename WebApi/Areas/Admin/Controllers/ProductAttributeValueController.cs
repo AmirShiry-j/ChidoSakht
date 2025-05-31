@@ -24,6 +24,31 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// برگردوندن همه مقادیر یک خصوصیت (Auth)
+        /// </summary>
+        /// <param name="ProductAttributeId"></param>
+        /// <returns></returns>
+        [HttpGet("{ProductAttributeId}")]
+        public async Task<IActionResult> Get(int ProductAttributeId)
+        {
+            //Get by service
+            var resultService = await _facadeProductAttributeService.ProductAttributeQueriesService.GetProductAttributeValuesByProductAttributeId(ProductAttributeId);
+
+            //HATEAOS
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                return
+                    BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
         /// اضافه کردن یک مقدار به خصوصیت (Auth)
         /// </summary>
         /// <param name="dto"></param>

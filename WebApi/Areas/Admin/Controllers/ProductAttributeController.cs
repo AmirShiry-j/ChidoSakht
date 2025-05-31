@@ -28,7 +28,7 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// برگردوندن تمام خصوصیات یک محصول (Auth)
+        /// برگردوندن همه خصوصیات یک محصول (Auth)
         /// </summary>
         /// <param name="ProductId"></param>
         /// <returns></returns>

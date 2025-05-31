@@ -31,4 +31,12 @@ namespace Application.ProductAttribute.Queries
             ProductId = productId;
         }
     }
+    public class GetProductAttributeValuesByProductAttributeIdQuery : IRequest<List<ProductAttributeValueDto>>
+    {
+        public int ProductAttributeId { get; set; }
+        public GetProductAttributeValuesByProductAttributeIdQuery(int productAttributeId)
+        {
+            ProductAttributeId = productAttributeId;
+        }
+    }
 }

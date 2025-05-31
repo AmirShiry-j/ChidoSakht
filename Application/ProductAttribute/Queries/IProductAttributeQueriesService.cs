@@ -15,6 +15,7 @@ namespace Application.ProductAttribute.Queries
     public interface IProductAttributeQueriesService
     {
         Task<ResultDto<List<ProductAttributeDto>>> GetProductAttributesByProductId(int ProductId);
+        Task<ResultDto<List<ProductAttributeValueDto>>> GetProductAttributeValuesByProductAttributeId(int ProductAttributeId);
     }
     public class ProductAttributeQueriesService : IProductAttributeQueriesService
     {
@@ -42,11 +43,33 @@ namespace Application.ProductAttribute.Queries
                 Data = productAttributes
             };
         }
+
+        public async Task<ResultDto<List<ProductAttributeValueDto>>> GetProductAttributeValuesByProductAttributeId(int ProductAttributeId)
+        {
+            //get from db
+            var productAttributeValues = await _mediator.Send(new GetProductAttributeValuesByProductAttributeIdQuery(ProductAttributeId));
+            if (productAttributeValues is null || !productAttributeValues.Any())
+                return new ResultDto<List<ProductAttributeValueDto>>
+                {
+                    MessageEventType = Common.MessageEventTypes.MessageEventType.NotFound
+                };
+
+            return new ResultDto<List<ProductAttributeValueDto>>
+            {
+                IsSuccess = true,
+                Data = productAttributeValues
+            };
+        }
     }
     public class ProductAttributeDto
     {
         public int ProductAttributeId { get; set; }
         public string Name { get; set; }
         public AttributeType AttributeType { get; set; }
+    }
+    public class ProductAttributeValueDto
+    {
+        public int ProductAttributeValueId { get; set; }
+        public string Value { get; set; }
     }
 }
