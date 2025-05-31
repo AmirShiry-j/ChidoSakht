@@ -53,5 +53,32 @@ namespace WebApi.Areas.Admin.Controllers
                     return BadRequest(resultService.Message);
             }
         }
+
+
+        /// <summary>
+        /// ایجاد یک خصوصیت جدید (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> Put(UpdateProductAttributeApiDto dto)
+        {
+            var inputModel = new UpdateProductAttributeDto
+            {
+                Name = dto.Name
+            };
+            var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Update(inputModel);
+            if (resultService.IsSuccess)
+            {
+                return Ok();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
     }
 }

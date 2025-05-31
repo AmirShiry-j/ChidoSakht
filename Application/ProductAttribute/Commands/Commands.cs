@@ -20,4 +20,14 @@ namespace Application.ProductAttribute.Commands
             AttributeType = attributeType;
         }
     }
+
+    public class UpdateProductAttributeCommand : IRequest
+    {
+        public Domain.Products.ProductAttribute ProductAttribute { get; set; }
+
+        public UpdateProductAttributeCommand(Domain.Products.ProductAttribute productAttribute)
+        {
+            ProductAttribute = productAttribute;
+        }
+    }
 }

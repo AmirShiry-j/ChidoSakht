@@ -1,6 +1,7 @@
 ﻿using Application.Common.Dtoes;
 using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
+using Application.ProductAttribute.Queries;
 using Application.ProductService.Commands;
 using Application.ProductService.Queries;
 using Domain.Products;
@@ -18,6 +19,7 @@ namespace Application.ProductAttribute.Commands
     public interface IProductAttributeCommandsService
     {
         Task<ResultDto<int>> Create(CreateProductAttributeDto dto);
+        Task<ResultDto> Update(UpdateProductAttributeDto dto);
     }
     public class ProductAttributeCommandsService : IProductAttributeCommandsService
     {
@@ -51,6 +53,30 @@ namespace Application.ProductAttribute.Commands
                 MessageEventType = MessageEventType.Created
             };
         }
+
+        public async Task<ResultDto> Update(UpdateProductAttributeDto dto)
+        {
+            //check id exist in db
+            var productAttribute = await _mediator.Send(new GetProductAttributeByIdQuery((int)dto.ProductAttributeId));
+            if (productAttribute is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //changes
+            productAttribute.Name = dto.Name;
+
+            //update
+            await _mediator.Send(new UpdateProductAttributeCommand(productAttribute));
+
+            return new ResultDto
+            {
+                IsSuccess = true
+            };
+        }
     }
 
     public class CreateProductAttributeDto
@@ -59,4 +85,10 @@ namespace Application.ProductAttribute.Commands
         public string Name { get; set; }
         public AttributeType AttributeType { get; set; }
     }
+    public class UpdateProductAttributeDto
+    {
+        public int ProductAttributeId { get; set; }
+        public string Name { get; set; }
+    }
+
 }

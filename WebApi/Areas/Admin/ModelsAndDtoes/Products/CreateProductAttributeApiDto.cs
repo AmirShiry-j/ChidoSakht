@@ -7,6 +7,7 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         public int ProductId { get; set; }
         [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
         [Required]
         [Range(1, 2)]
@@ -16,6 +17,15 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
     {
         Selective = 1,
         Colored = 2
+    }
+
+    public class UpdateProductAttributeApiDto
+    {
+        [Required]
+        public int ProductAttributeId { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; set; }
     }
 
 }
