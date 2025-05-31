@@ -15,4 +15,12 @@ namespace Application.ProductAttribute.Queries
             Id = id;
         }
     }
+    public class GetProductAttributeDetailsByIdQuery : IRequest<ProductAttributeDetailsDto>
+    {
+        public int Id { get; set; }
+        public GetProductAttributeDetailsByIdQuery(int id)
+        {
+            Id = id;
+        }
+    }
 }

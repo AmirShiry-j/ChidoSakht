@@ -44,9 +44,23 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Get(System.Int32)">
+            <summary>
+            برگردوندن اطلاعات یک خصوصیت (Auth)
+            </summary>
+            <param name="ProductAttributeId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductAttributeApiDto)">
             <summary>
             ایجاد یک خصوصیت جدید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateProductAttributeApiDto)">
+            <summary>
+            ویرایش یک خصوصیت (Auth)
             </summary>
             <param name="dto"></param>
             <returns></returns>

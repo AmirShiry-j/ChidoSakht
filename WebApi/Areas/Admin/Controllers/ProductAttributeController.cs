@@ -1,10 +1,12 @@
-﻿using Application.Common.MessageEventTypes;
+﻿using Application.Common.Dtoes;
+using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.ProductAttribute;
 using Application.ProductAttribute.Commands;
 using Application.ProductVariant;
 using Domain.Products;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Products;
 
@@ -26,6 +28,42 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// برگردوندن اطلاعات یک خصوصیت (Auth)
+        /// </summary>
+        /// <param name="ProductAttributeId"></param>
+        /// <returns></returns>
+        [HttpGet("{ProductAttributeId}")]
+        public async Task<IActionResult> Get(int ProductAttributeId)
+        {
+            //Get by service
+            var resultService = await _facadeProductAttributeService.ProductAttributeQueriesService.GetOnProductAttribute(ProductAttributeId);
+
+            //HATEAOS
+            if (resultService.IsSuccess)
+            {
+
+                resultService.Data.Links = new List<Link>
+                    {
+                        new Link
+                        {
+                            For="For Update",
+                            HttpMethod=HttpMethod.Put.ToString(),
+                            Url=Url.Action(nameof(Put),nameof(ProductAttributeController).Replace("Controller", ""),new { Area="Admin" },Request.Scheme)
+                        },
+                    };
+
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                return
+                    BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
         /// ایجاد یک خصوصیت جدید (Auth)
         /// </summary>
         /// <param name="dto"></param>
@@ -42,8 +80,7 @@ namespace WebApi.Areas.Admin.Controllers
             var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Create(inputModel);
             if (resultService.IsSuccess)
             {
-                //return CreatedAtAction(nameof(Get), new { ProductAttributeId = resultService.Data }, null);
-                return Created();
+                return CreatedAtAction(nameof(Get), new { ProductAttributeId = resultService.Data }, null);
             }
             else
             {
@@ -56,7 +93,7 @@ namespace WebApi.Areas.Admin.Controllers
 
 
         /// <summary>
-        /// ایجاد یک خصوصیت جدید (Auth)
+        /// ویرایش یک خصوصیت (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -65,12 +102,13 @@ namespace WebApi.Areas.Admin.Controllers
         {
             var inputModel = new UpdateProductAttributeDto
             {
-                Name = dto.Name
+                Name = dto.Name,
+                ProductAttributeId = dto.ProductAttributeId
             };
             var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.Update(inputModel);
             if (resultService.IsSuccess)
             {
-                return Ok();
+                return NoContent();
             }
             else
             {

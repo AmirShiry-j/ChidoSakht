@@ -1,4 +1,8 @@
-﻿using Application.Interfaces.Localization;
+﻿using Application.Common.Dtoes;
+using Application.Interfaces.Localization;
+using Application.ProductAttribute.Commands;
+using Application.ProductService.Queries;
+using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +14,7 @@ namespace Application.ProductAttribute.Queries
 {
     public interface IProductAttributeQueriesService
     {
+        Task<ResultDto<ProductAttributeDetailsDto>> GetOnProductAttribute(int ProductAttributeId);
     }
     public class ProductAttributeQueriesService : IProductAttributeQueriesService
     {
@@ -20,5 +25,30 @@ namespace Application.ProductAttribute.Queries
             _mediator = mediator;
             _localizationService = localizationService;
         }
+
+        public async Task<ResultDto<ProductAttributeDetailsDto>> GetOnProductAttribute(int ProductAttributeId)
+        {
+            //get from db
+            var productAttributeDetailsDto = await _mediator.Send(new GetProductAttributeDetailsByIdQuery((int)ProductAttributeId));
+            if (productAttributeDetailsDto is null)
+                return new ResultDto<ProductAttributeDetailsDto>
+                {
+                    MessageEventType = Common.MessageEventTypes.MessageEventType.NotFound
+                };
+
+            return new ResultDto<ProductAttributeDetailsDto>
+            {
+                IsSuccess = true,
+                Data = productAttributeDetailsDto
+            };
+        }
+    }
+    public class ProductAttributeDetailsDto
+    {
+        public int ProductAttributeId { get; set; }
+        public string Name { get; set; }
+        public AttributeType AttributeType { get; set; }
+        public int ProductId { get; set; }
+        public List<Link> Links { get; set; }
     }
 }
