@@ -39,4 +39,13 @@ namespace Application.ProductAttribute.Queries
             ProductAttributeId = productAttributeId;
         }
     }
+
+    public class GetProductAttributesAndValuesByProductIdQuery : IRequest<List<ProductAttributeAndValuesDto>>
+    {
+        public int ProductId { get; set; }
+        public GetProductAttributesAndValuesByProductIdQuery(int productId)
+        {
+            ProductId = productId;
+        }
+    }
 }

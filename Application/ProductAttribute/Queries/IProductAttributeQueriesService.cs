@@ -1,4 +1,5 @@
 ﻿using Application.Common.Dtoes;
+using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.ProductAttribute.Commands;
 using Application.ProductService.Queries;
@@ -16,6 +17,7 @@ namespace Application.ProductAttribute.Queries
     {
         Task<ResultDto<List<ProductAttributeDto>>> GetProductAttributesByProductId(int ProductId);
         Task<ResultDto<List<ProductAttributeValueDto>>> GetProductAttributeValuesByProductAttributeId(int ProductAttributeId);
+        Task<ResultDto<List<ProductAttributeAndValuesDto>>> GetProductAttributesWithValuesByProductId(int ProductId);
     }
     public class ProductAttributeQueriesService : IProductAttributeQueriesService
     {
@@ -29,13 +31,18 @@ namespace Application.ProductAttribute.Queries
 
         public async Task<ResultDto<List<ProductAttributeDto>>> GetProductAttributesByProductId(int ProductId)
         {
-            //get from db
-            var productAttributes = await _mediator.Send(new GetProductAttributesByProductIdQuery(ProductId));
-            if (productAttributes is null || !productAttributes.Any())
+            //check id in db
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
                 return new ResultDto<List<ProductAttributeDto>>
                 {
-                    MessageEventType = Common.MessageEventTypes.MessageEventType.NotFound
+                    MessageEventType = MessageEventType.NotFound
                 };
+            }
+
+            //get from db
+            var productAttributes = await _mediator.Send(new GetProductAttributesByProductIdQuery(ProductId));
 
             return new ResultDto<List<ProductAttributeDto>>
             {
@@ -44,20 +51,44 @@ namespace Application.ProductAttribute.Queries
             };
         }
 
+        
+
         public async Task<ResultDto<List<ProductAttributeValueDto>>> GetProductAttributeValuesByProductAttributeId(int ProductAttributeId)
         {
-            //get from db
-            var productAttributeValues = await _mediator.Send(new GetProductAttributeValuesByProductAttributeIdQuery(ProductAttributeId));
-            if (productAttributeValues is null || !productAttributeValues.Any())
+            //check id in db
+            var productAttribute = await _mediator.Send(new GetProductAttributeByIdQuery(ProductAttributeId));
+            if (productAttribute is null)
+            {
                 return new ResultDto<List<ProductAttributeValueDto>>
                 {
-                    MessageEventType = Common.MessageEventTypes.MessageEventType.NotFound
+                    MessageEventType = MessageEventType.NotFound
                 };
+            }
+
+            //get from db
+            var productAttributeValues = await _mediator.Send(new GetProductAttributeValuesByProductAttributeIdQuery(ProductAttributeId));
 
             return new ResultDto<List<ProductAttributeValueDto>>
             {
                 IsSuccess = true,
                 Data = productAttributeValues
+            };
+        }
+
+        public async Task<ResultDto<List<ProductAttributeAndValuesDto>>> GetProductAttributesWithValuesByProductId(int ProductId)
+        {
+            //get from db
+            var productAttributesAndValues = await _mediator.Send(new GetProductAttributesAndValuesByProductIdQuery(ProductId));
+            if (productAttributesAndValues is null || !productAttributesAndValues.Any())
+                return new ResultDto<List<ProductAttributeAndValuesDto>>
+                {
+                    MessageEventType = Common.MessageEventTypes.MessageEventType.NotFound
+                };
+
+            return new ResultDto<List<ProductAttributeAndValuesDto>>
+            {
+                IsSuccess = true,
+                Data = productAttributesAndValues
             };
         }
     }
@@ -71,5 +102,13 @@ namespace Application.ProductAttribute.Queries
     {
         public int ProductAttributeValueId { get; set; }
         public string Value { get; set; }
+    }
+
+    public class ProductAttributeAndValuesDto
+    {
+        public int ProductAttributeId { get; set; }
+        public string Name { get; set; }
+        public AttributeType AttributeType { get; set; }
+        public List<ProductAttributeValueDto> Values { get; set; }
     }
 }

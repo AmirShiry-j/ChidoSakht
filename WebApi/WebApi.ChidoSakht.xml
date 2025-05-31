@@ -72,6 +72,13 @@
             <param name="ProductAttributeId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributesAndValuesController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه خصوصیات یک محصول به همراه مقادیرشون (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeValueController.Get(System.Int32)">
             <summary>
             برگردوندن همه مقادیر یک خصوصیت (Auth)
