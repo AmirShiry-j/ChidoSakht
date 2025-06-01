@@ -185,6 +185,13 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه واریانت های یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductVariantApiDto)">
             <summary>
             اضافه کردن یک واریانت (Auth)

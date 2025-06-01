@@ -25,6 +25,31 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// برگردوندن همه واریانت های یک محصول (Auth)
+        /// </summary>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
+        [HttpGet("{ProductId}")]
+        public async Task<IActionResult> Get(int ProductId)
+        {
+            //Get by service
+            var resultService = await _facadeProductVariantService.ProductVariantQueriesService.GetProductVariantsByProductId(ProductId);
+
+            //HATEAOS
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                return
+                    BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
         /// اضافه کردن یک واریانت (Auth)
         /// </summary>
         /// <param name="dto"></param>

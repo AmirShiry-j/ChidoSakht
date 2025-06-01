@@ -25,4 +25,13 @@ namespace Application.ProductVariant.Queries
             this.ProductVariantId = ProductVariantId;
         }
     }
+    public class GetProductVariantsByProductIdQuery : IRequest<List<ProductVariantDto>>
+    {
+        public int ProductId { get; set; }
+        public GetProductVariantsByProductIdQuery(int productId)
+        {
+            ProductId = productId;
+        }
+    }
+
 }

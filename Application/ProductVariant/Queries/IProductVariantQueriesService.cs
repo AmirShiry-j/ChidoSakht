@@ -1,4 +1,7 @@
-﻿using Application.Interfaces.Localization;
+﻿using Application.Common.Dtoes;
+using Application.Common.MessageEventTypes;
+using Application.Interfaces.Localization;
+using Application.ProductService.Queries;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +13,7 @@ namespace Application.ProductVariant.Queries
 {
     public interface IProductVariantQueriesService
     {
+        Task<ResultDto<List<ProductVariantDto>>> GetProductVariantsByProductId(int ProductId);
     }
     public class ProductVariantQueriesService : IProductVariantQueriesService
     {
@@ -20,5 +24,43 @@ namespace Application.ProductVariant.Queries
             _mediator = mediator;
             _localizationService = localizationService;
         }
+
+        public async Task<ResultDto<List<ProductVariantDto>>> GetProductVariantsByProductId(int ProductId)
+        {
+            //get from db
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto<List<ProductVariantDto>>
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Get data from db
+            var productVariants = await _mediator.Send(new GetProductVariantsByProductIdQuery(ProductId));
+            return new ResultDto<List<ProductVariantDto>>
+            {
+                Data = productVariants,
+                IsSuccess = true
+            };
+        }
+    }
+
+    public class ProductVariantDto
+    {
+        public int ProductVariantId { get; set; }
+        public long Price { get; set; }
+        public long SpecialPrice { get; set; }
+        public int Stock { get; set; }
+        public ICollection<ProductVariantAttributeValueDto> ProductVariantAttributeValues { get; set; }
+    }
+    public class ProductVariantAttributeValueDto
+    {
+        public int ProductAttributeId { get; set; }
+        public string ProductAttributeName { get; set; }
+        public int ProductAttributeValueId { get; set; }
+        public string ProductAttributeValue { get; set; }
+
     }
 }
