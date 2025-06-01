@@ -51,7 +51,7 @@ namespace Application.ProductVariant.Queries
     {
         public int ProductVariantId { get; set; }
         public long Price { get; set; }
-        public long SpecialPrice { get; set; }
+        public long? SpecialPrice { get; set; }
         public int Stock { get; set; }
         public ICollection<ProductVariantAttributeValueDto> ProductVariantAttributeValues { get; set; }
     }

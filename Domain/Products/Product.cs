@@ -15,7 +15,7 @@ namespace Domain.Products
             Name = name;
         }
         public int Id { get; set; }
-        //public string UniCode { get; set; } // شناسه یکتا برای محصول
+        public string? UniCode { get; set; } 
         public string Name { get; set; }
         public string? Description { get; set; }
         public string? UniqeLink { get; set; }
@@ -25,6 +25,7 @@ namespace Domain.Products
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }
 
+        public bool IsPublished { get; set; }
 
         //naves
         public ICollection<ProductImage> ProductImages { get; set; }
@@ -63,7 +64,7 @@ namespace Domain.Products
         public Product Product { get; set; }
 
         public long Price { get; set; }
-        public long SpecialPrice { get; set; }
+        public long? SpecialPrice { get; set; }
         public int Stock { get; set; }
 
         public ICollection<ProductVariantAttributeValue> ProductVariantAttributeValues { get; set; }

@@ -33,7 +33,7 @@ namespace Persistence.Contexts
         public DbSet<Domain.Products.ProductAttribute> ProductAttributes { get; set; }
         public DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
         public DbSet<Domain.Products.ProductVariant> ProductVariants { get; set; }
-        public DbSet<Domain.Products.ProductVariantAttributeValue> VariantAttributeValues { get; set; }
+        public DbSet<Domain.Products.ProductVariantAttributeValue> ProductVariantAttributeValues { get; set; }
         //
         protected override void OnModelCreating(ModelBuilder builder)
         {
