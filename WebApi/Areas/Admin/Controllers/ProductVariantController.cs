@@ -54,5 +54,27 @@ namespace WebApi.Areas.Admin.Controllers
                     return BadRequest(resultService.Message);
             }
         }
+
+        /// <summary>
+        /// حذف یک واریانت (Auth)
+        /// </summary>
+        /// <param name="ProductVariantId"></param>
+        /// <returns></returns>
+        [HttpDelete("{ProductVariantId}")]
+        public async Task<IActionResult> Delete(int ProductVariantId)
+        {
+            var resultService = await _facadeProductVariantService.ProductVariantCommandsService.DeleteProductVariant(ProductVariantId);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
     }
 }

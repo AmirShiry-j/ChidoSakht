@@ -15,4 +15,13 @@ namespace Application.ProductVariant.Commands
             ProductVariantDto = productVariantDto;
         }
     }
+
+    public class DeleteProductVariantCommand : IRequest
+    {
+        public Domain.Products.ProductVariant ProductVariant { get; set; }
+        public DeleteProductVariantCommand(Domain.Products.ProductVariant ProductVariant)
+        {
+            this.ProductVariant = ProductVariant;
+        }
+    }
 }

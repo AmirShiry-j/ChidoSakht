@@ -1,6 +1,8 @@
 ﻿using Application.Common.Dtoes;
 using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
+using Application.ProductAttribute.Commands;
+using Application.ProductAttribute.Queries;
 using Application.ProductService.Queries;
 using Application.ProductVariant.Queries;
 using Domain.Products;
@@ -16,6 +18,7 @@ namespace Application.ProductVariant.Commands
     public interface IProductVariantCommandsService
     {
         Task<ResultDto<int>> CreateProductVariant(CreateProductVariantDto dto);
+        Task<ResultDto> DeleteProductVariant(int ProductVariantId);
     }
     public class ProductVariantCommandsService : IProductVariantCommandsService
     {
@@ -62,6 +65,27 @@ namespace Application.ProductVariant.Commands
                 IsSuccess = true,
                 Data = productVariantId,
                 MessageEventType = MessageEventType.Created
+            };
+        }
+
+        public async Task<ResultDto> DeleteProductVariant(int ProductVariantId)
+        {
+            //check id exist in db
+            var productVariant = await _mediator.Send(new GetProductVariantByIdQuery(ProductVariantId));
+            if (productVariant is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Delete
+            await _mediator.Send(new DeleteProductVariantCommand(productVariant));
+
+            return new ResultDto
+            {
+                IsSuccess = true
             };
         }
     }

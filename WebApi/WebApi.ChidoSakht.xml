@@ -192,6 +192,13 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Delete(System.Int32)">
+            <summary>
+            حذف یک واریانت (Auth)
+            </summary>
+            <param name="ProductVariantId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">
             <summary>
             برگردوندن لیست نقش ها در سایت (Auth)

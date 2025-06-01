@@ -17,4 +17,12 @@ namespace Application.ProductVariant.Queries
             ProductAttributeValueIds = productAttributeValueIds;
         }
     }
+    public class GetProductVariantByIdQuery : IRequest<Domain.Products.ProductVariant>
+    {
+        public int ProductVariantId { get; set; }
+        public GetProductVariantByIdQuery(int ProductVariantId)
+        {
+            this.ProductVariantId = ProductVariantId;
+        }
+    }
 }
