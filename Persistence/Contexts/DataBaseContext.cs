@@ -64,6 +64,12 @@ namespace Persistence.Contexts
                 .HasForeignKey(p => p.ParentCategoryId)
                 .IsRequired(false);
 
+            builder.Entity<Category>()
+    .HasMany(p => p.Products)
+    .WithOne(p => p.Category)
+    .HasForeignKey(p => p.CategoryId)
+            .IsRequired(false);
+
             //Permissions
             builder.Entity<RolePermission>()
     .HasKey(rp => new { rp.RoleId, rp.PermissionId });

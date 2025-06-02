@@ -15,7 +15,7 @@ namespace Domain.Products
             Name = name;
         }
         public int Id { get; set; }
-        public string? UniCode { get; set; } 
+        public string? UniCode { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
         public string? UniqeLink { get; set; }
@@ -31,6 +31,8 @@ namespace Domain.Products
         public ICollection<ProductImage> ProductImages { get; set; }
         public ICollection<ProductAttribute> ProductAttributes { get; set; }
         public ICollection<ProductVariant> ProductVariants { get; set; }
+        public Category Category { get; set; }
+        public int? CategoryId { get; set; }
     }
 
 
