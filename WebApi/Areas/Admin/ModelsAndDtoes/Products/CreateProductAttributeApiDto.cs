@@ -48,10 +48,14 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
 
     public class CreateProductVariantApiDto
     {
+        [Required]
         public int ProductId { get; set; }
+        [Required]
         public long Price { get; set; }
-        public long SpecialPrice { get; set; }
+        public long? SpecialPrice { get; set; }
+        [Required]
         public int Stock { get; set; }
+        [Required]
         public List<int> ProductAttributeValueIds { get; set; }
     }
 }
