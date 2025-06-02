@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Collections;
 
 namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
 {
@@ -51,11 +52,41 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         public int ProductId { get; set; }
         [Required]
+        [Range(0, long.MaxValue)]
         public long Price { get; set; }
+        [Range(0, long.MaxValue)]
         public long? SpecialPrice { get; set; }
         [Required]
+        [Range(0, int.MaxValue)]
         public int Stock { get; set; }
         [Required]
+        [MinListCount(1)]
         public List<int> ProductAttributeValueIds { get; set; }
+    }
+
+
+
+    public class MinListCountAttribute : ValidationAttribute
+    {
+        private readonly int _minCount;
+
+        public MinListCountAttribute(int minCount)
+        {
+            _minCount = minCount;
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var list = value as ICollection;
+            if(list is null)
+                return ValidationResult.Success;
+
+
+            if (list.Count < _minCount)
+            {
+                return new ValidationResult($"The list must contain at least {_minCount} item(s).");
+            }
+            return ValidationResult.Success;
+        }
     }
 }
