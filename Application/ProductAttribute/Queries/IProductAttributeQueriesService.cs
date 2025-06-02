@@ -77,13 +77,18 @@ namespace Application.ProductAttribute.Queries
 
         public async Task<ResultDto<List<ProductAttributeAndValuesDto>>> GetProductAttributesWithValuesByProductId(int ProductId)
         {
-            //get from db
-            var productAttributesAndValues = await _mediator.Send(new GetProductAttributesAndValuesByProductIdQuery(ProductId));
-            if (productAttributesAndValues is null || !productAttributesAndValues.Any())
+            //check id in db
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
                 return new ResultDto<List<ProductAttributeAndValuesDto>>
                 {
-                    MessageEventType = Common.MessageEventTypes.MessageEventType.NotFound
+                    MessageEventType = MessageEventType.NotFound
                 };
+            }
+
+            //get from db
+            var productAttributesAndValues = await _mediator.Send(new GetProductAttributesAndValuesByProductIdQuery(ProductId));
 
             return new ResultDto<List<ProductAttributeAndValuesDto>>
             {
