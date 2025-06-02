@@ -68,9 +68,23 @@ namespace Domain.Products
         public long Price { get; set; }
         public long? SpecialPrice { get; set; }
         public int Stock { get; set; }
-
+        //
         public ICollection<ProductVariantAttributeValue> ProductVariantAttributeValues { get; set; }
+        public ProductVariantTransportation ProductVariantTransportation { get; set; }
     }
+    public class ProductVariantTransportation
+    {
+        public int Id { get; set; }
+        //
+        public double? Length { get; set; }
+        public double? Width { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
+        //
+        public ProductVariant ProductVariant { get; set; }
+        public int ProductVariantId { get; set; }
+    }
+
     public class ProductVariantAttributeValue
     {
         public int Id { get; set; }
