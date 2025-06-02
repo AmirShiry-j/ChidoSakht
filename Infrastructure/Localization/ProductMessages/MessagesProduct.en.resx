@@ -123,4 +123,7 @@
   <data name="LinkNotUniqe" xml:space="preserve">
     <value>The link sent is not unique.</value>
   </data>
+  <data name="UniCodeNotUniqe" xml:space="preserve">
+    <value>The Unicode sent is not unique.</value>
+  </data>
 </root>

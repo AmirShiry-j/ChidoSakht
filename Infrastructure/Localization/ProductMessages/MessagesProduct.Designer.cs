@@ -77,5 +77,14 @@ namespace Infrastructure.Localization.ProductMessages {
                 return ResourceManager.GetString("LinkNotUniqe", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کدیکتا ارسال شده یکتا نیست.
+        /// </summary>
+        internal static string UniCodeNotUniqe {
+            get {
+                return ResourceManager.GetString("UniCodeNotUniqe", resourceCulture);
+            }
+        }
     }
 }

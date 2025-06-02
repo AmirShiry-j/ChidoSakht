@@ -14,6 +14,7 @@ namespace Application.ProductService.Queries
         Task<ResultDto<ProductDetailsDto>> GetOneProduct(int Id);
         Task<ResultDto<ResultSearchDto>> GetProducts(ProductFilterDto filterDto);
         Task<ResultDto<bool>> ValidateUniqeLink(int ProductId, string? UniqeLink);
+        Task<ResultDto<bool>> ValidateUniCode(int ProductId, string? UniCode);
 
     }
     public class ProductQueriesService : IProductQueriesService
@@ -55,6 +56,19 @@ namespace Application.ProductService.Queries
             };
         }
 
+        public async Task<ResultDto<bool>> ValidateUniCode(int ProductId, string? UniCode)
+        {
+            //is exist in db?
+            var isValid = await _mediator.Send(new ValidateUniCodeQuery(ProductId, UniCode));
+
+            //return
+            return new ResultDto<bool>
+            {
+                IsSuccess = true,
+                Data = isValid
+            };
+        }
+
         public async Task<ResultDto<bool>> ValidateUniqeLink(int ProductId, string UniqeLink)
         {
             //is exist in db?
@@ -84,6 +98,7 @@ namespace Application.ProductService.Queries
         public string? ImageAltText { get; set; }
         public string? NameIndexImage { get; set; }
         public string? UrlNameIndexImage { get; set; }
+        public string? UniCode { get; set; }
 
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }

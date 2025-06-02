@@ -218,5 +218,46 @@ namespace WebApi.Areas.Admin.Controllers
             }
         }
 
+
+        /// <summary>
+        /// بررسی یکتا بودن فیلد یونیکد محصول (Auth)
+        /// </summary>
+        /// <param name="UniCode"></param>
+        /// <returns></returns>
+        [HttpGet(nameof(ValidateUniCode))]
+        public async Task<IActionResult> ValidateUniCode([Required] int ProductId, [Required] string UniCode)
+        {
+            var resultService = await _facadeProductService.ProductQueriesService.ValidateUniCode(ProductId, UniCode);
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// ست کردن کد یکتا برای محصول (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut(nameof(SetUniCode))]
+        public async Task<IActionResult> SetUniCode(SetUniCodeApiDto dto)
+        {
+            var resultService = await _facadeProductService.ProductCommandsService.SetUniCode(dto.ProductId, dto.UniCode);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
     }
 }

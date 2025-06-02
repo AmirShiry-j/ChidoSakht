@@ -123,4 +123,7 @@
   <data name="LinkNotUniqe" xml:space="preserve">
     <value>پیوند ارسال شده یکتا نیست</value>
   </data>
+  <data name="UniCodeNotUniqe" xml:space="preserve">
+    <value>کدیکتا ارسال شده یکتا نیست</value>
+  </data>
 </root>

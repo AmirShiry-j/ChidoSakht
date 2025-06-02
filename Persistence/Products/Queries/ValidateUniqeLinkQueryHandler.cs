@@ -8,12 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Categories.Queries
+namespace Persistence.Products.Queries
 {
     public class ValidateUniqeLinkQueryHandler : IRequestHandler<ValidateUniqeLinkQuery, bool>
     {
         private readonly DataBaseContext _context;
-
         public ValidateUniqeLinkQueryHandler(DataBaseContext context)
         {
             _context = context;

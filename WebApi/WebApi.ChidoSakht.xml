@@ -149,6 +149,20 @@
             <param name="UniqeLink"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.ValidateUniCode(System.Int32,System.String)">
+            <summary>
+            بررسی یکتا بودن فیلد یونیکد محصول (Auth)
+            </summary>
+            <param name="UniCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetUniCode(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetUniCodeApiDto)">
+            <summary>
+            ست کردن کد یکتا برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Get(System.Int32)">
             <summary>
             برگردوندن تصاویر یک محصول (Auth)

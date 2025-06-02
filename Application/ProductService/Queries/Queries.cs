@@ -46,4 +46,15 @@ namespace Application.ProductService.Queries
             ProductId = productId;
         }
     }
+    public class ValidateUniCodeQuery : IRequest<bool>
+    {
+        public int ProductId { get; set; }
+        public string UniCode { get; set; }
+
+        public ValidateUniCodeQuery(int productId, string uniCode)
+        {
+            UniCode = uniCode;
+            ProductId = productId;
+        }
+    }
 }

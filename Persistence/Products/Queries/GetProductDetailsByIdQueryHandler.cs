@@ -31,6 +31,7 @@ namespace Persistence.Products.Queries
                 UniqeLink = product.UniqeLink,
                 ImageAltText = product.ImageAltText,
                 NameIndexImage = product.NameIndexImage,
+                UniCode = product.UniCode,
             };
 
             //Retrun It

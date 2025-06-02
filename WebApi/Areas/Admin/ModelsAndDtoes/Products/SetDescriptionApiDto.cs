@@ -19,4 +19,13 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [MaxLength(100)]
         public string? UniqeLink { get; set; }
     }
+
+    public class SetUniCodeApiDto
+    {
+        [Required]
+        public int ProductId { get; set; }
+
+        [MaxLength(50)]
+        public string? UniCode { get; set; }
+    }
 }

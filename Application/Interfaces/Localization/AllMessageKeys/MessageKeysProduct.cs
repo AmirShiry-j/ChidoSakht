@@ -3,6 +3,8 @@
     public enum MessageKeysProduct
     {
         CreatedWasUnSuccess,
-        LinkNotUniqe
+        LinkNotUniqe,
+        UniCodeNotUniqe,
+
     }
 }

@@ -21,6 +21,7 @@ namespace Application.ProductService.Commands
         Task<ResultDto> SetDescription(int ProductId, string? Description);
         Task<ResultDto> SetUniqeLink(int ProductId, string? UniqeLink);
         Task<ResultDto> SetImageAltText(int ProductId, string? ImageAltText);
+        Task<ResultDto> SetUniCode(int ProductId, string? UniCode);
 
     }
     public class ProductCommandsService : IProductCommandsService
@@ -169,5 +170,43 @@ namespace Application.ProductService.Commands
             };
         }
 
+        public async Task<ResultDto> SetUniCode(int ProductId, string? UniCode)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            if (UniCode is not null)
+            {
+                //is exist in db?
+                var isValid = await _mediator.Send(new ValidateUniCodeQuery(ProductId, UniCode));
+                if (isValid == false)
+                {
+                    return new ResultDto
+                    {
+                        MessageEventType = MessageEventType.BadRequest,
+                        Message = _localizationService.GetMessageProduct(MessageKeysProduct.UniCodeNotUniqe.ToString())
+                    };
+                }
+            }
+
+            //set new value
+            product.UniCode = UniCode;
+
+            //Update in db
+            await _mediator.Send(new UpdateProductCommand(product));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+                MessageEventType = MessageEventType.Ok
+            };
+        }
     }
 }
