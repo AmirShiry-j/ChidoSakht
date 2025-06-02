@@ -16,7 +16,7 @@ namespace Persistence.Products.Queries
         public async Task<ProductDetailsDto> Handle(GetProductDetailsByIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
+            var product = await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
 
             if (product == null)
                 return null;
@@ -32,6 +32,8 @@ namespace Persistence.Products.Queries
                 ImageAltText = product.ImageAltText,
                 NameIndexImage = product.NameIndexImage,
                 UniCode = product.UniCode,
+                CategoryId = product?.CategoryId,
+                CategoryName = product.Category?.Name
             };
 
             //Retrun It

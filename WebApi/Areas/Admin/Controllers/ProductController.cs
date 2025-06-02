@@ -259,5 +259,27 @@ namespace WebApi.Areas.Admin.Controllers
                     return BadRequest(resultService.Message);
             }
         }
+
+        /// <summary>
+        /// ست کردن دسته بندی برای محصول (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut(nameof(SetCategoryId))]
+        public async Task<IActionResult> SetCategoryId(SetCategoryIdApiDto dto)
+        {
+            var resultService = await _facadeProductService.ProductCommandsService.SetCategoryId(dto.ProductId, dto.CategoryId);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
     }
 }

@@ -99,6 +99,8 @@ namespace Application.ProductService.Queries
         public string? NameIndexImage { get; set; }
         public string? UrlNameIndexImage { get; set; }
         public string? UniCode { get; set; }
+        public int? CategoryId { get; set; }
+        public string? CategoryName { get; set; }
 
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }

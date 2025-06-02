@@ -28,4 +28,12 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [MaxLength(50)]
         public string? UniCode { get; set; }
     }
+
+    public class SetCategoryIdApiDto
+    {
+        [Required]
+        public int ProductId { get; set; }
+
+        public int? CategoryId { get; set; }
+    }
 }

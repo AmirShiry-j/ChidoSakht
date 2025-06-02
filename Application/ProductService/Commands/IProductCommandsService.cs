@@ -1,4 +1,5 @@
-﻿using Application.Common.Dtoes;
+﻿using Application.CategoryService.Queries;
+using Application.Common.Dtoes;
 using Application.Common.MessageEventTypes;
 using Application.Interfaces.ConfigService;
 using Application.Interfaces.Localization;
@@ -22,6 +23,7 @@ namespace Application.ProductService.Commands
         Task<ResultDto> SetUniqeLink(int ProductId, string? UniqeLink);
         Task<ResultDto> SetImageAltText(int ProductId, string? ImageAltText);
         Task<ResultDto> SetUniCode(int ProductId, string? UniCode);
+        Task<ResultDto> SetCategoryId(int ProductId, int? CategoryId);
 
     }
     public class ProductCommandsService : IProductCommandsService
@@ -206,6 +208,52 @@ namespace Application.ProductService.Commands
             {
                 IsSuccess = true,
                 MessageEventType = MessageEventType.Ok
+            };
+        }
+
+        public async Task<ResultDto> SetCategoryId(int ProductId, int? CategoryId)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            if (CategoryId is null)
+            {
+                //change
+                product.CategoryId = null;
+                await _mediator.Send(new UpdateProductCommand(product));
+
+                return new ResultDto
+                {
+                    IsSuccess = true
+                };
+            }
+
+            //with data
+
+            //check exist
+            var category = await _mediator.Send(new GetCategoryByIdQuery((int)CategoryId));
+            if (category is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //change
+            product.CategoryId = (int)CategoryId;
+            await _mediator.Send(new UpdateProductCommand(product));
+
+            return new ResultDto
+            {
+                IsSuccess = true
             };
         }
     }

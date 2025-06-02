@@ -163,6 +163,13 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetCategoryId(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetCategoryIdApiDto)">
+            <summary>
+            ست کردن دسته بندی برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Get(System.Int32)">
             <summary>
             برگردوندن تصاویر یک محصول (Auth)
