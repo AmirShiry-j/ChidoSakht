@@ -62,6 +62,16 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         [MinListCount(1)]
         public List<int> ProductAttributeValueIds { get; set; }
+
+        //
+        [Range(0, double.MaxValue)]
+        public double? Length { get; set; }
+        [Range(0, double.MaxValue)]
+        public double? Width { get; set; }
+        [Range(0, double.MaxValue)]
+        public double? Height { get; set; }
+        [Range(0, double.MaxValue)]
+        public double? Weight { get; set; }
     }
 
 

@@ -30,7 +30,14 @@ namespace Persistence.ProductVariant.Commands
                 Price = request.ProductVariantDto.Price,
                 SpecialPrice = request.ProductVariantDto.SpecialPrice,
                 ProductVariantAttributeValues = productVariantAttributeValues,
-                Stock = request.ProductVariantDto.Stock
+                Stock = request.ProductVariantDto.Stock,
+                ProductVariantTransportation=new ProductVariantTransportation
+                {
+                    Width = request.ProductVariantDto.Width,
+                    Weight = request.ProductVariantDto.Weight,
+                    Length = request.ProductVariantDto.Length,
+                    Height = request.ProductVariantDto.Height,                    
+                }
             };
 
             //Add and save in DB

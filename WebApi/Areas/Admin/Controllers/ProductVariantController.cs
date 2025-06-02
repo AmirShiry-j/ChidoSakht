@@ -63,7 +63,11 @@ namespace WebApi.Areas.Admin.Controllers
                 ProductAttributeValueIds = dto.ProductAttributeValueIds,
                 ProductId = dto.ProductId,
                 SpecialPrice = dto.SpecialPrice,
-                Stock = dto.Stock
+                Stock = dto.Stock,
+                Height = dto.Height,
+                Length = dto.Length,
+                Weight = dto.Weight,
+                Width = dto.Width 
             };
             var resultService = await _facadeProductVariantService.ProductVariantCommandsService.CreateProductVariant(inputModel);
             if (resultService.IsSuccess)
