@@ -125,7 +125,7 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// ایجاد اولیه محصول و یا ویرایش آن (Auth)
+        /// ایجاد اولیه محصول یا ویرایش نام آن (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
