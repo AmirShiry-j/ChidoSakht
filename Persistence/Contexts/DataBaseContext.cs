@@ -7,6 +7,7 @@ using Persistence.Configurations.Categories;
 using Domain.Products;
 using Persistence.Configurations.Products;
 using System.Reflection.Emit;
+using Domain.SymbolicShoppingCarts;
 
 namespace Persistence.Contexts
 {
@@ -36,6 +37,7 @@ namespace Persistence.Contexts
         public DbSet<Domain.Products.ProductVariantAttributeValue> ProductVariantAttributeValues { get; set; }
         public DbSet<ProductVariantTransportation> ProductVariantTransportations { get; set; }
         //
+        public DbSet<SymbolicOrderOrSymbolicShoppingCartItem> SymbolicOrderOrSymbolicShoppingCartItems { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             ////Relations
@@ -121,8 +123,6 @@ namespace Persistence.Contexts
     .HasForeignKey(v => v.ProductId)
     .OnDelete(DeleteBehavior.Cascade);
 
-            //
-
             builder.Entity<Domain.Products.ProductAttributeValue>()
     .HasMany<Domain.Products.ProductVariantAttributeValue>()
     .WithOne(p => p.ProductAttributeValue)
@@ -134,6 +134,14 @@ namespace Persistence.Contexts
     .WithOne(p => p.ProductVariant)
     .HasForeignKey<Domain.Products.ProductVariantTransportation>(v => v.ProductVariantId)
     .OnDelete(DeleteBehavior.Cascade);
+
+            //
+
+            builder.Entity<Domain.Products.ProductVariant>()
+    .HasMany<Domain.SymbolicShoppingCarts.SymbolicOrderOrSymbolicShoppingCartItem>()
+    .WithOne(p => p.ProductVariant)
+    .HasForeignKey(p => p.ProductVariantId)
+    .OnDelete(DeleteBehavior.NoAction);
 
             SetConfigurations(builder);
 
