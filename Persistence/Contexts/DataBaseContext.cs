@@ -69,7 +69,8 @@ namespace Persistence.Contexts
     .HasMany(p => p.Products)
     .WithOne(p => p.Category)
     .HasForeignKey(p => p.CategoryId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull);
 
             //Permissions
             builder.Entity<RolePermission>()
@@ -90,14 +91,49 @@ namespace Persistence.Contexts
     .HasMany(p => p.ProductImages)
     .WithOne()
     .HasForeignKey(p => p.ProductId)
-            .IsRequired(true);
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<Product>()
+.HasMany(p => p.ProductAttributes)
+.WithOne(p => p.Product)
+.HasForeignKey(p => p.ProductId)
+.IsRequired(true)
+.OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<ProductVariantAttributeValue>()
-    .HasOne(v => v.ProductVariant)
-    .WithMany(pv => pv.ProductVariantAttributeValues)
+            builder.Entity<Domain.Products.ProductVariant>()
+    .HasMany(p => p.ProductVariantAttributeValues)
+    .WithOne(p => p.ProductVariant)
     .HasForeignKey(v => v.ProductVariantId)
-    .OnDelete(DeleteBehavior.NoAction); // یا DeleteBehavior.NoAction
+    .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.Entity<Domain.Products.ProductAttribute>()
+    .HasMany(p => p.ProductAttributeValues)
+    .WithOne(p => p.ProductAttribute)
+    .HasForeignKey(v => v.ProductAttributeId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.Entity<Domain.Products.Product>()
+    .HasMany(p => p.ProductVariants)
+    .WithOne(p => p.Product)
+    .HasForeignKey(v => v.ProductId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+            //
+
+            builder.Entity<Domain.Products.ProductAttributeValue>()
+    .HasMany<Domain.Products.ProductVariantAttributeValue>()
+    .WithOne(p => p.ProductAttributeValue)
+    .HasForeignKey(v => v.ProductAttributeValueId)
+    .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Domain.Products.ProductVariant>()
+    .HasOne(p => p.ProductVariantTransportation)
+    .WithOne(p => p.ProductVariant)
+    .HasForeignKey<Domain.Products.ProductVariantTransportation>(v => v.ProductVariantId)
+    .OnDelete(DeleteBehavior.Cascade);
 
             SetConfigurations(builder);
 
