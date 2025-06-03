@@ -5,11 +5,14 @@ using Application.Interfaces.ConfigService;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Application.ProductService.Queries;
+using Application.ProductVariant.Commands;
+using Application.ProductVariant.Queries;
 using Application.RoleService.Queries;
 using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +23,7 @@ namespace Application.ProductService.Commands
     public interface IProductCommandsService
     {
         Task<ResultDto<int>> Upsert(int? ProductId, string Name, ProductType ProductType);
+        Task<ResultDto> UpdateInfoProductSample(UpdateInfoProductSampleDto dto);
         Task<ResultDto> SetDescription(int ProductId, string? Description);
         Task<ResultDto> SetUniqeLink(int ProductId, string? UniqeLink);
         Task<ResultDto> SetImageAltText(int ProductId, string? ImageAltText);
@@ -263,5 +267,86 @@ namespace Application.ProductService.Commands
             };
         }
 
+        public async Task<ResultDto> UpdateInfoProductSample(UpdateInfoProductSampleDto dto)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(dto.ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //check product was sample
+            if (product.ProductType != ProductType.Sample)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.BadRequest,
+                    Message = "product is not Sample"
+                };
+            }
+
+            //map dto to domain
+            var productVariantDto = (await _mediator.Send(new GetProductVariantsByProductIdQuery(dto.ProductId))).SingleOrDefault();
+            if (productVariantDto is null)
+            {
+                var newProductVariant = new CreateProductVariantDto
+                {
+                    Price = dto.Price,
+                    SpecialPrice = dto.SpecialPrice,
+                    Stock = dto.Stock,
+                    ProductId = dto.ProductId,
+                    Height = dto.Height,
+                    Length = dto.Length,
+                    Weight = dto.Weight,
+                    Width = dto.Width,
+                };
+
+                var productVariantId = await _mediator.Send(new CreateProductVariantCommand(newProductVariant));
+            }
+            else
+            {
+                //get main domain
+                var productVariant = await _mediator.Send(new GetProductVariantByIdQuery(productVariantDto.ProductVariantId));
+
+                //set new Change
+                productVariant.ProductId = dto.ProductId;
+                productVariant.Price = dto.Price;
+                productVariant.SpecialPrice = dto.SpecialPrice;
+                productVariant.Stock = dto.Stock;
+                productVariant.ProductVariantTransportation = new ProductVariantTransportation
+                {
+                    Height = dto.Height,
+                    Weight = dto.Weight,
+                    Width = dto.Width,
+                    Length = dto.Length
+                };
+
+                await _mediator.Send(new UpdateProductVariantCommand(productVariant));
+            }
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+                MessageEventType = MessageEventType.Ok
+            };
+        }
+    }
+
+
+    public class UpdateInfoProductSampleDto
+    {
+        public int ProductId { get; set; }
+        public long Price { get; set; }
+        public long? SpecialPrice { get; set; }
+        public int Stock { get; set; }
+        //
+        public double? Length { get; set; }
+        public double? Width { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
     }
 }

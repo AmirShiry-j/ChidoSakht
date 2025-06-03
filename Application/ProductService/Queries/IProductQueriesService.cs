@@ -1,5 +1,6 @@
 ﻿using Application.Common.Dtoes;
 using Application.Interfaces.Localization;
+using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -93,6 +94,7 @@ namespace Application.ProductService.Queries
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public ProductType ProductType { get; set; }
         public string? Description { get; set; }
         public string? UniqeLink { get; set; }
         public string? ImageAltText { get; set; }
@@ -110,6 +112,7 @@ namespace Application.ProductService.Queries
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public ProductType ProductType { get; set; }
         public string? NameIndexImage { get; set; }
         public string? UrlNameIndexImage { get; set; }
         public Link Link { get; set; }

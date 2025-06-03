@@ -20,10 +20,15 @@ namespace Persistence.ProductVariant.Commands
         public async Task<int> Handle(CreateProductVariantCommand request, CancellationToken cancellationToken)
         {
             //Define
-            var productVariantAttributeValues = request.ProductVariantDto.ProductAttributeValueIds.Select(p => new ProductVariantAttributeValue
+            var productVariantAttributeValues = new List<ProductVariantAttributeValue>();
+            if (request.ProductVariantDto.ProductAttributeValueIds is not null && request.ProductVariantDto.ProductAttributeValueIds.Any())
             {
-                ProductAttributeValueId = p
-            }).ToList();
+                productVariantAttributeValues = request.ProductVariantDto.ProductAttributeValueIds.Select(p => new ProductVariantAttributeValue
+                {
+                    ProductAttributeValueId = p
+                }).ToList();
+            }
+
             var newProductVariant = new Domain.Products.ProductVariant()
             {
                 ProductId = request.ProductVariantDto.ProductId,
@@ -31,12 +36,12 @@ namespace Persistence.ProductVariant.Commands
                 SpecialPrice = request.ProductVariantDto.SpecialPrice,
                 ProductVariantAttributeValues = productVariantAttributeValues,
                 Stock = request.ProductVariantDto.Stock,
-                ProductVariantTransportation=new ProductVariantTransportation
+                ProductVariantTransportation = new ProductVariantTransportation
                 {
                     Width = request.ProductVariantDto.Width,
                     Weight = request.ProductVariantDto.Weight,
                     Length = request.ProductVariantDto.Length,
-                    Height = request.ProductVariantDto.Height,                    
+                    Height = request.ProductVariantDto.Height,
                 }
             };
 

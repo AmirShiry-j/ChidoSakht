@@ -154,6 +154,39 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// ثبت و آپدیت اطلاعات برای محصول ساده
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> Put(UpdateInfoProductSampleApiDto dto)
+        {
+            var inputModel = new UpdateInfoProductSampleDto
+            {
+                Height = dto.Height,
+                Length = dto.Length,
+                Price = dto.Price,
+                ProductId = dto.ProductId,
+                SpecialPrice = dto.SpecialPrice,
+                Stock = dto.Stock,
+                Weight = dto.Weight,
+                Width = dto.Width
+            };
+            var resultService = await _facadeProductService.ProductCommandsService.UpdateInfoProductSample(inputModel);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
         /// ست کردن یک توضیح برای محصول (Auth)
         /// </summary>
         /// <param name="dto"></param>

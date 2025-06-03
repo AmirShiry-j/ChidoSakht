@@ -25,6 +25,7 @@ namespace Persistence.Products.Queries
             {
                 Id = product.Id,
                 Name = product.Name,
+                ProductType = product.ProductType,
                 CreateTime = product.CreateTime,
                 Description = product.Description,
                 LastUpdateTime = product.LastUpdateTime,
@@ -33,7 +34,8 @@ namespace Persistence.Products.Queries
                 NameIndexImage = product.NameIndexImage,
                 UniCode = product.UniCode,
                 CategoryId = product?.CategoryId,
-                CategoryName = product.Category?.Name
+                CategoryName = product.Category?.Name,
+
             };
 
             //Retrun It

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Products;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,16 @@ namespace Application.ProductVariant.Commands
     {
         public Domain.Products.ProductVariant ProductVariant { get; set; }
         public DeleteProductVariantCommand(Domain.Products.ProductVariant ProductVariant)
+        {
+            this.ProductVariant = ProductVariant;
+        }
+    }
+
+    public class UpdateProductVariantCommand : IRequest
+    {
+        public Domain.Products.ProductVariant ProductVariant { get; set; }
+
+        public UpdateProductVariantCommand(Domain.Products.ProductVariant ProductVariant)
         {
             this.ProductVariant = ProductVariant;
         }

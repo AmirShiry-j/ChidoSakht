@@ -128,6 +128,13 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateInfoProductSampleApiDto)">
+            <summary>
+            ثبت و آپدیت اطلاعات برای محصول ساده
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetDescription(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetDescriptionApiDto)">
             <summary>
             ست کردن یک توضیح برای محصول (Auth)

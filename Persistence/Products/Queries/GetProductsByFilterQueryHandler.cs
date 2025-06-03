@@ -42,6 +42,7 @@ namespace Persistence.Products.Queries
                 {
                     Id = p.Id,
                     Name = p.Name,
+                    ProductType = p.ProductType,
                     NameIndexImage = p.NameIndexImage
                 })
                 .ToListAsync();
