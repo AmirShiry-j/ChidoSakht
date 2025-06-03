@@ -103,10 +103,23 @@ namespace Application.ProductService.Queries
         public string? UniCode { get; set; }
         public int? CategoryId { get; set; }
         public string? CategoryName { get; set; }
-
+        public bool IsPublished { get; set; }
+        public InfoForSampleProductDto InfoForSampleProduct { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }
         public List<Link> Links { get; set; }
+    }
+    public class InfoForSampleProductDto
+    {
+
+        public long Price { get; set; }
+        public long? SpecialPrice { get; set; }
+        public int Stock { get; set; }
+        //
+        public double? Length { get; set; }
+        public double? Width { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
     }
     public class ProductDto
     {
