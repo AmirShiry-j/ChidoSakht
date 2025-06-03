@@ -311,19 +311,19 @@ namespace Application.ProductService.Commands
             {
                 //get main domain
                 var productVariant = await _mediator.Send(new GetProductVariantByIdQuery(productVariantDto.ProductVariantId));
+                var productVariantTransportation = await _mediator.Send(new GetProductVariantTransportationByProductVariantIdQuery(productVariantDto.ProductVariantId));
 
                 //set new Change
+                productVariantTransportation.Width = dto.Width;
+                productVariantTransportation.Weight = dto.Weight;
+                productVariantTransportation.Length = dto.Length;
+                productVariantTransportation.Height = dto.Height;
+
                 productVariant.ProductId = dto.ProductId;
                 productVariant.Price = dto.Price;
                 productVariant.SpecialPrice = dto.SpecialPrice;
                 productVariant.Stock = dto.Stock;
-                productVariant.ProductVariantTransportation = new ProductVariantTransportation
-                {
-                    Height = dto.Height,
-                    Weight = dto.Weight,
-                    Width = dto.Width,
-                    Length = dto.Length
-                };
+                productVariant.ProductVariantTransportation = productVariantTransportation;
 
                 await _mediator.Send(new UpdateProductVariantCommand(productVariant));
             }

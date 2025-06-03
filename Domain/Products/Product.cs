@@ -10,9 +10,10 @@ namespace Domain.Products
 {
     public class Product
     {
-        public Product(string name)
+        public Product(string name, ProductType productType)
         {
             Name = name;
+            ProductType = productType;
         }
         public int Id { get; set; }
         public string Name { get; set; }

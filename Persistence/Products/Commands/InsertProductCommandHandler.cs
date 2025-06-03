@@ -24,7 +24,7 @@ namespace Persistence.Products.Commands
         public async Task<int?> Handle(InsertProductCommand request, CancellationToken cancellationToken)
         {
             //Define
-            var product = new Product(request.Name);
+            var product = new Product(request.Name, request.ProductType);
 
             //Add and save in DB
             await _context.Products.AddAsync(product);

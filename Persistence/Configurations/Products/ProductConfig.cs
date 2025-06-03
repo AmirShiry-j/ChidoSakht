@@ -14,10 +14,8 @@ namespace Persistence.Configurations.Products
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            var converterForProductTypeEnum = new Microsoft.EntityFrameworkCore.Storage.ValueConversion.EnumToStringConverter<Domain.Products.ProductType>();
 
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
-            builder.Property(p => p.ProductType).IsRequired().HasConversion(converterForProductTypeEnum);
             builder.Property(p => p.CreateTime).HasDefaultValueSql("getdate()");
             builder.HasIndex(p => p.UniqeLink).IsUnique();
             builder.HasIndex(p => p.UniCode).IsUnique();

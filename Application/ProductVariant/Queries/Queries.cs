@@ -25,6 +25,14 @@ namespace Application.ProductVariant.Queries
             this.ProductVariantId = ProductVariantId;
         }
     }
+    public class GetProductVariantTransportationByProductVariantIdQuery : IRequest<Domain.Products.ProductVariantTransportation>
+    {
+        public int ProductVariantId { get; set; }
+        public GetProductVariantTransportationByProductVariantIdQuery(int ProductVariantId)
+        {
+            this.ProductVariantId = ProductVariantId;
+        }
+    }
     public class GetProductVariantsByProductIdQuery : IRequest<List<ProductVariantDto>>
     {
         public int ProductId { get; set; }
