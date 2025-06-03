@@ -11,10 +11,11 @@ namespace Application.ProductService.Commands
     public class InsertProductCommand : IRequest<int?>
     {
         public string Name { get; set; }
-
-        public InsertProductCommand(string name)
+        public ProductType ProductType { get; set; }
+        public InsertProductCommand(string name, ProductType productType)
         {
             Name = name;
+            ProductType = productType;
         }
     }
     public class UpdateProductCommand : IRequest

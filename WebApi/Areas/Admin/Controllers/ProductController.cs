@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Application.ProductService.Queries;
 using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
+using Domain.Products;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -124,14 +125,14 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// ایجاد اولیه محصول و یا ویرایش نام آن (Auth)
+        /// ایجاد اولیه محصول و یا ویرایش آن (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post(UpsertProductApiDto dto)
         {
-            var resultService = await _facadeProductService.ProductCommandsService.Upsert(dto.ProductId, dto.Name);
+            var resultService = await _facadeProductService.ProductCommandsService.Upsert(dto.ProductId, dto.Name, (ProductType)dto.ProductType);
             if (resultService.IsSuccess)
             {
                 if (resultService.MessageEventType == MessageEventType.Created)

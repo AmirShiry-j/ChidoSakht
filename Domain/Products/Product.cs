@@ -38,8 +38,8 @@ namespace Domain.Products
 
     public enum ProductType
     {
-        Sample,
-        Variable
+        Sample = 1,
+        Variable = 2
     }
     public class ProductAttribute
     {

@@ -6,6 +6,7 @@ using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
 using Application.ProductService.Queries;
 using Application.RoleService.Queries;
+using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Application.ProductService.Commands
 {
     public interface IProductCommandsService
     {
-        Task<ResultDto<int>> Upsert(int? ProductId, string Name);
+        Task<ResultDto<int>> Upsert(int? ProductId, string Name, ProductType ProductType);
         Task<ResultDto> SetDescription(int ProductId, string? Description);
         Task<ResultDto> SetUniqeLink(int ProductId, string? UniqeLink);
         Task<ResultDto> SetImageAltText(int ProductId, string? ImageAltText);
@@ -35,7 +36,7 @@ namespace Application.ProductService.Commands
             _mediator = mediator;
             _localizationService = localizationService;
         }
-        public async Task<ResultDto<int>> Upsert(int? ProductId, string Name)
+        public async Task<ResultDto<int>> Upsert(int? ProductId, string Name, ProductType ProductType)
         {
 
             if (ProductId is not null)
@@ -50,8 +51,13 @@ namespace Application.ProductService.Commands
                     };
                 }
 
+                //if(NowType==Variable && NewType==Sample)
+                //Check product does not have any ProductVariant
+
+
                 //set new Name
                 product.Name = Name;
+                product.ProductType = ProductType;
 
                 //Update in db
                 await _mediator.Send(new UpdateProductCommand(product));
@@ -65,7 +71,7 @@ namespace Application.ProductService.Commands
 
 
             //Insert product
-            var productId = await _mediator.Send(new InsertProductCommand(Name));
+            var productId = await _mediator.Send(new InsertProductCommand(Name, ProductType));
             //if (productId is null)
             //{
             //    return new ResultDto<int>
@@ -256,5 +262,6 @@ namespace Application.ProductService.Commands
                 IsSuccess = true
             };
         }
+
     }
 }

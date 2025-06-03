@@ -8,5 +8,14 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
+        [Required]
+        [Range(1, 2)]
+        public ProductTypeApi ProductType { get; set; }
+    }
+    
+    public enum ProductTypeApi
+    {
+        Sample = 1,
+        Variable = 2
     }
 }
