@@ -285,12 +285,12 @@ namespace Application.ProductService.Commands
                 return new ResultDto
                 {
                     MessageEventType = MessageEventType.BadRequest,
-                    Message = "product is not Sample"
+                    Message = "Temp-Mes  product is not Sample"
                 };
             }
 
             //map dto to domain
-            var productVariantDto = (await _mediator.Send(new GetProductVariantsByProductIdQuery(dto.ProductId))).SingleOrDefault();
+            var productVariantDto = (await _mediator.Send(new GetProductVariantTypeSampleByProductIdQuery(dto.ProductId)));
             if (productVariantDto is null)
             {
                 var newProductVariant = new CreateProductVariantDto
@@ -303,6 +303,7 @@ namespace Application.ProductService.Commands
                     Length = dto.Length,
                     Weight = dto.Weight,
                     Width = dto.Width,
+                    ProductType = ProductType.Sample
                 };
 
                 var productVariantId = await _mediator.Send(new CreateProductVariantCommand(newProductVariant));
@@ -324,6 +325,7 @@ namespace Application.ProductService.Commands
                 productVariant.SpecialPrice = dto.SpecialPrice;
                 productVariant.Stock = dto.Stock;
                 productVariant.ProductVariantTransportation = productVariantTransportation;
+                //productVariant.ProductType = ProductType.Sample; //No need
 
                 await _mediator.Send(new UpdateProductVariantCommand(productVariant));
             }

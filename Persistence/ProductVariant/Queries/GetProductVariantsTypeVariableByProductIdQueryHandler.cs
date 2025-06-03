@@ -1,27 +1,23 @@
 ﻿using Application.ProductVariant.Queries;
+using Domain.Products;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.ProductVariant.Queries
 {
-    public class GetProductVariantsByProductIdQueryHandler : IRequestHandler<GetProductVariantsByProductIdQuery, List<ProductVariantDto>>
+    public class GetProductVariantsTypeVariableByProductIdQueryHandler : IRequestHandler<GetProductVariantsTypeVariableByProductIdQuery, List<ProductVariantDto>>
     {
         private readonly DataBaseContext _context;
-        public GetProductVariantsByProductIdQueryHandler(DataBaseContext context)
+        public GetProductVariantsTypeVariableByProductIdQueryHandler(DataBaseContext context)
         {
             _context = context;
         }
-        public async Task<List<ProductVariantDto>> Handle(GetProductVariantsByProductIdQuery request, CancellationToken cancellationToken)
+        public async Task<List<ProductVariantDto>> Handle(GetProductVariantsTypeVariableByProductIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
             var productVariants = await _context.ProductVariants
-                .Where(p => p.ProductId.Equals(request.ProductId))
+                .Where(p => p.ProductId.Equals(request.ProductId) && p.ProductType.Equals(ProductType.Variable))
                 .Include(p => p.ProductVariantAttributeValues)
                 .ThenInclude(p => p.ProductAttributeValue)
                 .ThenInclude(p => p.ProductAttribute)

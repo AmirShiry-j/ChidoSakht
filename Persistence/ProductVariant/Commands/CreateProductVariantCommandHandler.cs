@@ -36,6 +36,7 @@ namespace Persistence.ProductVariant.Commands
                 SpecialPrice = request.ProductVariantDto.SpecialPrice,
                 ProductVariantAttributeValues = productVariantAttributeValues,
                 Stock = request.ProductVariantDto.Stock,
+                ProductType = request.ProductVariantDto.ProductType,
                 ProductVariantTransportation = new ProductVariantTransportation
                 {
                     Width = request.ProductVariantDto.Width,

@@ -70,6 +70,7 @@ namespace Domain.Products
 
         public int ProductId { get; set; }
         public Product Product { get; set; }
+        public ProductType ProductType { get; set; }
 
         public long Price { get; set; }
         public long? SpecialPrice { get; set; }

@@ -38,7 +38,7 @@ namespace Application.ProductVariant.Queries
             }
 
             //Get data from db
-            var productVariants = await _mediator.Send(new GetProductVariantsByProductIdQuery(ProductId));
+            var productVariants = await _mediator.Send(new GetProductVariantsTypeVariableByProductIdQuery(ProductId));
             return new ResultDto<List<ProductVariantDto>>
             {
                 Data = productVariants,

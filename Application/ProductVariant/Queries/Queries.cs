@@ -42,4 +42,21 @@ namespace Application.ProductVariant.Queries
         }
     }
 
+    public class GetProductVariantsTypeVariableByProductIdQuery : IRequest<List<ProductVariantDto>>
+    {
+        public int ProductId { get; set; }
+        public GetProductVariantsTypeVariableByProductIdQuery(int productId)
+        {
+            ProductId = productId;
+        }
+    }
+
+    public class GetProductVariantTypeSampleByProductIdQuery : IRequest<ProductVariantDto>
+    {
+        public int ProductId { get; set; }
+        public GetProductVariantTypeSampleByProductIdQuery(int productId)
+        {
+            ProductId = productId;
+        }
+    }
 }

@@ -42,6 +42,16 @@ namespace Application.ProductVariant.Commands
                 };
             }
 
+            //Check Poduct wa Variable
+            if (product.ProductType != ProductType.Variable)
+            {
+                return new ResultDto<int>
+                {
+                    Message = "Temp-Mes  Product is not Variable",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
             //فعلا فرض میشه حداقل یه آیدی ارسال میکنه تا ولیدشنشو فعال کنم
             var validSendedValueIds = await _mediator.Send(new GetValidSendedProductAttributeValueIdsByProductIdQuery(dto.ProductId, dto.ProductAttributeValueIds));
             var inValidSendedValueIds = dto.ProductAttributeValueIds.Where(p => !validSendedValueIds.Contains(p)).ToList();
@@ -50,7 +60,7 @@ namespace Application.ProductVariant.Commands
                 string strInValidIds = inValidSendedValueIds.Select(p => p.ToString()).Aggregate((p1, p2) => p1 + "," + p2).ToString();
                 return new ResultDto<int>
                 {
-                    Message = strInValidIds,
+                    Message = "Temp-Mes ," + strInValidIds + " , Is not valid",
                     MessageEventType = MessageEventType.BadRequest
                 };
             }
@@ -80,6 +90,16 @@ namespace Application.ProductVariant.Commands
                 };
             }
 
+            //Check Variant was for ProductType Variable
+            if (productVariant.ProductType != ProductType.Variable)
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes   Variant is not for a Variable Product",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
             //Delete
             await _mediator.Send(new DeleteProductVariantCommand(productVariant));
 
@@ -101,5 +121,7 @@ namespace Application.ProductVariant.Commands
         public double? Width { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
+        public ProductType ProductType { get; set; }
+
     }
 }

@@ -67,7 +67,8 @@ namespace WebApi.Areas.Admin.Controllers
                 Height = dto.Height,
                 Length = dto.Length,
                 Weight = dto.Weight,
-                Width = dto.Width 
+                Width = dto.Width,
+                ProductType = Domain.Products.ProductType.Variable
             };
             var resultService = await _facadeProductVariantService.ProductVariantCommandsService.CreateProductVariant(inputModel);
             if (resultService.IsSuccess)
