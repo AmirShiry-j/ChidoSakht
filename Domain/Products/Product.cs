@@ -15,8 +15,9 @@ namespace Domain.Products
             Name = name;
         }
         public int Id { get; set; }
-        public string? UniCode { get; set; }
         public string Name { get; set; }
+        public ProductType ProductType { get; set; }
+        public string? UniCode { get; set; }
         public string? Description { get; set; }
         public string? UniqeLink { get; set; }
         public string? ImageAltText { get; set; }
@@ -35,7 +36,11 @@ namespace Domain.Products
         public int? CategoryId { get; set; }
     }
 
-
+    public enum ProductType
+    {
+        Sample,
+        Variable
+    }
     public class ProductAttribute
     {
         public int Id { get; set; }
