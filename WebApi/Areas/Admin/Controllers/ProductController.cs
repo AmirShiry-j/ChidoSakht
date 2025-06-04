@@ -27,10 +27,12 @@ namespace WebApi.Areas.Admin.Controllers
     {
         private readonly IFacadeProductService _facadeProductService;
         private readonly ILocalizationService _localizationService;
-        public ProductController(IFacadeProductService facadeProductService, ILocalizationService localizationService)
+        private readonly IWebHostEnvironment _env;
+        public ProductController(IFacadeProductService facadeProductService, ILocalizationService localizationService, IWebHostEnvironment env)
         {
             _facadeProductService = facadeProductService;
             _localizationService = localizationService;
+            _env = env;
         }
 
         /// <summary>
@@ -154,7 +156,7 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// ثبت و آپدیت اطلاعات برای محصول ساده
+        /// ثبت و آپدیت اطلاعات برای محصول ساده (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -303,6 +305,30 @@ namespace WebApi.Areas.Admin.Controllers
         public async Task<IActionResult> SetCategoryId(SetCategoryIdApiDto dto)
         {
             var resultService = await _facadeProductService.ProductCommandsService.SetCategoryId(dto.ProductId, dto.CategoryId);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// حذف یک محصول (Auth)
+        /// </summary>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
+        [HttpDelete("{ProductId}")]
+        public async Task<IActionResult> Delete(int ProductId)
+        {
+            var basePathImages = Path.Combine(_env.ContentRootPath, "Images", "ProductImage");
+
+            var resultService = await _facadeProductService.ProductCommandsService.DeleteAProduct(ProductId, basePathImages);
             if (resultService.IsSuccess)
             {
                 return NoContent();

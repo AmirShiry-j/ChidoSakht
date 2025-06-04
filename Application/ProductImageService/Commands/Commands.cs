@@ -39,4 +39,15 @@ namespace Application.ProductImageService.Commands
             Product = product;
         }
     }
+
+    public class DeleteProductImagesByProductIdCommand : IRequest
+    {
+        public int ProductId { get; set; }
+        public string BasePathImages { get; set; }
+        public DeleteProductImagesByProductIdCommand(int ProductId, string basePathImages)
+        {
+            this.ProductId = ProductId;
+            BasePathImages = basePathImages;
+        }
+    }
 }

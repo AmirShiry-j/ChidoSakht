@@ -15,7 +15,6 @@ namespace Persistence.Products.Queries
     public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Product>
     {
         private readonly DataBaseContext _context;
-
         public GetProductByIdQueryHandler(DataBaseContext context)
         {
             _context = context;

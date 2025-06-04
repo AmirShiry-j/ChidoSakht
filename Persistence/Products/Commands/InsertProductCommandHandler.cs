@@ -15,7 +15,6 @@ namespace Persistence.Products.Commands
     public class InsertProductCommandHandler : IRequestHandler<InsertProductCommand, int?>
     {
         private readonly DataBaseContext _context;
-
         public InsertProductCommandHandler(DataBaseContext context)
         {
             _context = context;

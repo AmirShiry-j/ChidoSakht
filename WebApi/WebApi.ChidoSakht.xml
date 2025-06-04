@@ -130,7 +130,7 @@
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateInfoProductSampleApiDto)">
             <summary>
-            ثبت و آپدیت اطلاعات برای محصول ساده
+            ثبت و آپدیت اطلاعات برای محصول ساده (Auth)
             </summary>
             <param name="dto"></param>
             <returns></returns>
@@ -175,6 +175,13 @@
             ست کردن دسته بندی برای محصول (Auth)
             </summary>
             <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Delete(System.Int32)">
+            <summary>
+            حذف یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Get(System.Int32)">

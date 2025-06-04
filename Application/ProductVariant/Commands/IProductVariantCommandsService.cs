@@ -100,6 +100,17 @@ namespace Application.ProductVariant.Commands
                 };
             }
 
+            //Check Variant not use in any Sabad Kharid or Sefareshi
+            var used = await _mediator.Send(new CheckUsedVariantInAnySefareshQuery(ProductVariantId));
+            if (used)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.BadRequest,
+                    Message = "Temp-Mes   واریانت در حداقل یک سفارش استفاده شده و نمیتوان آنرا حذف کرد"
+                };
+            }
+
             //Delete
             await _mediator.Send(new DeleteProductVariantCommand(productVariant));
 

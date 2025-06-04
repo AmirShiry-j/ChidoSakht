@@ -57,4 +57,13 @@ namespace Application.ProductService.Queries
             ProductId = productId;
         }
     }
+
+    public class CheckUsedProductInAnySefareshQuery : IRequest<bool>
+    {
+        public int ProductId { get; set; }
+        public CheckUsedProductInAnySefareshQuery(int productId)
+        {
+            ProductId = productId;
+        }
+    }
 }

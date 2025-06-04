@@ -25,6 +25,15 @@ namespace Application.ProductVariant.Queries
             this.ProductVariantId = ProductVariantId;
         }
     }
+
+    public class CheckUsedVariantInAnySefareshQuery : IRequest<bool>
+    {
+        public int ProductVariantId { get; set; }
+        public CheckUsedVariantInAnySefareshQuery(int ProductVariantId)
+        {
+            this.ProductVariantId = ProductVariantId;
+        }
+    }
     public class GetProductVariantTransportationByProductVariantIdQuery : IRequest<Domain.Products.ProductVariantTransportation>
     {
         public int ProductVariantId { get; set; }

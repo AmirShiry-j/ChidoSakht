@@ -4,6 +4,7 @@ using Application.Common.MessageEventTypes;
 using Application.Interfaces.ConfigService;
 using Application.Interfaces.Localization;
 using Application.Interfaces.Localization.AllMessageKeys;
+using Application.ProductImageService.Commands;
 using Application.ProductService.Queries;
 using Application.ProductVariant.Commands;
 using Application.ProductVariant.Queries;
@@ -29,6 +30,7 @@ namespace Application.ProductService.Commands
         Task<ResultDto> SetImageAltText(int ProductId, string? ImageAltText);
         Task<ResultDto> SetUniCode(int ProductId, string? UniCode);
         Task<ResultDto> SetCategoryId(int ProductId, int? CategoryId);
+        Task<ResultDto> DeleteAProduct(int ProductId, string BasePathImages);
 
     }
     public class ProductCommandsService : IProductCommandsService
@@ -366,6 +368,40 @@ namespace Application.ProductService.Commands
 
                 await _mediator.Send(new UpdateProductVariantCommand(productVariant));
             }
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+                MessageEventType = MessageEventType.Ok
+            };
+        }
+
+        public async Task<ResultDto> DeleteAProduct(int ProductId, string BasePathImages)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Check product dont used in any sefaresh
+            var used = await _mediator.Send(new CheckUsedProductInAnySefareshQuery(ProductId));
+            if (used)
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.BadRequest,
+                    Message = "Temp-Mes    محصول در حداقل یک سفارش استفاده شده و نمیتوان آنرا حذف کرد"
+                };
+
+            //Delete Images
+            await _mediator.Send(new DeleteProductImagesByProductIdCommand(ProductId, BasePathImages));
+
+            //Delete product
+            await _mediator.Send(new DeleteProductCommand(product));
 
             return new ResultDto
             {

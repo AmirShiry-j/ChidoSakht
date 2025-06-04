@@ -28,5 +28,14 @@ namespace Application.ProductService.Commands
         }
     }
 
+    public class DeleteProductCommand : IRequest
+    {
+        public Product Product { get; set; }
+        public DeleteProductCommand(Product Product)
+        {
+            this.Product = Product;
+        }
+    }
 
+    
 }
