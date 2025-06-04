@@ -94,6 +94,17 @@ namespace Application.ProductAttribute.Commands
                 };
             }
 
+            //check for unUsed ProductAttribute in Varinat
+            var used = await _mediator.Send(new CheckUsedProductAttributeInAnyProductVariantQuery(ProductAttributeId));
+            if (used)
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes   - این خصوصیت در یک واریانت استفاده شده است - ابتدا باید آن واریانت را حذف کنید",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
             //Delete
             await _mediator.Send(new DeleteProductAttributeCommand(productAttribute));
 
@@ -135,6 +146,17 @@ namespace Application.ProductAttribute.Commands
                 return new ResultDto
                 {
                     MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //check for unUsed ProductAttributeValue in Varinat
+            var used = await _mediator.Send(new CheckUsedProductAttributeValueInAnyProductVariantQuery(ProductAttributeValueId));
+            if (used)
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes   - این مقدار در یک واریانت استفاده شده است - ابتدا باید آن واریانت را حذف کنید",
+                    MessageEventType = MessageEventType.BadRequest
                 };
             }
 

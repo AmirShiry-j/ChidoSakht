@@ -48,4 +48,22 @@ namespace Application.ProductAttribute.Queries
             ProductId = productId;
         }
     }
+
+    public class CheckUsedProductAttributeValueInAnyProductVariantQuery : IRequest<bool>
+    {
+        public int ProductAttributeValueId { get; set; }
+        public CheckUsedProductAttributeValueInAnyProductVariantQuery(int productAttributeValueId)
+        {
+            ProductAttributeValueId = productAttributeValueId;
+        }
+    }
+
+    public class CheckUsedProductAttributeInAnyProductVariantQuery : IRequest<bool>
+    {
+        public int ProductAttributeId { get; set; }
+        public CheckUsedProductAttributeInAnyProductVariantQuery(int productAttributeId)
+        {
+            ProductAttributeId = productAttributeId;
+        }
+    }
 }
