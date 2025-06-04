@@ -13,11 +13,13 @@ namespace Application.ProductAttribute.Commands
         public int ProductId { get; set; }
         public string Name { get; set; }
         public AttributeType AttributeType { get; set; }
-        public CreateProductAttributeCommand(int productId, string name, AttributeType attributeType)
+        public bool UseForVariant { get; set; }
+        public CreateProductAttributeCommand(int productId, string name, AttributeType attributeType, bool useForVariant)
         {
             ProductId = productId;
             Name = name;
             AttributeType = attributeType;
+            UseForVariant = useForVariant;
         }
     }
 

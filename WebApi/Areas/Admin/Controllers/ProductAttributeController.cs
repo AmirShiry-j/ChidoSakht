@@ -64,7 +64,8 @@ namespace WebApi.Areas.Admin.Controllers
             {
                 Name = dto.Name,
                 ProductId = dto.ProductId,
-                AttributeType = (AttributeType)dto.AttributeType
+                AttributeType = (AttributeType)dto.AttributeType,
+                UseForVariant = dto.UseForVariant
             };
             var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.CreateAttrbite(inputModel);
             if (resultService.IsSuccess)
@@ -92,7 +93,8 @@ namespace WebApi.Areas.Admin.Controllers
             var inputModel = new UpdateProductAttributeDto
             {
                 Name = dto.Name,
-                ProductAttributeId = dto.ProductAttributeId
+                ProductAttributeId = dto.ProductAttributeId,
+                UseForVariant = dto.UseForVariant
             };
             var resultService = await _facadeProductAttributeService.ProductAttributeCommandsService.UpdateAttrbite(inputModel);
             if (resultService.IsSuccess)

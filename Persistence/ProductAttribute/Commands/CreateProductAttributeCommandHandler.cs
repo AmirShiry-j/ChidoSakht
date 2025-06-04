@@ -16,9 +16,10 @@ namespace Persistence.ProductAttribute.Commands
         {
             //Define
             var newProductAttribute = new Domain.Products.ProductAttribute();
-            newProductAttribute.ProductId=request.ProductId;
-            newProductAttribute.AttributeType=request.AttributeType;
+            newProductAttribute.ProductId = request.ProductId;
+            newProductAttribute.AttributeType = request.AttributeType;
             newProductAttribute.Name = request.Name;
+            newProductAttribute.UseForVariant = request.UseForVariant;
 
             //Add and save in DB
             await _context.ProductAttributes.AddAsync(newProductAttribute);

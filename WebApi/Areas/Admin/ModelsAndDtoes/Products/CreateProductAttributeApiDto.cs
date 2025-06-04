@@ -13,6 +13,8 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         [Range(1, 2)]
         public AttributeTypeApi AttributeType { get; set; }
+        [Required]
+        public bool UseForVariant { get; set; }
     }
     public enum AttributeTypeApi
     {
@@ -27,6 +29,8 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+        [Required]
+        public bool UseForVariant { get; set; }
     }
 
     public class CreateValueForAttributeApiDto
@@ -88,7 +92,7 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var list = value as ICollection;
-            if(list is null)
+            if (list is null)
                 return ValidationResult.Success;
 
 

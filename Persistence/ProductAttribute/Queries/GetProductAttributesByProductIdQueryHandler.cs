@@ -25,7 +25,8 @@ namespace Persistence.ProductAttribute.Queries
                 {
                     AttributeType = p.AttributeType,
                     Name = p.Name,
-                    ProductAttributeId = p.Id
+                    ProductAttributeId = p.Id,
+                    UseForVariant=p.UseForVariant
                 }).ToListAsync();
 
             //Retrun It

@@ -48,7 +48,7 @@ namespace Application.ProductAttribute.Commands
             }
 
             //Create
-            var productAttributeId = await _mediator.Send(new CreateProductAttributeCommand(dto.ProductId, dto.Name, dto.AttributeType));
+            var productAttributeId = await _mediator.Send(new CreateProductAttributeCommand(dto.ProductId, dto.Name, dto.AttributeType, dto.UseForVariant));
 
             return new ResultDto<int>
             {
@@ -70,8 +70,24 @@ namespace Application.ProductAttribute.Commands
                 };
             }
 
+            //Check limit use for UseForVariant if changes , mean = New UseForVariant = false
+            if (productAttribute.UseForVariant && !dto.UseForVariant)
+            {
+                //check for Use ProductAttribute in any Varinat
+                var used = await _mediator.Send(new CheckUsedProductAttributeInAnyProductVariantQuery(dto.ProductAttributeId));
+                if (used)
+                {
+                    return new ResultDto
+                    {
+                        Message = "Temp-Mes   - این خصوصیت در یک واریانت استفاده شده است - نمیتوان آن را به یک خصوصیت معولی تغییر داد - ابتدا باید آن واریانت را حذف کنید",
+                        MessageEventType = MessageEventType.BadRequest
+                    };
+                }
+            }
+
             //changes
             productAttribute.Name = dto.Name;
+            productAttribute.UseForVariant = dto.UseForVariant;
 
             //update
             await _mediator.Send(new UpdateProductAttributeCommand(productAttribute));
@@ -199,11 +215,13 @@ namespace Application.ProductAttribute.Commands
         public int ProductId { get; set; }
         public string Name { get; set; }
         public AttributeType AttributeType { get; set; }
+        public bool UseForVariant { get; set; }
     }
     public class UpdateProductAttributeDto
     {
         public int ProductAttributeId { get; set; }
         public string Name { get; set; }
+        public bool UseForVariant { get; set; }
     }
 
     public class CreateValueForAttributeDto

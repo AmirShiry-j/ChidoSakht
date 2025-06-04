@@ -64,8 +64,13 @@ namespace Application.ProductVariant.Commands
                     MessageEventType = MessageEventType.BadRequest
                 };
             }
+            
+            //باید چک بشه مقدار ها حتما از اتریبیوت هایی ارسال شدن که تیکت استفاده برای واریانتشون فعاله
+            
             //همچنین باید مربوط به یک خاصیت نبودن آیدی هارم چک کرد
             //...
+
+
 
             //Create in db
             var productVariantId = await _mediator.Send(new CreateProductVariantCommand(dto));

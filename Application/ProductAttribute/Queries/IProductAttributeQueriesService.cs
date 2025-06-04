@@ -102,6 +102,7 @@ namespace Application.ProductAttribute.Queries
         public int ProductAttributeId { get; set; }
         public string Name { get; set; }
         public AttributeType AttributeType { get; set; }
+        public bool UseForVariant { get; set; }
     }
     public class ProductAttributeValueDto
     {
@@ -114,6 +115,7 @@ namespace Application.ProductAttribute.Queries
         public int ProductAttributeId { get; set; }
         public string Name { get; set; }
         public AttributeType AttributeType { get; set; }
+        public bool UseForVariant { get; set; }
         public List<ProductAttributeValueDto> Values { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace Persistence.ProductAttribute.Queries
                     AttributeType = p.AttributeType,
                     Name = p.Name,
                     ProductAttributeId = p.Id,
+                    UseForVariant = p.UseForVariant,
                     Values = p.ProductAttributeValues.Select(c => new ProductAttributeValueDto
                     {
                         ProductAttributeValueId = c.Id,

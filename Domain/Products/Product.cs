@@ -48,6 +48,7 @@ namespace Domain.Products
         public int ProductId { get; set; }
         public Product Product { get; set; }
         public AttributeType AttributeType { get; set; }
+        public bool UseForVariant { get; set; }
         public string Name { get; set; }
         public ICollection<ProductAttributeValue> ProductAttributeValues { get; set; }
     }
