@@ -84,6 +84,16 @@ namespace Application.ProductVariant.Commands
                 };
             }
 
+            //Check Dont Exist variat like this
+            var notExistBefore = await _mediator.Send(new CheckNotExistVariantLikeThisBeforeQuery(dto.ProductId, dto.ProductAttributeValueIds));
+            if (notExistBefore == false)
+            {
+                return new ResultDto<int>
+                {
+                    Message = "Temp-Mes  یک واریانت با این خصوصیات قبلا ثبت شده",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
 
             //Create in db
             var productVariantId = await _mediator.Send(new CreateProductVariantCommand(dto));

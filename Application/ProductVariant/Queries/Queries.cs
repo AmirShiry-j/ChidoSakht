@@ -78,4 +78,15 @@ namespace Application.ProductVariant.Queries
             ProductAttributeValueIds = productAttributeValueIds;
         }
     }
+
+    public class CheckNotExistVariantLikeThisBeforeQuery : IRequest<bool>
+    {
+        public int ProductId { get; set; }
+        public List<int> ProductAttributeValueIds { get; set; }
+        public CheckNotExistVariantLikeThisBeforeQuery(int ProductId, List<int> productAttributeValueIds)
+        {
+            this.ProductId = ProductId;
+            ProductAttributeValueIds = productAttributeValueIds;
+        }
+    }
 }
