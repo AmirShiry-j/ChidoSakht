@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.ProductVariant.Commands;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,15 @@ namespace Application.ProductVariant.Queries
         public GetProductVariantTypeSampleByProductIdQuery(int productId)
         {
             ProductId = productId;
+        }
+    }
+
+    public class GroupbySendedProductAttributeValueIds_ByAttributeId_Query : IRequest<List<GroupBy_Values_By_AttributeId_Dto>>
+    {
+        public List<int> ProductAttributeValueIds { get; set; }
+        public GroupbySendedProductAttributeValueIds_ByAttributeId_Query(List<int> productAttributeValueIds)
+        {
+            ProductAttributeValueIds = productAttributeValueIds;
         }
     }
 }

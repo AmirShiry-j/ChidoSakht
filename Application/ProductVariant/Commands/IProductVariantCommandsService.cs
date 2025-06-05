@@ -52,7 +52,7 @@ namespace Application.ProductVariant.Commands
                 };
             }
 
-            //فعلا فرض میشه حداقل یه آیدی ارسال میکنه تا ولیدشنشو فعال کنم
+            //Validate ValueIds
             var validSendedValueIds = await _mediator.Send(new GetValidSendedProductAttributeValueIdsByProductIdQuery(dto.ProductId, dto.ProductAttributeValueIds));
             var inValidSendedValueIds = dto.ProductAttributeValueIds.Where(p => !validSendedValueIds.Contains(p)).ToList();
             if (inValidSendedValueIds.Any())
@@ -60,16 +60,29 @@ namespace Application.ProductVariant.Commands
                 string strInValidIds = inValidSendedValueIds.Select(p => p.ToString()).Aggregate((p1, p2) => p1 + "," + p2).ToString();
                 return new ResultDto<int>
                 {
-                    Message = "Temp-Mes ," + strInValidIds + " , Is not valid",
+                    Message = "Temp-Mes ," + strInValidIds + " , این آیدی ها معتبر نیستند، یا آیدی ها پرتند یا متعلق به این محصول نیستند یا مربوط به خصوصیاتی نیستند که تیک قابلیت استفاده برای واریانتشون نخورده",
                     MessageEventType = MessageEventType.BadRequest
                 };
             }
-            
-            //باید چک بشه مقدار ها حتما از اتریبیوت هایی ارسال شدن که تیکت استفاده برای واریانتشون فعاله
-            
-            //همچنین باید مربوط به یک خاصیت نبودن آیدی هارم چک کرد
-            //...
 
+            //Validate AttributeId repetitive
+            var groupBies = await _mediator.Send(new GroupbySendedProductAttributeValueIds_ByAttributeId_Query(dto.ProductAttributeValueIds));
+            var attributeIdsAndTheirValueIds_CountMoreThanOne = groupBies.Where(p => p.ValueIds.Count() > 1).ToList();
+            if (attributeIdsAndTheirValueIds_CountMoreThanOne.Any())
+            {
+                string Message = "Temp-Mes مقادیر زیر مربوط به یک خصوصیت هستند و نباید باشند";
+                foreach (var attribute in attributeIdsAndTheirValueIds_CountMoreThanOne)
+                {
+                    Message += "\n";
+                    Message += attribute.ProductAttributeId + " :  " + attribute.ValueIds.Select(p => p.ToString()).Aggregate((p1, p2) => p1 + "," + p2).ToString();
+                }
+
+                return new ResultDto<int>
+                {
+                    Message = Message,
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
 
 
             //Create in db
@@ -139,5 +152,11 @@ namespace Application.ProductVariant.Commands
         public double? Weight { get; set; }
         public ProductType ProductType { get; set; }
 
+    }
+
+    public class GroupBy_Values_By_AttributeId_Dto
+    {
+        public int ProductAttributeId { get; set; }
+        public List<int> ValueIds { get; set; }
     }
 }
