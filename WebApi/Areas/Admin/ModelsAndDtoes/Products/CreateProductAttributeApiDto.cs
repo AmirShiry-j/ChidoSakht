@@ -103,4 +103,28 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
             return ValidationResult.Success;
         }
     }
+
+    public class UpdateProductVariantApiDto
+    {
+        [Required]
+        public int ProductVariantId { get; set; }
+        [Required]
+        [Range(0, long.MaxValue)]
+        public long Price { get; set; }
+        [Range(0, long.MaxValue)]
+        public long? SpecialPrice { get; set; }
+        [Required]
+        [Range(0, int.MaxValue)]
+        public int Stock { get; set; }
+
+        //
+        [Range(0, double.MaxValue)]
+        public double? Length { get; set; }
+        [Range(0, double.MaxValue)]
+        public double? Width { get; set; }
+        [Range(0, double.MaxValue)]
+        public double? Height { get; set; }
+        [Range(0, double.MaxValue)]
+        public double? Weight { get; set; }
+    }
 }

@@ -9,6 +9,7 @@ using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace Application.ProductVariant.Commands
     public interface IProductVariantCommandsService
     {
         Task<ResultDto<int>> CreateProductVariant(CreateProductVariantDto dto);
+        Task<ResultDto> UpdateProductVariant(UpdateProductVariantDto dto);
         Task<ResultDto> DeleteProductVariant(int ProductVariantId);
     }
     public class ProductVariantCommandsService : IProductVariantCommandsService
@@ -123,7 +125,7 @@ namespace Application.ProductVariant.Commands
             {
                 return new ResultDto
                 {
-                    Message = "Temp-Mes   Variant is not for a Variable Product",
+                    Message = "Temp-Mes   Variant is not a Variable Product",
                     MessageEventType = MessageEventType.BadRequest
                 };
             }
@@ -147,6 +149,52 @@ namespace Application.ProductVariant.Commands
                 IsSuccess = true
             };
         }
+
+        public async Task<ResultDto> UpdateProductVariant(UpdateProductVariantDto dto)
+        {
+            //check id exist in db
+            var productVariant = await _mediator.Send(new GetProductVariantByIdQuery(dto.ProductVariantId));
+            if (productVariant is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Check Variant was for ProductType Variable
+            if (productVariant.ProductType != ProductType.Variable)
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes   Variant is not a Variable Product",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            //get main domain
+            var productVariantTransportation = await _mediator.Send(new GetProductVariantTransportationByProductVariantIdQuery(dto.ProductVariantId));
+
+            //set new Change
+            productVariantTransportation.Width = dto.Width;
+            productVariantTransportation.Weight = dto.Weight;
+            productVariantTransportation.Length = dto.Length;
+            productVariantTransportation.Height = dto.Height;
+
+            productVariant.ProductId = productVariant.ProductId;
+            productVariant.Price = dto.Price;
+            productVariant.SpecialPrice = dto.SpecialPrice;
+            productVariant.Stock = dto.Stock;
+            productVariant.ProductVariantTransportation = productVariantTransportation;
+
+            await _mediator.Send(new UpdateProductVariantCommand(productVariant));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+
+            };
+        }
     }
 
     public class CreateProductVariantDto
@@ -162,6 +210,20 @@ namespace Application.ProductVariant.Commands
         public double? Weight { get; set; }
         public ProductType ProductType { get; set; }
 
+    }
+
+
+    public class UpdateProductVariantDto
+    {
+        public int ProductVariantId { get; set; }
+        public long Price { get; set; }
+        public long? SpecialPrice { get; set; }
+        public int Stock { get; set; }
+
+        public double? Length { get; set; }
+        public double? Width { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
     }
 
     public class GroupBy_Values_By_AttributeId_Dto

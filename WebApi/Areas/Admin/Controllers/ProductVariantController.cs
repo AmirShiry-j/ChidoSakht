@@ -86,6 +86,39 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// ویرایش اطلاعات یک واریانت (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> Put(UpdateProductVariantApiDto dto)
+        {
+            var inputModel = new UpdateProductVariantDto
+            {
+                ProductVariantId = dto.ProductVariantId,
+                Price = dto.Price,
+                SpecialPrice = dto.SpecialPrice,
+                Stock = dto.Stock,
+                Height = dto.Height,
+                Length = dto.Length,
+                Weight = dto.Weight,
+                Width = dto.Width
+            };
+            var resultService = await _facadeProductVariantService.ProductVariantCommandsService.UpdateProductVariant(inputModel);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
         /// حذف یک واریانت (Auth)
         /// </summary>
         /// <param name="ProductVariantId"></param>

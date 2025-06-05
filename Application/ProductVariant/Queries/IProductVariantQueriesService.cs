@@ -2,6 +2,7 @@
 using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.ProductService.Queries;
+using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,16 @@ namespace Application.ProductVariant.Queries
                 return new ResultDto<List<ProductVariantDto>>
                 {
                     MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Check Poduct was Variable
+            if (product.ProductType != ProductType.Variable)
+            {
+                return new ResultDto<List<ProductVariantDto>>
+                {
+                    Message = "Temp-Mes  Product is not Variable",
+                    MessageEventType = MessageEventType.BadRequest
                 };
             }
 
