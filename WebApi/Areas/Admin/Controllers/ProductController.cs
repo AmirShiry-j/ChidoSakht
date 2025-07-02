@@ -127,24 +127,39 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// ایجاد اولیه محصول یا ویرایش نام آن (Auth)
+        /// ایجاد اولیه محصول (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post(UpsertProductApiDto dto)
+        public async Task<IActionResult> Post(CreateProductApiDto dto)
         {
-            var resultService = await _facadeProductService.ProductCommandsService.Upsert(dto.ProductId, dto.Name, (ProductType)dto.ProductType);
+            var resultService = await _facadeProductService.ProductCommandsService.Create(dto.Name, (ProductType)dto.ProductType);
             if (resultService.IsSuccess)
             {
-                if (resultService.MessageEventType == MessageEventType.Created)
-                {
-                    return CreatedAtAction(nameof(Get), new { ProductId = resultService.Data }, null);
-                }
-                else//Updated
-                {
-                    return NoContent();
-                }
+                return CreatedAtAction(nameof(Get), new { ProductId = resultService.Data }, null);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// آپدیت کردن نام برای محصول (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpPut(nameof(SetName))]
+        public async Task<IActionResult> SetName(SetNameProductApiDto dto)
+        {
+            var resultService = await _facadeProductService.ProductCommandsService.SetName(dto.ProductId, dto.Name);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
             }
             else
             {

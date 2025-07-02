@@ -23,8 +23,9 @@ namespace Application.ProductService.Commands
 {
     public interface IProductCommandsService
     {
-        Task<ResultDto<int>> Upsert(int? ProductId, string Name, ProductType ProductType);
+        Task<ResultDto<int>> Create(string Name, ProductType ProductType);
         Task<ResultDto> UpdateInfoProductSample(UpdateInfoProductSampleDto dto);
+        Task<ResultDto> SetName(int ProductId, string Name);
         Task<ResultDto> SetDescription(int ProductId, string? Description);
         Task<ResultDto> SetUniqeLink(int ProductId, string? UniqeLink);
         Task<ResultDto> SetImageAltText(int ProductId, string? ImageAltText);
@@ -42,77 +43,8 @@ namespace Application.ProductService.Commands
             _mediator = mediator;
             _localizationService = localizationService;
         }
-        public async Task<ResultDto<int>> Upsert(int? ProductId, string Name, ProductType ProductType)
+        public async Task<ResultDto<int>> Create(string Name, ProductType ProductType)
         {
-
-            if (ProductId is not null)
-            {
-                //get from db
-                var product = await _mediator.Send(new GetProductByIdQuery((int)ProductId));
-                if (product is null)
-                {
-                    return new ResultDto<int>
-                    {
-                        MessageEventType = MessageEventType.NotFound
-                    };
-                }
-
-                if (product.ProductType == ProductType.Variable && ProductType == ProductType.Sample)
-                {
-                    ////Check product does not have any ProductVariant
-                    //var productVariantsTypeVariables = (await _mediator.Send(new GetProductVariantsTypeVariableByProductIdQuery((int)ProductId)));
-                    //if (productVariantsTypeVariables.Any())
-                    //{
-                    //    return new ResultDto<int>
-                    //    {
-                    //        Message = "Temp-Mes  این محصول متغیر دارای واریانت هست . ابتدا باید آنهارا حذف کنید. تا بتوانید آن را به محصول ساده تغییر دهید",
-                    //        MessageEventType = MessageEventType.BadRequest
-                    //    };
-                    //}
-
-                    return new ResultDto<int>
-                    {
-                        Message = "Temp-Mes نمیتوان نوع محصول را تغییر داد",
-                        MessageEventType = MessageEventType.BadRequest
-                    };
-                }
-                else if (product.ProductType == ProductType.Sample && ProductType == ProductType.Variable)
-                {
-                    ////Check product does not have any ProductVariant
-                    //var productVariantTypeSample = (await _mediator.Send(new GetProductVariantTypeSampleByProductIdQuery((int)ProductId)));
-                    //if (productVariantTypeSample is not null)
-                    //{
-                    //    //check چک کردن اینکه از این محصول خریدی ثبت نشده باشه
-                    //    //..
-                    //    //.. برای بعدن
-                    //    //.. WarCheckWar
-
-                    //    var productVariant = (await _mediator.Send(new GetProductVariantByIdQuery(productVariantTypeSample.ProductVariantId)));
-                    //    await _mediator.Send(new DeleteProductVariantCommand(productVariant));
-                    //}
-
-                    return new ResultDto<int>
-                    {
-                        Message = "Temp-Mes نمیتوان نوع محصول را تغییر داد",
-                        MessageEventType = MessageEventType.BadRequest
-                    };
-                }
-
-                //set new Name
-                product.Name = Name;
-                product.ProductType = ProductType;
-
-                //Update in db
-                await _mediator.Send(new UpdateProductCommand(product));
-
-                return new ResultDto<int>
-                {
-                    IsSuccess = true,
-                    MessageEventType = MessageEventType.Ok
-                };
-            }
-
-
             //Insert product
             var productId = await _mediator.Send(new InsertProductCommand(Name, ProductType));
             //if (productId is null)
@@ -130,6 +62,32 @@ namespace Application.ProductService.Commands
                 MessageEventType = MessageEventType.Created
             };
         }
+
+        public async Task<ResultDto> SetName(int ProductId, string Name)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //set new value
+            product.Name = Name;
+
+            //Update in db
+            await _mediator.Send(new UpdateProductCommand(product));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+                MessageEventType = MessageEventType.Ok
+            };
+        }
+
 
         public async Task<ResultDto> SetDescription(int ProductId, string? Description)
         {
