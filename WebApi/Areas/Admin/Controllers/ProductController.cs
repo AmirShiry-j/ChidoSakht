@@ -22,7 +22,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiVersion("1")]
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
-    //[Authorize]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IFacadeProductService _facadeProductService;
@@ -40,6 +40,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="searchProductApiDto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] ProductFilterApiDto searchProductApiDto)
         {
@@ -83,6 +84,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="ProductId"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet("{ProductId}")]
         public async Task<IActionResult> Get(int ProductId)
         {
@@ -131,6 +133,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Add, KeyNameArea.Admin)]
         [HttpPost]
         public async Task<IActionResult> Post(CreateProductApiDto dto)
         {
@@ -153,6 +156,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut(nameof(SetName))]
         public async Task<IActionResult> SetName(SetNameProductApiDto dto)
         {
@@ -175,6 +179,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut]
         public async Task<IActionResult> Put(UpdateInfoProductSampleApiDto dto)
         {
@@ -208,6 +213,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut(nameof(SetDescription))]
         public async Task<IActionResult> SetDescription(SetDescriptionApiDto dto)
         {
@@ -231,6 +237,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut(nameof(SetUniqeLink))]
         public async Task<IActionResult> SetUniqeLink(SetUniqeLinkApiDto dto)
         {
@@ -255,6 +262,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="UniqeLink"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpGet(nameof(ValidateUniqeLink))]
         public async Task<IActionResult> ValidateUniqeLink([Required] int ProductId, [Required] string UniqeLink)
         {
@@ -275,6 +283,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="UniCode"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpGet(nameof(ValidateUniCode))]
         public async Task<IActionResult> ValidateUniCode([Required] int ProductId, [Required] string UniCode)
         {
@@ -294,6 +303,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut(nameof(SetUniCode))]
         public async Task<IActionResult> SetUniCode(SetUniCodeApiDto dto)
         {
@@ -316,6 +326,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut(nameof(SetCategoryId))]
         public async Task<IActionResult> SetCategoryId(SetCategoryIdApiDto dto)
         {
@@ -338,6 +349,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="ProductId"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete("{ProductId}")]
         public async Task<IActionResult> Delete(int ProductId)
         {

@@ -1,14 +1,17 @@
-﻿using Application.Common.Dtoes;
+﻿using Application.Common.AppKeyNames;
+using Application.Common.Dtoes;
 using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.ProductAttribute;
 using Application.ProductAttribute.Commands;
 using Application.ProductVariant;
 using Domain.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Products;
+using WebApi.Filters.Permissions;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -16,7 +19,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiVersion("1")]
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
-    //[Authorize]
+    [Authorize]
     public class ProductAttributeController : ControllerBase
     {
         private readonly IFacadeProductAttributeService _facadeProductAttributeService;
@@ -32,6 +35,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="ProductId"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet("{ProductId}")]
         public async Task<IActionResult> Get(int ProductId)
         {
@@ -57,6 +61,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPost]
         public async Task<IActionResult> Post(CreateProductAttributeApiDto dto)
         {
@@ -87,6 +92,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut]
         public async Task<IActionResult> Put(UpdateProductAttributeApiDto dto)
         {
@@ -115,6 +121,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="ProductAttributeId"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpDelete("{ProductAttributeId}")]
         public async Task<IActionResult> Delete(int ProductAttributeId)
         {

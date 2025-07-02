@@ -1,4 +1,5 @@
-﻿using Application.Common.MessageEventTypes;
+﻿using Application.Common.AppKeyNames;
+using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.ProductImageService;
 using Application.ProductService;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Areas.Admin.ModelsAndDtoes.Products;
+using WebApi.Filters.Permissions;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -15,7 +17,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiVersion("1")]
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
-    //[Authorize]
+    [Authorize]
     public class ProductImageController : ControllerBase
     {
         private readonly IFacadeProductImageService _facadeProductImageService;
@@ -33,6 +35,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="ProductId"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet("{ProductId}")]
         public async Task<IActionResult> Get(int ProductId)
         {
@@ -75,6 +78,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// <param name="file"></param>
         /// <param name="ProductId"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPost("{ProductId}")]
         public async Task<IActionResult> Post(IFormFile file, int ProductId)
         {
@@ -136,6 +140,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="Name"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpDelete("{Name}")]
         public async Task<IActionResult> Delete(string Name)
         {
@@ -165,6 +170,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut(nameof(SetImageAltText))]
         public async Task<IActionResult> SetImageAltText(SetImageAltTextApiDto dto)
         {
@@ -187,6 +193,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut(nameof(SetIndexImage))]
         public async Task<IActionResult> SetIndexImage(SetIndexImageApiDto dto)
         {

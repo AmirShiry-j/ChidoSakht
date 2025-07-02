@@ -1,7 +1,10 @@
-﻿using Application.Common.MessageEventTypes;
+﻿using Application.Common.AppKeyNames;
+using Application.Common.MessageEventTypes;
 using Application.Interfaces.Localization;
 using Application.ProductAttribute;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters.Permissions;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -9,7 +12,7 @@ namespace WebApi.Areas.Admin.Controllers
     [ApiVersion("1")]
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
-    //[Authorize]
+    [Authorize]
     public class ProductAttributesAndValuesController : ControllerBase
     {
         private readonly IFacadeProductAttributeService _facadeProductAttributeService;
@@ -27,6 +30,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="ProductId"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet("{ProductId}")]
         public async Task<IActionResult> Get(int ProductId)
         {
