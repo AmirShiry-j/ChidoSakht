@@ -1,0 +1,51 @@
+﻿using Application.Interfaces.Localization;
+using Application.ProductService.Commands;
+using Application.ProductService.Queries;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.ProductService
+{
+    public interface IFacadeProductService
+    {
+        //Commands
+        IProductCommandsService ProductCommandsService { get; }
+        //Queries
+        IProductQueriesService ProductQueriesService { get; }
+    }
+
+    public class FacadeProductService : IFacadeProductService
+    {
+        private readonly IMediator _mediator;
+        private readonly ILocalizationService _localizationService;
+        public FacadeProductService(IMediator mediator, ILocalizationService localizationService)
+        {
+            _mediator = mediator;
+            _localizationService = localizationService;
+        }
+
+        //Commands
+        private IProductCommandsService _productCommandsService;
+        public IProductCommandsService ProductCommandsService
+        {
+            get
+            {
+                return _productCommandsService = _productCommandsService ?? new ProductCommandsService(_mediator, _localizationService);
+            }
+        }
+
+        //Queries
+        private IProductQueriesService _productQueriesService;
+        public IProductQueriesService ProductQueriesService
+        {
+            get
+            {
+                return _productQueriesService = _productQueriesService ?? new ProductQueriesService(_mediator, _localizationService);
+            }
+        }
+    }
+}

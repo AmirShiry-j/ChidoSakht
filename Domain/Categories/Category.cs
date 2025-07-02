@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Domain.Categories
     {
         public Category()
         {
-                
+
         }
         public Category(string Name, int? ParentCategoryId)
         {
@@ -41,5 +42,6 @@ namespace Domain.Categories
         public Category ParentCategory { get; set; }
         public int? ParentCategoryId { get; set; }
         public ICollection<Category> ChildCategories { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

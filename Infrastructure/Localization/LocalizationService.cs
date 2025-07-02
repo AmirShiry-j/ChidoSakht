@@ -2,6 +2,7 @@
 using Infrastructure.Localization.AccountMessages;
 using Infrastructure.Localization.CategoryMessages;
 using Infrastructure.Localization.PermissionMessages;
+using Infrastructure.Localization.ProductMessages;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace Infrastructure.Localization
         public string GetMessagePermission(string key)
         {
             return MessagesPermission.ResourceManager.GetString(key);
+        }
+
+        public string GetMessageProduct(string key)
+        {
+            return MessagesProduct.ResourceManager.GetString(key);
         }
     }
 }

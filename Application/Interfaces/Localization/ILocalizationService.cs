@@ -12,5 +12,6 @@ namespace Application.Interfaces.Localization
         string GetMessageIdentity(string key);
         string GetMessageCategory(string key);
         string GetMessagePermission(string key);
+        string GetMessageProduct(string key);
     }
 }

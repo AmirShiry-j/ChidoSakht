@@ -9,5 +9,11 @@
         User,
         UserRole,
         Category,
+        Product,
+        ProductAttribute,
+        ProductImage,
+        ProductAttributeValue,
+        ProductAttributesAndValues,
+        ProductVariant
     }
 }
