@@ -67,7 +67,7 @@ builder.Services.AddCors(options =>
         else
             policy.WithHeaders(corsOrigins.Headers);
 
-        policy.WithExposedHeaders("Location");
+        policy.WithExposedHeaders("location");
     });
 });
 
