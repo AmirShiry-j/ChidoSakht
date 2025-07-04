@@ -1,5 +1,5 @@
-﻿using Application.ProductVariant.Commands;
-using Application.ProductVariant.Queries;
+﻿using Application.Store.AdminSection.ProductVariant.Commands;
+using Application.Store.AdminSection.ProductVariant.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;

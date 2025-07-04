@@ -1,5 +1,5 @@
-﻿using Application.Interfaces.ConfigService;
-using Application.Interfaces.Messagers.EmailService;
+﻿using Application.Commons.Interfaces.ConfigService;
+using Application.Commons.Interfaces.Messagers.EmailService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

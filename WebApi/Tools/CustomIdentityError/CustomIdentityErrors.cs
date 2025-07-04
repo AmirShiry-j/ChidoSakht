@@ -1,5 +1,4 @@
-﻿using Application.Interfaces.ConfigService;
-using Application.Interfaces.Localization;
+﻿using Application.Commons.Interfaces.Localization;
 using Domain.Users;
 using Infrastructure.Localization;
 using Microsoft.AspNetCore.Identity;

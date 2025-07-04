@@ -1,4 +1,4 @@
-﻿using Application.ProductAttribute.Queries;
+﻿using Application.Store.AdminSection.ProductAttribute.Queries;
 using Domain.Products;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

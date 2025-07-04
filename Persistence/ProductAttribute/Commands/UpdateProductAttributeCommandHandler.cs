@@ -1,4 +1,4 @@
-﻿using Application.ProductAttribute.Commands;
+﻿using Application.Store.AdminSection.ProductAttribute.Commands;
 using MediatR;
 using Persistence.Contexts;
 using System;

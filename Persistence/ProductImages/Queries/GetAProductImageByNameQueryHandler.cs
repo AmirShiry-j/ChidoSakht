@@ -1,4 +1,4 @@
-﻿using Application.ProductImageService.Queries;
+﻿using Application.Store.AdminSection.ProductImageService.Queries;
 using Domain.Products;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

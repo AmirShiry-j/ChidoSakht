@@ -1,4 +1,4 @@
-﻿using Application.CategoryService.Queries;
+﻿using Application.Store.AdminSection.CategoryService.Queries;
 using Domain.Categories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

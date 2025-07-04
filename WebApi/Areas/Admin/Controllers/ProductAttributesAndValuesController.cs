@@ -1,7 +1,7 @@
-﻿using Application.Common.AppKeyNames;
-using Application.Common.MessageEventTypes;
-using Application.Interfaces.Localization;
-using Application.ProductAttribute;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.ProductAttribute;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters.Permissions;

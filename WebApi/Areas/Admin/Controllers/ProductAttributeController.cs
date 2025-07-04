@@ -1,10 +1,8 @@
-﻿using Application.Common.AppKeyNames;
-using Application.Common.Dtoes;
-using Application.Common.MessageEventTypes;
-using Application.Interfaces.Localization;
-using Application.ProductAttribute;
-using Application.ProductAttribute.Commands;
-using Application.ProductVariant;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.ProductAttribute;
+using Application.Store.AdminSection.ProductAttribute.Commands;
 using Domain.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

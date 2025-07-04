@@ -1,11 +1,8 @@
-﻿using Application.CategoryService;
-using Application.CategoryService.Commands;
-using Application.Common.AppKeyNames;
-using Application.Common.MessageEventTypes;
-using Application.Interfaces.Localization;
-using Application.Interfaces.Localization.AllMessageKeys;
-using Application.PermissionService.Commands;
-using Application.PermissionService.Queries;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.PermissionService;
+using Application.Store.AdminSection.PermissionService.Commands;
 using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

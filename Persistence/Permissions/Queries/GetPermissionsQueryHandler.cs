@@ -1,5 +1,5 @@
-﻿using Application.Common.Dtoes;
-using Application.PermissionService.Queries;
+﻿using Application.Commons.Objects.Dtoes;
+using Application.Store.AdminSection.PermissionService.Queries;
 using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

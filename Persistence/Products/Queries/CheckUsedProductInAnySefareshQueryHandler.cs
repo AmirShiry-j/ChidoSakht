@@ -1,4 +1,4 @@
-﻿using Application.ProductService.Queries;
+﻿using Application.Store.AdminSection.ProductService.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;

@@ -1,10 +1,9 @@
-﻿using Application.CategoryService;
-using Application.CategoryService.Commands;
-using Application.CategoryService.Queries;
-using Application.Common.AppKeyNames;
-using Application.Common.Dtoes;
-using Application.Interfaces.Localization;
-using Application.Interfaces.Localization.AllMessageKeys;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Interfaces.Localization.AllMessageKeys;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.Dtoes;
+using Application.Store.AdminSection.CategoryService;
+using Application.Store.AdminSection.CategoryService.Commands;
 using Domain.Categories;
 using Domain.Users;
 using MediatR;

@@ -1,6 +1,5 @@
-﻿using Application.Common.Dtoes;
-using Application.PermissionService.Queries;
-using Application.ProductService.Queries;
+﻿using Application.Commons.Objects.Dtoes;
+using Application.Store.AdminSection.ProductService.Queries;
 using Domain.Products;
 using Domain.Users;
 using MediatR;

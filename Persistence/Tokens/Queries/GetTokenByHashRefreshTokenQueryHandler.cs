@@ -1,4 +1,4 @@
-﻿using Application.TokenService.Queries;
+﻿using Application.Commons.Services.TokenService.Queries;
 using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

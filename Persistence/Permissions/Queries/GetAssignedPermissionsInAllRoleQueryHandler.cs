@@ -1,4 +1,4 @@
-﻿using Application.PermissionService.Queries;
+﻿using Application.Store.AdminSection.PermissionService.Queries;
 using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

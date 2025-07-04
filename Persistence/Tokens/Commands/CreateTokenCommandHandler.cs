@@ -1,5 +1,4 @@
-﻿using Application.CategoryService.Commands;
-using Application.TokenService.Commands;
+﻿using Application.Commons.Services.TokenService.Commands;
 using Domain.Categories;
 using Domain.Users;
 using MediatR;

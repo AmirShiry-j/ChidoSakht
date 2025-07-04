@@ -1,4 +1,4 @@
-﻿using Application.RoleService.Queries;
+﻿using Application.Store.AdminSection.RoleService.Queries;
 using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

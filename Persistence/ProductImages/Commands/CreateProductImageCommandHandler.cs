@@ -1,4 +1,4 @@
-﻿using Application.ProductImageService.Commands;
+﻿using Application.Store.AdminSection.ProductImageService.Commands;
 using Domain.Products;
 using MediatR;
 using Persistence.Contexts;

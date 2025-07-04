@@ -1,6 +1,4 @@
-﻿using Application.CategoryService;
-using Application.TokenService;
-using Application.UserService;
+﻿using Application.Commons.Services.UserService;
 using Domain.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

@@ -1,4 +1,4 @@
-﻿using Application.CategoryService.Commands;
+﻿using Application.Store.AdminSection.CategoryService.Commands;
 using Domain.Categories;
 using MediatR;
 using Persistence.Contexts;

@@ -1,4 +1,4 @@
-﻿using Application.Common.AppKeyNames;
+﻿using Application.Commons.Objects.AppKeyNames;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

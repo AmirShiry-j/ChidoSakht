@@ -1,5 +1,4 @@
-﻿using Application.ProductService.Commands;
-using Application.ProductVariant.Commands;
+﻿using Application.Store.AdminSection.ProductVariant.Commands;
 using MediatR;
 using Persistence.Contexts;
 using System;

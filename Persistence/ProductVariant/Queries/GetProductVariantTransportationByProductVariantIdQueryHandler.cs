@@ -1,4 +1,4 @@
-﻿using Application.ProductVariant.Queries;
+﻿using Application.Store.AdminSection.ProductVariant.Queries;
 using Domain.Products;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

@@ -1,20 +1,18 @@
-﻿using Application.CategoryService;
-using Application.Common.AppKeyNames;
-using Application.Common.Dtoes;
-using Application.Interfaces.Localization;
-using Application.Interfaces.Localization.AllMessageKeys;
-using Application.ProductService;
-using Application.ProductService.Commands;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Products;
 using WebApi.Filters.Permissions;
-using Application.Common.MessageEventTypes;
 using Microsoft.AspNetCore.Http.Extensions;
-using Application.ProductService.Queries;
 using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
 using Domain.Products;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.Dtoes;
+using Application.Commons.Objects.MessageEventTypes;
+using Application.Commons.Interfaces.Localization;
+using Application.Store.AdminSection.ProductService;
+using Application.Store.AdminSection.ProductService.Queries;
+using Application.Store.AdminSection.ProductService.Commands;
 
 namespace WebApi.Areas.Admin.Controllers
 {

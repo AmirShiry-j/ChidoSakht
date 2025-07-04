@@ -1,4 +1,4 @@
-﻿using Application.ProductService.Queries;
+﻿using Application.Store.AdminSection.ProductService.Queries;
 using Domain.Categories;
 using Domain.Products;
 using MediatR;

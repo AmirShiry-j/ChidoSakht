@@ -2,8 +2,8 @@
 using System.Text;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
-using Application.Interfaces.ConfigService;
-using Application.Interfaces.Messagers.EmailService;
+using Application.Commons.Interfaces.ConfigService;
+using Application.Commons.Interfaces.Messagers.EmailService;
 
 namespace Infrastructure.Messagers.EmailService
 {

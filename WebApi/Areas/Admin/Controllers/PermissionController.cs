@@ -1,10 +1,7 @@
-﻿using Application.CategoryService;
-using Application.CategoryService.Commands;
-using Application.Common.AppKeyNames;
-using Application.Interfaces.Localization;
-using Application.Interfaces.Localization.AllMessageKeys;
-using Application.PermissionService.Commands;
-using Application.PermissionService.Queries;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Store.AdminSection.PermissionService;
+using Application.Store.AdminSection.PermissionService.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

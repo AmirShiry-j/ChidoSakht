@@ -1,5 +1,4 @@
-﻿using Application.CategoryService.Commands;
-using Application.ProductService.Commands;
+﻿using Application.Store.AdminSection.ProductService.Commands;
 using Domain.Categories;
 using Domain.Products;
 using MediatR;

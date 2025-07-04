@@ -1,4 +1,4 @@
-﻿using Application.UserService.Queries;
+﻿using Application.Commons.Services.UserService.Queries;
 
 namespace WebApi.Areas.Admin.ModelsAndDtoes.Roles
 {

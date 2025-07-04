@@ -1,7 +1,7 @@
-﻿using Application.Common.AppKeyNames;
-using Application.Interfaces.Localization;
-using Application.Interfaces.Localization.AllMessageKeys;
-using Application.UserService.Queries;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Interfaces.Localization.AllMessageKeys;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Services.UserService.Queries;
 using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
