@@ -17,14 +17,14 @@
             <param name="CategoryId"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Post(WebApi.ModelsAndDtoes.Categories.CreateCategoryApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Categories.CreateCategoryApiDto)">
             <summary>
             اضافه کردن یک دسته بندی جدید (Auth)
             </summary>
             <param name="createCategoryApiDto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Put(WebApi.ModelsAndDtoes.Categories.UpdateCategoryApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Categories.UpdateCategoryApiDto)">
             <summary>
             آپدیت اطلاعات یک دسته بندی (Auth)
             </summary>

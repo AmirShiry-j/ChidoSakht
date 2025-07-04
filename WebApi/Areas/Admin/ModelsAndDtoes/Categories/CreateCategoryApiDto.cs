@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.ModelsAndDtoes.Categories
+namespace WebApi.Areas.Admin.ModelsAndDtoes.Categories
 {
     public class CreateCategoryApiDto
     {

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Roles;
 using WebApi.Filters.Permissions;
-using WebApi.ModelsAndDtoes.Categories;
 
 namespace WebApi.Areas.Admin.Controllers
 {
