@@ -2,6 +2,9 @@
 {
     public enum MessageEventType
     {
-        NotFound
+        NotFound,
+        BadRequest,
+        Created,
+        Ok,
     }
 }

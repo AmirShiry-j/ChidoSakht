@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.Configurations.Users;
 using Domain.Categories;
 using Persistence.Configurations.Categories;
+using Domain.Products;
+using Persistence.Configurations.Products;
+using System.Reflection.Emit;
+using Domain.SymbolicShoppingCarts;
 
 namespace Persistence.Contexts
 {
@@ -23,7 +27,17 @@ namespace Persistence.Contexts
         //Permissions
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
-
+        //Products
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        //
+        public DbSet<Domain.Products.ProductAttribute> ProductAttributes { get; set; }
+        public DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
+        public DbSet<Domain.Products.ProductVariant> ProductVariants { get; set; }
+        public DbSet<Domain.Products.ProductVariantAttributeValue> ProductVariantAttributeValues { get; set; }
+        public DbSet<ProductVariantTransportation> ProductVariantTransportations { get; set; }
+        //
+        public DbSet<SymbolicOrderOrSymbolicShoppingCartItem> SymbolicOrderOrSymbolicShoppingCartItems { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             ////Relations
@@ -53,6 +67,13 @@ namespace Persistence.Contexts
                 .HasForeignKey(p => p.ParentCategoryId)
                 .IsRequired(false);
 
+            builder.Entity<Category>()
+    .HasMany(p => p.Products)
+    .WithOne(p => p.Category)
+    .HasForeignKey(p => p.CategoryId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull);
+
             //Permissions
             builder.Entity<RolePermission>()
     .HasKey(rp => new { rp.RoleId, rp.PermissionId });
@@ -66,6 +87,61 @@ namespace Persistence.Contexts
                 .HasOne(rp => rp.Permission)
                 .WithMany()
                 .HasForeignKey(rp => rp.PermissionId);
+
+            //Products
+            builder.Entity<Product>()
+    .HasMany(p => p.ProductImages)
+    .WithOne()
+    .HasForeignKey(p => p.ProductId)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Product>()
+.HasMany(p => p.ProductAttributes)
+.WithOne(p => p.Product)
+.HasForeignKey(p => p.ProductId)
+.IsRequired(true)
+.OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Domain.Products.ProductVariant>()
+    .HasMany(p => p.ProductVariantAttributeValues)
+    .WithOne(p => p.ProductVariant)
+    .HasForeignKey(v => v.ProductVariantId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.Entity<Domain.Products.ProductAttribute>()
+    .HasMany(p => p.ProductAttributeValues)
+    .WithOne(p => p.ProductAttribute)
+    .HasForeignKey(v => v.ProductAttributeId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.Entity<Domain.Products.Product>()
+    .HasMany(p => p.ProductVariants)
+    .WithOne(p => p.Product)
+    .HasForeignKey(v => v.ProductId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Domain.Products.ProductAttributeValue>()
+    .HasMany<Domain.Products.ProductVariantAttributeValue>()
+    .WithOne(p => p.ProductAttributeValue)
+    .HasForeignKey(v => v.ProductAttributeValueId)
+    .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Domain.Products.ProductVariant>()
+    .HasOne(p => p.ProductVariantTransportation)
+    .WithOne(p => p.ProductVariant)
+    .HasForeignKey<Domain.Products.ProductVariantTransportation>(v => v.ProductVariantId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+            //
+
+            builder.Entity<Domain.Products.ProductVariant>()
+    .HasMany<Domain.SymbolicShoppingCarts.SymbolicOrderOrSymbolicShoppingCartItem>()
+    .WithOne(p => p.ProductVariant)
+    .HasForeignKey(p => p.ProductVariantId)
+    .OnDelete(DeleteBehavior.NoAction);
 
             SetConfigurations(builder);
 
@@ -82,6 +158,11 @@ namespace Persistence.Contexts
 
             //Categories
             builder.ApplyConfiguration(new CategoryConfig());
+
+            //Products
+            builder.ApplyConfiguration(new ProductConfig());
+            builder.ApplyConfiguration(new ProductImageConfig());
+            builder.ApplyConfiguration(new ProductAttributeConfig());
 
 
             base.OnModelCreating(builder);

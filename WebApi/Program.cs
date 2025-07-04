@@ -24,6 +24,12 @@ using Application.Interfaces.ConfigService;
 using Application.Interfaces.Messagers.EmailService;
 using Application.Interfaces.Messagers.SmsService;
 using Persistence.Seeds;
+using Application.ProductService.Commands;
+using Application.ProductService;
+using Application.ProductImageService;
+using Microsoft.Extensions.FileProviders;
+using Application.ProductAttribute;
+using Application.ProductVariant;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +66,8 @@ builder.Services.AddCors(options =>
             policy.AllowAnyHeader();
         else
             policy.WithHeaders(corsOrigins.Headers);
+
+        policy.WithExposedHeaders("location");
     });
 });
 
@@ -138,6 +146,12 @@ builder.Services.AddScoped<IFacadeUserService, FacadeUserService>();
 
 //Permissions
 builder.Services.AddScoped<IFacadePermissionService, FacadePermissionService>();
+
+//Prdoucts
+builder.Services.AddScoped<IFacadeProductService, FacadeProductService>();
+builder.Services.AddScoped<IFacadeProductImageService, FacadeProductImageService>();
+builder.Services.AddScoped<IFacadeProductAttributeService, FacadeProductAttributeService>();
+builder.Services.AddScoped<IFacadeProductVariantService, FacadeProductVariantService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));
@@ -255,6 +269,15 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
     c.RoutePrefix = string.Empty;
+});
+
+//Create Static files
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Images/ProductImage")
+    ),
+    RequestPath = "/Images/ProductImage"
 });
 
 // Configure the HTTP request pipeline.

@@ -55,7 +55,13 @@ namespace Persistence.Seeds
                 new Permission { Id=16, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.View.ToString(), Description = "مشاهده دسته بندی ها" },
                 new Permission { Id=17, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Add.ToString(), Description = "ایجاد دسته بندی" },
                 new Permission { Id=18, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Edit.ToString(), Description = "ویرایش دسته بندی" },
-                new Permission { Id=19, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Delete.ToString(), Description = "حذف دسته بندی" }
+                new Permission { Id=19, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Category.ToString(), Action =  KeyNameAction.Delete.ToString(), Description = "حذف دسته بندی" },
+                                  
+                // Products    
+                new Permission { Id=20, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Product.ToString(), Action =  KeyNameAction.View.ToString(), Description = "مشاهده محصولات , هر چیزی که ماهیت \r\nدیدن اطلاعات محصول بشه\r\nمیشه View محصول" },
+                new Permission { Id=21, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Product.ToString(), Action =  KeyNameAction.Add.ToString(), Description = "ایجاد محصول , هر چیزی ام که ماهیت \r\nایحاد یک محصول ساده یا متغییر داشته باشه یا شامل ایجاد شاخص باشه برای محصول\r\nمیشه Add محصول" },
+                new Permission { Id=22, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Product.ToString(), Action =  KeyNameAction.Edit.ToString(), Description = "ویرایش محصول , هر چیزی که ماهیت \r\nویرایش اطلاعات محصول بشه\r\nمیشه Edit محصول" },
+                new Permission { Id=23, Area = KeyNameArea.Admin.ToString(), Controller = KeyNameController.Product.ToString(), Action =  KeyNameAction.Delete.ToString(), Description = "حذف محصول , هر چیزی که ماهیت \r\nحذف خود محصول بشه یا واریانت های اون باشه\r\nمیشه Delete محصول" }
             };
 
             //Insert new permissions in list if does exist in db

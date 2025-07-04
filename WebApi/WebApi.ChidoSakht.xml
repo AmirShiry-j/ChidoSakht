@@ -44,6 +44,217 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه خصوصیات یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductAttributeApiDto)">
+            <summary>
+            ایجاد یک خصوصیت جدید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateProductAttributeApiDto)">
+            <summary>
+            ویرایش یک خصوصیت (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeController.Delete(System.Int32)">
+            <summary>
+            حذف یک خصوصیت (Auth)
+            </summary>
+            <param name="ProductAttributeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributesAndValuesController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه خصوصیات یک محصول به همراه مقادیرشون (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeValueController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه مقادیر یک خصوصیت (Auth)
+            </summary>
+            <param name="ProductAttributeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeValueController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateValueForAttributeApiDto)">
+            <summary>
+            اضافه کردن یک مقدار به خصوصیت (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeValueController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateProductAttributeValueApiDto)">
+            <summary>
+            ویرایش یکی از مقادیر خصوصیت (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductAttributeValueController.Delete(System.Int32)">
+            <summary>
+            حذف یک مقدار از خصوصیت (Auth)
+            </summary>
+            <param name="ProductAttributeValueId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Get(WebApi.Areas.Admin.ModelsAndDtoes.Products.ProductFilterApiDto)">
+            <summary>
+            برگردوندن محصولات (Auth)
+            </summary>
+            <param name="searchProductApiDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Get(System.Int32)">
+            <summary>
+            گرفتن اطلاعات یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductApiDto)">
+            <summary>
+            ایجاد اولیه محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetName(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetNameProductApiDto)">
+            <summary>
+            آپدیت کردن نام برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateInfoProductSampleApiDto)">
+            <summary>
+            ثبت و آپدیت اطلاعات برای محصول ساده (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetDescription(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetDescriptionApiDto)">
+            <summary>
+            ست کردن یک توضیح برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetUniqeLink(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetUniqeLinkApiDto)">
+            <summary>
+            ست کردن یک پیوند یکتا برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.ValidateUniqeLink(System.Int32,System.String)">
+            <summary>
+            بررسی یکتا بودن پیوند محصول (Auth)
+            </summary>
+            <param name="UniqeLink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.ValidateUniCode(System.Int32,System.String)">
+            <summary>
+            بررسی یکتا بودن فیلد یونیکد محصول (Auth)
+            </summary>
+            <param name="UniCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetUniCode(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetUniCodeApiDto)">
+            <summary>
+            ست کردن کد یکتا برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.SetCategoryId(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetCategoryIdApiDto)">
+            <summary>
+            ست کردن دسته بندی برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.Delete(System.Int32)">
+            <summary>
+            حذف یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Get(System.Int32)">
+            <summary>
+            برگردوندن تصاویر یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Post(Microsoft.AspNetCore.Http.IFormFile,System.Int32)">
+            <summary>
+            اضافه کردن یک تصویر (Auth)
+            </summary>
+            <param name="file"></param>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Delete(System.String)">
+            <summary>
+            حذف یک تصویر (Auth)
+            </summary>
+            <param name="Name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.SetImageAltText(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetImageAltTextApiDto)">
+            <summary>
+            ست کردن یک متن جایگزین تصویر برای محصول (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.SetIndexImage(WebApi.Areas.Admin.ModelsAndDtoes.Products.SetIndexImageApiDto)">
+            <summary>
+            قرار دادن یک تصویر به عنوان شاخص (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه واریانت های یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductVariantApiDto)">
+            <summary>
+            اضافه کردن یک واریانت (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateProductVariantApiDto)">
+            <summary>
+            ویرایش اطلاعات یک واریانت (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Delete(System.Int32)">
+            <summary>
+            حذف یک واریانت (Auth)
+            </summary>
+            <param name="ProductVariantId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">
             <summary>
             برگردوندن لیست نقش ها در سایت (Auth)
