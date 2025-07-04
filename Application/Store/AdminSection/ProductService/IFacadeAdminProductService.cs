@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Store.AdminSection.ProductService
 {
-    public interface IFacadeProductService
+    public interface IFacadeAdminProductService
     {
         //Commands
         IProductCommandsService ProductCommandsService { get; }
@@ -18,11 +18,11 @@ namespace Application.Store.AdminSection.ProductService
         IProductQueriesService ProductQueriesService { get; }
     }
 
-    public class FacadeProductService : IFacadeProductService
+    public class FacadeAdminProductService : IFacadeAdminProductService
     {
         private readonly IMediator _mediator;
         private readonly ILocalizationService _localizationService;
-        public FacadeProductService(IMediator mediator, ILocalizationService localizationService)
+        public FacadeAdminProductService(IMediator mediator, ILocalizationService localizationService)
         {
             _mediator = mediator;
             _localizationService = localizationService;

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Store.AdminSection.CategoryService
 {
-    public interface IFacadeCategoryService
+    public interface IFacadeAdminCategoryService
     {
         //Commands
         ICreateCategoryService CreateCategoryService { get; }
@@ -21,11 +21,11 @@ namespace Application.Store.AdminSection.CategoryService
         IGetCategoryDetailsByIdService GetCategoryDetailsByIdService { get; }
         IGetAllCategoriesAsTreeService GetAllCategoriesAsTreeService { get; }
     }
-    public class FacadeCategoryService : IFacadeCategoryService
+    public class FacadeAdminCategoryService : IFacadeAdminCategoryService
     {
         private readonly IMediator _mediator;
         private readonly ILocalizationService _localizationService;
-        public FacadeCategoryService(IMediator mediator, ILocalizationService localizationService)
+        public FacadeAdminCategoryService(IMediator mediator, ILocalizationService localizationService)
         {
             _mediator = mediator;
             _localizationService = localizationService;

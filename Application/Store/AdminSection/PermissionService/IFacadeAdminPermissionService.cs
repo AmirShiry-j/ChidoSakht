@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Store.AdminSection.PermissionService
 {
-    public interface IFacadePermissionService
+    public interface IFacadeAdminPermissionService
     {
         //Commands
         IAssignPermissionsService AssignPermissionsService { get; }
@@ -22,11 +22,11 @@ namespace Application.Store.AdminSection.PermissionService
         IGetAssignedPermissionsInARoleService GetAssignedPermissionsInARoleService { get; }
         IGetAssignedPermissionsInAllRoleService GetAssignedPermissionsInAllRoleService { get; }
     }
-    public class FacadePermissionService : IFacadePermissionService
+    public class FacadeAdminPermissionService : IFacadeAdminPermissionService
     {
         private readonly IMediator _mediator;
         private readonly ILocalizationService _localizationService;
-        public FacadePermissionService(IMediator mediator, ILocalizationService localizationService)
+        public FacadeAdminPermissionService(IMediator mediator, ILocalizationService localizationService)
         {
             _mediator = mediator;
             _localizationService = localizationService;

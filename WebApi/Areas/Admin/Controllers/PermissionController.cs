@@ -18,9 +18,9 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class PermissionController : ControllerBase
     {
-        private readonly IFacadePermissionService _FacadePermissionService;
+        private readonly IFacadeAdminPermissionService _FacadePermissionService;
         private readonly ILocalizationService _localizationService;
-        public PermissionController(IFacadePermissionService FacadePermissionService, ILocalizationService localizationService)
+        public PermissionController(IFacadeAdminPermissionService FacadePermissionService, ILocalizationService localizationService)
         {
             _FacadePermissionService = FacadePermissionService;
             _localizationService = localizationService;

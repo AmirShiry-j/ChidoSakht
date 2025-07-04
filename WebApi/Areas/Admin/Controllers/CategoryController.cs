@@ -25,9 +25,9 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class CategoryController : ControllerBase
     {
-        private readonly IFacadeCategoryService _facadeCategoryService;
+        private readonly IFacadeAdminCategoryService _facadeCategoryService;
         private readonly ILocalizationService _localizationService;
-        public CategoryController(IFacadeCategoryService facadeCategoryService, ILocalizationService localizationService)
+        public CategoryController(IFacadeAdminCategoryService facadeCategoryService, ILocalizationService localizationService)
         {
             _facadeCategoryService = facadeCategoryService;
             _localizationService = localizationService;

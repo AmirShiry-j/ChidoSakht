@@ -138,21 +138,20 @@ builder.Services.AddScoped<ITokenValidator, TokenValidator>();
 
 //Authorize and token services
 builder.Services.AddScoped<IUserTokenService, UserTokenService>();
-
-//Categories
-builder.Services.AddScoped<IFacadeCategoryService, FacadeCategoryService>();
-
 //Users
 builder.Services.AddScoped<IFacadeUserService, FacadeUserService>();
 
-//Permissions
-builder.Services.AddScoped<IFacadePermissionService, FacadePermissionService>();
-
+//Admins
+//Categories
+builder.Services.AddScoped<IFacadeAdminCategoryService, FacadeAdminCategoryService>();
 //Prdoucts
-builder.Services.AddScoped<IFacadeProductService, FacadeProductService>();
-builder.Services.AddScoped<IFacadeProductImageService, FacadeProductImageService>();
-builder.Services.AddScoped<IFacadeProductAttributeService, FacadeProductAttributeService>();
-builder.Services.AddScoped<IFacadeProductVariantService, FacadeProductVariantService>();
+builder.Services.AddScoped<IFacadeAdminProductService, FacadeAdminProductService>();
+builder.Services.AddScoped<IFacadeAdminProductImageService, FacadeAdminProductImageService>();
+builder.Services.AddScoped<IFacadeAdminProductAttributeService, FacadeAdminProductAttributeService>();
+builder.Services.AddScoped<IFacadeAdminProductVariantService, FacadeAdminProductVariantService>();
+//Permissions
+builder.Services.AddScoped<IFacadeAdminPermissionService, FacadeAdminPermissionService>();
+
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));

@@ -18,9 +18,9 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class ProductAttributeValueController : ControllerBase
     {
-        private readonly IFacadeProductAttributeService _facadeProductAttributeService;
+        private readonly IFacadeAdminProductAttributeService _facadeProductAttributeService;
         private readonly ILocalizationService _localizationService;
-        public ProductAttributeValueController(IFacadeProductAttributeService facadeProductAttributeService, ILocalizationService localizationService)
+        public ProductAttributeValueController(IFacadeAdminProductAttributeService facadeProductAttributeService, ILocalizationService localizationService)
         {
             _facadeProductAttributeService = facadeProductAttributeService;
             _localizationService = localizationService;

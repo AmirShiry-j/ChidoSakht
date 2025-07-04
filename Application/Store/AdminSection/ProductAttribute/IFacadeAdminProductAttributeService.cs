@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace Application.Store.AdminSection.ProductAttribute
 {
-    public interface IFacadeProductAttributeService
+    public interface IFacadeAdminProductAttributeService
     {
         IProductAttributeCommandsService ProductAttributeCommandsService { get; }
         IProductAttributeQueriesService ProductAttributeQueriesService { get; }
     }
-    public class FacadeProductAttributeService : IFacadeProductAttributeService
+    public class FacadeAdminProductAttributeService : IFacadeAdminProductAttributeService
     {
         private readonly IMediator _mediator;
         private readonly ILocalizationService _localizationService;
-        public FacadeProductAttributeService(IMediator mediator, ILocalizationService localizationService)
+        public FacadeAdminProductAttributeService(IMediator mediator, ILocalizationService localizationService)
         {
             _mediator = mediator;
             _localizationService = localizationService;

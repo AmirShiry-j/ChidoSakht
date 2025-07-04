@@ -23,10 +23,10 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class ProductController : ControllerBase
     {
-        private readonly IFacadeProductService _facadeProductService;
+        private readonly IFacadeAdminProductService _facadeProductService;
         private readonly ILocalizationService _localizationService;
         private readonly IWebHostEnvironment _env;
-        public ProductController(IFacadeProductService facadeProductService, ILocalizationService localizationService, IWebHostEnvironment env)
+        public ProductController(IFacadeAdminProductService facadeProductService, ILocalizationService localizationService, IWebHostEnvironment env)
         {
             _facadeProductService = facadeProductService;
             _localizationService = localizationService;

@@ -20,10 +20,10 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class ProductImageController : ControllerBase
     {
-        private readonly IFacadeProductImageService _facadeProductImageService;
-        private readonly IFacadeProductService _facadeProductService;
+        private readonly IFacadeAdminProductImageService _facadeProductImageService;
+        private readonly IFacadeAdminProductService _facadeProductService;
         private readonly ILocalizationService _localizationService;
-        public ProductImageController(IFacadeProductImageService facadeProductImageService, ILocalizationService localizationService, IFacadeProductService facadeProductService)
+        public ProductImageController(IFacadeAdminProductImageService facadeProductImageService, ILocalizationService localizationService, IFacadeAdminProductService facadeProductService)
         {
             _facadeProductImageService = facadeProductImageService;
             _localizationService = localizationService;
