@@ -21,20 +21,20 @@ namespace Application.Store.UserSection.ProductService.Queries
         public async Task<ResultDto<ResultFilterDto>> GetProducts(ProductFilterForUserSectionDto filterDto)
         {
             //get from db
-            //var products = await _mediator.Send(new GetProductsByFilterQuery(filterDto));
+            var products = await _mediator.Send(new GetProductsByFilterQuery(filterDto));
 
             //return
             return new ResultDto<ResultFilterDto>
             {
                 IsSuccess = true,
-                Data = null
+                Data = products
             };
         }
     }
 
     public class ProductFilterForUserSectionDto
     {
-        public FilterFor FilterFor { get; set; }
+        public TypeOrderByForProduct TypeOrderByForProduct { get; set; }
         public string? ProductName { get; set; }
         public int? CategoryId { get; set; }
         public bool? OnlyAvailableGoods { get; set; }
@@ -44,7 +44,7 @@ namespace Application.Store.UserSection.ProductService.Queries
         public int? Page { get; set; } = 1;
         public int? CountInPage { get; set; } = 10;
     }
-    public enum FilterFor
+    public enum TypeOrderByForProduct
     {
         Bazdid,
         Jadid,

@@ -1,4 +1,6 @@
-﻿using Application.Store.AdminSection.ProductService.Queries;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Store.UserSection.ProductService;
+using Application.Store.UserSection.ProductService.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -12,42 +14,42 @@ namespace WebApi.Controllers
     [Route("api/v{version:apiVersion}/[controller]/")]
     public class ProductController : ControllerBase
     {
-        //[HttpGet]
-        //public async Task<IActionResult> Get([FromQuery] ProductFilterForUserSectionApiDto productFilterForUserSectionApiDto)
-        //{
-        //    //map
-        //    var inputService = new ProductFilterDto
-        //    {
-        //        Name = searchProductApiDto.Name,
-        //        CountInPage = searchProductApiDto.CountInPage,
-        //        Page = searchProductApiDto.Page,
-        //    };
+        private readonly IFacadeProductService _facadeProductService;
+        private readonly ILocalizationService _localizationService;
+        private readonly IWebHostEnvironment _env;
+        public ProductController(IFacadeProductService facadeProductService, ILocalizationService localizationService, IWebHostEnvironment env)
+        {
+            _facadeProductService = facadeProductService;
+            _localizationService = localizationService;
+            _env = env;
+        }
 
-        //    //Get data from service
-        //    var resultService = await _facadeProductService.ProductQueriesService.GetProducts(inputService);
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] ProductFilterForUserSectionApiDto productFilterForUserSectionApiDto)
+        {
+            //map
+            var inputService = new ProductFilterForUserSectionDto
+            {
+                ProductName = productFilterForUserSectionApiDto.ProductName,
+                ToPrice = productFilterForUserSectionApiDto.ToPrice,
+                FromPrice = productFilterForUserSectionApiDto.FromPrice,
+                TypeOrderByForProduct = productFilterForUserSectionApiDto.TypeOrderByForProduct,
+                CategoryId = productFilterForUserSectionApiDto.CategoryId,
+                OnlyAvailableGoods= productFilterForUserSectionApiDto.OnlyAvailableGoods,
 
-        //    //HATEAOS
-        //    //Build url of image
-        //    string url = Request.GetDisplayUrl();
-        //    string domainName = url.Substring(0, url.IndexOf("/api"));
+                CountInPage = productFilterForUserSectionApiDto.CountInPage,
+                Page = productFilterForUserSectionApiDto.Page,
+            };
 
-        //    foreach (var product in resultService.Data.Products)
-        //    {
-        //        if (product.NameIndexImage != null)
-        //        {
-        //            string imageUrl = domainName + "/Images/ProductImage/" + product.NameIndexImage;
-        //            product.UrlNameIndexImage = imageUrl;
-        //        }
+            //Get data from service
+            var resultService = await _facadeProductService.ProductQueriesService.GetProducts(inputService);
 
-        //        product.Link = new Link
-        //        {
-        //            For = "Details",
-        //            HttpMethod = HttpMethod.Get.ToString(),
-        //            Url = Url.Action(nameof(Get), nameof(ProductController).Replace("Controller", ""), new { ProductId = product.Id }, Request.Scheme)
-        //        };
-        //    }
+            //HATEAOS
+            //Build url of image
+            string url = Request.GetDisplayUrl();
+            string domainName = url.Substring(0, url.IndexOf("/api"));
 
-        //    return Ok(resultService.Data);
-        //}
+            return Ok(resultService.Data);
+        }
     }
 }
