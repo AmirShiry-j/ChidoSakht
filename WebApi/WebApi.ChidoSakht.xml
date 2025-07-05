@@ -439,6 +439,12 @@
             <param name="user"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.CategoryController.Get">
+            <summary>
+            برگردوندن همه دسته بندی ها به شکل درخت (کاربری)
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.ProfileController.Get">
             <summary>
             بر گردوندن اطلاعات پروفایل (Auth)

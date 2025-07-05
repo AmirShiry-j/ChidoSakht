@@ -31,6 +31,7 @@ using Application.Store.AdminSection.ProductVariant;
 using Application.Store.AdminSection.ProductService;
 using Application.Commons.Services.UserService;
 using Application.Store.AdminSection.CategoryService;
+using Application.Store.UserSection.CategoryService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -152,6 +153,8 @@ builder.Services.AddScoped<IFacadeAdminProductVariantService, FacadeAdminProduct
 //Permissions
 builder.Services.AddScoped<IFacadeAdminPermissionService, FacadeAdminPermissionService>();
 
+//User Section
+builder.Services.AddScoped<IFacadeCategoryService, FacadeCategoryService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));
