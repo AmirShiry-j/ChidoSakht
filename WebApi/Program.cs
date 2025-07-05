@@ -16,7 +16,6 @@ using WebApi.Helpers;
 using WebApi.Tools.TokenValidator;
 using Infrastructure.Localization;
 using WebApi.Filters.Language;
-using Persistence.Categories.Commands;
 using Persistence.Seeds;
 using Microsoft.Extensions.FileProviders;
 using Application.Commons.Interfaces.ConfigService;
@@ -32,6 +31,7 @@ using Application.Store.AdminSection.ProductService;
 using Application.Commons.Services.UserService;
 using Application.Store.AdminSection.CategoryService;
 using Application.Store.UserSection.CategoryService;
+using Persistence.Store.AdminSection.Categories.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
