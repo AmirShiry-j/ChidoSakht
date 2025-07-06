@@ -445,6 +445,20 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.ProductController.Get(WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto)">
+            <summary>
+            برگردوندن محصولات با فیلتر های مختلف (کاربری)
+            </summary>
+            <param name="productFilterForUserSectionApiDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ProductController.Get(System.Int32)">
+            <summary>
+            برگردوندن اطلاعات یک محصول (کاربری)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.ProfileController.Get">
             <summary>
             بر گردوندن اطلاعات پروفایل (Auth)
