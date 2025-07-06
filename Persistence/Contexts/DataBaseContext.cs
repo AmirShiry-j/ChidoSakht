@@ -142,6 +142,25 @@ namespace Persistence.Contexts
     .WithOne(p => p.ProductVariant)
     .HasForeignKey(p => p.ProductVariantId)
     .OnDelete(DeleteBehavior.NoAction);
+            //
+
+
+            builder.Entity<RelatedProduct>()
+    .HasKey(rp => new { rp.ProductId, rp.RelatedProductId });
+
+            builder.Entity<RelatedProduct>()
+                .HasOne(rp => rp.Product)
+                .WithMany(p => p.RelatedProducts)
+                .HasForeignKey(rp => rp.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<RelatedProduct>()
+                .HasOne(rp => rp.RelatedTo)
+                .WithMany(p => p.RelatedToProducts)
+                .HasForeignKey(rp => rp.RelatedProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
 
             SetConfigurations(builder);
 

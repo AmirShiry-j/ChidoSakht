@@ -14,7 +14,6 @@ namespace Persistence.Store.AdminSection.Categories.Queries
     public class GetAllCategoriesAsTreeQueryHandler : IRequestHandler<GetAllCategoriesAsTreeQuery, List<BriefCategoryDto>>
     {
         private readonly DataBaseContext _context;
-
         public GetAllCategoriesAsTreeQueryHandler(DataBaseContext context)
         {
             _context = context;
