@@ -1,5 +1,7 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Commons.Objects.Dtoes;
+using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.ProductService.Queries;
 using Application.Store.AdminSection.RelatedProduct.Queries;
 using MediatR;
 using System;
@@ -14,7 +16,7 @@ namespace Application.Store.AdminSection.RelatedProduct.Commands
     public interface IRelatedProductCommandsService
     {
         Task<ResultDto> AddRelatedProductsAsync(AddRelatedProductsDto dto);
-        Task<ResultDto> RemoveRelationAsync(RemoveRelatedProductDto dto);
+        Task<ResultDto> RemoveRelatedProductsAsync(RemoveRelatedProductDto dto);
     }
     public class RelatedProductCommandsService : IRelatedProductCommandsService
     {
@@ -27,6 +29,16 @@ namespace Application.Store.AdminSection.RelatedProduct.Commands
         }
         public async Task<ResultDto> AddRelatedProductsAsync(AddRelatedProductsDto dto)
         {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(dto.ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
             var productId = dto.ProductId;
             var relatedIds = dto.RelatedProductIds
                                 .Where(id => id != productId)
@@ -60,10 +72,28 @@ namespace Application.Store.AdminSection.RelatedProduct.Commands
         }
 
 
-        public async Task<ResultDto> RemoveRelationAsync(RemoveRelatedProductDto dto)
+        public async Task<ResultDto> RemoveRelatedProductsAsync(RemoveRelatedProductDto dto)
         {
-            await _mediator.Send(new RemoveRelatedProductCommand(dto.ProductId, dto.RelatedProductId));
-            await _mediator.Send(new RemoveRelatedProductCommand(dto.RelatedProductId, dto.ProductId));
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(dto.ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            var productId = dto.ProductId;
+            var relatedIds = dto.RelatedProductIds
+                .Where(id => id != productId)
+                .Distinct();
+
+            foreach (var relatedId in relatedIds)
+            {
+                await _mediator.Send(new RemoveRelatedProductCommand(productId, relatedId));
+                await _mediator.Send(new RemoveRelatedProductCommand(relatedId, productId));
+            }
 
             return new ResultDto
             {
@@ -82,7 +112,7 @@ namespace Application.Store.AdminSection.RelatedProduct.Commands
     public class RemoveRelatedProductDto
     {
         public int ProductId { get; set; }
-        public int RelatedProductId { get; set; }
+        public List<int> RelatedProductIds { get; set; }
     }
 
 }

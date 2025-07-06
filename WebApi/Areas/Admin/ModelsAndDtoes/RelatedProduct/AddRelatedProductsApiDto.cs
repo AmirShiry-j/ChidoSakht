@@ -9,6 +9,6 @@
     public class RemoveRelatedProductApiDto
     {
         public int ProductId { get; set; }
-        public int RelatedProductId { get; set; }
+        public List<int> RelatedProductIds { get; set; }
     }
 }

@@ -17,14 +17,39 @@ namespace WebApi.Areas.Admin.Controllers
     [Area("Admin")]
     [Route("api/v{version:apiVersion}/[Area]/[controller]/")]
     //[Authorize]
-    public class RelatedProductsController : ControllerBase
+    public class RelatedProductController : ControllerBase
     {
         private readonly IFacadeAdminRelatedProductService _FacadeAdminRelatedProductService;
         private readonly ILocalizationService _localizationService;
-        public RelatedProductsController(IFacadeAdminRelatedProductService FacadeAdminRelatedProductService, ILocalizationService localizationService)
+        public RelatedProductController(IFacadeAdminRelatedProductService FacadeAdminRelatedProductService, ILocalizationService localizationService)
         {
             _FacadeAdminRelatedProductService = FacadeAdminRelatedProductService;
             _localizationService = localizationService;
+        }
+
+        /// <summary>
+        /// برگدوندن محصولات مرتبط به یک محصول (Auth)
+        /// </summary>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
+        [HttpGet("{ProductId}")]
+        public async Task<IActionResult> Get(int ProductId)
+        {
+            //Get by service
+            var resultService = await _FacadeAdminRelatedProductService.RelatedProductQueriesService.GetRelatedProductsAsync(ProductId);
+
+            //HATEAOS
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                return
+                    BadRequest(resultService.Message);
+            }
         }
 
         /// <summary>
@@ -56,7 +81,7 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// حذف محصول مرتبط یک محصول - دو طرفه (Auth)
+        /// حذف محصولات مرتبط به یک محصول - دو طرفه (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -66,10 +91,10 @@ namespace WebApi.Areas.Admin.Controllers
             var inputModel = new RemoveRelatedProductDto
             {
                 ProductId = dto.ProductId,
-                RelatedProductId = dto.RelatedProductId,
+                RelatedProductIds = dto.RelatedProductIds,
             };
 
-            var resultService = await _FacadeAdminRelatedProductService.RelatedProductCommandsService.RemoveRelationAsync(inputModel);
+            var resultService = await _FacadeAdminRelatedProductService.RelatedProductCommandsService.RemoveRelatedProductsAsync(inputModel);
             if (resultService.IsSuccess)
             {
                 return NoContent();

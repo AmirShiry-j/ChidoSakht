@@ -18,4 +18,15 @@ namespace Application.Store.AdminSection.RelatedProduct.Queries
             RelatedIds = relatedIds;
         }
     }
+
+    public class GetRelatedProductsQuery : IRequest<List<ProductDto>>
+    {
+        public int ProductId { get; }
+
+        public GetRelatedProductsQuery(int productId)
+        {
+            ProductId = productId;
+        }
+    }
+
 }

@@ -255,16 +255,23 @@
             <param name="ProductVariantId"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.RelatedProductsController.Post(WebApi.Areas.Admin.ModelsAndDtoes.RelatedProduct.AddRelatedProductsApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.RelatedProductController.Get(System.Int32)">
+            <summary>
+            برگدوندن محصولات مرتبط به یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RelatedProductController.Post(WebApi.Areas.Admin.ModelsAndDtoes.RelatedProduct.AddRelatedProductsApiDto)">
             <summary>
             اضافه کردن محصولات مرتبط یک محصول - خودکار دو طرفه - (Auth)
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.RelatedProductsController.RemoveRelation(WebApi.Areas.Admin.ModelsAndDtoes.RelatedProduct.RemoveRelatedProductApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.RelatedProductController.RemoveRelation(WebApi.Areas.Admin.ModelsAndDtoes.RelatedProduct.RemoveRelatedProductApiDto)">
             <summary>
-            حذف محصول مرتبط یک محصول - دو طرفه (Auth)
+            حذف محصولات مرتبط به یک محصول - دو طرفه (Auth)
             </summary>
             <param name="dto"></param>
             <returns></returns>

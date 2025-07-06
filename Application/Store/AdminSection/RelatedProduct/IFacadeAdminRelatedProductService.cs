@@ -1,6 +1,7 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Store.AdminSection.ProductVariant.Commands;
 using Application.Store.AdminSection.RelatedProduct.Commands;
+using Application.Store.AdminSection.RelatedProduct.Queries;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Application.Store.AdminSection.RelatedProduct
     public interface IFacadeAdminRelatedProductService
     {
         IRelatedProductCommandsService RelatedProductCommandsService { get; }
+        IRelatedProductQueriesService RelatedProductQueriesService { get; }
     }
     public class FacadeAdminRelatedProductService : IFacadeAdminRelatedProductService
     {
@@ -31,6 +33,16 @@ namespace Application.Store.AdminSection.RelatedProduct
             get
             {
                 return _RelatedProductCommandsService = _RelatedProductCommandsService ?? new RelatedProductCommandsService(_mediator, _localizationService);
+            }
+        }
+
+        //Queries
+        public IRelatedProductQueriesService _RelatedProductQueriesService;
+        public IRelatedProductQueriesService RelatedProductQueriesService
+        {
+            get
+            {
+                return _RelatedProductQueriesService = _RelatedProductQueriesService ?? new RelatedProductQueriesService(_mediator, _localizationService);
             }
         }
     }
