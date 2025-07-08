@@ -1,16 +1,16 @@
-﻿using Application.Store.AdminSection.ProductSpecification.Queries;
+﻿using Application.Store.AdminSection.ProductSpecificationService.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 
-namespace Persistence.Store.AdminSection.ProductSpecification.Queries
+namespace Persistence.Store.AdminSection.ProductSpecifications.Queries
 {
-    public class GetSpecGroupsHandler : IRequestHandler<GetSpecGroupsQuery, List<SpecGroupDto>>
+    public class GetAllSpecGroupsWithSpecsByProductIdQueryHandler : IRequestHandler<GetAllSpecGroupsWithSpecsByProductIdQuery, List<SpecGroupDto>>
     {
         private readonly DataBaseContext _context;
-        public GetSpecGroupsHandler(DataBaseContext context) => _context = context;
+        public GetAllSpecGroupsWithSpecsByProductIdQueryHandler(DataBaseContext context) => _context = context;
 
-        public async Task<List<SpecGroupDto>> Handle(GetSpecGroupsQuery request, CancellationToken cancellationToken)
+        public async Task<List<SpecGroupDto>> Handle(GetAllSpecGroupsWithSpecsByProductIdQuery request, CancellationToken cancellationToken)
         {
             return await _context.ProductSpecificationGroups
                 .Where(g => g.ProductId == request.ProductId)

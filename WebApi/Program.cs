@@ -33,6 +33,7 @@ using Application.Store.AdminSection.CategoryService;
 using Application.Store.UserSection.CategoryService;
 using Persistence.Store.AdminSection.Categories.Commands;
 using Application.Store.AdminSection.RelatedProduct;
+using Application.Store.AdminSection.ProductSpecificationService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -151,6 +152,7 @@ builder.Services.AddScoped<IFacadeAdminProductService, FacadeAdminProductService
 builder.Services.AddScoped<IFacadeAdminProductImageService, FacadeAdminProductImageService>();
 builder.Services.AddScoped<IFacadeAdminProductAttributeService, FacadeAdminProductAttributeService>();
 builder.Services.AddScoped<IFacadeAdminProductVariantService, FacadeAdminProductVariantService>();
+builder.Services.AddScoped<IFacadeAdminProductSpecificationService, FacadeAdminProductSpecificationService>();
 //Permissions
 builder.Services.AddScoped<IFacadeAdminPermissionService, FacadeAdminPermissionService>();
 //RelatedProduct

@@ -24,7 +24,7 @@ namespace Domain.Products
         public long ProductSpecificationGroupId { get; set; }
         public ProductSpecificationGroup ProductSpecificationGroup { get; set; }
 
-        public string Key { get; set; }   // مثلاً "رنگ"
-        public string Value { get; set; } // مثلاً "قرمز"
+        public string Key { get; set; } 
+        public string Value { get; set; }
     }
 }

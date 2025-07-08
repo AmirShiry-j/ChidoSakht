@@ -233,6 +233,62 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationController.Get(System.Int64)">
+            <summary>
+            برگردوندن همه گروه ها (Auth)
+            </summary>
+            <param name="ProductSpecificationGroupId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductSpecificationApiDto)">
+            <summary>
+            ایجاد یک گروه (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateProductSpecificationApiDto)">
+            <summary>
+            ویرایش گروه (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationController.Delete(System.Int64)">
+            <summary>
+            حذف یک گروه (Auth)
+            </summary>
+            <param name="ProductSpecificationId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationGroupController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه گروه ها (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationGroupController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductSpecificationGroupApiDto)">
+            <summary>
+            ایجاد یک گروه (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationGroupController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateProductSpecificationGroupApiDto)">
+            <summary>
+            ویرایش گروه (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationGroupController.Delete(System.Int64)">
+            <summary>
+            حذف یک گروه (Auth)
+            </summary>
+            <param name="ProductSpecificationGroupId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Get(System.Int32)">
             <summary>
             برگردوندن همه واریانت های یک محصول (Auth)

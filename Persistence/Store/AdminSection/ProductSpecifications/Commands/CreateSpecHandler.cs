@@ -1,8 +1,8 @@
-﻿using Application.Store.AdminSection.ProductSpecification.Commands;
+﻿using Application.Store.AdminSection.ProductSpecificationService.Commands;
 using MediatR;
 using Persistence.Contexts;
 
-namespace Persistence.Store.AdminSection.ProductSpecification.Commands
+namespace Persistence.Store.AdminSection.ProductSpecifications.Commands
 {
     ////
     ///
