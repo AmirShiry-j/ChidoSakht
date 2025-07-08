@@ -40,7 +40,9 @@ namespace Persistence.Contexts
         public DbSet<SymbolicOrderOrSymbolicShoppingCartItem> SymbolicOrderOrSymbolicShoppingCartItems { get; set; }
         //
         public DbSet<RelatedProduct> RelatedProducts { get; set; }
-
+        //
+        public DbSet<ProductSpecificationGroup> ProductSpecificationGroups { get; set; }
+        public DbSet<ProductSpecification> ProductSpecifications { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             ////Relations
@@ -168,7 +170,7 @@ namespace Persistence.Contexts
                 .WithOne(s => s.ProductSpecificationGroup)
                 .HasForeignKey(s => s.ProductSpecificationGroupId)
                 .OnDelete(DeleteBehavior.Cascade);
-
+            //
 
 
             SetConfigurations(builder);
