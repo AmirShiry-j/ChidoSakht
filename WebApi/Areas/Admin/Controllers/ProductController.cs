@@ -46,6 +46,7 @@ namespace WebApi.Areas.Admin.Controllers
             var inputService = new ProductFilterDto
             {
                 Name = searchProductApiDto.Name,
+                CategoryId = searchProductApiDto.CategoryId,
                 CountInPage = searchProductApiDto.CountInPage,
                 Page = searchProductApiDto.Page,
             };

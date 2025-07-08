@@ -32,9 +32,15 @@ namespace Persistence.Store.AdminSection.Products.Queries
                 prProduct = prProduct.And(x => x.Name.Contains(FilterDto.Name));
             }
 
+            //Filter CategoryId
+            if (FilterDto.CategoryId is not null)
+            {
+                prProduct = prProduct.And(x => x.CategoryId.Equals(FilterDto.CategoryId));
+            }
+
             var products = await _context.Products
                 .Where(prProduct)
-                .OrderBy(p => p.Id)
+                .OrderBy(p => p.Name)
                 .Skip((FilterDto.Page.Value - 1) * FilterDto.CountInPage.Value)
                 .Take(FilterDto.CountInPage.Value)
                 .Select(p => new ProductDto
