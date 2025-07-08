@@ -38,6 +38,9 @@ namespace Persistence.Contexts
         public DbSet<ProductVariantTransportation> ProductVariantTransportations { get; set; }
         //
         public DbSet<SymbolicOrderOrSymbolicShoppingCartItem> SymbolicOrderOrSymbolicShoppingCartItems { get; set; }
+        //
+        public DbSet<RelatedProduct> RelatedProducts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             ////Relations
