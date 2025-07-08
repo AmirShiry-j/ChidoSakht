@@ -15,9 +15,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Store\AdminSection\ProductSpecification\Commands\" />
-    <Folder Include="Store\AdminSection\ProductSpecification\Queries\" />
-  </ItemGroup>
-
 </Project>
