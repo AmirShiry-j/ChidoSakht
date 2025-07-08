@@ -34,12 +34,33 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// برگردوندن همه دسته بندی ها به شکل ساده (Auth)
+        /// </summary>
+        /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Category, KeyNameAction.View, KeyNameArea.Admin)]
+        [HttpGet(nameof(GetAllSamaple))]
+        public async Task<IActionResult> GetAllSamaple()
+        {
+            //Get by service
+            var resultService = await _facadeCategoryService.GetAllCategoriesService.Execute();
+
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
         /// برگردوندن همه دسته بندی ها به شکل درخت (Auth)
         /// </summary>
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.Category, KeyNameAction.View, KeyNameArea.Admin)]
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet(nameof(GetAllAsTree))]
+        public async Task<IActionResult> GetAllAsTree()
         {
             //Get by service
             var resultService = await _facadeCategoryService.GetAllCategoriesAsTreeService.Execute();

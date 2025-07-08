@@ -14,7 +14,6 @@ namespace Persistence.Store.AdminSection.Categories.Queries
     public class CheckCategoryHasAnyChildrenByIdQueryHandler : IRequestHandler<CheckCategoryHasAnyChildrenByIdQuery, bool>
     {
         private readonly DataBaseContext _context;
-
         public CheckCategoryHasAnyChildrenByIdQueryHandler(DataBaseContext context)
         {
             _context = context;

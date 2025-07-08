@@ -4,7 +4,13 @@
         <name>WebApi</name>
     </assembly>
     <members>
-        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Get">
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.GetAllSamaple">
+            <summary>
+            برگردوندن همه دسته بندی ها به شکل ساده (Auth)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.GetAllAsTree">
             <summary>
             برگردوندن همه دسته بندی ها به شکل درخت (Auth)
             </summary>

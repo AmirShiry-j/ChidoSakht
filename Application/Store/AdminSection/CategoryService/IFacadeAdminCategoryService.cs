@@ -20,6 +20,7 @@ namespace Application.Store.AdminSection.CategoryService
         //Queries
         IGetCategoryDetailsByIdService GetCategoryDetailsByIdService { get; }
         IGetAllCategoriesAsTreeService GetAllCategoriesAsTreeService { get; }
+        IGetAllCategoriesService GetAllCategoriesService { get; }
     }
     public class FacadeAdminCategoryService : IFacadeAdminCategoryService
     {
@@ -71,12 +72,22 @@ namespace Application.Store.AdminSection.CategoryService
                 return _getCategoryDetailsByIdService = _getCategoryDetailsByIdService ?? new GetCategoryDetailsByIdService(_mediator);
             }
         }
+        //
         private IGetAllCategoriesAsTreeService _getAllCategoriesAsTreeService;
         public IGetAllCategoriesAsTreeService GetAllCategoriesAsTreeService
         {
             get
             {
                 return _getAllCategoriesAsTreeService = _getAllCategoriesAsTreeService ?? new GetAllCategoriesAsTreeService(_mediator);
+            }
+        }
+        //
+        private IGetAllCategoriesService _GetAllCategoriesService;
+        public IGetAllCategoriesService GetAllCategoriesService
+        {
+            get
+            {
+                return _GetAllCategoriesService = _GetAllCategoriesService ?? new GetAllCategoriesService(_mediator);
             }
         }
         #endregion

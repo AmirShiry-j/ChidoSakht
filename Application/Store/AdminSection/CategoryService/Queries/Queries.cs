@@ -36,4 +36,10 @@ namespace Application.Store.AdminSection.CategoryService.Queries
         {
         }
     }
+    public class GetAllCategoriesQuery : IRequest<List<BriefCategorySampleDto>>
+    {
+        public GetAllCategoriesQuery()
+        {
+        }
+    }
 }
