@@ -1,6 +1,7 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Commons.Objects.Dtoes;
 using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.ProductService.Queries;
 using Domain.Products;
 using MediatR;
 
@@ -10,6 +11,7 @@ namespace Application.Store.UserSection.ProductService.Queries
     {
         Task<ResultDto<ResultFilterDto>> GetProducts(ProductFilterForUserSectionDto filterDto);
         Task<ResultDto<ProductWithDetailsDto>> GetOneProductWithDetails(int ProductId);
+        Task<ResultDto<List<ProductDto>>> GetRelatedProducts(int ProductId);
     }
     public class ProductQueriesService : IProductQueriesService
     {
@@ -54,6 +56,28 @@ namespace Application.Store.UserSection.ProductService.Queries
                 Data = productWithDetails
             };
         }
+
+        public async Task<ResultDto<List<ProductDto>>> GetRelatedProducts(int ProductId)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto<List<ProductDto>>
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //get from db
+            var products = await _mediator.Send(new GetRelatedProductsByProductIdQuery(ProductId));
+
+            return new ResultDto<List<ProductDto>>
+            {
+                IsSuccess = true,
+                Data = products
+            };
+        }
     }
 
     public class ProductFilterForUserSectionDto
@@ -83,6 +107,7 @@ namespace Application.Store.UserSection.ProductService.Queries
         public string? UniqeLink { get; set; }
         public string? ImageAltText { get; set; }
         public string? NameIndexImage { get; set; }
+        public string? UrlNameIndexImage { get; set; }
         public long Price { get; set; }
         public long? SpecialPrice { get; set; }
     }
@@ -152,4 +177,5 @@ namespace Application.Store.UserSection.ProductService.Queries
         public bool IsIndex { get; set; }
         public string Url { get; set; }
     }
+
 }

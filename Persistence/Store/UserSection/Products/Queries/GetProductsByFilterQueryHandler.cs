@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Store.UserSection.Queries
+namespace Persistence.Store.UserSection.Products.Queries
 {
     public class GetProductsByFilterQueryHandler : IRequestHandler<GetProductsByFilterQuery, ResultFilterDto>
     {

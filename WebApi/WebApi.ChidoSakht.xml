@@ -549,6 +549,13 @@
             <param name="ProductId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.ProductController.GetRelatedProducts(System.Int32)">
+            <summary>
+            برگردوندن اطلاعات یک محصول (کاربری)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.ProfileController.Get">
             <summary>
             بر گردوندن اطلاعات پروفایل (Auth)

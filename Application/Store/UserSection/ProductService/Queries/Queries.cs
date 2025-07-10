@@ -26,4 +26,13 @@ namespace Application.Store.UserSection.ProductService.Queries
             Id = id;
         }
     }
+
+    public class GetRelatedProductsByProductIdQuery : IRequest<List<ProductDto>>
+    {
+        public int ProductId { get; set; }
+        public GetRelatedProductsByProductIdQuery(int productId)
+        {
+            ProductId = productId;
+        }
+    }
 }
