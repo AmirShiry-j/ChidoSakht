@@ -34,6 +34,7 @@ using Application.Store.UserSection.CategoryService;
 using Persistence.Store.AdminSection.Categories.Commands;
 using Application.Store.AdminSection.RelatedProduct;
 using Application.Store.AdminSection.ProductSpecificationService;
+using Application.Store.UserSection.ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -161,6 +162,7 @@ builder.Services.AddScoped<IFacadeAdminRelatedProductService, FacadeAdminRelated
 
 //User Section
 builder.Services.AddScoped<IFacadeCategoryService, FacadeCategoryService>();
+builder.Services.AddScoped<IFacadeProductService, FacadeProductService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));
