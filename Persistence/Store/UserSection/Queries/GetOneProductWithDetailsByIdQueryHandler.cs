@@ -74,6 +74,13 @@ namespace Persistence.Store.UserSection.Queries
                     infoPrice.Price = sampleInfo.Price;
                     infoPrice.SpecialPrice = sampleInfo.SpecialPrice;
                     infoPrice.Stock = sampleInfo.Stock;
+
+                    infoPrice.HasDiscount = sampleInfo.SpecialPrice is not null;
+                    if (infoPrice.HasDiscount)
+                    {
+                        //infoPrice.PercentDiscount = int.Parse(((infoPrice.Price - infoPrice.SpecialPrice) / infoPrice.Price) * 100));
+                        infoPrice.PercentDiscount = 10;
+                    }
                 }
             }
 
@@ -134,5 +141,7 @@ namespace Persistence.Store.UserSection.Queries
         public long? Price { get; set; }
         public long? SpecialPrice { get; set; }
         public int? Stock { get; set; }
+        public bool HasDiscount { get; set; }
+        public int PercentDiscount { get; set; }
     }
 }

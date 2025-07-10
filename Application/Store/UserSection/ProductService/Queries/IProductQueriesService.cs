@@ -114,6 +114,8 @@ namespace Application.Store.UserSection.ProductService.Queries
         public long? Price { get; set; }
         public long? SpecialPrice { get; set; }
         public int? Stock { get; set; }
+        public bool HasDiscount { get; set; }
+        public int PercentDiscount { get; set; }
         public List<SpecGroupWithSpecsDto> SpecificationGroups { get; set; }
         public List<ProductImageDto> ProductImages { get; set; }
     }
