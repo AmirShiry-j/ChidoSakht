@@ -26,7 +26,7 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// برگردوندن همه گروه ها (Auth)
+        /// برگردوندن همه گروه های مشخصات (Auth)
         /// </summary>
         /// <param name="ProductId"></param>
         /// <returns></returns>
@@ -35,7 +35,7 @@ namespace WebApi.Areas.Admin.Controllers
         public async Task<IActionResult> Get(int ProductId)
         {
             //Get by service
-            var resultService = await _facadeAdminProductSpecificationService.ProductSpecificationQueriesService.GetSpecGroupsWihtSpecsAsync(ProductId);
+            var resultService = await _facadeAdminProductSpecificationService.ProductSpecificationQueriesService.GetSpecGroupsByProductIdAsync(ProductId);
 
             //HATEAOS
             if (resultService.IsSuccess)
@@ -53,7 +53,7 @@ namespace WebApi.Areas.Admin.Controllers
 
 
         /// <summary>
-        /// ایجاد یک گروه (Auth)
+        /// ایجاد یک گروه برای ثبت مشخصات (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -88,7 +88,7 @@ namespace WebApi.Areas.Admin.Controllers
             var resultService = await _facadeAdminProductSpecificationService.ProductSpecificationCommandsService.UpdateSpecGroupAsync(dto.ProductSpecificationGroupId, dto.Titile);
             if (resultService.IsSuccess)
             {
-                return Created();
+                return NoContent();
             }
             else
             {

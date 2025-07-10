@@ -5,17 +5,17 @@ using Persistence.Contexts;
 
 namespace Persistence.Store.AdminSection.ProductSpecifications.Queries
 {
-    public class GetAllSpecGroupsWithSpecsByProductIdQueryHandler : IRequestHandler<GetAllSpecGroupsWithSpecsByProductIdQuery, List<SpecGroupDto>>
+    public class GetAllSpecGroupsWithSpecsByProductIdQueryHandler : IRequestHandler<GetAllSpecGroupsWithSpecsByProductIdQuery, List<SpecGroupWithSpecsDto>>
     {
         private readonly DataBaseContext _context;
         public GetAllSpecGroupsWithSpecsByProductIdQueryHandler(DataBaseContext context) => _context = context;
 
-        public async Task<List<SpecGroupDto>> Handle(GetAllSpecGroupsWithSpecsByProductIdQuery request, CancellationToken cancellationToken)
+        public async Task<List<SpecGroupWithSpecsDto>> Handle(GetAllSpecGroupsWithSpecsByProductIdQuery request, CancellationToken cancellationToken)
         {
             return await _context.ProductSpecificationGroups
                 .Where(g => g.ProductId == request.ProductId)
                 .Include(g => g.Specifications)
-                .Select(g => new SpecGroupDto
+                .Select(g => new SpecGroupWithSpecsDto
                 {
                     Id = g.Id,
                     Title = g.Title,

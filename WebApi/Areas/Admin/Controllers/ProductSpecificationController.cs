@@ -26,7 +26,7 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// برگردوندن همه گروه ها (Auth)
+        /// برگردوندن همه مشخصه های یک گروه (Auth)
         /// </summary>
         /// <param name="ProductSpecificationGroupId"></param>
         /// <returns></returns>
@@ -35,7 +35,7 @@ namespace WebApi.Areas.Admin.Controllers
         public async Task<IActionResult> Get(long ProductSpecificationGroupId)
         {
             //Get by service
-            var resultService = await _facadeAdminProductSpecificationService.ProductSpecificationQueriesService.GetSpecGroupsWihtSpecsAsync((int)ProductSpecificationGroupId);
+            var resultService = await _facadeAdminProductSpecificationService.ProductSpecificationQueriesService.GetSpecsBySpecGroupIdAsync(ProductSpecificationGroupId);
 
             //HATEAOS
             if (resultService.IsSuccess)
@@ -53,7 +53,7 @@ namespace WebApi.Areas.Admin.Controllers
 
 
         /// <summary>
-        /// ایجاد یک گروه (Auth)
+        /// ایجاد یک مشخصه (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -77,7 +77,7 @@ namespace WebApi.Areas.Admin.Controllers
 
 
         /// <summary>
-        /// ویرایش گروه (Auth)
+        /// ویرایش مشخصه (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -88,7 +88,7 @@ namespace WebApi.Areas.Admin.Controllers
             var resultService = await _facadeAdminProductSpecificationService.ProductSpecificationCommandsService.UpdateSpecAsync(dto.ProductSpecificationId, dto.Key, dto.Value);
             if (resultService.IsSuccess)
             {
-                return Created();
+                return NoContent();
             }
             else
             {
@@ -101,7 +101,7 @@ namespace WebApi.Areas.Admin.Controllers
 
 
         /// <summary>
-        /// حذف یک گروه (Auth)
+        /// حذف یک مشخصه (Auth)
         /// </summary>
         /// <param name="ProductSpecificationId"></param>
         /// <returns></returns>
