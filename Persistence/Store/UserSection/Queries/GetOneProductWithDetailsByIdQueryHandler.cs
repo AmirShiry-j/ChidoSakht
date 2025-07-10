@@ -27,12 +27,18 @@ namespace Persistence.Store.UserSection.Queries
             if (product is null)
                 return null;
 
-            InfoForSampleProductDto infoForSampleProduct = null;
+            InfoPriceDto infoPrice = null;
+
             if (product.ProductType == ProductType.Sample)
             {
                 product = await _context.Products
                 .Where(p => p.Id.Equals(request.Id))
                 .Include(p => p.Category)
+                .Include(p => p.ProductAttributes)
+                .ThenInclude(p => p.ProductAttributeValues)
+                .Include(p => p.ProductImages)
+                .Include(p => p.ProductSpecificationGroups)
+                .ThenInclude(p => p.Specifications)
                 .Include(p => p.ProductVariants)
                 .ThenInclude(p => p.ProductVariantTransportation)
                 .FirstOrDefaultAsync();
@@ -40,26 +46,35 @@ namespace Persistence.Store.UserSection.Queries
                 if (product.ProductVariants.Any())
                 {
                     var sampleInfo = product.ProductVariants.SingleOrDefault();
-                    infoForSampleProduct = new InfoForSampleProductDto();
+                    infoPrice = new InfoPriceDto();
 
-                    infoForSampleProduct.Price = sampleInfo.Price;
-                    infoForSampleProduct.SpecialPrice = sampleInfo.SpecialPrice;
-                    infoForSampleProduct.Stock = sampleInfo.Stock;
-                    if (sampleInfo.ProductVariantTransportation is not null)
-                    {
-                        infoForSampleProduct.Weight = sampleInfo.ProductVariantTransportation.Weight;
-                        infoForSampleProduct.Width = sampleInfo.ProductVariantTransportation.Width;
-                        infoForSampleProduct.Length = sampleInfo.ProductVariantTransportation.Length;
-                        infoForSampleProduct.Height = sampleInfo.ProductVariantTransportation.Height;
-                    }
+                    infoPrice.Price = sampleInfo.Price;
+                    infoPrice.SpecialPrice = sampleInfo.SpecialPrice;
+                    infoPrice.Stock = sampleInfo.Stock;
                 }
             }
             else
             {
                 product = await _context.Products
-                    .Where(p => p.Id.Equals(request.Id))
                     .Include(p => p.Category)
-                    .FirstOrDefaultAsync();
+                .Include(p => p.ProductAttributes)
+                .ThenInclude(p => p.ProductAttributeValues)
+                .Include(p => p.ProductImages)
+                .Include(p => p.ProductSpecificationGroups)
+                .ThenInclude(p => p.Specifications)
+                .Include(p => p.ProductVariants)
+                .ThenInclude(p => p.ProductVariantTransportation)
+                .FirstOrDefaultAsync();
+
+                if (product.ProductVariants.Any())
+                {
+                    var sampleInfo = product.ProductVariants.FirstOrDefault();
+                    infoPrice = new InfoPriceDto();
+
+                    infoPrice.Price = sampleInfo.Price;
+                    infoPrice.SpecialPrice = sampleInfo.SpecialPrice;
+                    infoPrice.Stock = sampleInfo.Stock;
+                }
             }
 
             var model = new ProductWithDetailsDto
@@ -67,6 +82,7 @@ namespace Persistence.Store.UserSection.Queries
                 Id = product.Id,
                 Name = product.Name,
                 ProductType = product.ProductType,
+                ProductTypeName = product.ProductType == ProductType.Sample ? "Sample" : "Variable",
                 Description = product.Description,
                 UniqeLink = product.UniqeLink,
                 ImageAltText = product.ImageAltText,
@@ -74,11 +90,49 @@ namespace Persistence.Store.UserSection.Queries
                 UniCode = product.UniCode,
                 CategoryId = product?.CategoryId,
                 CategoryName = product.Category?.Name,
-                InfoForSampleProduct = infoForSampleProduct
+                Price = infoPrice?.Price,
+                SpecialPrice = infoPrice?.SpecialPrice,
+                Stock = infoPrice?.Stock,
+                AttributeAndValues = product.ProductAttributes.Select(p => new ProductAttributeAndValuesDto
+                {
+                    ProductAttributeId = p.Id,
+                    Name = p.Name,
+                    UseForVariant = p.UseForVariant,
+                    AttributeType = p.AttributeType,
+                    Values = p.ProductAttributeValues.Select(s => new ProductAttributeValueDto
+                    {
+                        ProductAttributeValueId = s.Id,
+                        Value = s.Value
+                    }).ToList()
+                }).ToList(),
+                SpecificationGroups = product.ProductSpecificationGroups.Select(s => new SpecGroupWithSpecsDto
+                {
+                    GroupId = s.Id,
+                    Title = s.Title,
+                    Specifications = s.Specifications.Select(w => new SpecDto
+                    {
+                        SpecId = w.Id,
+                        Key = w.Key,
+                        Value = w.Value
+                    }).ToList()
+
+                }).ToList(),
+                ProductImages = product.ProductImages.Select(s => new ProductImageDto
+                {
+                    Id = s.Id,
+                    IsIndex = s.IsIndex,
+                    Name = s.Name
+                }).ToList()
             };
 
             //Retrun It
             return model;
         }
+    }
+    public class InfoPriceDto
+    {
+        public long? Price { get; set; }
+        public long? SpecialPrice { get; set; }
+        public int? Stock { get; set; }
     }
 }

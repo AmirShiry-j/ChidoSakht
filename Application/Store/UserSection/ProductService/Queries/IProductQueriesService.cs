@@ -1,7 +1,6 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Commons.Objects.Dtoes;
 using Application.Commons.Objects.MessageEventTypes;
-using Application.Store.AdminSection.ProductService.Queries;
 using Domain.Products;
 using MediatR;
 
@@ -37,18 +36,16 @@ namespace Application.Store.UserSection.ProductService.Queries
 
         public async Task<ResultDto<ProductWithDetailsDto>> GetOneProductWithDetails(int ProductId)
         {
+            //get from db
+            var productWithDetails = await _mediator.Send(new GetOneProductWithDetailsByIdQuery(ProductId));
             //check exist
-            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
-            if (product is null)
+            if (productWithDetails is null)
             {
                 return new ResultDto<ProductWithDetailsDto>
                 {
                     MessageEventType = MessageEventType.NotFound
                 };
             }
-
-            //get from db
-            var productWithDetails = await _mediator.Send(new GetOneProductWithDetailsByIdQuery(ProductId));
 
             //return
             return new ResultDto<ProductWithDetailsDto>
@@ -103,6 +100,7 @@ namespace Application.Store.UserSection.ProductService.Queries
         public int Id { get; set; }
         public string Name { get; set; }
         public ProductType ProductType { get; set; }
+        public string ProductTypeName { get; set; }
         public string? Description { get; set; }
         public string? UniqeLink { get; set; }
         public string? ImageAltText { get; set; }
@@ -111,9 +109,13 @@ namespace Application.Store.UserSection.ProductService.Queries
         public string? UniCode { get; set; }
         public int? CategoryId { get; set; }
         public string? CategoryName { get; set; }
-        public bool IsPublished { get; set; }
-        public InfoForSampleProductDto InfoForSampleProduct { get; set; }
-        public List<ProductAttributeValueDto> AttributeAndValues { get; set; }
+        //public bool IsPublished { get; set; }
+        public List<ProductAttributeAndValuesDto> AttributeAndValues { get; set; }
+        public long? Price { get; set; }
+        public long? SpecialPrice { get; set; }
+        public int? Stock { get; set; }
+        public List<SpecGroupWithSpecsDto> SpecificationGroups { get; set; }
+        public List<ProductImageDto> ProductImages { get; set; }
     }
 
     public class ProductAttributeAndValuesDto
@@ -129,16 +131,23 @@ namespace Application.Store.UserSection.ProductService.Queries
         public int ProductAttributeValueId { get; set; }
         public string Value { get; set; }
     }
-    public class InfoForSampleProductDto
+    public class SpecGroupWithSpecsDto
     {
-
-        public long Price { get; set; }
-        public long? SpecialPrice { get; set; }
-        public int Stock { get; set; }
-        //
-        public double? Length { get; set; }
-        public double? Width { get; set; }
-        public double? Height { get; set; }
-        public double? Weight { get; set; }
+        public long GroupId { get; set; }
+        public string Title { get; set; }
+        public List<SpecDto> Specifications { get; set; }
+    }
+    public class SpecDto
+    {
+        public long SpecId { get; set; }
+        public string Key { get; set; }
+        public string Value { get; set; }
+    }
+    public class ProductImageDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool IsIndex { get; set; }
+        public string Url { get; set; }
     }
 }

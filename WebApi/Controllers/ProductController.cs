@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using WebApi.Filters.Permissions;
 using WebApi.ModelsAndDtoes.Product;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WebApi.Controllers
 {
@@ -43,7 +44,7 @@ namespace WebApi.Controllers
                 FromPrice = productFilterForUserSectionApiDto.FromPrice,
                 TypeOrderByForProduct = productFilterForUserSectionApiDto.TypeOrderByForProduct,
                 CategoryId = productFilterForUserSectionApiDto.CategoryId,
-                OnlyAvailableGoods= productFilterForUserSectionApiDto.OnlyAvailableGoods,
+                OnlyAvailableGoods = productFilterForUserSectionApiDto.OnlyAvailableGoods,
 
                 CountInPage = productFilterForUserSectionApiDto.CountInPage,
                 Page = productFilterForUserSectionApiDto.Page,
@@ -74,6 +75,24 @@ namespace WebApi.Controllers
 
             if (resultService.IsSuccess)
             {
+                //HATEOAS
+                //Build url of image
+                string url = Request.GetDisplayUrl();
+                string domainName = url.Substring(0, url.IndexOf("/api"));
+                string baseImageUrl = domainName + "/Images/ProductImage/";
+
+                if (resultService.Data.NameIndexImage is not null)
+                {
+                    string imageUrl = baseImageUrl + resultService.Data.NameIndexImage;
+                    resultService.Data.UrlNameIndexImage = imageUrl;
+                }
+
+                foreach (var img in resultService.Data.ProductImages)
+                {
+                    string imageUrl = baseImageUrl + img.Name;
+                    img.Url = imageUrl;
+                }
+
                 return Ok(resultService.Data);
             }
             else
