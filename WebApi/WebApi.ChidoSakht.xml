@@ -333,7 +333,7 @@
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RelatedProductController.Post(WebApi.Areas.Admin.ModelsAndDtoes.RelatedProduct.AddRelatedProductsApiDto)">
             <summary>
-            اضافه کردن محصولات مرتبط یک محصول - خودکار دو طرفه - (Auth)
+            اضافه کردن محصولات مرتبط یک محصول - دو طرفه - (Auth)
             </summary>
             <param name="dto"></param>
             <returns></returns>

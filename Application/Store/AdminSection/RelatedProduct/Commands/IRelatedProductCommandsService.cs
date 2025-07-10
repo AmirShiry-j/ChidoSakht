@@ -38,6 +38,16 @@ namespace Application.Store.AdminSection.RelatedProduct.Commands
                     MessageEventType = MessageEventType.NotFound
                 };
             }
+            //check exist products
+            var existIds = await _mediator.Send(new GetExistingProductIdsForSetRelatedQuery(dto.RelatedProductIds));
+            var notExistIds = dto.RelatedProductIds.Where(p => !existIds.Contains(p)).ToList();
+            if (notExistIds.Any())
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
 
             var productId = dto.ProductId;
             var relatedIds = dto.RelatedProductIds
@@ -57,6 +67,9 @@ namespace Application.Store.AdminSection.RelatedProduct.Commands
             var newIds = relatedIds
                 .Where(id => !alreadyRelatedIds.Contains(id))
                 .ToList();
+
+
+
 
             foreach (var relatedId in newIds)
             {
@@ -83,6 +96,17 @@ namespace Application.Store.AdminSection.RelatedProduct.Commands
                     MessageEventType = MessageEventType.NotFound
                 };
             }
+            //check exist products
+            var existIds = await _mediator.Send(new GetExistingProductIdsForSetRelatedQuery(dto.RelatedProductIds));
+            var notExistIds = dto.RelatedProductIds.Where(p => !existIds.Contains(p)).ToList();
+            if (notExistIds.Any())
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
 
             var productId = dto.ProductId;
             var relatedIds = dto.RelatedProductIds

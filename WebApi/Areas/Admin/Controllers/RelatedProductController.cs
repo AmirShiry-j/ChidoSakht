@@ -53,7 +53,7 @@ namespace WebApi.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// اضافه کردن محصولات مرتبط یک محصول - خودکار دو طرفه - (Auth)
+        /// اضافه کردن محصولات مرتبط یک محصول - دو طرفه - (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>

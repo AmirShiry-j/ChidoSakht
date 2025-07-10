@@ -28,5 +28,12 @@ namespace Application.Store.AdminSection.RelatedProduct.Queries
             ProductId = productId;
         }
     }
-
+    public class GetExistingProductIdsForSetRelatedQuery : IRequest<List<int>>
+    {
+        public List<int> RecivedIds { get; }
+        public GetExistingProductIdsForSetRelatedQuery(List<int> recivedIds)
+        {
+            RecivedIds = recivedIds;
+        }
+    }
 }
