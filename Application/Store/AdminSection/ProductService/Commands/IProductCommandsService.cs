@@ -7,6 +7,7 @@ using Application.Store.AdminSection.ProductImageService.Commands;
 using Application.Store.AdminSection.ProductService.Queries;
 using Application.Store.AdminSection.ProductVariant.Commands;
 using Application.Store.AdminSection.ProductVariant.Queries;
+using Application.Store.AdminSection.RelatedProduct.Commands;
 using Domain.Products;
 using MediatR;
 using System;
@@ -355,6 +356,9 @@ namespace Application.Store.AdminSection.ProductService.Commands
 
             //Delete Images
             await _mediator.Send(new DeleteProductImagesByProductIdCommand(ProductId, BasePathImages));
+
+            //Delete Relateds
+            await _mediator.Send(new DeleteRelatedProductsByProductIdCommand(ProductId));
 
             //Delete product
             await _mediator.Send(new DeleteProductCommand(product));

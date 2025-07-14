@@ -31,4 +31,13 @@ namespace Application.Store.AdminSection.RelatedProduct.Commands
         }
     }
 
+    public class DeleteRelatedProductsByProductIdCommand : IRequest
+    {
+        public int ProductId { get; set; }
+        public DeleteRelatedProductsByProductIdCommand(int ProductId)
+        {
+            this.ProductId = ProductId;
+        }
+    }
+
 }

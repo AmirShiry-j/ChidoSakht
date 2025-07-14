@@ -50,7 +50,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.Product", b =>
@@ -110,7 +110,7 @@ namespace Persistence.Migrations
                         .IsUnique()
                         .HasFilter("[UniqeLink] IS NOT NULL");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductAttribute", b =>
@@ -140,7 +140,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductAttributes");
+                    b.ToTable("ProductAttributes", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductAttributeValue", b =>
@@ -162,7 +162,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductAttributeId");
 
-                    b.ToTable("ProductAttributeValues");
+                    b.ToTable("ProductAttributeValues", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductImage", b =>
@@ -187,7 +187,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductSpecification", b =>
@@ -213,7 +213,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductSpecificationGroupId");
 
-                    b.ToTable("ProductSpecifications");
+                    b.ToTable("ProductSpecifications", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductSpecificationGroup", b =>
@@ -235,7 +235,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductSpecificationGroups");
+                    b.ToTable("ProductSpecificationGroups", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductVariant", b =>
@@ -265,7 +265,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductVariants");
+                    b.ToTable("ProductVariants", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductVariantAttributeValue", b =>
@@ -288,7 +288,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductVariantId");
 
-                    b.ToTable("ProductVariantAttributeValues");
+                    b.ToTable("ProductVariantAttributeValues", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductVariantTransportation", b =>
@@ -319,7 +319,7 @@ namespace Persistence.Migrations
                     b.HasIndex("ProductVariantId")
                         .IsUnique();
 
-                    b.ToTable("ProductVariantTransportations");
+                    b.ToTable("ProductVariantTransportations", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.RelatedProduct", b =>
@@ -334,7 +334,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("RelatedProductId");
 
-                    b.ToTable("RelatedProducts");
+                    b.ToTable("RelatedProducts", (string)null);
                 });
 
             modelBuilder.Entity("Domain.SymbolicShoppingCarts.SymbolicOrderOrSymbolicShoppingCartItem", b =>
@@ -355,7 +355,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ProductVariantId");
 
-                    b.ToTable("SymbolicOrderOrSymbolicShoppingCartItems");
+                    b.ToTable("SymbolicOrderOrSymbolicShoppingCartItems", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Users.Permission", b =>
@@ -380,7 +380,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions");
+                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Users.Role", b =>
@@ -431,7 +431,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.ToTable("RolePermissions");
+                    b.ToTable("RolePermissions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Users.Token", b =>
@@ -469,7 +469,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tokens");
+                    b.ToTable("Tokens", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Users.User", b =>

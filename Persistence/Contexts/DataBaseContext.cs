@@ -157,7 +157,7 @@ namespace Persistence.Contexts
                 .HasOne(rp => rp.Product)
                 .WithMany(p => p.RelatedProducts)
                 .HasForeignKey(rp => rp.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<RelatedProduct>()
                 .HasOne(rp => rp.RelatedTo)
