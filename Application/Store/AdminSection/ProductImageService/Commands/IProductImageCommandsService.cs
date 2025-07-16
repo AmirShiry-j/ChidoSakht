@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Application.Store.AdminSection.ProductImageService.Commands
 {
@@ -68,6 +69,17 @@ namespace Application.Store.AdminSection.ProductImageService.Commands
             //get image
             await _mediator.Send(new DeleteProductImageCommand(image));
 
+            //Check if was index
+            var product = await _mediator.Send(new GetProductByIdQuery(image.ProductId));
+            if (product.NameIndexImage == image.Name)
+            {
+                //set index
+                product.NameIndexImage = null;
+
+                //Update in db
+                await _mediator.Send(new UpdateProductCommand(product));
+            }
+
             //Set publish if ...
             var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(image.ProductId));
 
@@ -77,7 +89,7 @@ namespace Application.Store.AdminSection.ProductImageService.Commands
             };
         }
 
-        public async Task<ResultDto> SetIndexImage(int ProductId, string Name)
+        public async Task<ResultDto> SetIndexImage(int ProductId, string? Name)
         {
             //check exist
             var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
@@ -89,20 +101,44 @@ namespace Application.Store.AdminSection.ProductImageService.Commands
                 };
             }
 
-            //check exist product
-            var image = await _mediator.Send(new GetAProductImageByNameQuery(Name));
-            if (image is null)
+            //check exist image
+            if (Name is not null)
             {
+                var image = await _mediator.Send(new GetAProductImageByNameQuery(Name));
+                if (image is null)
+                {
+                    return new ResultDto
+                    {
+                        MessageEventType = MessageEventType.NotFound
+                    };
+                }
+
+                if (image.ProductId != ProductId)
+                {
+                    return new ResultDto
+                    {
+                        MessageEventType = MessageEventType.BadRequest,
+                        Message = "Temp-Mes عکس باید متعلق به خود محصول باشد"
+                    };
+                }
+
+                //set index
+                image.IsIndex = true;
+                product.NameIndexImage = image.Name;
+                await _mediator.Send(new SetIndexImageForPrdouctCommand(image, product));
+
                 return new ResultDto
                 {
-                    MessageEventType = MessageEventType.NotFound
+                    IsSuccess = true,
+
                 };
             }
 
             //set index
-            image.IsIndex = true;
-            product.NameIndexImage = image.Name;
-            await _mediator.Send(new SetIndexImageForPrdouctCommand(image, product));
+            product.NameIndexImage = null;
+
+            //Update in db
+            await _mediator.Send(new UpdateProductCommand(product));
 
             //Set publish if ...
             var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
