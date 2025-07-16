@@ -239,8 +239,8 @@ namespace Application.Store.AdminSection.ProductService.Commands
                 product.CategoryId = null;
                 await _mediator.Send(new UpdateProductCommand(product));
 
-                //Set publish if ...
-                var resultPublish1 = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
+                ////Set publish if ...
+                //var resultPublish1 = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
 
                 return new ResultDto
                 {
@@ -264,8 +264,8 @@ namespace Application.Store.AdminSection.ProductService.Commands
             product.CategoryId = (int)CategoryId;
             await _mediator.Send(new UpdateProductCommand(product));
 
-            //Set publish if ...
-            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
+            ////Set publish if ...
+            //var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
 
             return new ResultDto
             {

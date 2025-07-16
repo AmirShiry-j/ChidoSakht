@@ -29,7 +29,8 @@ namespace Persistence.Store.AdminSection.Products.Commands
 
             //حتما باید دارای یک عکس باشه
 
-            //حتما باید جز یک دسته بندی باشد
+            //فعلا دسته بندی کامنت
+            //////حتما باید جز یک دسته بندی باشد
 
             //اگه محصول ساده بود
             //حتما باید دارای قیمت باشه
@@ -50,11 +51,11 @@ namespace Persistence.Store.AdminSection.Products.Commands
                 canPublish = false;
             }
 
-            if (product.CategoryId is null)
-            {
-                messages.Add("محصول حتما باید جزوه یک دسته بندی باشد");
-                canPublish = false;
-            }
+            //if (product.CategoryId is null)
+            //{
+            //    messages.Add("محصول حتما باید جزوه یک دسته بندی باشد");
+            //    canPublish = false;
+            //}
 
             if (product.ProductType == ProductType.Sample)
             {

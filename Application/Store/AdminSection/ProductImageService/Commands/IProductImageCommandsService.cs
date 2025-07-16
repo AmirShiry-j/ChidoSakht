@@ -127,6 +127,9 @@ namespace Application.Store.AdminSection.ProductImageService.Commands
                 product.NameIndexImage = image.Name;
                 await _mediator.Send(new SetIndexImageForPrdouctCommand(image, product));
 
+                //Set publish if ...
+                var resultPublish1 = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
+
                 return new ResultDto
                 {
                     IsSuccess = true,
