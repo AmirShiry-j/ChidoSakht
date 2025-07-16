@@ -367,5 +367,55 @@ namespace WebApi.Areas.Admin.Controllers
                     return BadRequest(resultService.Message);
             }
         }
+
+
+        /// <summary>
+        /// پابلیش محصول در صورت  (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
+        [HttpPut("PublishProductIfValidate/{ProductId}")]
+        public async Task<IActionResult> PublishProductIfValidate(int ProductId)
+        {
+            var resultService = await _facadeProductService.ProductCommandsService.PublishProductIfValidate(ProductId);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// برگردوندن وضعیت پابلیش بودن محصول (Auth)
+        /// </summary>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.View, KeyNameArea.Admin)]
+        [HttpGet("GetPublicationStatus/{ProductId}")]
+        public async Task<IActionResult> GetPublicationStatus(int ProductId)
+        {
+            //Get by service
+            var resultService = await _facadeProductService.ProductQueriesService.GetPublicationStatus(ProductId);
+
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                return
+                    BadRequest(resultService.Message);
+            }
+        }
+
     }
 }

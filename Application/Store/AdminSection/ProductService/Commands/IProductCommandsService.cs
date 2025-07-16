@@ -31,6 +31,7 @@ namespace Application.Store.AdminSection.ProductService.Commands
         Task<ResultDto> SetUniCode(int ProductId, string? UniCode);
         Task<ResultDto> SetCategoryId(int ProductId, int? CategoryId);
         Task<ResultDto> DeleteAProduct(int ProductId, string BasePathImages);
+        Task<ResultDto> PublishProductIfValidate(int ProductId);
 
     }
     public class ProductCommandsService : IProductCommandsService
@@ -171,6 +172,9 @@ namespace Application.Store.AdminSection.ProductService.Commands
             //Update in db
             await _mediator.Send(new UpdateProductCommand(product));
 
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
+
             return new ResultDto
             {
                 IsSuccess = true,
@@ -235,6 +239,9 @@ namespace Application.Store.AdminSection.ProductService.Commands
                 product.CategoryId = null;
                 await _mediator.Send(new UpdateProductCommand(product));
 
+                //Set publish if ...
+                var resultPublish1 = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
+
                 return new ResultDto
                 {
                     IsSuccess = true
@@ -256,6 +263,9 @@ namespace Application.Store.AdminSection.ProductService.Commands
             //change
             product.CategoryId = (int)CategoryId;
             await _mediator.Send(new UpdateProductCommand(product));
+
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
 
             return new ResultDto
             {
@@ -326,6 +336,9 @@ namespace Application.Store.AdminSection.ProductService.Commands
                 await _mediator.Send(new UpdateProductVariantCommand(productVariant));
             }
 
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(dto.ProductId));
+
             return new ResultDto
             {
                 IsSuccess = true,
@@ -360,6 +373,9 @@ namespace Application.Store.AdminSection.ProductService.Commands
             //Delete Relateds
             await _mediator.Send(new DeleteRelatedProductsByProductIdCommand(ProductId));
 
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
+
             //Delete product
             await _mediator.Send(new DeleteProductCommand(product));
 
@@ -368,6 +384,39 @@ namespace Application.Store.AdminSection.ProductService.Commands
                 IsSuccess = true,
                 MessageEventType = MessageEventType.Ok
             };
+        }
+
+        public async Task<ResultDto> PublishProductIfValidate(int ProductId)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
+
+            if (resultPublish.Item1)
+            {
+                return new ResultDto
+                {
+                    IsSuccess = true,
+                };
+            }
+            else
+            {
+                return new ResultDto
+                {
+                    IsSuccess = false,
+                    MessageEventType = MessageEventType.BadRequest,
+                    Message = resultPublish.Item2
+                };
+            }
         }
     }
 

@@ -197,6 +197,20 @@
             <param name="ProductId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.PublishProductIfValidate(System.Int32)">
+            <summary>
+            پابلیش محصول در صورت  (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.GetPublicationStatus(System.Int32)">
+            <summary>
+            برگردوندن وضعیت پابلیش بودن محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Get(System.Int32)">
             <summary>
             برگردوندن تصاویر یک محصول (Auth)

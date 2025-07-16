@@ -17,6 +17,7 @@ namespace Application.Store.AdminSection.ProductService.Queries
         Task<ResultDto<ResultSearchDto>> GetProducts(ProductFilterDto filterDto);
         Task<ResultDto<bool>> ValidateUniqeLink(int ProductId, string? UniqeLink);
         Task<ResultDto<bool>> ValidateUniCode(int ProductId, string? UniCode);
+        Task<ResultDto<bool>> GetPublicationStatus(int ProductId);
 
     }
     public class ProductQueriesService : IProductQueriesService
@@ -55,6 +56,25 @@ namespace Application.Store.AdminSection.ProductService.Queries
             {
                 IsSuccess = true,
                 Data = products
+            };
+        }
+
+        public async Task<ResultDto<bool>> GetPublicationStatus(int ProductId)
+        {
+            //check exist
+            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            if (product is null)
+            {
+                return new ResultDto<bool>
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            return new ResultDto<bool>
+            {
+                IsSuccess = true,
+                Data = product.IsPublished
             };
         }
 

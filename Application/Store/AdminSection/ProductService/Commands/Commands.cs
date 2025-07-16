@@ -37,5 +37,14 @@ namespace Application.Store.AdminSection.ProductService.Commands
         }
     }
 
+    public class PublishProductIfValidateCommand : IRequest<Tuple<bool, string>>
+    {
+        public int ProductId { get; set; }
+        public PublishProductIfValidateCommand(int productId)
+        {
+            this.ProductId = productId;
+        }
+    }
+
 
 }

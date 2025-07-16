@@ -1,6 +1,7 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Commons.Objects.Dtoes;
 using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.ProductService.Commands;
 using Application.Store.AdminSection.ProductService.Queries;
 using Application.Store.AdminSection.ProductVariant.Queries;
 using Domain.Products;
@@ -98,6 +99,9 @@ namespace Application.Store.AdminSection.ProductVariant.Commands
             //Create in db
             var productVariantId = await _mediator.Send(new CreateProductVariantCommand(dto));
 
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(dto.ProductId));
+
             return new ResultDto<int>
             {
                 IsSuccess = true,
@@ -141,6 +145,9 @@ namespace Application.Store.AdminSection.ProductVariant.Commands
 
             //Delete
             await _mediator.Send(new DeleteProductVariantCommand(productVariant));
+
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(productVariant.ProductId));
 
             return new ResultDto
             {
@@ -186,6 +193,9 @@ namespace Application.Store.AdminSection.ProductVariant.Commands
             productVariant.ProductVariantTransportation = productVariantTransportation;
 
             await _mediator.Send(new UpdateProductVariantCommand(productVariant));
+
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(productVariant.ProductId));
 
             return new ResultDto
             {

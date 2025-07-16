@@ -2,7 +2,9 @@
 using Application.Commons.Objects.Dtoes;
 using Application.Commons.Objects.MessageEventTypes;
 using Application.Store.AdminSection.ProductImageService.Queries;
+using Application.Store.AdminSection.ProductService.Commands;
 using Application.Store.AdminSection.ProductService.Queries;
+using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -66,6 +68,9 @@ namespace Application.Store.AdminSection.ProductImageService.Commands
             //get image
             await _mediator.Send(new DeleteProductImageCommand(image));
 
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(image.ProductId));
+
             return new ResultDto
             {
                 IsSuccess = true,
@@ -98,6 +103,9 @@ namespace Application.Store.AdminSection.ProductImageService.Commands
             image.IsIndex = true;
             product.NameIndexImage = image.Name;
             await _mediator.Send(new SetIndexImageForPrdouctCommand(image, product));
+
+            //Set publish if ...
+            var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
 
             return new ResultDto
             {
