@@ -83,6 +83,7 @@ namespace Application.Store.UserSection.ProductService.Queries
     public class ProductFilterForUserSectionDto
     {
         public TypeOrderByForProduct TypeOrderByForProduct { get; set; }
+        //public bool Ascending { get; set; }
         public string? ProductName { get; set; }
         public int? CategoryId { get; set; }
         public bool? OnlyAvailableGoods { get; set; }
