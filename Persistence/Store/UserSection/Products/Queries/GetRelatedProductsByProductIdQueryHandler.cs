@@ -22,11 +22,16 @@ namespace Persistence.Store.UserSection.Products.Queries
             return await _context.Set<Domain.Products.RelatedProduct>()
     .Where(r => r.ProductId == request.ProductId)
     .Include(r => r.RelatedTo)
-    .ThenInclude(r=>r.ProductVariants)
+    .ThenInclude(r => r.ProductVariants)
     .Select(r => new ProductDto
     {
         Id = r.RelatedTo.Id,
         Name = r.RelatedTo.Name,
+        Price = r.RelatedTo.ProductVariants.First().Price,
+        SpecialPrice = r.RelatedTo.ProductVariants.First().SpecialPrice,
+        ImageAltText = r.RelatedTo.ImageAltText,
+        NameIndexImage = r.RelatedTo.NameIndexImage,
+        UniqeLink = r.RelatedTo.UniqeLink,
     })
     .ToListAsync(cancellationToken);
         }

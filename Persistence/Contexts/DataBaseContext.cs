@@ -45,6 +45,9 @@ namespace Persistence.Contexts
         public DbSet<ProductSpecification> ProductSpecifications { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //Filters
+            builder.Entity<Product>().HasQueryFilter(p => p.IsPublished);
+
             ////Relations
             //Users
             builder.Entity<Token>()
