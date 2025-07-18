@@ -110,6 +110,15 @@ namespace Application.Store.UserSection.ProductService.Queries
         public string? UrlNameIndexImage { get; set; }
         public long Price { get; set; }
         public long? SpecialPrice { get; set; }
+        public int? PercentDiscount
+        {
+            get
+            {
+                if (SpecialPrice == null) return null;
+
+                return Convert.ToInt32(((Price - SpecialPrice * 1.0) / Price) * 100);
+            }
+        }
     }
     public class ResultFilterDto
     {
