@@ -94,10 +94,10 @@ namespace Application.Store.UserSection.ProductService.Queries
     }
     public enum TypeOrderByForProduct
     {
-        Bazdid,
-        Jadid,
-        Forush,
-        Arzan,
+        Bazdid=1,
+        Jadid=2,
+        Forush=3,
+        Arzan=4,
     }
 
     public class ProductDto

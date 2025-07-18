@@ -53,10 +53,17 @@ namespace WebApi.Controllers
             //Get data from service
             var resultService = await _facadeProductService.ProductQueriesService.GetProducts(inputService);
 
-            //HATEAOS
+            //HATEOAS
             //Build url of image
             string url = Request.GetDisplayUrl();
             string domainName = url.Substring(0, url.IndexOf("/api"));
+            string baseImageUrl = domainName + "/Images/ProductImage/";
+
+            foreach (var product in resultService.Data.Products.Where(p => p.NameIndexImage is not null))
+            {
+                string imageUrl = baseImageUrl + product.NameIndexImage;
+                product.UrlNameIndexImage = imageUrl;
+            }
 
             return Ok(resultService.Data);
         }
@@ -131,7 +138,7 @@ namespace WebApi.Controllers
                     {
                         string imageUrl = baseImageUrl + product.NameIndexImage;
                         product.UrlNameIndexImage = imageUrl;
-                    }                    
+                    }
                 }
 
                 return Ok(resultService.Data);

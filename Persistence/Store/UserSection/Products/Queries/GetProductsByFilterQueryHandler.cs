@@ -71,6 +71,7 @@ namespace Persistence.Store.UserSection.Products.Queries
                     Price = p.ProductVariants.FirstOrDefault().Price,
                     SpecialPrice = p.ProductVariants.FirstOrDefault().SpecialPrice,
                     UniqeLink = p.UniqeLink,
+                    
                 })
                 .ToListAsync();
 
