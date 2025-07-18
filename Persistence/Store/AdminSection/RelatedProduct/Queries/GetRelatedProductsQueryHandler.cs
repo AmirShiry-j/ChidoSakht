@@ -20,7 +20,7 @@ namespace Persistence.Store.AdminSection.RelatedProduct.Queries
 
         public async Task<List<ProductDto>> Handle(GetRelatedProductsQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Set<Domain.Products.RelatedProduct>()
+            return await _context.Set<Domain.Products.RelatedProduct>().IgnoreQueryFilters()
                 .Where(r => r.ProductId == request.ProductId)
                 .Include(r => r.RelatedTo)
                 .Select(r => new ProductDto

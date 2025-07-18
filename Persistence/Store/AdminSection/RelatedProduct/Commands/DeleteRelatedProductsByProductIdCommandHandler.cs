@@ -19,7 +19,7 @@ namespace Persistence.Store.AdminSection.RelatedProduct.Commands
         }
         public async Task Handle(DeleteRelatedProductsByProductIdCommand request, CancellationToken cancellationToken)
         {
-            var relateds = await _context.RelatedProducts
+            var relateds = await _context.RelatedProducts.IgnoreQueryFilters()
                 .Where(p => p.ProductId.Equals(request.ProductId) || p.RelatedProductId.Equals(request.ProductId))
                 .ToListAsync();
 

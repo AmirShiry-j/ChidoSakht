@@ -38,7 +38,7 @@ namespace Persistence.Store.AdminSection.Products.Queries
                 prProduct = prProduct.And(x => x.CategoryId.Equals(FilterDto.CategoryId));
             }
 
-            var products = await _context.Products
+            var products = await _context.Products.IgnoreQueryFilters()
                 .Where(prProduct)
                 .OrderBy(p => p.Name)
                 .Skip((FilterDto.Page.Value - 1) * FilterDto.CountInPage.Value)
@@ -53,7 +53,7 @@ namespace Persistence.Store.AdminSection.Products.Queries
                 .ToListAsync();
 
             //For Pagination
-            int CountAllItems = _context.Products.Where(prProduct).Count();
+            int CountAllItems = _context.Products.IgnoreQueryFilters().Where(prProduct).Count();
             int CountAllPages = CountAllItems / FilterDto.CountInPage.Value + (CountAllItems % FilterDto.CountInPage.Value > 0 ? 1 : 0);
 
             return new ResultSearchDto

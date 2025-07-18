@@ -19,7 +19,7 @@ namespace Persistence.Store.AdminSection.Products.Queries
         }
         public async Task<bool> Handle(ValidateUniCodeQuery request, CancellationToken cancellationToken)
         {
-            return !await _context.Products
+            return !await _context.Products.IgnoreQueryFilters()
                 .AnyAsync(p => !p.Id.Equals(request.ProductId) && p.UniCode != null && p.UniCode.Equals(request.UniCode));
         }
     }

@@ -18,7 +18,7 @@ namespace Persistence.Store.AdminSection.Products.Queries
         public async Task<ProductDetailsDto> Handle(GetProductDetailsByIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
-            Product product = await _context.Products
+            Product product = await _context.Products.IgnoreQueryFilters()
                 .FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
 
             if (product is null)
@@ -27,7 +27,7 @@ namespace Persistence.Store.AdminSection.Products.Queries
             InfoForSampleProductDto infoForSampleProduct = null;
             if (product.ProductType == ProductType.Sample)
             {
-                product = await _context.Products
+                product = await _context.Products.IgnoreQueryFilters()
                 .Where(p => p.Id.Equals(request.Id))
                 .Include(p => p.Category)
                 .Include(p => p.ProductVariants)
@@ -53,7 +53,7 @@ namespace Persistence.Store.AdminSection.Products.Queries
             }
             else
             {
-                product = await _context.Products
+                product = await _context.Products.IgnoreQueryFilters()
                     .Where(p => p.Id.Equals(request.Id))
                     .Include(p => p.Category)
                     .FirstOrDefaultAsync();

@@ -20,7 +20,7 @@ namespace Persistence.Store.AdminSection.RelatedProduct.Queries
 
         public async Task<List<int>> Handle(GetExistingProductIdsForSetRelatedQuery request, CancellationToken cancellationToken)
         {
-            var ids = await _context.Products.Where(p => request.RecivedIds.Contains(p.Id))
+            var ids = await _context.Products.IgnoreQueryFilters().Where(p => request.RecivedIds.Contains(p.Id))
                 .Select(p => p.Id)
                 .ToListAsync();
 

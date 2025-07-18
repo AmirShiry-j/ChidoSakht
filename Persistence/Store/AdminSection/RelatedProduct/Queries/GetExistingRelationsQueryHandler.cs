@@ -24,7 +24,7 @@ namespace Persistence.Store.AdminSection.RelatedProduct.Queries
             var productId = request.ProductId;
             var relatedIds = request.RelatedIds;
 
-            return await _context.Set<Domain.Products.RelatedProduct>()
+            return await _context.Set<Domain.Products.RelatedProduct>().IgnoreQueryFilters()
                 .Where(r =>
                     (r.ProductId == productId && relatedIds.Contains(r.RelatedProductId)) ||
                     (r.RelatedProductId == productId && relatedIds.Contains(r.ProductId)))

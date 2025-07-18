@@ -41,7 +41,7 @@ namespace Persistence.Store.AdminSection.Products.Commands
 
             // در این صورت قابل پابلیش میشه
 
-            var product = await _context.Products.Where(p => p.Id.Equals(request.ProductId))
+            var product = await _context.Products.IgnoreQueryFilters().Where(p => p.Id.Equals(request.ProductId))
                 .Include(p => p.ProductVariants)
                 .FirstOrDefaultAsync();
 

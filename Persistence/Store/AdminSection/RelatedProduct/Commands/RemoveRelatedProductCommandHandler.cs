@@ -20,7 +20,7 @@ namespace Persistence.Store.AdminSection.RelatedProduct.Commands
 
         public async Task Handle(RemoveRelatedProductCommand request, CancellationToken cancellationToken)
         {
-            var relation = await _context.Set<Domain.Products.RelatedProduct>()
+            var relation = await _context.Set<Domain.Products.RelatedProduct>().IgnoreQueryFilters()
                 .FirstOrDefaultAsync(r =>
                     r.ProductId == request.ProductId &&
                     r.RelatedProductId == request.RelatedProductId,

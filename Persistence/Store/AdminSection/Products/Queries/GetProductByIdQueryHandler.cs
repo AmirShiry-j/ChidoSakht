@@ -22,7 +22,7 @@ namespace Persistence.Store.AdminSection.Products.Queries
         public async Task<Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
+            var product = await _context.Products.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
 
             //Retrun It
             return product;
