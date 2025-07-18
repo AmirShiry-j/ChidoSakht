@@ -11,6 +11,9 @@ namespace WebApi.ModelsAndDtoes.Product
         [Required]
         [Range(1, 4)]
         public TypeOrderByForProduct TypeOrderByForProduct { get; set; }
+        /// <summary>
+        /// Default : false
+        /// </summary>
         public bool Ascending { get; set; } = false;
         public string? ProductName { get; set; }
         public int? CategoryId { get; set; }

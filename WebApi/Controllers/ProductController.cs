@@ -111,46 +111,5 @@ namespace WebApi.Controllers
                     BadRequest(resultService.Message);
             }
         }
-
-
-
-        /// <summary>
-        /// برگردوندن اطلاعات یک محصول (کاربری)
-        /// </summary>
-        /// <param name="ProductId"></param>
-        /// <returns></returns>
-        [HttpGet("GetRelatedProducts/{ProductId}")]
-        public async Task<IActionResult> GetRelatedProducts(int ProductId)
-        {
-            //Get by service
-            var resultService = await _facadeProductService.ProductQueriesService.GetRelatedProducts(ProductId);
-
-            if (resultService.IsSuccess)
-            {
-                //HATEOAS
-                //Build url of image
-                string url = Request.GetDisplayUrl();
-                string domainName = url.Substring(0, url.IndexOf("/api"));
-                string baseImageUrl = domainName + "/Images/ProductImage/";
-
-                foreach (var product in resultService.Data)
-                {
-                    if (product.NameIndexImage is not null)
-                    {
-                        string imageUrl = baseImageUrl + product.NameIndexImage;
-                        product.UrlNameIndexImage = imageUrl;
-                    }
-                }
-
-                return Ok(resultService.Data);
-            }
-            else
-            {
-                if (resultService.MessageEventType == MessageEventType.NotFound)
-                    return NotFound();
-                return
-                    BadRequest(resultService.Message);
-            }
-        }
     }
 }

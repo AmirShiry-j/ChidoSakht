@@ -563,17 +563,17 @@
             <param name="ProductId"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Controllers.ProductController.GetRelatedProducts(System.Int32)">
-            <summary>
-            برگردوندن اطلاعات یک محصول (کاربری)
-            </summary>
-            <param name="ProductId"></param>
-            <returns></returns>
-        </member>
         <member name="M:WebApi.Controllers.ProfileController.Get">
             <summary>
             بر گردوندن اطلاعات پروفایل (Auth)
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.RelatedProductController.GetRelatedProducts(System.Int32)">
+            <summary>
+            برگردوندن اطلاعات یک محصول (کاربری)
+            </summary>
+            <param name="ProductId"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.WeatherForecastController.Get">
@@ -585,6 +585,11 @@
         <member name="P:WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto.TypeOrderByForProduct">
             <summary>
             1_View 2_Date 3_Sell 4_Price
+            </summary>
+        </member>
+        <member name="P:WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto.Ascending">
+            <summary>
+            Default : false
             </summary>
         </member>
     </members>
