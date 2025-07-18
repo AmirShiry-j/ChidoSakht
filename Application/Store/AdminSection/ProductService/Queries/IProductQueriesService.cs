@@ -126,6 +126,7 @@ namespace Application.Store.AdminSection.ProductService.Queries
         public int? CategoryId { get; set; }
         public string? CategoryName { get; set; }
         public bool IsPublished { get; set; }
+        public long ViewCount { get; set; }
         public InfoForSampleProductDto InfoForSampleProduct { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }

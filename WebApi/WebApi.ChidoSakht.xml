@@ -582,5 +582,10 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="P:WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto.TypeOrderByForProduct">
+            <summary>
+            1_View 2_Date 3_Sell 4_Price
+            </summary>
+        </member>
     </members>
 </doc>

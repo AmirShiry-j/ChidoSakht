@@ -45,6 +45,7 @@ namespace WebApi.Controllers
                 TypeOrderByForProduct = productFilterForUserSectionApiDto.TypeOrderByForProduct,
                 CategoryId = productFilterForUserSectionApiDto.CategoryId,
                 OnlyAvailableGoods = productFilterForUserSectionApiDto.OnlyAvailableGoods,
+                Ascending = productFilterForUserSectionApiDto.Ascending,
 
                 CountInPage = productFilterForUserSectionApiDto.CountInPage,
                 Page = productFilterForUserSectionApiDto.Page,

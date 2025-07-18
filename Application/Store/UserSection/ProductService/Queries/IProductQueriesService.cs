@@ -83,7 +83,7 @@ namespace Application.Store.UserSection.ProductService.Queries
     public class ProductFilterForUserSectionDto
     {
         public TypeOrderByForProduct TypeOrderByForProduct { get; set; }
-        //public bool Ascending { get; set; }
+        public bool Ascending { get; set; } = false;
         public string? ProductName { get; set; }
         public int? CategoryId { get; set; }
         public bool? OnlyAvailableGoods { get; set; }
@@ -95,10 +95,10 @@ namespace Application.Store.UserSection.ProductService.Queries
     }
     public enum TypeOrderByForProduct
     {
-        Bazdid=1,
-        Jadid=2,
-        Forush=3,
-        Arzan=4,
+        View = 1,
+        Date = 2,
+        Sell = 3,
+        Price = 4,
     }
 
     public class ProductDto
@@ -151,6 +151,7 @@ namespace Application.Store.UserSection.ProductService.Queries
         public int? Stock { get; set; }
         public bool HasDiscount { get; set; }
         public int PercentDiscount { get; set; }
+        public long ViewCount { get; set; }
         public List<SpecGroupWithSpecsDto> SpecificationGroups { get; set; }
         public List<ProductImageDto> ProductImages { get; set; }
     }

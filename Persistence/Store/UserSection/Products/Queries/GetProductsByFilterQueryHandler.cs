@@ -80,27 +80,26 @@ namespace Persistence.Store.UserSection.Products.Queries
                 prProduct = prProduct.And(x => x.ProductVariants.Any(p => p.Price > FilterDto.ToPrice));
             }
 
+
             //Order by
             string SortBy = "";
-            bool Ascending = false;
+            bool Ascending = request.Filter.Ascending;
             switch (request.Filter.TypeOrderByForProduct)
             {
-                case TypeOrderByForProduct.Bazdid:
-                    SortBy = "CountView";
-                    Ascending = false;
+                case TypeOrderByForProduct.View:
+                    SortBy = nameof(Product.ViewCount);
                     break;
-                case TypeOrderByForProduct.Jadid:
-                    SortBy = nameof(Product.CreateTime);
-                    Ascending = false;
-                    break;
-                case TypeOrderByForProduct.Forush:
-                    //SortBy = "felan";
+                case TypeOrderByForProduct.Date:
                     SortBy = nameof(Product.CreateTime);
                     break;
-                case TypeOrderByForProduct.Arzan:
-                    //SortBy = "felan";
-                    SortBy = nameof(Product.CreateTime);
-                    break;
+                //case TypeOrderByForProduct.Sell:
+                //    //SortBy = "felan";
+                //    SortBy = nameof(Product.CreateTime);
+                //    break;
+                //case TypeOrderByForProduct.Price:
+                //    //SortBy = "felan";
+                //    SortBy = nameof(Product.CreateTime);
+                //    break;
                 default:
                     SortBy = nameof(Product.CreateTime);
                     Ascending = false;

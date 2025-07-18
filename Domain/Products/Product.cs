@@ -23,6 +23,7 @@ namespace Domain.Products
         public string? UniqeLink { get; set; }
         public string? ImageAltText { get; set; }
         public string? NameIndexImage { get; set; }
+        public long ViewCount { get; set; }
 
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }

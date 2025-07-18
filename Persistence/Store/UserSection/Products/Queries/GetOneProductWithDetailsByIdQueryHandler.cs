@@ -29,6 +29,9 @@ namespace Persistence.Store.UserSection.Products.Queries
 
             InfoPriceDto infoPrice = null;
 
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+    $"UPDATE Products SET ViewCount = ViewCount + 1 WHERE Id = {request.Id}");
+
             if (product.ProductType == ProductType.Sample)
             {
                 product = await _context.Products
@@ -56,6 +59,7 @@ namespace Persistence.Store.UserSection.Products.Queries
             else
             {
                 product = await _context.Products
+                    .Where(p => p.Id.Equals(request.Id))
                     .Include(p => p.Category)
                 .Include(p => p.ProductAttributes)
                 .ThenInclude(p => p.ProductAttributeValues)
@@ -100,6 +104,7 @@ namespace Persistence.Store.UserSection.Products.Queries
                 Price = infoPrice?.Price,
                 SpecialPrice = infoPrice?.SpecialPrice,
                 Stock = infoPrice?.Stock,
+                ViewCount = product.ViewCount + 1,
                 AttributeAndValues = product.ProductAttributes.Select(p => new ProductAttributeAndValuesDto
                 {
                     ProductAttributeId = p.Id,

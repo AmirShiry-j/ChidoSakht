@@ -73,7 +73,8 @@ namespace Persistence.Store.AdminSection.Products.Queries
                 UniCode = product.UniCode,
                 CategoryId = product?.CategoryId,
                 CategoryName = product.Category?.Name,
-                InfoForSampleProduct = infoForSampleProduct
+                InfoForSampleProduct = infoForSampleProduct,
+                ViewCount = product.ViewCount,
             };
 
             //Retrun It
