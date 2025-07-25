@@ -41,6 +41,7 @@ namespace Domain.Products
         public ICollection<RelatedProduct> RelatedToProducts { get; set; } = new List<RelatedProduct>();
         //
         public ICollection<ProductSpecificationGroup> ProductSpecificationGroups { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 
     public enum ProductType

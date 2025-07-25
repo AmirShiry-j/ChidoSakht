@@ -43,6 +43,9 @@ namespace Persistence.Contexts
         //
         public DbSet<ProductSpecificationGroup> ProductSpecificationGroups { get; set; }
         public DbSet<ProductSpecification> ProductSpecifications { get; set; }
+        //
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Helpful> Helpfuls { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //Filters
@@ -175,6 +178,11 @@ namespace Persistence.Contexts
                 .OnDelete(DeleteBehavior.Cascade);
             //
 
+            builder.Entity<Domain.Users.User>()
+    .HasMany<Comment>()
+    .WithOne(p => p.User)
+    .HasForeignKey(v => v.UserId)
+    .OnDelete(DeleteBehavior.NoAction);
 
             SetConfigurations(builder);
 
@@ -196,6 +204,7 @@ namespace Persistence.Contexts
             builder.ApplyConfiguration(new ProductConfig());
             builder.ApplyConfiguration(new ProductImageConfig());
             builder.ApplyConfiguration(new ProductAttributeConfig());
+            builder.ApplyConfiguration(new CommentConfig());
 
 
             base.OnModelCreating(builder);
