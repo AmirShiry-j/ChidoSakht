@@ -38,7 +38,7 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         public int ProductAttributeId { get; set; }
         [Required]
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Value { get; set; }
     }
 
@@ -47,7 +47,7 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         public int ProductAttributeValueId { get; set; }
         [Required]
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Value { get; set; }
     }
 
