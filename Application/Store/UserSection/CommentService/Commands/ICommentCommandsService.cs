@@ -64,6 +64,15 @@ namespace Application.Store.UserSection.CommentService.Commands
                 };
             }
 
+            //Check confirm
+            if (!comment.Confirmation)
+            {
+                return new ResultDto
+                {
+                    Message = "Tem-Mes کامنت تایید نشده"
+                };
+            }
+
             //check exist
             var vote = await _mediator.Send(new GetVoteAUserOnCommentQuery(dto.CommentId, UserId));
             if (vote is null)
@@ -145,6 +154,15 @@ namespace Application.Store.UserSection.CommentService.Commands
                 return new ResultDto
                 {
                     MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Check confirm
+            if (!comment.Confirmation)
+            {
+                return new ResultDto
+                {
+                    Message = "Tem-Mes کامنت تایید نشده"
                 };
             }
 

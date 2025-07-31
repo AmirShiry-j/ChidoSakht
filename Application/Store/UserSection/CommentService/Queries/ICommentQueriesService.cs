@@ -27,13 +27,13 @@ namespace Application.Store.UserSection.CommentService.Queries
         public async Task<ResultDto<ResultFilterDto>> GetComments(CommentFilterForUserSectionDto filterDto, string? UserId)
         {
             //get from db
-            var products = await _mediator.Send(new GetCommentsByFilterQuery(filterDto, UserId));
+            var comments = await _mediator.Send(new GetCommentsByFilterQuery(filterDto, UserId));
 
             //return
             return new ResultDto<ResultFilterDto>
             {
                 IsSuccess = true,
-                Data = products
+                Data = comments
             };
         }
     }

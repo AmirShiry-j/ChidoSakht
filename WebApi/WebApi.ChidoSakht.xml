@@ -44,6 +44,27 @@
             <param name="CategoryId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CommentController.Get(WebApi.Areas.Admin.ModelsAndDtoes.Comments.CommentFilterForAdminSectionApiDto)">
+            <summary>
+            نمایش کامنت ها (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CommentController.Put(System.Int64)">
+            <summary>
+            تایید یک کامنت (Auth)
+            </summary>
+            <param name="CommentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CommentController.Delete(System.Int64)">
+            <summary>
+            حذف یک کامنت (Auth)
+            </summary>
+            <param name="CommentId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.PermissionController.Get(System.String,System.String,System.String)">
             <summary>
             برگردوندن لیست دسترسی ها (Auth)
@@ -551,7 +572,7 @@
         </member>
         <member name="M:WebApi.Controllers.CommentController.Get(WebApi.ModelsAndDtoes.Product.CommentFilterForUserSectionApiDto)">
             <summary>
-            نمایش کامنت های یک محصول 
+            نمایش کامنت های یک محصول (کاربری)
             </summary>
             <param name="dto"></param>
             <returns></returns>

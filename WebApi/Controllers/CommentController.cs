@@ -28,7 +28,7 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// نمایش کامنت های یک محصول 
+        /// نمایش کامنت های یک محصول (کاربری)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
