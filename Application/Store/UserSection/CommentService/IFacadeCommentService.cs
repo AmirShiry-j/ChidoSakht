@@ -1,5 +1,6 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Store.UserSection.CommentService.Commands;
+using Application.Store.UserSection.CommentService.Queries;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Application.Store.UserSection.CommentService
     public interface IFacadeCommentService
     {
         ICommentCommandsService CommentCommandsService { get; }
+        ICommentQueriesService CommentQueriesService { get; }
     }
 
     public class FacadeCommentService : IFacadeCommentService
@@ -31,6 +33,16 @@ namespace Application.Store.UserSection.CommentService
             get
             {
                 return _CommentCommandsService = _CommentCommandsService ?? new CommentCommandsService(_mediator, _localizationService);
+            }
+        }
+
+        //Queries
+        private ICommentQueriesService _CommentQueriesService;
+        public ICommentQueriesService CommentQueriesService
+        {
+            get
+            {
+                return _CommentQueriesService = _CommentQueriesService ?? new CommentQueriesService(_mediator, _localizationService);
             }
         }
     }

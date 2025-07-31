@@ -28,4 +28,15 @@ namespace Application.Store.UserSection.CommentService.Queries
             this.UserId = UserId;
         }
     }
+
+    public class GetCommentsByFilterQuery : IRequest<ResultFilterDto>
+    {
+        public CommentFilterForUserSectionDto Filter { get; set; }
+        public string? UserId { get; set; }
+        public GetCommentsByFilterQuery(CommentFilterForUserSectionDto Filter, string? UserId)
+        {
+            this.Filter = Filter;
+            this.UserId = UserId;
+        }
+    }
 }
