@@ -37,6 +37,18 @@ namespace Application.Store.UserSection.CommentService.Commands
                 };
             }
 
+            //Control count comments of a user
+            var count = await _mediator.Send(new GetCountCommentForAProductByUserIdQuery(dto.ProductId, UserId));
+            if (count != 0)
+            {
+                return new ResultDto<long>
+                {
+                    Message = "Temp-Mes بیشتر از یک کامنت نمیتوانید بگذارید",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+
             var commentId = await _mediator.Send(new CreateCommentCommand
             (
                 dto.Text,

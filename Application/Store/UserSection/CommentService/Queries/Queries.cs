@@ -18,6 +18,18 @@ namespace Application.Store.UserSection.CommentService.Queries
         }
     }
 
+    public class GetCountCommentForAProductByUserIdQuery : IRequest<long>
+    {
+        public int ProductId { get; set; }
+        public string UserId { get; set; }
+
+        public GetCountCommentForAProductByUserIdQuery(int ProductId, string UserId)
+        {
+            this.ProductId = ProductId;
+            this.UserId = UserId;
+        }
+    }
+
     public class GetVoteAUserOnCommentQuery : IRequest<Helpful>
     {
         public long CommentId { get; set; }
