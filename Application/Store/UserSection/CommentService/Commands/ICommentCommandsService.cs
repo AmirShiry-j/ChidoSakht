@@ -11,7 +11,9 @@ namespace Application.Store.UserSection.CommentService.Commands
     public interface ICommentCommandsService
     {
         Task<ResultDto<long>> CreateCommentAsync(CreateCommentDto dto, string UserId);
-        Task<ResultDto> VoteOnCommentAsync(VoteOnCommentDto dto, string UserId);
+        Task<ResultDto> DeleteCommentAsync(long CommentId, string UserId);
+        Task<ResultDto> CreateVoteOnCommentAsync(CreateVoteOnCommentDto dto, string UserId);
+        Task<ResultDto> DeleteVoteOnCommentAsync(UpdateVoteOnCommentDto dto, string UserId);
     }
     public class CommentCommandsService : ICommentCommandsService
     {
@@ -50,7 +52,7 @@ namespace Application.Store.UserSection.CommentService.Commands
             };
         }
 
-        public async Task<ResultDto> VoteOnCommentAsync(VoteOnCommentDto dto, string UserId)
+        public async Task<ResultDto> CreateVoteOnCommentAsync(CreateVoteOnCommentDto dto, string UserId)
         {
             //check exist
             var comment = await _mediator.Send(new GetCommentByIdQuery(dto.CommentId));
@@ -62,17 +64,107 @@ namespace Application.Store.UserSection.CommentService.Commands
                 };
             }
 
-            await _mediator.Send(new VoteOnCommentCommand
-            (
-                dto.CommentId,
-                dto.WasHelpful,
-                UserId
-            ));
+            //check exist
+            var vote = await _mediator.Send(new GetVoteAUserOnCommentQuery(dto.CommentId, UserId));
+            if (vote is null)
+            {
+                await _mediator.Send(new CreateVoteOnCommentCommand
+                            (
+                                dto.CommentId,
+                                dto.WasHelpful,
+                                UserId
+                            ));
+
+                return new ResultDto
+                {
+                    IsSuccess = true,
+                    MessageEventType = MessageEventType.Ok
+                };
+            }
+            else
+            {
+                if (vote.WasHelpful == dto.WasHelpful)
+                {
+                    return new ResultDto
+                    {
+                        IsSuccess = true,
+                        MessageEventType = MessageEventType.Ok
+                    };
+                }
+                else
+                {
+                    vote.WasHelpful = dto.WasHelpful;
+                    await _mediator.Send(new UpdateVoteOnCommentCommand(vote));
+                    return new ResultDto
+                    {
+                        IsSuccess = true,
+                        MessageEventType = MessageEventType.Ok
+                    };
+                }
+            }
+        }
+
+        public async Task<ResultDto> DeleteCommentAsync(long CommentId, string UserId)
+        {
+            //check exist
+            var comment = await _mediator.Send(new GetCommentByIdQuery(CommentId));
+            if (comment is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //check comment was for user
+            if (comment.UserId.Equals(UserId))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes کامنت متعلق به این یوزر نیست",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            //delete
+            await _mediator.Send(new DeleteCommentCommand(comment));
 
             return new ResultDto
             {
                 IsSuccess = true,
-                MessageEventType = MessageEventType.Created
+                MessageEventType = MessageEventType.Ok
+            };
+        }
+
+        public async Task<ResultDto> DeleteVoteOnCommentAsync(UpdateVoteOnCommentDto dto, string UserId)
+        {
+            //check exist
+            var comment = await _mediator.Send(new GetCommentByIdQuery(dto.CommentId));
+            if (comment is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //get from db
+            var vote = await _mediator.Send(new GetVoteAUserOnCommentQuery(dto.CommentId, UserId));
+            if (vote is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //delete from db
+            await _mediator.Send(new DeleteVoteOnCommentCommand(vote));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+                MessageEventType = MessageEventType.Ok
             };
         }
     }
@@ -84,9 +176,13 @@ namespace Application.Store.UserSection.CommentService.Commands
         public byte Star { get; set; }
         public int ProductId { get; set; }
     }
-    public class VoteOnCommentDto
+    public class CreateVoteOnCommentDto
     {
         public long CommentId { get; set; }
         public bool WasHelpful { get; set; }
+    }
+    public class UpdateVoteOnCommentDto
+    {
+        public long CommentId { get; set; }
     }
 }

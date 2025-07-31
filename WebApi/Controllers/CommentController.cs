@@ -40,12 +40,12 @@ namespace WebApi.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
-            var model = new VoteOnCommentDto
+            var model = new CreateVoteOnCommentDto
             {
                 CommentId = dto.CommentId,
                 WasHelpful = dto.WasHelpful
             };
-            await _facadeCommentService.CommentCommandsService.VoteOnCommentAsync(model, userId);
+            await _facadeCommentService.CommentCommandsService.CreateVoteOnCommentAsync(model, userId);
             return Ok();
         }
     }

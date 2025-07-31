@@ -17,4 +17,15 @@ namespace Application.Store.UserSection.CommentService.Queries
             Id = id;
         }
     }
+
+    public class GetVoteAUserOnCommentQuery : IRequest<Helpful>
+    {
+        public long CommentId { get; set; }
+        public string UserId { get; set; }
+        public GetVoteAUserOnCommentQuery(long CommentId, string UserId)
+        {
+            this.CommentId = CommentId;
+            this.UserId = UserId;
+        }
+    }
 }

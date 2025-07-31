@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Persistence.Store.UserSection.Comments.Commands
 {
-    public class VoteOnCommentCommandHandler : IRequestHandler<VoteOnCommentCommand>
+    public class CreateVoteOnCommentCommandHandler : IRequestHandler<CreateVoteOnCommentCommand>
     {
         private readonly DataBaseContext _context;
-        public VoteOnCommentCommandHandler(DataBaseContext context)
+        public CreateVoteOnCommentCommandHandler(DataBaseContext context)
         {
             _context = context;
         }
-        public async Task Handle(VoteOnCommentCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateVoteOnCommentCommand request, CancellationToken cancellationToken)
         {
             var helpful = new Helpful
             {
