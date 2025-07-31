@@ -597,6 +597,20 @@
             <param name="ProductId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.VoteOnCommentController.Post(WebApi.ModelsAndDtoes.Product.CreateOrUpdateVoteOnCommentApiDto)">
+            <summary>
+            ثبت یا ویرایش یک رای برای کامنت (کاربری) (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.VoteOnCommentController.Delete(System.Int64)">
+            <summary>
+            حذف یک رای (کاربری) (Auth)
+            </summary>
+            <param name="CommentId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.WeatherForecastController.Get">
             <summary>
             ای پی آی برای تست اتنفیکشن (Auth)

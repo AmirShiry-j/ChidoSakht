@@ -36,7 +36,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Get([FromQuery] CommentFilterForUserSectionApiDto dto)
         {
             //map
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
             var inputService = new CommentFilterForUserSectionDto
             {
                 ProductId = dto.ProductId,

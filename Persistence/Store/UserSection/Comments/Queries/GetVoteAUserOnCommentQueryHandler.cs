@@ -20,7 +20,7 @@ namespace Persistence.Store.UserSection.Comments.Queries
         }
         public async Task<Helpful> Handle(GetVoteAUserOnCommentQuery request, CancellationToken cancellationToken)
         {
-            var vote = await _context.Helpfuls.FirstOrDefaultAsync(p => p.UserId.Equals(request.UserId) && request.CommentId.Equals(request.CommentId));
+            var vote = await _context.Helpfuls.FirstOrDefaultAsync(p => p.UserId.Equals(request.UserId) && p.CommentId.Equals(request.CommentId));
             return vote;
         }
     }

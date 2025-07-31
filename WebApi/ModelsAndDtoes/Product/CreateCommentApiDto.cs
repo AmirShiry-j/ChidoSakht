@@ -13,7 +13,7 @@ namespace WebApi.ModelsAndDtoes.Product
         [Required]
         public int ProductId { get; set; }
     }
-    public class CreateVoteOnCommentApiDto
+    public class CreateOrUpdateVoteOnCommentApiDto
     {
         [Required]
         public long CommentId { get; set; }

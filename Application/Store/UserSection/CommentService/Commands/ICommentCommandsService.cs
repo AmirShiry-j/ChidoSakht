@@ -12,8 +12,8 @@ namespace Application.Store.UserSection.CommentService.Commands
     {
         Task<ResultDto<long>> CreateCommentAsync(CreateCommentDto dto, string UserId);
         Task<ResultDto> DeleteCommentAsync(long CommentId, string UserId);
-        Task<ResultDto> CreateVoteOnCommentAsync(CreateVoteOnCommentDto dto, string UserId);
-        Task<ResultDto> DeleteVoteOnCommentAsync(UpdateVoteOnCommentDto dto, string UserId);
+        Task<ResultDto> CreateVoteOnCommentAsync(CreateOrUpdateVoteOnCommentDto dto, string UserId);
+        Task<ResultDto> DeleteVoteOnCommentAsync(long CommentId, string UserId);
     }
     public class CommentCommandsService : ICommentCommandsService
     {
@@ -52,7 +52,7 @@ namespace Application.Store.UserSection.CommentService.Commands
             };
         }
 
-        public async Task<ResultDto> CreateVoteOnCommentAsync(CreateVoteOnCommentDto dto, string UserId)
+        public async Task<ResultDto> CreateVoteOnCommentAsync(CreateOrUpdateVoteOnCommentDto dto, string UserId)
         {
             //check exist
             var comment = await _mediator.Send(new GetCommentByIdQuery(dto.CommentId));
@@ -136,10 +136,10 @@ namespace Application.Store.UserSection.CommentService.Commands
             };
         }
 
-        public async Task<ResultDto> DeleteVoteOnCommentAsync(UpdateVoteOnCommentDto dto, string UserId)
+        public async Task<ResultDto> DeleteVoteOnCommentAsync(long CommentId, string UserId)
         {
             //check exist
-            var comment = await _mediator.Send(new GetCommentByIdQuery(dto.CommentId));
+            var comment = await _mediator.Send(new GetCommentByIdQuery(CommentId));
             if (comment is null)
             {
                 return new ResultDto
@@ -149,7 +149,7 @@ namespace Application.Store.UserSection.CommentService.Commands
             }
 
             //get from db
-            var vote = await _mediator.Send(new GetVoteAUserOnCommentQuery(dto.CommentId, UserId));
+            var vote = await _mediator.Send(new GetVoteAUserOnCommentQuery(CommentId, UserId));
             if (vote is null)
             {
                 return new ResultDto
@@ -176,7 +176,7 @@ namespace Application.Store.UserSection.CommentService.Commands
         public byte Star { get; set; }
         public int ProductId { get; set; }
     }
-    public class CreateVoteOnCommentDto
+    public class CreateOrUpdateVoteOnCommentDto
     {
         public long CommentId { get; set; }
         public bool WasHelpful { get; set; }
