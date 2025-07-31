@@ -36,6 +36,7 @@ using Application.Store.AdminSection.RelatedProduct;
 using Application.Store.AdminSection.ProductSpecificationService;
 using Application.Store.UserSection.ProductService;
 using Application.Store.UserSection.CommentService;
+using Application.Store.AdminSection.CommentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -159,7 +160,8 @@ builder.Services.AddScoped<IFacadeAdminProductSpecificationService, FacadeAdminP
 builder.Services.AddScoped<IFacadeAdminPermissionService, FacadeAdminPermissionService>();
 //RelatedProduct
 builder.Services.AddScoped<IFacadeAdminRelatedProductService, FacadeAdminRelatedProductService>();
-
+//Comment
+builder.Services.AddScoped<IFacadeAdminCommentService, FacadeAdminCommentService>();
 
 //User Section
 builder.Services.AddScoped<IFacadeCategoryService, FacadeCategoryService>();
