@@ -14,6 +14,7 @@
         ProductImage,
         ProductAttributeValue,
         ProductAttributesAndValues,
-        ProductVariant
+        ProductVariant,
+        Comment
     }
 }

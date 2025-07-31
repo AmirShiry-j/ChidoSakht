@@ -1,9 +1,11 @@
-﻿using Application.Commons.Objects.MessageEventTypes;
+﻿using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.MessageEventTypes;
 using Application.Store.AdminSection.CommentService;
 using Application.Store.AdminSection.CommentService.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Comments;
+using WebApi.Filters.Permissions;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -25,6 +27,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Comment, KeyNameAction.View, KeyNameArea.Admin)]
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] CommentFilterForAdminSectionApiDto dto)
         {
@@ -50,6 +53,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="CommentId"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Comment, KeyNameAction.Edit, KeyNameArea.Admin)]
         [HttpPut("{CommentId}")]
         public async Task<IActionResult> Put(long CommentId)
         {
@@ -72,6 +76,7 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <param name="CommentId"></param>
         /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Comment, KeyNameAction.Delete, KeyNameArea.Admin)]
         [HttpDelete("{CommentId}")]
         public async Task<IActionResult> Delete(long CommentId)
         {
