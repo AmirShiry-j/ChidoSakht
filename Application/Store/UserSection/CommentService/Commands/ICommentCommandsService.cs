@@ -117,7 +117,7 @@ namespace Application.Store.UserSection.CommentService.Commands
             }
 
             //check comment was for user
-            if (comment.UserId.Equals(UserId))
+            if (!comment.UserId.Equals(UserId))
             {
                 return new ResultDto
                 {

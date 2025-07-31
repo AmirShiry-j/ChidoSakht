@@ -549,6 +549,27 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.CommentController.Get(WebApi.ModelsAndDtoes.Product.CommentFilterForUserSectionApiDto)">
+            <summary>
+            نمایش کامنت های یک محصول 
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CommentController.Post(WebApi.ModelsAndDtoes.Product.CreateCommentApiDto)">
+            <summary>
+            گذاشتن یک کامنت (کاربری) (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CommentController.Delete(System.Int64)">
+            <summary>
+            حذف یک کامنت (کاربری) (Auth)
+            </summary>
+            <param name="CommentId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.ProductController.Get(WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto)">
             <summary>
             برگردوندن محصولات با فیلتر های مختلف (کاربری)

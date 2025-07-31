@@ -29,13 +29,13 @@ namespace Persistence.Store.UserSection.Comments.Queries
             prComment = prComment.And(x => x.Confirmation);
 
             //Filter CommentId
-            prComment = prComment.And(x => x.Id.Equals(FilterDto.CommentId));
+            prComment = prComment.And(x => x.ProductId.Equals(FilterDto.ProductId));
 
             //Comment by FilterFor
             var comments = await _context.Comments
                 .Where(prComment)
                 .Include(p => p.Helpfuls)
-                .Include(p => p.UserId)
+                .Include(p => p.User)
                 .OrderByDescending(p => p.CreateTime)
                 .Skip((FilterDto.Page.Value - 1) * FilterDto.CountInPage.Value)
                 .Take(FilterDto.CountInPage.Value)
@@ -47,11 +47,11 @@ namespace Persistence.Store.UserSection.Comments.Queries
                     CountVoteUnHelpfuls = p.Helpfuls.Count(p => !p.WasHelpful),
                     FullNameUser = p.User.FullName,
                     Star = p.Star,
-                    UserVoteHelpful = (string.IsNullOrEmpty(request.UserId)) && p.Helpfuls.Any(p => p.UserId.Equals(request.UserId)) 
-                                        ? null : p.Helpfuls.FirstOrDefault(p => p.UserId.Equals(request.UserId)).WasHelpful
+                    UserVoteHelpful = (string.IsNullOrEmpty(request.UserId)) && p.Helpfuls.Any(p => p.UserId.Equals(request.UserId))
+                                        ? null : p.Helpfuls.FirstOrDefault(p => p.UserId.Equals(request.UserId)).WasHelpful,
+                    CreateTime = p.CreateTime
                 })
                 .ToListAsync();
-
 
             //For Pagination
             int CountAllItems = _context.Comments.Where(prComment).Count();

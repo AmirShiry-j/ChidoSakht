@@ -39,7 +39,7 @@ namespace Application.Store.UserSection.CommentService.Queries
     }
     public class CommentFilterForUserSectionDto
     {
-        public long CommentId { get; set; }
+        public int ProductId { get; set; }
         public int? Page { get; set; } = 1;
         public int? CountInPage { get; set; } = 10;
     }
@@ -53,6 +53,7 @@ namespace Application.Store.UserSection.CommentService.Queries
         public int CountVoteHelpfuls { get; set; }
         public int CountVoteUnHelpfuls { get; set; }
         public bool? UserVoteHelpful { get; set; }
+        public DateTime CreateTime { get; set; }
     }
     public class ResultFilterDto
     {
