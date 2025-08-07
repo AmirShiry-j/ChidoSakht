@@ -71,13 +71,13 @@ namespace Persistence.Store.UserSection.Products.Queries
             //Filter FromPrice
             if (FilterDto.FromPrice is not null)
             {
-                prProduct = prProduct.And(x => x.ProductVariants.Any(p => p.Price > FilterDto.FromPrice));
+                prProduct = prProduct.And(x => x.ProductVariants.Any(p => (p.SpecialPrice == null && p.Price >= FilterDto.FromPrice) || (p.SpecialPrice != null && p.SpecialPrice >= FilterDto.FromPrice)));
             }
 
-            //Filter FromPrice
+            //Filter ToPrice
             if (FilterDto.ToPrice is not null)
             {
-                prProduct = prProduct.And(x => x.ProductVariants.Any(p => p.Price > FilterDto.ToPrice));
+                prProduct = prProduct.And(x => x.ProductVariants.Any(p => (p.SpecialPrice == null && p.Price <= FilterDto.ToPrice) || (p.SpecialPrice != null && p.SpecialPrice <= FilterDto.ToPrice)));
             }
 
 
@@ -98,7 +98,7 @@ namespace Persistence.Store.UserSection.Products.Queries
                 //    break;
                 //case TypeOrderByForProduct.Price:
                 //    //SortBy = "felan";
-                //    SortBy = nameof(Product.CreateTime);
+                //    SortBy = nameof(Product.);
                 //    break;
                 default:
                     SortBy = nameof(Product.CreateTime);
