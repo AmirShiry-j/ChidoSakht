@@ -18,7 +18,7 @@ namespace Persistence.Store.AdminSection.Categories.Queries
         public async Task<Category> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
             //Find and return
-            return await _context.Categories
+            return await _context.Categories.IgnoreQueryFilters()
                 .Where(c => c.Id == request.Id)
                 .FirstOrDefaultAsync(cancellationToken);
         }

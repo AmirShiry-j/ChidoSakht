@@ -21,7 +21,7 @@ namespace Persistence.Store.AdminSection.Permissions.Queries
 
         public async Task<List<PermissionDto>> Handle(GetAssignedPermissionsInARoleQuery request, CancellationToken cancellationToken)
         {
-            return await _context.RolePermissions.Where(p => p.RoleId.Equals(request.RoleId))
+            return await _context.RolePermissions.IgnoreQueryFilters().Where(p => p.RoleId.Equals(request.RoleId))
                 .Include(p => p.Permission)
                 .Select(p => new PermissionDto
                 {

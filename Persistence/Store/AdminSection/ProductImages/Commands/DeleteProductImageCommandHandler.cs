@@ -23,7 +23,7 @@ namespace Persistence.Store.AdminSection.ProductImages.Commands
             //Update product if image was set for Index
             if (request.ProductImage.IsIndex)
             {
-                var product = await _context.Products.FirstOrDefaultAsync(p => p.Id.Equals(request.ProductImage.ProductId));
+                var product = await _context.Products.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id.Equals(request.ProductImage.ProductId));
                 product.NameIndexImage = null;
                 _context.Products.Update(product);
             }

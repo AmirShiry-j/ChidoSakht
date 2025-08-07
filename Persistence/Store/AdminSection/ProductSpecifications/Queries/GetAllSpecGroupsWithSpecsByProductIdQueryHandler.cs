@@ -12,7 +12,7 @@ namespace Persistence.Store.AdminSection.ProductSpecifications.Queries
 
         public async Task<List<SpecGroupWithSpecsDto>> Handle(GetAllSpecGroupsWithSpecsByProductIdQuery request, CancellationToken cancellationToken)
         {
-            return await _context.ProductSpecificationGroups
+            return await _context.ProductSpecificationGroups.IgnoreQueryFilters()
                 .Where(g => g.ProductId == request.ProductId)
                 .Include(g => g.Specifications)
                 .Select(g => new SpecGroupWithSpecsDto

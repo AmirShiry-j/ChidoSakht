@@ -20,7 +20,7 @@ namespace Persistence.Store.AdminSection.ProductImages.Queries
         }
         public async Task<ProductImage> Handle(GetAProductImageByNameQuery request, CancellationToken cancellationToken)
         {
-            var image = await _context.ProductImages.FirstOrDefaultAsync(p => p.Name.Equals(request.Name));
+            var image = await _context.ProductImages.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Name.Equals(request.Name));
 
             return image;
         }

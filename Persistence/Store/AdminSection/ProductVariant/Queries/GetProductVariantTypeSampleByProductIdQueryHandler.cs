@@ -16,7 +16,7 @@ namespace Persistence.Store.AdminSection.ProductVariant.Queries
         public async Task<ProductVariantDto> Handle(GetProductVariantTypeSampleByProductIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
-            var productVariant = await _context.ProductVariants
+            var productVariant = await _context.ProductVariants.IgnoreQueryFilters()
                 .Where(p => p.ProductId.Equals(request.ProductId) && p.ProductType.Equals(ProductType.Sample))
                 .Include(p => p.ProductVariantTransportation)
                 .Select(p => new ProductVariantDto

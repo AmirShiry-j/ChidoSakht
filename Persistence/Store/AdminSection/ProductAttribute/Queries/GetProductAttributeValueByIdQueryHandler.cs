@@ -21,7 +21,7 @@ namespace Persistence.Store.AdminSection.ProductAttribute.Queries
         public async Task<ProductAttributeValue> Handle(GetProductAttributeValueByIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
-            var productAttributeValue = await _context.ProductAttributeValues.FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
+            var productAttributeValue = await _context.ProductAttributeValues.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
 
             //Retrun It
             return productAttributeValue;

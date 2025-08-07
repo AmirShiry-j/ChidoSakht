@@ -20,7 +20,7 @@ namespace Persistence.Store.AdminSection.ProductVariant.Queries
         public async Task<Domain.Products.ProductVariant> Handle(GetProductVariantByIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
-            var productVariant = await _context.ProductVariants.FirstOrDefaultAsync(p => p.Id.Equals(request.ProductVariantId));
+            var productVariant = await _context.ProductVariants.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id.Equals(request.ProductVariantId));
 
             //Retrun It
             return productVariant;

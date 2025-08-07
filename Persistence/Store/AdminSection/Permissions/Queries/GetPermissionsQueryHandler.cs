@@ -46,7 +46,7 @@ namespace Persistence.Store.AdminSection.Permissions.Queries
                 prPermi = prPermi.And(x => x.Action.Equals(FilterDto.Action));
             }
 
-            return await _context.Permissions
+            return await _context.Permissions.IgnoreQueryFilters()
                 .Where(prPermi)
                 .OrderBy(p => p.Id)
                 //.OrderBy(p => p.Area)

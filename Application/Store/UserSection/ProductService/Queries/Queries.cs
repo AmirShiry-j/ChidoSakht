@@ -1,4 +1,4 @@
-﻿using Application.Store.AdminSection.ProductService.Queries;
+﻿using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,15 @@ using System.Threading.Tasks;
 
 namespace Application.Store.UserSection.ProductService.Queries
 {
+    public class GetProductByIdInUserSectionQuery : IRequest<Product>
+    {
+        public int Id { get; set; }
+
+        public GetProductByIdInUserSectionQuery(int id)
+        {
+            Id = id;
+        }
+    }
     public class GetProductsByFilterQuery : IRequest<ResultFilterDto>
     {
         public ProductFilterForUserSectionDto Filter { get; set; }

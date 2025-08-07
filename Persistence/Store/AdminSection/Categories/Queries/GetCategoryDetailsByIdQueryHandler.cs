@@ -33,7 +33,7 @@ namespace Persistence.Store.AdminSection.Categories.Queries
         public async Task<CategoryDetailsDto> GetCategoryWithChildrenExplicitAsync(int categoryId, DataBaseContext context)
         {
             //Get Category and include parent
-            var category = await context.Set<Category>()
+            var category = await context.Set<Category>().IgnoreQueryFilters()
                 .Include(p => p.ParentCategory)
            .FirstOrDefaultAsync(c => c.Id == categoryId);
 

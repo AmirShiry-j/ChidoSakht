@@ -19,7 +19,7 @@ namespace Persistence.Store.AdminSection.ProductVariant.Queries
         }
         public async Task<List<int>> Handle(GetValidSendedProductAttributeValueIdsByProductIdQuery request, CancellationToken cancellationToken)
         {
-            var ids = await _context.ProductAttributeValues.Include(p => p.ProductAttribute)
+            var ids = await _context.ProductAttributeValues.IgnoreQueryFilters().Include(p => p.ProductAttribute)
                             .Where(p => request.ProductAttributeValueIds.Contains(p.Id) &&
                             p.ProductAttribute.ProductId.Equals(request.ProductId) &&
                             p.ProductAttribute.UseForVariant

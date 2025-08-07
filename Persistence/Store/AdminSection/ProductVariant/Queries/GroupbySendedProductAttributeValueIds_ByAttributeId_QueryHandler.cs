@@ -21,7 +21,7 @@ namespace Persistence.Store.AdminSection.ProductVariant.Queries
 
         public async Task<List<GroupBy_Values_By_AttributeId_Dto>> Handle(GroupbySendedProductAttributeValueIds_ByAttributeId_Query request, CancellationToken cancellationToken)
         {
-            var values = await _context.ProductAttributeValues.Where(p => request.ProductAttributeValueIds.Contains(p.Id)).ToListAsync();
+            var values = await _context.ProductAttributeValues.IgnoreQueryFilters().Where(p => request.ProductAttributeValueIds.Contains(p.Id)).ToListAsync();
 
             var results = values.GroupBy(
     p => p.ProductAttributeId,

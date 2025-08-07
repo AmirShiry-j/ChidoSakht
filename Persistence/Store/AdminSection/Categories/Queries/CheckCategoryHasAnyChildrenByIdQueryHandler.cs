@@ -22,7 +22,7 @@ namespace Persistence.Store.AdminSection.Categories.Queries
         public async Task<bool> Handle(CheckCategoryHasAnyChildrenByIdQuery request, CancellationToken cancellationToken)
         {
             //Find and return
-            return await _context.Categories
+            return await _context.Categories.IgnoreQueryFilters()
                 .Where(c => c.ParentCategoryId == request.Id)
                 .AnyAsync();
         }

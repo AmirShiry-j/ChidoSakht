@@ -19,7 +19,7 @@ namespace Persistence.Store.AdminSection.ProductImages.Commands
         }
         public async Task Handle(DeleteProductImagesByProductIdCommand request, CancellationToken cancellationToken)
         {
-            var images = await _context.ProductImages.Where(p => p.ProductId.Equals(request.ProductId)).ToListAsync();
+            var images = await _context.ProductImages.IgnoreQueryFilters().Where(p => p.ProductId.Equals(request.ProductId)).ToListAsync();
 
             foreach (var image in images)
             {

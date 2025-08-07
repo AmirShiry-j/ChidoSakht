@@ -19,7 +19,7 @@ namespace Persistence.Store.AdminSection.ProductVariant.Queries
         }
         public async Task<bool> Handle(CheckNotExistVariantLikeThisBeforeQuery request, CancellationToken cancellationToken)
         {
-            var valuesOfVariatsProduct = await _context.ProductVariantAttributeValues
+            var valuesOfVariatsProduct = await _context.ProductVariantAttributeValues.IgnoreQueryFilters()
                 .Include(p => p.ProductVariant)
                 .Where(p => p.ProductVariant.ProductId.Equals(request.ProductId))
                 .ToListAsync();

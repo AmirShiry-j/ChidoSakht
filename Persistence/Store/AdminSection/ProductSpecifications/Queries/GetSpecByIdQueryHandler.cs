@@ -21,7 +21,7 @@ namespace Persistence.Store.AdminSection.ProductSpecifications.Queries
         public async Task<ProductSpecification> Handle(GetSpecByIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
-            var productSpecification = await _context.ProductSpecifications.FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
+            var productSpecification = await _context.ProductSpecifications.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
 
             //Retrun It
             return productSpecification;

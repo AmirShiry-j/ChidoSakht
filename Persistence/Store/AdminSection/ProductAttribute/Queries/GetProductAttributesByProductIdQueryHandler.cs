@@ -20,7 +20,7 @@ namespace Persistence.Store.AdminSection.ProductAttribute.Queries
         public async Task<List<ProductAttributeDto>> Handle(GetProductAttributesByProductIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
-            var productAttributes = await _context.ProductAttributes.Where(p => p.ProductId.Equals(request.ProductId))
+            var productAttributes = await _context.ProductAttributes.IgnoreQueryFilters().Where(p => p.ProductId.Equals(request.ProductId))
                 .Select(p => new ProductAttributeDto
                 {
                     AttributeType = p.AttributeType,

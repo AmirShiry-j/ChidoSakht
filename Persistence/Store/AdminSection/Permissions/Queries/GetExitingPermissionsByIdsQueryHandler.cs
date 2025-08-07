@@ -20,7 +20,7 @@ namespace Persistence.Store.AdminSection.Permissions.Queries
         }
         public async Task<List<Permission>> Handle(GetExitingPermissionsByIdsQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Permissions
+            return await _context.Permissions.IgnoreQueryFilters()
                 .Where(p => request.PermissionsIds.Contains(p.Id))
                 .ToListAsync(cancellationToken);
         }

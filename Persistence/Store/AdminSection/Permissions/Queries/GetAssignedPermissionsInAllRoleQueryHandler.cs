@@ -21,7 +21,7 @@ namespace Persistence.Store.AdminSection.Permissions.Queries
         public async Task<List<RoleDto>> Handle(GetAssignedPermissionsInAllRoleQuery request, CancellationToken cancellationToken)
         {
             //get roles and their permissions
-            var roles = await _context.Roles
+            var roles = await _context.Roles.IgnoreQueryFilters()
                 .Select(x => new RoleDto
                 {
                     Id = x.Id,
@@ -30,10 +30,10 @@ namespace Persistence.Store.AdminSection.Permissions.Queries
                 }).ToListAsync(cancellationToken);
 
             //get rolePermissions  many to many table
-            var rolePermissions = await _context.RolePermissions.ToListAsync(cancellationToken);
+            var rolePermissions = await _context.RolePermissions.IgnoreQueryFilters().ToListAsync(cancellationToken);
 
             //get permissions
-            var permissions = await _context.Permissions.Where(p => rolePermissions.Select(s => s.PermissionId).Contains(p.Id))
+            var permissions = await _context.Permissions.IgnoreQueryFilters().Where(p => rolePermissions.Select(s => s.PermissionId).Contains(p.Id))
                 .Select(p => new PermissionDto
                 {
                     Id = p.Id,

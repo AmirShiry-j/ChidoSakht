@@ -20,7 +20,7 @@ namespace Persistence.Store.AdminSection.Categories.Queries
 
         public async Task<List<BriefCategorySampleDto>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Categories.Select(p => new BriefCategorySampleDto
+            return await _context.Categories.IgnoreQueryFilters().Select(p => new BriefCategorySampleDto
             {
                 Id = p.Id,
                 Name = p.Name

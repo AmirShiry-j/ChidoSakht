@@ -20,7 +20,7 @@ namespace Persistence.Store.AdminSection.Roles.Queries
         }
         public async Task<Role> Handle(GetRoleByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Roles.FirstOrDefaultAsync(p => p.Id.Equals(request.RoleId));
+            return await _context.Roles.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id.Equals(request.RoleId));
         }
     }
 }

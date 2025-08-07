@@ -29,7 +29,7 @@ namespace Persistence.Store.AdminSection.Categories.Queries
         public async Task<List<BriefCategoryDto>> GetAllCategoriesAsTreeExplicitAsync(DataBaseContext context)
         {
             //Get main Categories
-            var baseCategories = await context.Set<Category>()
+            var baseCategories = await context.Set<Category>().IgnoreQueryFilters()
                 .Where(p => p.ParentCategoryId == null)
                 .ToListAsync();
 

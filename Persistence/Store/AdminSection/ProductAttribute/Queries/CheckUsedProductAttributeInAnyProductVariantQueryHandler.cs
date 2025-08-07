@@ -15,7 +15,7 @@ namespace Persistence.Store.AdminSection.ProductAttribute.Queries
 
         public async Task<bool> Handle(CheckUsedProductAttributeInAnyProductVariantQuery request, CancellationToken cancellationToken)
         {
-            var valueIds = await _context.ProductAttributeValues.Where(p => p.ProductAttributeId.Equals(request.ProductAttributeId))
+            var valueIds = await _context.ProductAttributeValues.IgnoreQueryFilters().Where(p => p.ProductAttributeId.Equals(request.ProductAttributeId))
                 .Select(p => p.Id)
                 .ToListAsync();
 

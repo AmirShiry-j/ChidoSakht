@@ -1,5 +1,6 @@
 ﻿using Application.Store.AdminSection.ProductImageService.Queries;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Persistence.Store.AdminSection.ProductImages.Queries
         }
         public async Task<List<ProductImageDto>> Handle(GetProductImagesQueries request, CancellationToken cancellationToken)
         {
-            var images = _context.ProductImages.Where(p => p.ProductId.Equals(request.ProductId)).Select(p =>
+            var images = _context.ProductImages.IgnoreQueryFilters().Where(p => p.ProductId.Equals(request.ProductId)).Select(p =>
                 new ProductImageDto
                 {
                     Id = p.Id,

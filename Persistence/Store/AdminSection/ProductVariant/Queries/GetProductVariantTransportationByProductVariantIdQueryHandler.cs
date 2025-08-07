@@ -21,7 +21,7 @@ namespace Persistence.Store.AdminSection.ProductVariant.Queries
         public async Task<ProductVariantTransportation> Handle(GetProductVariantTransportationByProductVariantIdQuery request, CancellationToken cancellationToken)
         {
             //get from db
-            var productVariantTransportation = await _context.ProductVariantTransportations.FirstOrDefaultAsync(p => p.ProductVariantId.Equals(request.ProductVariantId));
+            var productVariantTransportation = await _context.ProductVariantTransportations.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.ProductVariantId.Equals(request.ProductVariantId));
 
             //Retrun It
             return productVariantTransportation;

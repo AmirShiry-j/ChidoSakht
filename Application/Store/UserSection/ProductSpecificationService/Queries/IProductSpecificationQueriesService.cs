@@ -1,7 +1,7 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Commons.Objects.Dtoes;
 using Application.Commons.Objects.MessageEventTypes;
-using Application.Store.AdminSection.ProductService.Queries;
+using Application.Store.UserSection.ProductService.Queries;
 using Domain.Products;
 using MediatR;
 using System;
@@ -30,7 +30,7 @@ namespace Application.Store.UserSection.ProductSpecificationService.Queries
         {
 
             //check exist
-            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            var product = await _mediator.Send(new GetProductByIdInUserSectionQuery(ProductId));
             if (product is null)
             {
                 return new ResultDto<List<SpecGroupWithSpecsDto>>

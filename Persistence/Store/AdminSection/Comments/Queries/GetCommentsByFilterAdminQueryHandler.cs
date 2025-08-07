@@ -60,7 +60,7 @@ namespace Persistence.Store.AdminSection.Comments.Queries
                 .ToListAsync();
 
             //For Pagination
-            int CountAllItems = _context.Comments.Where(prComment).Count();
+            int CountAllItems = _context.Comments.IgnoreQueryFilters().Where(prComment).Count();
             int CountAllPages = CountAllItems / FilterDto.CountInPage.Value + (CountAllItems % FilterDto.CountInPage.Value > 0 ? 1 : 0);
 
             return new ResultFilterDto

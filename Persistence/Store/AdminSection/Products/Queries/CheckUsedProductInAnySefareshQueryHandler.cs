@@ -20,14 +20,14 @@ namespace Persistence.Store.AdminSection.Products.Queries
 
         public async Task<bool> Handle(CheckUsedProductInAnySefareshQuery request, CancellationToken cancellationToken)
         {
-            var variantIds_SampleOrVariable = await _context.ProductVariants
+            var variantIds_SampleOrVariable = await _context.ProductVariants.IgnoreQueryFilters()
                 .Where(p => p.ProductId.Equals(request.ProductId))
                 .Select(p => p.Id).ToListAsync();
 
             if (!variantIds_SampleOrVariable.Any())
                 return false;
 
-            var used = await _context.SymbolicOrderOrSymbolicShoppingCartItems
+            var used = await _context.SymbolicOrderOrSymbolicShoppingCartItems.IgnoreQueryFilters()
                 .AnyAsync(p => variantIds_SampleOrVariable.Contains(p.ProductVariantId));
 
             return used;

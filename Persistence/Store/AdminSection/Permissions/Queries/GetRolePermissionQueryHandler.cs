@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Store.AdminSection.Permissions.Commands
+namespace Persistence.Store.AdminSection.Permissions.Queries
 {
     public class GetRolePermissionQueryHandler : IRequestHandler<GetRolePermissionQuery, RolePermission>
     {
@@ -22,7 +22,7 @@ namespace Persistence.Store.AdminSection.Permissions.Commands
         public async Task<RolePermission> Handle(GetRolePermissionQuery request, CancellationToken cancellationToken)
         {
             //Get record from db
-            return await _context.RolePermissions
+            return await _context.RolePermissions.IgnoreQueryFilters()
                 .FirstOrDefaultAsync(p => p.PermissionId.Equals(request.PermissionId) && p.RoleId.Equals(request.RoleId), cancellationToken);
         }
     }

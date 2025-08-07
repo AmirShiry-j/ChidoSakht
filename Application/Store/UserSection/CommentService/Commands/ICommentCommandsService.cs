@@ -1,8 +1,8 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Commons.Objects.Dtoes;
 using Application.Commons.Objects.MessageEventTypes;
-using Application.Store.AdminSection.ProductService.Queries;
 using Application.Store.UserSection.CommentService.Queries;
+using Application.Store.UserSection.ProductService.Queries;
 using Domain.Users;
 using MediatR;
 
@@ -28,7 +28,7 @@ namespace Application.Store.UserSection.CommentService.Commands
         public async Task<ResultDto<long>> CreateCommentAsync(CreateCommentDto dto, string UserId)
         {
             //check exist
-            var product = await _mediator.Send(new GetProductByIdQuery(dto.ProductId));
+            var product = await _mediator.Send(new GetProductByIdInUserSectionQuery(dto.ProductId));
             if (product is null)
             {
                 return new ResultDto<long>

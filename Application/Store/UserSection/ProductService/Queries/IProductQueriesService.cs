@@ -1,7 +1,6 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Commons.Objects.Dtoes;
 using Application.Commons.Objects.MessageEventTypes;
-using Application.Store.AdminSection.ProductService.Queries;
 using Domain.Products;
 using MediatR;
 
@@ -60,7 +59,7 @@ namespace Application.Store.UserSection.ProductService.Queries
         public async Task<ResultDto<List<ProductDto>>> GetRelatedProducts(int ProductId)
         {
             //check exist
-            var product = await _mediator.Send(new GetProductByIdQuery(ProductId));
+            var product = await _mediator.Send(new GetProductByIdInUserSectionQuery(ProductId));
             if (product is null)
             {
                 return new ResultDto<List<ProductDto>>
