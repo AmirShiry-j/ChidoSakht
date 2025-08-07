@@ -18,7 +18,16 @@ namespace Persistence.Store.AdminSection.ProductImages.Commands
         }
         public async Task Handle(SetIndexImageForPrdouctCommand request, CancellationToken cancellationToken)
         {
-            _context.Update(request.ProductImage);
+            if (request.ProductImage is not null)
+                _context.Update(request.ProductImage);
+
+            var images = _context.ProductImages.Where(p => p.ProductId.Equals(request.Product.Id) && p.Name != request.Product.NameIndexImage);
+            foreach (var item in images)
+            {
+                item.IsIndex = false;
+                _context.Update(item);
+            }
+
             _context.Update(request.Product);
             _context.SaveChanges();
 

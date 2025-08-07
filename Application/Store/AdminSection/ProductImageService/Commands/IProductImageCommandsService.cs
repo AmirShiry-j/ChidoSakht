@@ -139,9 +139,7 @@ namespace Application.Store.AdminSection.ProductImageService.Commands
 
             //set index
             product.NameIndexImage = null;
-
-            //Update in db
-            await _mediator.Send(new UpdateProductCommand(product));
+            await _mediator.Send(new SetIndexImageForPrdouctCommand(null, product));
 
             //Set publish if ...
             var resultPublish = await _mediator.Send(new PublishProductIfValidateCommand(ProductId));
