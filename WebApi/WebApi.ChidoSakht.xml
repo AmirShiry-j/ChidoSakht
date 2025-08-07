@@ -605,6 +605,13 @@
             <param name="ProductId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.ProductSpecificationGroupsAndSpecificationsController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه گروه های اطلاعات با مشخصه هاشون (کاربری)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.ProfileController.Get">
             <summary>
             بر گردوندن اطلاعات پروفایل (Auth)
