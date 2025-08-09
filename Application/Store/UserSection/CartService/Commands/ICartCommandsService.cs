@@ -21,4 +21,20 @@ namespace Application.Store.UserSection.CartService.Commands
             _localizationService = localizationService;
         }
     }
+
+    public class CartDto
+    {
+        public long Id { get; set; }
+        public string UserId { get; set; }
+        public List<CartItemDto> Items { get; set; }
+        public decimal TotalPrice { get; set; }
+    }
+    public class CartItemDto
+    {
+        public int VariantId { get; set; }
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public long Price { get; set; }
+        public int Quantity { get; set; }
+    }
 }
