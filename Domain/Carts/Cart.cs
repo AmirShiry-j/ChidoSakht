@@ -15,6 +15,10 @@ namespace Domain.Carts
     }
     public class Cart
     {
+        public Cart()
+        {
+            
+        }
         public long Id { get; set; }
         public string UserId { get; set; }
         public ICollection<CartItem> Items { get; set; } = new List<CartItem>();
@@ -49,11 +53,13 @@ namespace Domain.Carts
 
     public class CartItem
     {
+        public CartItem()
+        {
+            
+        }
         public long Id { get; set; }
         public int ProductVariantId { get; set; }
         public ProductVariant ProductVariant { get; set; }
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
         public string ProductName { get; set; }
         public long Price { get; set; }
         public int Quantity { get; set; }
@@ -61,7 +67,6 @@ namespace Domain.Carts
         public CartItem(ProductVariant variant, int quantity)
         {
             ProductVariantId = variant.Id;
-            ProductId = variant.ProductId;
             ProductName = variant.Product.Name;
             Price = variant.SpecialPrice is null ? variant.Price : (long)variant.SpecialPrice;
             Quantity = quantity;
