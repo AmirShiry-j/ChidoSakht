@@ -14,7 +14,7 @@ namespace Application.Store.UserSection.CartService.Commands
     public class AddToCartCommand : IRequest<CartDto>
     {
         public string UserId { get; set; }
-        public int VariantId { get; set; }
+        public int PoductVariantId { get; set; }
         public int Quantity { get; set; }
     }
 
@@ -33,14 +33,15 @@ namespace Application.Store.UserSection.CartService.Commands
 
         public async Task<CartDto> Handle(AddToCartCommand request, CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetByIdAsync(Guid.NewGuid());
-            if (product == null) throw new Exception("Product not found");
+            //var product = await _productRepository.GetByIdAsync(Guid.NewGuid());
+            //if (product == null) throw new Exception("Product not found");
 
-            var cart = await _cartRepository.GetByUserIdAsync(request.UserId) ?? new Cart(request.UserId);
-            cart.AddItem(product, request.Quantity);
+            //var cart = await _cartRepository.GetByUserIdAsync(request.UserId) ?? new Cart(request.UserId);
+            //cart.AddItem(product, request.Quantity);
 
-            await _cartRepository.SaveAsync(cart);
-            return _mapper.Map<CartDto>(cart);
+            //await _cartRepository.SaveAsync(cart);
+            //return _mapper.Map<CartDto>(cart);
+            return null;
         }
     }
 

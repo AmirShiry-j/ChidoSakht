@@ -1,7 +1,9 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Store.UserSection.CartService.Commands;
 using Application.Store.UserSection.CartService.Queries;
+using Domain.Users;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +21,12 @@ namespace Application.Store.UserSection.CartService
     {
         private readonly IMediator _mediator;
         private readonly ILocalizationService _localizationService;
-        public FacadeCartService(IMediator mediator, ILocalizationService localizationService)
+        private readonly UserManager<User> _userManager;
+        public FacadeCartService(IMediator mediator, ILocalizationService localizationService, UserManager<User> userManager)
         {
             _mediator = mediator;
             _localizationService = localizationService;
+            _userManager = userManager;
         }
 
         //Commands
@@ -31,7 +35,7 @@ namespace Application.Store.UserSection.CartService
         {
             get
             {
-                return _CartCommandsService = _CartCommandsService ?? new CartCommandsService(_mediator, _localizationService);
+                return _CartCommandsService = _CartCommandsService ?? new CartCommandsService(_mediator, _localizationService, _userManager);
             }
         }
 

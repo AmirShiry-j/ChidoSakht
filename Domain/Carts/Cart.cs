@@ -7,14 +7,19 @@ using System.Threading.Tasks;
 
 namespace Domain.Carts
 {
-
+    public enum CartStatus
+    {
+        Open,
+        Next,
+        Closed,
+    }
     public class Cart
     {
         public long Id { get; set; }
         public string UserId { get; set; }
-        public List<CartItem> Items { get; set; } = new List<CartItem>();
+        public ICollection<CartItem> Items { get; set; } = new List<CartItem>();
         public long TotalPrice => Items.Sum(i => i.Price * i.Quantity);
-
+        public CartStatus CartStatus { get; set; }
         public Cart(string userId)
         {
             UserId = userId;
@@ -45,16 +50,20 @@ namespace Domain.Carts
     public class CartItem
     {
         public long Id { get; set; }
-        public int VariantId { get; set; }
+        public int ProductVariantId { get; set; }
+        public ProductVariant ProductVariant { get; set; }
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
         public string ProductName { get; set; }
         public long Price { get; set; }
         public int Quantity { get; set; }
 
         public CartItem(ProductVariant variant, int quantity)
         {
-            VariantId = variant.Id;
+            ProductVariantId = variant.Id;
+            ProductId = variant.ProductId;
             ProductName = variant.Product.Name;
-            Price = variant.Price;
+            Price = variant.SpecialPrice is null ? variant.Price : (long)variant.SpecialPrice;
             Quantity = quantity;
         }
 

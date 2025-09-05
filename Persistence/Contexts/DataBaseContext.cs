@@ -8,6 +8,8 @@ using Domain.Products;
 using Persistence.Configurations.Products;
 using System.Reflection.Emit;
 using Domain.SymbolicShoppingCarts;
+using Persistence.Configurations.Carts;
+using Domain.Carts;
 
 namespace Persistence.Contexts
 {
@@ -46,6 +48,9 @@ namespace Persistence.Contexts
         //
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Helpful> Helpfuls { get; set; }
+        //
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //Filters
@@ -206,6 +211,8 @@ namespace Persistence.Contexts
             builder.ApplyConfiguration(new ProductAttributeConfig());
             builder.ApplyConfiguration(new CommentConfig());
 
+            //Carts
+            builder.ApplyConfiguration(new CartConfig());
 
             base.OnModelCreating(builder);
         }
