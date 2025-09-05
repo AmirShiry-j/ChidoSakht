@@ -81,7 +81,7 @@ namespace Application.Store.UserSection.CommentService.Commands
             {
                 return new ResultDto
                 {
-                    Message = "Tem-Mes کامنت تایید نشده"
+                    Message = "Temp-Mes کامنت تایید نشده"
                 };
             }
 
@@ -174,7 +174,7 @@ namespace Application.Store.UserSection.CommentService.Commands
             {
                 return new ResultDto
                 {
-                    Message = "Tem-Mes کامنت تایید نشده"
+                    Message = "Temp-Mes کامنت تایید نشده"
                 };
             }
 
