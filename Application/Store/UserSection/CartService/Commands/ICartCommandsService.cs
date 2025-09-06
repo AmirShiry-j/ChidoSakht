@@ -1,11 +1,15 @@
 ﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Interfaces.Localization.AllMessageKeys;
 using Application.Commons.Objects.Dtoes;
 using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.CategoryService.Queries;
 using Application.Store.AdminSection.CommentService.Commands;
 using Application.Store.AdminSection.ProductVariant.Queries;
+using Application.Store.UserSection.CartService.Queries;
 using Application.Store.UserSection.CommentService.Queries;
 using Application.Store.UserSection.ProductService.Queries;
 using Application.Store.UserSection.ProductVariantService.Queries;
+using Domain.Carts;
 using Domain.Products;
 using Domain.Users;
 using MediatR;
@@ -34,7 +38,7 @@ namespace Application.Store.UserSection.CartService.Commands
         }
 
 
-        public async Task<ResultDto> AddItemToCard(string UserId, int? ProductId, int? VariantId)
+        public async Task<ResultDto> AddItemToCard(string UserId, int? ProductId, int? VariantId, CartStatus CartStatus)
         {
             //get User
             var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
@@ -119,29 +123,54 @@ namespace Application.Store.UserSection.CartService.Commands
             {
                 return new ResultDto
                 {
-                    Message = "اطلاعات نادرست است"
+                    Message = "Temp-Mes اطلاعات نادرست است"
                 };
             }
 
-            //Add to card
-            return null;
+            //Get Now cart
+            var cart = await _mediator.Send(new GetCartWithItemsQuery(UserId, CartStatus));
+
+            //create it if it is not exist
+            if (cart is null)
+            {
+                cart = new Domain.Carts.Cart
+                {
+                    UserId = UserId,
+                    CartStatus = CartStatus,
+                };
+                cart.AddItem(variant, 1);
+                //
+                var cartId = await _mediator.Send(new CreateACartWithItemCommand(cart));
+            }
+            else //add item to it
+            {
+                cart.AddItem(variant, 1);
+                //
+                await _mediator.Send(new UpdateACartWithItemCommand(cart));
+            }
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+                MessageEventType = MessageEventType.Created
+            };
         }
     }
 }
 
-public class CartDto
-{
-    public long Id { get; set; }
-    public string UserId { get; set; }
-    public List<CartItemDto> Items { get; set; }
-    public decimal TotalPrice { get; set; }
-}
-public class CartItemDto
-{
-    public int VariantId { get; set; }
-    public int ProductId { get; set; }
-    public string ProductName { get; set; }
-    public long Price { get; set; }
-    public int Quantity { get; set; }
-}
+//public class CartDto
+//{
+//    public long Id { get; set; }
+//    public string UserId { get; set; }
+//    public List<CartItemDto> Items { get; set; }
+//    public decimal TotalPrice { get; set; }
+//}
+//public class CartItemDto
+//{
+//    public int VariantId { get; set; }
+//    public int ProductId { get; set; }
+//    public string ProductName { get; set; }
+//    public long Price { get; set; }
+//    public int Quantity { get; set; }
+//}
 
