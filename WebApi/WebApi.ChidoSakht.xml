@@ -564,6 +564,20 @@
             <param name="user"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.CartController.Get(WebApi.ModelsAndDtoes.Cart.GetCartFilterApiDto)">
+            <summary>
+            برگردوندن سبد خرید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.Post(WebApi.ModelsAndDtoes.Cart.AddItemToCartApiDto)">
+            <summary>
+            اضافه کردن یک آیتم به سبد خرید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.CategoryController.Get">
             <summary>
             برگردوندن همه دسته بندی ها به شکل درخت (کاربری)

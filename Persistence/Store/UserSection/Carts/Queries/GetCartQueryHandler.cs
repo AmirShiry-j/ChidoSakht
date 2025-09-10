@@ -20,7 +20,7 @@ namespace Persistence.Store.UserSection.Carts.Queries
         }
         public async Task<Cart> Handle(GetCartQuery request, CancellationToken cancellationToken)
         {
-            var cart = await _context.Carts.Where(p => p.UserId.Equals(request.UserId) && p.CartStatus.Equals(request.CartStatus))
+            var cart = await _context.Carts.Where(p => p.UserId.Equals(request.UserId) && p.CartType.Equals(request.CartType))
                 .FirstOrDefaultAsync();
 
             return cart;

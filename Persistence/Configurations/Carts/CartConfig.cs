@@ -13,8 +13,8 @@ namespace Persistence.Configurations.Carts
     {
         public void Configure(EntityTypeBuilder<Cart> builder)
         {
-            var converterForCartStatusEnum = new Microsoft.EntityFrameworkCore.Storage.ValueConversion.EnumToStringConverter<CartStatus>();
-            builder.Property(p => p.CartStatus).IsRequired().HasConversion(converterForCartStatusEnum);
+            var converterForCartStatusEnum = new Microsoft.EntityFrameworkCore.Storage.ValueConversion.EnumToStringConverter<CartType>();
+            builder.Property(p => p.CartType).IsRequired().HasConversion(converterForCartStatusEnum);
         }
     }
 }

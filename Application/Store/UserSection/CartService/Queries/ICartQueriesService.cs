@@ -16,7 +16,7 @@ namespace Application.Store.UserSection.CartService.Queries
 {
     public interface ICartQueriesService
     {
-        Task<ResultDto<CartDetailsDto>> GetCartDetails(string UserId, CartStatus CartStatus);
+        Task<ResultDto<CartDetailsDto>> GetCartDetails(string UserId, CartType CartType);
     }
     public class CartQueriesService : ICartQueriesService
     {
@@ -30,7 +30,7 @@ namespace Application.Store.UserSection.CartService.Queries
             _userManager = userManager;
         }
 
-        public async Task<ResultDto<CartDetailsDto>> GetCartDetails(string UserId, CartStatus CartStatus)
+        public async Task<ResultDto<CartDetailsDto>> GetCartDetails(string UserId, CartType CartType)
         {
             //get User
             var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
@@ -54,7 +54,7 @@ namespace Application.Store.UserSection.CartService.Queries
             //}
 
             //Details
-            var cartDetails = await _mediator.Send(new GetCartDetailsQuery(UserId, CartStatus));
+            var cartDetails = await _mediator.Send(new GetCartDetailsQuery(UserId, CartType));
             return new ResultDto<CartDetailsDto>
             {
                 IsSuccess = true,
@@ -67,7 +67,7 @@ namespace Application.Store.UserSection.CartService.Queries
     {
         public long CartId { get; set; }
         public string UserId { get; set; }
-        public CartStatus CartStatus { get; set; }
+        public CartType CartType { get; set; }
         public List<CartItemDto> CartItems { get; set; } = new List<CartItemDto>();
         public long TotalPrice_LastKnown => CartItems.Sum(i => (i.LastKnownSpecialPrice is null ? i.LastKnownPrice : (long)i.LastKnownSpecialPrice) * i.Quantity);
         public long TotalPrice_Now => CartItems.Sum(i => (i.NowSpecialPrice is null ? i.NowPrice : (long)i.NowSpecialPrice) * i.Quantity);

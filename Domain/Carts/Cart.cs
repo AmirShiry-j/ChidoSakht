@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Carts
 {
-    public enum CartStatus
+    public enum CartType
     {
         Open = 1,
         Next = 2,
@@ -23,7 +23,7 @@ namespace Domain.Carts
         public string UserId { get; set; }
         public ICollection<CartItem> Items { get; set; } = new List<CartItem>();
         public long TotalPrice => Items.Sum(i => (i.LastKnownSpecialPrice is null ? i.LastKnownPrice : (long)i.LastKnownSpecialPrice) * i.Quantity);
-        public CartStatus CartStatus { get; set; }
+        public CartType CartType { get; set; }
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public Cart(string userId)

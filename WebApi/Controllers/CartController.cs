@@ -24,6 +24,11 @@ namespace WebApi.Controllers
             _localizationService = localizationService;
         }
 
+        /// <summary>
+        /// برگردوندن سبد خرید (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Get([FromQuery] GetCartFilterApiDto dto)
@@ -32,19 +37,24 @@ namespace WebApi.Controllers
             var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
 
             //Get data from service
-            var resultService = await _facadeCartService.CartQueriesService.GetCartDetails(userId, dto.CartStatus);
+            var resultService = await _facadeCartService.CartQueriesService.GetCartDetails(userId, dto.CartType);
 
             return Ok(resultService.Data);
         }
 
 
+        /// <summary>
+        /// اضافه کردن یک آیتم به سبد خرید (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post(AddItemToCartApiDto dto)
         {
             var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
 
-            var resultService = await _facadeCartService.CartCommandsService.AddItemToCard(userId, dto.ProductId, dto.ProductVariantId, dto.CartStatus);
+            var resultService = await _facadeCartService.CartCommandsService.AddItemToCard(userId, dto.ProductId, dto.ProductVariantId);
             if (resultService.IsSuccess)
             {
                 return Created();
@@ -57,5 +67,6 @@ namespace WebApi.Controllers
                     return BadRequest(resultService.Message);
             }
         }
+
     }
 }

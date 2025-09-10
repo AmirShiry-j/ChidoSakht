@@ -24,7 +24,7 @@ namespace Application.Store.UserSection.CartService.Commands
 {
     public interface ICartCommandsService
     {
-        Task<ResultDto> AddItemToCard(string UserId, int? ProductId, int? VariantId, CartStatus CartStatus);
+        Task<ResultDto> AddItemToCard(string UserId, int? ProductId, int? VariantId);
     }
     public class CartCommandsService : ICartCommandsService
     {
@@ -39,7 +39,7 @@ namespace Application.Store.UserSection.CartService.Commands
         }
 
 
-        public async Task<ResultDto> AddItemToCard(string UserId, int? ProductId, int? VariantId, CartStatus CartStatus)
+        public async Task<ResultDto> AddItemToCard(string UserId, int? ProductId, int? VariantId)
         {
             //get User
             var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
@@ -129,7 +129,7 @@ namespace Application.Store.UserSection.CartService.Commands
             }
 
             //Get Now cart
-            var cart = await _mediator.Send(new GetCartWithItemsQuery(UserId, CartStatus));
+            var cart = await _mediator.Send(new GetCartWithItemsQuery(UserId, CartType.Open));
 
             //create it if it is not exist
             if (cart is null)
@@ -137,7 +137,7 @@ namespace Application.Store.UserSection.CartService.Commands
                 cart = new Domain.Carts.Cart
                 {
                     UserId = UserId,
-                    CartStatus = CartStatus,
+                    CartType = CartType.Open,
                 };
                 cart.AddItem(variant, 1);
                 //
@@ -157,6 +157,11 @@ namespace Application.Store.UserSection.CartService.Commands
             };
         }
     }
+}
+public enum Behavior
+{
+    Increase = 1,
+    Decrease = 2
 }
 
 //public class CartDto

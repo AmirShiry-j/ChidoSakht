@@ -8,15 +8,36 @@ namespace WebApi.ModelsAndDtoes.Cart
     {
         public int? ProductId { get; set; }
         public int? ProductVariantId { get; set; }
-        [Required]
-        public CartStatus CartStatus { get; set; }
     }
 
+    public class DeleteItemInCartApiDto
+    {
+        [Required]
+        public long CartItemId { get; set; }
+    }
+
+    [ExactlyOneRequired(nameof(Quantity), nameof(Behavior))]
+    public class UpdateQuantityOfItemInCartApiDto
+    {
+        [Required]
+        public long CartItemId { get; set; }
+        public int? Quantity { get; set; }
+        public Behavior? Behavior { get; set; }
+    }
+
+    public class MoveAnItemInCartToAnotherCartApiDto
+    {
+        [Required]
+        public long CartItemId { get; set; }
+        [Range(1, 2)]
+        [Required]
+        public CartType MoveToCartType { get; set; }
+    }
     public class GetCartFilterApiDto
     {
         [Range(1, 2)]
         [Required]
-        public CartStatus CartStatus { get; set; }
+        public CartType CartType { get; set; }
     }
 
     //Validation
@@ -48,5 +69,4 @@ namespace WebApi.ModelsAndDtoes.Cart
             return new ValidationResult($"دقیقاً یکی از فیلدهای ({string.Join(", ", _propertyNames)}) باید مقدار داشته باشد.");
         }
     }
-
 }

@@ -19,7 +19,7 @@ namespace Persistence.Store.UserSection.Carts.Queries
         }
         public async Task<CartDetailsDto> Handle(GetCartDetailsQuery request, CancellationToken cancellationToken)
         {
-            var cartDetails = await _context.Carts.Where(p => p.UserId.Equals(request.UserId) && p.CartStatus.Equals(request.CartStatus))
+            var cartDetails = await _context.Carts.Where(p => p.UserId.Equals(request.UserId) && p.CartType.Equals(request.CartType))
     .Include(p => p.Items)
     .ThenInclude(p => p.ProductVariant)
     .ThenInclude(p => p.Product)
@@ -27,7 +27,7 @@ namespace Persistence.Store.UserSection.Carts.Queries
     {
         CartId = p.Id,
         UserId = p.UserId,
-        CartStatus = p.CartStatus,
+        CartType = p.CartType,
         CreatedAt = p.CreatedAt,
         UpdatedAt = p.UpdatedAt,
         CartItems = p.Items.Select(s => new CartItemDto
