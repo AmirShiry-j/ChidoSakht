@@ -21,4 +21,25 @@ namespace Application.Store.UserSection.CartService.Queries
         }
     }
 
+    public class GetCartQuery : IRequest<Cart>
+    {
+        public string UserId { get; set; }
+        public CartStatus CartStatus { get; set; }
+        public GetCartQuery(string UserId, CartStatus CartStatus)
+        {
+            this.UserId = UserId;
+            this.CartStatus = CartStatus;
+        }
+    }
+
+    public class GetCartDetailsQuery : IRequest<CartDetailsDto>
+    {
+        public string UserId { get; set; }
+        public CartStatus CartStatus { get; set; }
+        public GetCartDetailsQuery(string UserId, CartStatus CartStatus)
+        {
+            this.UserId = UserId;
+            this.CartStatus = CartStatus;
+        }
+    }
 }

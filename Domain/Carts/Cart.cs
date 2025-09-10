@@ -9,21 +9,23 @@ namespace Domain.Carts
 {
     public enum CartStatus
     {
-        Open,
-        Next,
-        Closed,
+        Open = 1,
+        Next = 2,
+        Closed = 3,
     }
     public class Cart
     {
         public Cart()
         {
-            
+
         }
         public long Id { get; set; }
         public string UserId { get; set; }
         public ICollection<CartItem> Items { get; set; } = new List<CartItem>();
-        public long TotalPrice => Items.Sum(i => i.Price * i.Quantity);
+        public long TotalPrice => Items.Sum(i => (i.LastKnownSpecialPrice is null ? i.LastKnownPrice : (long)i.LastKnownSpecialPrice) * i.Quantity);
         public CartStatus CartStatus { get; set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; set; }
         public Cart(string userId)
         {
             UserId = userId;
@@ -31,7 +33,7 @@ namespace Domain.Carts
 
         public void AddItem(ProductVariant variant, int quantity)
         {
-            var existingItem = Items.FirstOrDefault(i => i.Id == variant.Id);
+            var existingItem = Items.FirstOrDefault(i => i.ProductVariantId == variant.Id);
             if (existingItem != null)
             {
                 existingItem.IncreaseQuantity(quantity);
@@ -55,26 +57,29 @@ namespace Domain.Carts
     {
         public CartItem()
         {
-            
+
         }
         public long Id { get; set; }
         public int ProductVariantId { get; set; }
         public ProductVariant ProductVariant { get; set; }
-        public string ProductName { get; set; }
-        public long Price { get; set; }
+        public long LastKnownPrice { get; set; }
+        public long? LastKnownSpecialPrice { get; set; }
         public int Quantity { get; set; }
 
         public CartItem(ProductVariant variant, int quantity)
         {
             ProductVariantId = variant.Id;
-            ProductName = variant.Product.Name;
-            Price = variant.SpecialPrice is null ? variant.Price : (long)variant.SpecialPrice;
+            LastKnownSpecialPrice = variant.SpecialPrice;
+            LastKnownPrice = variant.Price;
             Quantity = quantity;
+            CreatedAt = DateTime.Now;
         }
 
         public void IncreaseQuantity(int amount)
         {
             if (amount > 0) Quantity += amount;
         }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

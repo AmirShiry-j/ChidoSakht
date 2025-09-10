@@ -11,20 +11,19 @@ using System.Threading.Tasks;
 
 namespace Persistence.Store.UserSection.Carts.Queries
 {
-    public class GetCartWithItemsQueryHandler : IRequestHandler<GetCartWithItemsQuery, Cart>
+    public class GetCartQueryHandler : IRequestHandler<GetCartQuery, Cart>
     {
         private readonly DataBaseContext _context;
-        public GetCartWithItemsQueryHandler(DataBaseContext context)
+        public GetCartQueryHandler(DataBaseContext context)
         {
             _context = context;
         }
-        public async Task<Cart> Handle(GetCartWithItemsQuery request, CancellationToken cancellationToken)
+        public async Task<Cart> Handle(GetCartQuery request, CancellationToken cancellationToken)
         {
-            var cartWithItems = await _context.Carts.Where(p => p.UserId.Equals(request.UserId) && p.CartStatus.Equals(request.CartStatus))
-                .Include(p => p.Items)
+            var cart = await _context.Carts.Where(p => p.UserId.Equals(request.UserId) && p.CartStatus.Equals(request.CartStatus))
                 .FirstOrDefaultAsync();
 
-            return cartWithItems;
+            return cart;
         }
     }
 }

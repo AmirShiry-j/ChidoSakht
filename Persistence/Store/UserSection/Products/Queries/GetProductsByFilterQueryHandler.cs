@@ -117,6 +117,7 @@ namespace Persistence.Store.UserSection.Products.Queries
                 {
                     Id = p.Id,
                     Name = p.Name,
+                    ProductType = p.ProductType,
                     NameIndexImage = p.NameIndexImage,
                     ImageAltText = p.ImageAltText,
                     Price = p.ProductVariants.FirstOrDefault().Price,

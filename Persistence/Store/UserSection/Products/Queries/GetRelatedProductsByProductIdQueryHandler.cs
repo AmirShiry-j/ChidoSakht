@@ -27,6 +27,7 @@ namespace Persistence.Store.UserSection.Products.Queries
     {
         Id = r.RelatedTo.Id,
         Name = r.RelatedTo.Name,
+        ProductType = r.RelatedTo.ProductType,
         Price = r.RelatedTo.ProductVariants.First().Price,
         SpecialPrice = r.RelatedTo.ProductVariants.First().SpecialPrice,
         ImageAltText = r.RelatedTo.ImageAltText,

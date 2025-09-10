@@ -103,6 +103,7 @@ namespace Application.Store.UserSection.ProductService.Queries
     public class ProductDto
     {
         public int Id { get; set; }
+        public ProductType ProductType { get; set; }
         public string Name { get; set; }
         public string? UniqeLink { get; set; }
         public string? ImageAltText { get; set; }

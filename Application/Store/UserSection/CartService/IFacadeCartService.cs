@@ -45,7 +45,7 @@ namespace Application.Store.UserSection.CartService
         {
             get
             {
-                return _CartQueriesService = _CartQueriesService ?? new CartQueriesService(_mediator, _localizationService);
+                return _CartQueriesService = _CartQueriesService ?? new CartQueriesService(_mediator, _localizationService, _userManager);
             }
         }
     }

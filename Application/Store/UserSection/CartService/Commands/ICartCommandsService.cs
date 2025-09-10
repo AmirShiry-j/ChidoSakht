@@ -24,6 +24,7 @@ namespace Application.Store.UserSection.CartService.Commands
 {
     public interface ICartCommandsService
     {
+        Task<ResultDto> AddItemToCard(string UserId, int? ProductId, int? VariantId, CartStatus CartStatus);
     }
     public class CartCommandsService : ICartCommandsService
     {
@@ -64,7 +65,7 @@ namespace Application.Store.UserSection.CartService.Commands
                     };
                 }
 
-                if (!variant.ProductType.Equals(2))
+                if (!variant.ProductType.Equals(ProductType.Variable))
                 {
                     return new ResultDto
                     {
@@ -93,7 +94,7 @@ namespace Application.Store.UserSection.CartService.Commands
                     };
                 }
 
-                if (!product.ProductType.Equals(1))
+                if (!product.ProductType.Equals(ProductType.Sample))
                 {
                     return new ResultDto
                     {
