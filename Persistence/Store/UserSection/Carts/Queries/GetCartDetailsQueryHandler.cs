@@ -21,21 +21,32 @@ namespace Persistence.Store.UserSection.Carts.Queries
         {
             var cartDetails = await _context.Carts.Where(p => p.UserId.Equals(request.UserId) && p.CartStatus.Equals(request.CartStatus))
     .Include(p => p.Items)
-    .Select(p=> new CartDetailsDto
+    .ThenInclude(p => p.ProductVariant)
+    .ThenInclude(p => p.Product)
+    .Select(p => new CartDetailsDto
     {
-        Id=p.Id,
-        UserId=p.UserId,
-        CartStatus=p.CartStatus,
-        TotalPrice=p.TotalPrice,
-        CartItems = p.Items.Select(s=>new CartItemDto
+        CartId = p.Id,
+        UserId = p.UserId,
+        CartStatus = p.CartStatus,
+        CreatedAt = p.CreatedAt,
+        UpdatedAt = p.UpdatedAt,
+        CartItems = p.Items.Select(s => new CartItemDto
         {
-            Id=s.Id,
-            ProductId=s.ProductVariant.ProductId,
+            CartItemId = s.Id,
+            ProductId = s.ProductVariant.ProductId,
             ProductType = s.ProductVariant.ProductType,
-            ProductVariantId= s.ProductVariantId,
-            Quantity=s.Quantity,
-            SpecialPrice = s.ProductVariant.SpecialPrice,
-            Stock= s.ProductVariant.Stock,            
+            ProductVariantId = s.ProductVariantId,
+            Quantity = s.Quantity,
+            LastKnownPrice = s.LastKnownPrice,
+            LastKnownSpecialPrice = s.LastKnownSpecialPrice,
+            Stock = s.ProductVariant.Stock,
+            ProductName = s.ProductVariant.Product.Name,
+            NameIndexImage = s.ProductVariant.Product.NameIndexImage,
+            CreatedAt = s.CreatedAt,
+            UpdatedAt = s.UpdatedAt,
+            NowPrice=s.ProductVariant.Price,
+            NowSpecialPrice=s.ProductVariant.SpecialPrice,
+
         }).ToList()
     })
     .FirstOrDefaultAsync();

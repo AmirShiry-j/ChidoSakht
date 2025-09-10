@@ -65,25 +65,51 @@ namespace Application.Store.UserSection.CartService.Queries
 
     public class CartDetailsDto
     {
-        public long Id { get; set; }
+        public long CartId { get; set; }
         public string UserId { get; set; }
-        //public string FullName { get; set; }
-        public long TotalPrice { get; set; }
         public CartStatus CartStatus { get; set; }
-        public List<CartItemDto> CartItems { get; set; }
+        public List<CartItemDto> CartItems { get; set; } = new List<CartItemDto>();
+        public long TotalPrice_LastKnown => CartItems.Sum(i => (i.LastKnownSpecialPrice is null ? i.LastKnownPrice : (long)i.LastKnownSpecialPrice) * i.Quantity);
+        public long TotalPrice_Now => CartItems.Sum(i => (i.NowSpecialPrice is null ? i.NowPrice : (long)i.NowSpecialPrice) * i.Quantity);
+        public bool AreAllThePricesUpToDate
+        {
+            get
+            {
+                return CartItems.All(p => p.AreThePricesUpToDate);
+            }
+        }
+        //
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
     public class CartItemDto
     {
-        public long Id { get; set; }
-        public int? ProductVariantId { get; set; }
-        public ProductType ProductType { get; set; }
+        public long CartItemId { get; set; }
         public int ProductId { get; set; }
+        public ProductType ProductType { get; set; }
+        public int? ProductVariantId { get; set; }
         public string ProductName { get; set; }
+        public string? NameIndexImage { get; set; }
+
         public int Quantity { get; set; }
         //
-        public long Price { get; set; }
-        public long? SpecialPrice { get; set; }
         public int Stock { get; set; }
         //
+        public long LastKnownPrice { get; set; }
+        public long? LastKnownSpecialPrice { get; set; }
+        //
+        public long NowPrice { get; set; }
+        public long? NowSpecialPrice { get; set; }
+        public bool AreThePricesUpToDate
+        {
+            get
+            {
+                return LastKnownPrice == NowPrice
+    && Nullable.Equals(LastKnownSpecialPrice, NowSpecialPrice);
+            }
+        }
+        //
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }
