@@ -41,7 +41,7 @@ namespace WebApi.Controllers
             var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
 
             //Get data from service
-            var resultService = await _facadeCartService.CartQueriesService.GetCartDetails(userId, dto.CartType);
+            var resultService = await _facadeCartService.CartQueriesService.GetCartDetails(userId, (Domain.Carts.CartType)dto.CartType);
 
             return Ok(resultService.Data);
         }
@@ -150,7 +150,7 @@ namespace WebApi.Controllers
             var inputService = new MoveAnItemInCartToAnotherCartDto
             {
                 CartItemId = dto.CartItemId,
-                MoveToCartType = dto.MoveToCartType,
+                MoveToCartType = (Domain.Carts.CartType)dto.MoveToCartType,
             };
 
             //run command

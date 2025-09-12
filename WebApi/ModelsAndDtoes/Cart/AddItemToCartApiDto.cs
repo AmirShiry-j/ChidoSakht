@@ -1,5 +1,4 @@
-﻿using Domain.Carts;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.ModelsAndDtoes.Cart
 {
@@ -21,7 +20,9 @@ namespace WebApi.ModelsAndDtoes.Cart
     {
         [Required]
         public long CartItemId { get; set; }
+        [Range(0, int.MaxValue)]
         public int? Quantity { get; set; }
+        [Range(1, 2)]
         public Behavior? Behavior { get; set; }
     }
 
@@ -68,5 +69,10 @@ namespace WebApi.ModelsAndDtoes.Cart
 
             return new ValidationResult($"دقیقاً یکی از فیلدهای ({string.Join(", ", _propertyNames)}) باید مقدار داشته باشد.");
         }
+    }
+    public enum CartType
+    {
+        Open = 1,
+        Next = 2,
     }
 }

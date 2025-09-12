@@ -68,6 +68,13 @@ namespace Application.Store.UserSection.CartService.Queries
             }
         }
         //
+        public bool DoWeHaveEnoughInventoryForEverything
+        {
+            get
+            {
+                return CartItems.Any(p => p.DoWeHaveEnoughInventory);
+            }
+        }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
@@ -95,6 +102,13 @@ namespace Application.Store.UserSection.CartService.Queries
             {
                 return LastKnownPrice == NowPrice
     && Nullable.Equals(LastKnownSpecialPrice, NowSpecialPrice);
+            }
+        }
+        public bool DoWeHaveEnoughInventory
+        {
+            get
+            {
+                return Stock >= Quantity;
             }
         }
         //

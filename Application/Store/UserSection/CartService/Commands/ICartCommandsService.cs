@@ -294,11 +294,11 @@ namespace Application.Store.UserSection.CartService.Commands
                     //change item
                     cartItem.CartId = cart_Next.Id;
                     //if item was exist in cart before 
-                    var existing_item = cart_Next.Items.Where(p => p.ProductVariantId.Equals(cartItem.ProductVariantId)).FirstOrDefault();
-                    if (existing_item is not null)
-                        cartItem.Quantity = existing_item.Quantity + cartItem.Quantity;
-                    else
-                        cartItem.Quantity = cartItem.Quantity;
+                    //var existing_item = cart_Next.Items.Where(p => p.ProductVariantId.Equals(cartItem.ProductVariantId)).FirstOrDefault();
+                    //if (existing_item is not null)
+                    //    cartItem.Quantity = existing_item.Quantity + cartItem.Quantity;
+                    //else
+                    //    cartItem.Quantity = cartItem.Quantity;
 
                     //updates
                     await _mediator.Send(new UpdateCartItemCommand(cartItem));
@@ -331,11 +331,11 @@ namespace Application.Store.UserSection.CartService.Commands
                     //change item
                     cartItem.CartId = cart_Open.Id;
                     //if item was exist in cart before 
-                    var existing_item = cart_Open.Items.Where(p => p.ProductVariantId.Equals(cartItem.ProductVariantId)).FirstOrDefault();
-                    if (existing_item is not null)
-                        cartItem.Quantity = existing_item.Quantity + cartItem.Quantity;
-                    else
-                        cartItem.Quantity = cartItem.Quantity;
+                    //var existing_item = cart_Open.Items.Where(p => p.ProductVariantId.Equals(cartItem.ProductVariantId)).FirstOrDefault();
+                    //if (existing_item is not null)
+                    //    cartItem.Quantity = existing_item.Quantity + cartItem.Quantity;
+                    //else
+                    //    cartItem.Quantity = cartItem.Quantity;
 
                     //updates
                     await _mediator.Send(new UpdateCartItemCommand(cartItem));
@@ -399,11 +399,13 @@ namespace Application.Store.UserSection.CartService.Commands
             {
                 if (dto.Behavior.Value == Behavior.Increase) //Increase
                 {
-                    cartItem.Quantity++;
+                    if (cartItem.Quantity < int.MaxValue)
+                        cartItem.Quantity++;
                 }
                 else //Decrease
                 {
-                    cartItem.Quantity--;
+                    if (cartItem.Quantity > 0)
+                        cartItem.Quantity--;
                 }
             }
             else
