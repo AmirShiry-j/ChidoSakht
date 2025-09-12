@@ -16,6 +16,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,8 @@ namespace Application.Store.UserSection.CartService.Commands
     {
         Task<ResultDto> AddItemToCard(string UserId, int? ProductId, int? VariantId);
         Task<ResultDto> DeleteItemInCard(string UserId, long CartItemId);
+        Task<ResultDto> UpdateQuantityAnItem(string UserId, UpdateQuantityOfItemInCartDto dto);
+        Task<ResultDto> MoveAnItemInACartToAnotherCart(string UserId, MoveAnItemInCartToAnotherCartDto dto);
     }
     public class CartCommandsService : ICartCommandsService
     {
@@ -189,6 +192,16 @@ namespace Application.Store.UserSection.CartService.Commands
 
             };
         }
+
+        public async Task<ResultDto> MoveAnItemInACartToAnotherCart(string UserId, MoveAnItemInCartToAnotherCartDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ResultDto> UpdateQuantityAnItem(string UserId, UpdateQuantityOfItemInCartDto dto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 public enum Behavior
@@ -197,19 +210,16 @@ public enum Behavior
     Decrease = 2
 }
 
-//public class CartDto
-//{
-//    public long Id { get; set; }
-//    public string UserId { get; set; }
-//    public List<CartItemDto> Items { get; set; }
-//    public decimal TotalPrice { get; set; }
-//}
-//public class CartItemDto
-//{
-//    public int VariantId { get; set; }
-//    public int ProductId { get; set; }
-//    public string ProductName { get; set; }
-//    public long Price { get; set; }
-//    public int Quantity { get; set; }
-//}
+public class UpdateQuantityOfItemInCartDto
+{
+    public long CartItemId { get; set; }
+    public int? Quantity { get; set; }
+    public Behavior? Behavior { get; set; }
+}
+
+public class MoveAnItemInCartToAnotherCartDto
+{
+    public long CartItemId { get; set; }
+    public CartType MoveToCartType { get; set; }
+}
 

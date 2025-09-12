@@ -578,6 +578,27 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.CartController.Delete(System.Int64)">
+            <summary>
+            حذف یک آیتم از سبد خرید (Auth)
+            </summary>
+            <param name="CartItemId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.UpdateQuantityAnItem(WebApi.ModelsAndDtoes.Cart.UpdateQuantityOfItemInCartApiDto)">
+            <summary>
+            تغییر تعداد یک آیتم (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.MoveAnItemInACartToAnotherCart(WebApi.ModelsAndDtoes.Cart.MoveAnItemInCartToAnotherCartApiDto)">
+            <summary>
+            انتقال یک آیتم به سبد خرید بعدی یا فعلی (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.CategoryController.Get">
             <summary>
             برگردوندن همه دسته بندی ها به شکل درخت (کاربری)

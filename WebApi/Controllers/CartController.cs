@@ -5,8 +5,10 @@ using Application.Store.UserSection.CartService;
 using Application.Store.UserSection.CommentService.Commands;
 using Application.Store.UserSection.CommentService.Queries;
 using Application.Store.UserSection.ProductService;
+using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Areas.Admin.ModelsAndDtoes.Products;
 using WebApi.Filters.Permissions;
 using WebApi.ModelsAndDtoes.Cart;
 using WebApi.ModelsAndDtoes.Product;
@@ -35,7 +37,7 @@ namespace WebApi.Controllers
         [Authorize]
         public async Task<IActionResult> Get([FromQuery] GetCartFilterApiDto dto)
         {
-            //map
+            //get userid
             var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
 
             //Get data from service
@@ -54,6 +56,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(AddItemToCartApiDto dto)
         {
+            //get userid
             var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
 
             var resultService = await _facadeCartService.CartCommandsService.AddItemToCard(userId, dto.ProductId, dto.ProductVariantId);
@@ -75,9 +78,11 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="CartItemId"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpDelete("{CartItemId}")]
         public async Task<IActionResult> Delete(long CartItemId)
         {
+            //get userid
             var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
 
             var resultService = await _facadeCartService.CartCommandsService.DeleteItemInCard(userId, CartItemId);
@@ -94,8 +99,74 @@ namespace WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// تغییر تعداد یک آیتم (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut(nameof(UpdateQuantityAnItem))]
+        public async Task<IActionResult> UpdateQuantityAnItem(UpdateQuantityOfItemInCartApiDto dto)
+        {
+            //get userid
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
 
+            //Map
+            var inputService = new UpdateQuantityOfItemInCartDto
+            {
+                CartItemId = dto.CartItemId,
+                Behavior = dto.Behavior,
+                Quantity = dto.Quantity
+            };
 
+            //run command
+            var resultService = await _facadeCartService.CartCommandsService.UpdateQuantityAnItem(userId, inputService);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// انتقال یک آیتم به سبد خرید بعدی یا فعلی (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut(nameof(MoveAnItemInACartToAnotherCart))]
+        public async Task<IActionResult> MoveAnItemInACartToAnotherCart(MoveAnItemInCartToAnotherCartApiDto dto)
+        {
+            //get userid
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
+
+            //Map
+            var inputService = new MoveAnItemInCartToAnotherCartDto
+            {
+                CartItemId = dto.CartItemId,
+                MoveToCartType = dto.MoveToCartType,
+            };
+
+            //run command
+            var resultService = await _facadeCartService.CartCommandsService.MoveAnItemInACartToAnotherCart(userId, inputService);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
 
     }
 }
