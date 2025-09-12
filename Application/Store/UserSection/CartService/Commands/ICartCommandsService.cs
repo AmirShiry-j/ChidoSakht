@@ -173,7 +173,7 @@ namespace Application.Store.UserSection.CartService.Commands
             }
 
             //Get cartItem
-            var cartItem = await _mediator.Send(new GetCartItemWithCartQuery(dto.CartItemId));
+            var cartItem = await _mediator.Send(new GetCartItemWithCartQuery(CartItemId));
 
             //check exist
             if (cartItem is null)
@@ -257,8 +257,96 @@ namespace Application.Store.UserSection.CartService.Commands
                 };
             }
 
-            //Move
+            //check has before
+            if (cartItem.Cart.CartType == dto.MoveToCartType)
+            {
+                return new ResultDto
+                {
+                    IsSuccess = true,
+                };
+            }
 
+            //Move
+            if (dto.MoveToCartType == CartType.Next)
+            {
+                var cart_Next = await _mediator.Send(new GetCartWithItemsQuery(UserId, CartType.Next));
+
+                //create it if it is not exist
+                if (cart_Next is null)
+                {
+                    //Define
+                    cart_Next = new Domain.Carts.Cart
+                    {
+                        UserId = UserId,
+                        CartType = CartType.Next,
+                    };
+                    //Create
+                    var cartId = await _mediator.Send(new CreateACartWithItemCommand(cart_Next));
+
+                    //change item
+                    cartItem.CartId = cartId;
+
+                    //Update item
+                    await _mediator.Send(new UpdateCartItemCommand(cartItem));
+                }
+                else //add item to it
+                {
+                    //change item
+                    cartItem.CartId = cart_Next.Id;
+                    //if item was exist in cart before 
+                    var existing_item = cart_Next.Items.Where(p => p.ProductVariantId.Equals(cartItem.ProductVariantId)).FirstOrDefault();
+                    if (existing_item is not null)
+                        cartItem.Quantity = existing_item.Quantity + cartItem.Quantity;
+                    else
+                        cartItem.Quantity = cartItem.Quantity;
+
+                    //updates
+                    await _mediator.Send(new UpdateCartItemCommand(cartItem));
+                }
+            }
+            else
+            {
+                var cart_Open = await _mediator.Send(new GetCartWithItemsQuery(UserId, CartType.Open));
+
+                //create it if it is not exist
+                if (cart_Open is null)
+                {
+                    //Define
+                    cart_Open = new Domain.Carts.Cart
+                    {
+                        UserId = UserId,
+                        CartType = CartType.Open,
+                    };
+                    //Create
+                    var cartId = await _mediator.Send(new CreateACartWithItemCommand(cart_Open));
+
+                    //change item
+                    cartItem.CartId = cartId;
+
+                    //Update item
+                    await _mediator.Send(new UpdateCartItemCommand(cartItem));
+                }
+                else //add item to it
+                {
+                    //change item
+                    cartItem.CartId = cart_Open.Id;
+                    //if item was exist in cart before 
+                    var existing_item = cart_Open.Items.Where(p => p.ProductVariantId.Equals(cartItem.ProductVariantId)).FirstOrDefault();
+                    if (existing_item is not null)
+                        cartItem.Quantity = existing_item.Quantity + cartItem.Quantity;
+                    else
+                        cartItem.Quantity = cartItem.Quantity;
+
+                    //updates
+                    await _mediator.Send(new UpdateCartItemCommand(cartItem));
+                }
+            }
+
+            //
+            return new ResultDto
+            {
+                IsSuccess = true
+            };
         }
 
         public async Task<ResultDto> UpdateQuantityAnItem(string UserId, UpdateQuantityOfItemInCartDto dto)
@@ -305,8 +393,32 @@ namespace Application.Store.UserSection.CartService.Commands
                 };
             }
 
+            ////Changes
             //Update Quentity
+            if (dto.Behavior.HasValue)
+            {
+                if (dto.Behavior.Value == Behavior.Increase) //Increase
+                {
+                    cartItem.Quantity++;
+                }
+                else //Decrease
+                {
+                    cartItem.Quantity--;
+                }
+            }
+            else
+            {//Set Quantity
+                cartItem.Quantity = (int)dto.Quantity;
+            }
 
+
+            //Updates
+            await _mediator.Send(new UpdateCartItemCommand(cartItem));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+            };
         }
     }
 }

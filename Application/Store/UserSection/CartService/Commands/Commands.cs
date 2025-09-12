@@ -36,4 +36,12 @@ namespace Application.Store.UserSection.CartService.Commands
             this.CartItem = CartItem;
         }
     }
+    public class UpdateCartItemCommand : IRequest
+    {
+        public CartItem CartItem { get; set; }
+        public UpdateCartItemCommand(CartItem CartItem)
+        {
+            this.CartItem = CartItem;
+        }
+    }
 }
