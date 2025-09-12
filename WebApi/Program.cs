@@ -39,6 +39,7 @@ using Application.Store.UserSection.CommentService;
 using Application.Store.AdminSection.CommentService;
 using Application.Store.UserSection.ProductSpecificationService;
 using Application.Store.UserSection.CartService;
+using Application.Store.UserSection.AddressService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -171,6 +172,7 @@ builder.Services.AddScoped<IFacadeProductService, FacadeProductService>();
 builder.Services.AddScoped<IFacadeCommentService, FacadeCommentService>();
 builder.Services.AddScoped<IFacadeProductSpecificationService, FacadeProductSpecificationService>();
 builder.Services.AddScoped<IFacadeCartService, FacadeCartService>();
+builder.Services.AddScoped<IFacadeAddressService, FacadeAddressService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));

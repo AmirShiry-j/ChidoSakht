@@ -1,0 +1,37 @@
+﻿using Domain.Users;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.Store.UserSection.AddressService.Queries
+{
+    public class GetAddressesByUserIdQuery : IRequest<List<AddressDto>>
+    {
+        public string UserId { get; set; }
+        public GetAddressesByUserIdQuery(string UserId)
+        {
+            this.UserId = UserId;
+        }
+    }
+
+    public class GetAddressByIdQuery : IRequest<Address>
+    {
+        public int Id { get; set; }
+        public GetAddressByIdQuery(int Id)
+        {
+            this.Id = Id;
+        }
+    }
+
+    public class GetAddressDetailsByIdQuery : IRequest<AddressDetailsDto>
+    {
+        public int Id { get; set; }
+        public GetAddressDetailsByIdQuery(int Id)
+        {
+            this.Id = Id;
+        }
+    }
+}

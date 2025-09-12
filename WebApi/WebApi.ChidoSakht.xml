@@ -564,6 +564,40 @@
             <param name="user"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.AddressController.Get">
+            <summary>
+            برگردوندن آدرس های ثبت شده برای یک کاربر (Auth)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AddressController.Get(System.Int32)">
+            <summary>
+            برگردوندن اطلاعات ثبت شده برای یک آدرس (Auth)
+            </summary>
+            <param name="AddressId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AddressController.Post(WebApi.ModelsAndDtoes.Address.CreateAddressApiDto)">
+            <summary>
+            ثبت یک آدرس جدید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AddressController.UpdateQuantityAnItem(WebApi.ModelsAndDtoes.Address.UpdateAddressApiDto)">
+            <summary>
+            ویرایش یک آدرس (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AddressController.Delete(System.Int32)">
+            <summary>
+            حذف یک آدرس (Auth)
+            </summary>
+            <param name="AddressId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.CartController.Get(WebApi.ModelsAndDtoes.Cart.GetCartFilterApiDto)">
             <summary>
             برگردوندن سبد خرید (Auth)
