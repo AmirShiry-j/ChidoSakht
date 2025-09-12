@@ -29,6 +29,8 @@ namespace Application.Store.UserSection.CartService.Commands
         Task<ResultDto> DeleteItemInCard(string UserId, long CartItemId);
         Task<ResultDto> UpdateQuantityAnItem(string UserId, UpdateQuantityOfItemInCartDto dto);
         Task<ResultDto> MoveAnItemInACartToAnotherCart(string UserId, MoveAnItemInCartToAnotherCartDto dto);
+        Task<ResultDto> UpdatePricesInCartWithUserApproval(string UserId, long CartId);
+        Task<ResultDto> UpdateNumberOfItemsWithUserApproval(string UserId, long CartId);
     }
     public class CartCommandsService : ICartCommandsService
     {
@@ -421,6 +423,80 @@ namespace Application.Store.UserSection.CartService.Commands
             {
                 IsSuccess = true,
             };
+        }
+
+        public async Task<ResultDto> UpdateNumberOfItemsWithUserApproval(string UserId, long CartId)
+        {
+            //get User
+            var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
+            if (user is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Get cart
+            var cart = await _mediator.Send(new GetCartWithItemsAndVariantsByCartIdQuery(CartId));
+
+            //check exist
+            if (cart is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //check cart is for user
+            if (!cart.UserId.Equals(UserId))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes این سبد خرید متعلق به شما نیست",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            return null;
+        }
+
+        public async Task<ResultDto> UpdatePricesInCartWithUserApproval(string UserId, long CartId)
+        {
+            //get User
+            var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
+            if (user is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Get cart
+            var cart = await _mediator.Send(new GetCartWithItemsAndVariantsByCartIdQuery(CartId));
+
+            //check exist
+            if (cart is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //check cart is for user
+            if (!cart.UserId.Equals(UserId))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes این سبد خرید متعلق به شما نیست",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            return null;
         }
     }
 }

@@ -168,5 +168,60 @@ namespace WebApi.Controllers
             }
         }
 
+        //Update prices in the cart based on the current status with user approval
+        /// <summary>
+        /// به‌روزرسانی قیمت‌ها در سبد خرید بر اساس وضعیت فعلی با تأیید کاربر (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut($"{nameof(UpdatePricesInCartWithUserApproval)}/" + "{CartId}")]
+        public async Task<IActionResult> UpdatePricesInCartWithUserApproval(long CartId)
+        {
+            //get userid
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
+
+            //run command
+            var resultService = await _facadeCartService.CartCommandsService.UpdatePricesInCartWithUserApproval(userId, CartId);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        //Update the number of items in the cart based on the current status with user approval
+        /// <summary>
+        /// تعداد اقلام موجود در سبد خرید را بر اساس وضعیت فعلی با تأیید کاربر به‌روزرسانی کنید (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut($"{nameof(UpdateNumberOfItemsWithUserApproval)}/" + "{CartId}")]
+        public async Task<IActionResult> UpdateNumberOfItemsWithUserApproval(long CartId)
+        {
+            //get userid
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
+
+            //run command
+            var resultService = await _facadeCartService.CartCommandsService.UpdateNumberOfItemsWithUserApproval(userId, CartId);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
     }
 }

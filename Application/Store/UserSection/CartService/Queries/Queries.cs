@@ -69,4 +69,13 @@ namespace Application.Store.UserSection.CartService.Queries
             this.CartItemId = CartItemId;
         }
     }
+
+    public class GetCartWithItemsAndVariantsByCartIdQuery : IRequest<Cart>
+    {
+        public long CartId { get; set; }
+        public GetCartWithItemsAndVariantsByCartIdQuery(long CartId)
+        {
+            this.CartId = CartId;
+        }
+    }
 }
