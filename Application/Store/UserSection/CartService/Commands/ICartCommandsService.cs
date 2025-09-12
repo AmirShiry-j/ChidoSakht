@@ -459,7 +459,33 @@ namespace Application.Store.UserSection.CartService.Commands
                 };
             }
 
-            return null;
+            //update items
+            var itemsForRemoveInCart = new List<CartItem>();
+            foreach (var item in cart.Items)
+            {
+                if (item.ProductVariant.Stock > 0)
+                {
+                    if (item.Quantity > item.ProductVariant.Stock) //set max if quentity is more
+                        item.Quantity = item.ProductVariant.Stock;
+                }
+                else
+                {
+                    //Remove it from cart
+                    itemsForRemoveInCart.Add(item);
+                }
+            }
+            //delete items with no stock
+            foreach (var item in itemsForRemoveInCart)
+            {
+                cart.Items.Remove(item);
+            }
+
+            await _mediator.Send(new UpdateACartWithItemCommand(cart));
+
+            return new ResultDto
+            {
+                IsSuccess = true
+            };
         }
 
         public async Task<ResultDto> UpdatePricesInCartWithUserApproval(string UserId, long CartId)
@@ -496,7 +522,19 @@ namespace Application.Store.UserSection.CartService.Commands
                 };
             }
 
-            return null;
+            //update items
+            foreach (var item in cart.Items)
+            {
+                item.LastKnownPrice = item.ProductVariant.Price;
+                item.LastKnownSpecialPrice = item.ProductVariant.SpecialPrice;
+            }
+
+            await _mediator.Send(new UpdateACartWithItemCommand(cart));
+
+            return new ResultDto
+            {
+                IsSuccess = true
+            };
         }
     }
 }

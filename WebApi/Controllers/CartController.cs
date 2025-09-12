@@ -170,7 +170,7 @@ namespace WebApi.Controllers
 
         //Update prices in the cart based on the current status with user approval
         /// <summary>
-        /// به‌روزرسانی قیمت‌ها در سبد خرید بر اساس وضعیت فعلی با تأیید کاربر (Auth)
+        /// به‌روزرسانی قیمت‌ها در سبد خرید بر اساس قیمت های جدید - با تأیید کاربر (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -198,7 +198,7 @@ namespace WebApi.Controllers
 
         //Update the number of items in the cart based on the current status with user approval
         /// <summary>
-        /// تعداد اقلام موجود در سبد خرید را بر اساس وضعیت فعلی با تأیید کاربر به‌روزرسانی کنید (Auth)
+        /// به‌روزرسانی تعداد اقلام موجود در سبد خرید بر اساس حداکثرا تعداد موجود فعلی و همچنین حذف اقلام ناموجود - با تأیید کاربر(Auth) 
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
