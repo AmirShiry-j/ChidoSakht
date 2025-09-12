@@ -172,11 +172,10 @@ namespace Application.Store.UserSection.CartService.Commands
                 };
             }
 
-
             //Get cartItem
-            var cartItem = await _mediator.Send(new GetCartItemByIdAndUserIdInOpenAndNextCartQuery(CartItemId, UserId));
+            var cartItem = await _mediator.Send(new GetCartItemWithCartQuery(dto.CartItemId));
 
-            //create it if it is not exist
+            //check exist
             if (cartItem is null)
             {
                 return new ResultDto
@@ -185,6 +184,27 @@ namespace Application.Store.UserSection.CartService.Commands
                 };
             }
 
+            //check cart is for user
+            if (!cartItem.Cart.UserId.Equals(UserId))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes این سبد خرید متعلق به شما نیست",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            //check must'nt Closed
+            if (!(cartItem.Cart.CartType.Equals(CartType.Open) || cartItem.Cart.CartType.Equals(CartType.Next)))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes سبد خرید بسته شده را نمیتوان تغییر داد",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            //Delete item
             await _mediator.Send(new DeleteCartItemCommand(cartItem));
             return new ResultDto
             {
@@ -195,12 +215,98 @@ namespace Application.Store.UserSection.CartService.Commands
 
         public async Task<ResultDto> MoveAnItemInACartToAnotherCart(string UserId, MoveAnItemInCartToAnotherCartDto dto)
         {
-            throw new NotImplementedException();
+            //get User
+            var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
+            if (user is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Get cartItem
+            var cartItem = await _mediator.Send(new GetCartItemWithCartQuery(dto.CartItemId));
+
+            //check exist
+            if (cartItem is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //check cart is for user
+            if (!cartItem.Cart.UserId.Equals(UserId))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes این سبد خرید متعلق به شما نیست",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            //check must'nt Closed
+            if (!(cartItem.Cart.CartType.Equals(CartType.Open) || cartItem.Cart.CartType.Equals(CartType.Next)))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes سبد خرید بسته شده را نمیتوان تغییر داد",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            //Move
+
         }
 
         public async Task<ResultDto> UpdateQuantityAnItem(string UserId, UpdateQuantityOfItemInCartDto dto)
         {
-            throw new NotImplementedException();
+            //get User
+            var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
+            if (user is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //Get cartItem
+            var cartItem = await _mediator.Send(new GetCartItemWithCartQuery(dto.CartItemId));
+
+            //check exist
+            if (cartItem is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //check cart is for user
+            if (!cartItem.Cart.UserId.Equals(UserId))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes این سبد خرید متعلق به شما نیست",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            //check must'nt Closed
+            if (!(cartItem.Cart.CartType.Equals(CartType.Open) || cartItem.Cart.CartType.Equals(CartType.Next)))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes سبد خرید بسته شده را نمیتوان تغییر داد",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            //Update Quentity
+
         }
     }
 }

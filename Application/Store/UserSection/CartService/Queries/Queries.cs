@@ -61,4 +61,12 @@ namespace Application.Store.UserSection.CartService.Queries
             this.UserId = UserId;
         }
     }
+    public class GetCartItemWithCartQuery : IRequest<CartItem>
+    {
+        public long CartItemId { get; set; }
+        public GetCartItemWithCartQuery(long CartItemId)
+        {
+            this.CartItemId = CartItemId;
+        }
+    }
 }
