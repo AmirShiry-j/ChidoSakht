@@ -42,4 +42,23 @@ namespace Application.Store.UserSection.CartService.Queries
             this.CartType = CartType;
         }
     }
+
+    public class GetCartItemByIdQuery : IRequest<CartItem>
+    {
+        public long Id { get; set; }
+        public GetCartItemByIdQuery(long Id)
+        {
+            this.Id = Id;
+        }
+    }
+    public class GetCartItemByIdAndUserIdInOpenAndNextCartQuery : IRequest<CartItem>
+    {
+        public long CartItemId { get; set; }
+        public string UserId { get; set; }
+        public GetCartItemByIdAndUserIdInOpenAndNextCartQuery(long CartItemId, string UserId)
+        {
+            this.CartItemId = CartItemId;
+            this.UserId = UserId;
+        }
+    }
 }

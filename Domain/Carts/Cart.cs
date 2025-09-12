@@ -85,5 +85,8 @@ namespace Domain.Carts
         }
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
+        //
+        public Cart Cart { get; set; }
+        public long CartId { get; set; }
     }
 }

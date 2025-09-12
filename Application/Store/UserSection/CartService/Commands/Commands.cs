@@ -27,4 +27,13 @@ namespace Application.Store.UserSection.CartService.Commands
             this.Cart = Cart;
         }
     }
+
+    public class DeleteCartItemCommand : IRequest
+    {
+        public CartItem CartItem { get; set; }
+        public DeleteCartItemCommand(CartItem CartItem)
+        {
+            this.CartItem = CartItem;
+        }
+    }
 }

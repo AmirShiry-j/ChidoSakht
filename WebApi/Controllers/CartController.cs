@@ -1,4 +1,5 @@
 ﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.AppKeyNames;
 using Application.Commons.Objects.MessageEventTypes;
 using Application.Store.UserSection.CartService;
 using Application.Store.UserSection.CommentService.Commands;
@@ -6,6 +7,7 @@ using Application.Store.UserSection.CommentService.Queries;
 using Application.Store.UserSection.ProductService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters.Permissions;
 using WebApi.ModelsAndDtoes.Cart;
 using WebApi.ModelsAndDtoes.Product;
 
@@ -67,6 +69,33 @@ namespace WebApi.Controllers
                     return BadRequest(resultService.Message);
             }
         }
+
+        /// <summary>
+        /// حذف یک آیتم از سبد خرید (Auth)
+        /// </summary>
+        /// <param name="CartItemId"></param>
+        /// <returns></returns>
+        [HttpDelete("{CartItemId}")]
+        public async Task<IActionResult> Delete(long CartItemId)
+        {
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
+
+            var resultService = await _facadeCartService.CartCommandsService.DeleteItemInCard(userId, CartItemId);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+
+
 
     }
 }

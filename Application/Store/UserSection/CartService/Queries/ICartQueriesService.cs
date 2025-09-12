@@ -42,17 +42,6 @@ namespace Application.Store.UserSection.CartService.Queries
                 };
             }
 
-            ////Get Now cart
-            //var cart = await _mediator.Send(new GetCartQuery(UserId, CartStatus));
-            //if (cart is null)
-            //{
-            //    return new ResultDto<CartDetailsDto>
-            //    {
-            //        IsSuccess = true,
-            //        Data = new CartDetailsDto { }
-            //    };
-            //}
-
             //Details
             var cartDetails = await _mediator.Send(new GetCartDetailsQuery(UserId, CartType));
             return new ResultDto<CartDetailsDto>

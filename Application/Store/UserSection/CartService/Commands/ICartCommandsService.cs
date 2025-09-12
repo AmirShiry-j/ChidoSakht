@@ -25,6 +25,7 @@ namespace Application.Store.UserSection.CartService.Commands
     public interface ICartCommandsService
     {
         Task<ResultDto> AddItemToCard(string UserId, int? ProductId, int? VariantId);
+        Task<ResultDto> DeleteItemInCard(string UserId, long CartItemId);
     }
     public class CartCommandsService : ICartCommandsService
     {
@@ -154,6 +155,38 @@ namespace Application.Store.UserSection.CartService.Commands
             {
                 IsSuccess = true,
                 MessageEventType = MessageEventType.Created
+            };
+        }
+        public async Task<ResultDto> DeleteItemInCard(string UserId, long CartItemId)
+        {
+            //get User
+            var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
+            if (user is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+
+            //Get cartItem
+            var cartItem = await _mediator.Send(new GetCartItemByIdAndUserIdInOpenAndNextCartQuery(CartItemId, UserId));
+
+            //create it if it is not exist
+            if (cartItem is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            await _mediator.Send(new DeleteCartItemCommand(cartItem));
+            return new ResultDto
+            {
+                IsSuccess = true,
+
             };
         }
     }
