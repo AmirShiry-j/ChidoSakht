@@ -29,8 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\ModelsAndDtoes\Orders\" />
     <Folder Include="Images\ProductImage\" />
     <Folder Include="Images\ProductImage\" />
+    <Folder Include="ModelsAndDtoes\Orders\" />
   </ItemGroup>
 
 </Project>
