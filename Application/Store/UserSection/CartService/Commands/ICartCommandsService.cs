@@ -122,7 +122,8 @@ namespace Application.Store.UserSection.CartService.Commands
                 {
                     return new ResultDto
                     {
-                        Message = "Temp-Mes کالا مورد نظر فعلا در انبار موجود نیست. به همین علت نمیتوان آن را به سبد خرید اضافه کرد"
+                        Message = "Temp-Mes کالا مورد نظر فعلا در انبار موجود نیست. به همین علت نمیتوان آن را به سبد خرید اضافه کرد",
+                        MessageEventType = MessageEventType.BadRequest
                     };
                 }
             }
@@ -525,8 +526,8 @@ namespace Application.Store.UserSection.CartService.Commands
             //update items
             foreach (var item in cart.Items)
             {
-                item.LastKnownPrice = item.ProductVariant.Price;
-                item.LastKnownSpecialPrice = item.ProductVariant.SpecialPrice;
+                item.Price_LastKnown = item.ProductVariant.Price;
+                item.SpecialPrice_LastKnown = item.ProductVariant.SpecialPrice;
             }
 
             await _mediator.Send(new UpdateACartWithItemCommand(cart));

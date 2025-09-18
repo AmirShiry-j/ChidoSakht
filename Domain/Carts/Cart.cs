@@ -24,7 +24,7 @@ namespace Domain.Carts
         public string UserId { get; set; }
         public User User { get; set; }
         public ICollection<CartItem> Items { get; set; } = new List<CartItem>();
-        public long TotalPrice => Items.Sum(i => (i.LastKnownSpecialPrice is null ? i.LastKnownPrice : (long)i.LastKnownSpecialPrice) * i.Quantity);
+        public long TotalPrice => Items.Sum(i => (i.SpecialPrice_LastKnown is null ? i.Price_LastKnown : (long)i.SpecialPrice_LastKnown) * i.Quantity);
         public CartType CartType { get; set; }
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
@@ -69,15 +69,15 @@ namespace Domain.Carts
         public long Id { get; set; }
         public int ProductVariantId { get; set; }
         public ProductVariant ProductVariant { get; set; }
-        public long LastKnownPrice { get; set; }
-        public long? LastKnownSpecialPrice { get; set; }
+        public long Price_LastKnown { get; set; }
+        public long? SpecialPrice_LastKnown { get; set; }
         public int Quantity { get; set; }
 
         public CartItem(ProductVariant variant, int quantity)
         {
             ProductVariantId = variant.Id;
-            LastKnownSpecialPrice = variant.SpecialPrice;
-            LastKnownPrice = variant.Price;
+            SpecialPrice_LastKnown = variant.SpecialPrice;
+            Price_LastKnown = variant.Price;
             Quantity = quantity;
         }
 

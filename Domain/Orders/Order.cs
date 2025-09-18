@@ -32,11 +32,18 @@ namespace Domain.Orders
 
     public enum OrderStatus
     {
-
+        PendingPayment=1,//→ در انتظار پرداخت
+        Paid =2,//→ پرداخت موفق
+        Processing,//→ در حال آماده‌سازی
+        Shipped,//→ ارسال شده
+        Delivered,//→ تحویل داده شده
+        CanceledByUser, //→ لغو شده توسط یوزر
+        CanceledByAdmin //→ لغو شده توسط ادمین
     }
     public enum SendBy
     {
-
+        Tipax = 1,
+        Post = 2
     }
     public class OrderItem
     {

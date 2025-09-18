@@ -1,7 +1,11 @@
 ﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.Dtoes;
+using Application.Commons.Objects.MessageEventTypes;
 using Application.Store.UserSection.CartService.Commands;
 using Application.Store.UserSection.CartService.Queries;
 using Application.Store.UserSection.OrderService.Queries;
+using Domain.Carts;
+using Domain.Orders;
 using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -28,5 +32,72 @@ namespace Application.Store.UserSection.OrderService.Commands
             _localizationService = localizationService;
             _userManager = userManager;
         }
+
+        public async Task<ResultDto<long>> CreateOrder(string UserId, CreateOrderDto dto)
+        {
+            //get User
+            var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
+            if (user is null)
+            {
+                return new ResultDto<long>
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //get cart by details
+            var cartByDetails = await _mediator.Send(new GetCartDetailsByCartIdQuery(dto.CartId));
+            if (cartByDetails is null)
+            {
+                return new ResultDto<long>
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            ////Checks
+            if (!cartByDetails.UserId.Equals(UserId))
+            {
+                return new ResultDto<long>
+                {
+                    Message = "temp-mes این سبد خرید متعلق به شما نیست",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+            if (!cartByDetails.CartType.Equals(CartType.Open))
+            {
+                return new ResultDto<long>
+                {
+                    Message = "temp-mes این سبد خرید جزوه سبد خرید های جاری نیست",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+            if (!cartByDetails.AreAllThePricesUpToDate)
+            {
+                return new ResultDto<long>
+                {
+                    Message = "temp-mes قیمت محصولات موجود در سبد خرید تغییر کرده اند و بروز نیستند. لطفا سبد خرید رو با زدن دکمه بازسازی کنید",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+            if (!cartByDetails.DoWeHaveEnoughInventoryForEverything)
+            {
+                return new ResultDto<long>
+                {
+                    Message = "temp-mes بعضی کالا ها به تعداد که در حال حاظر نیاز دارید موجود نیستند. لطفا سبد خرید رو با زدن دکمه بازسازی کنید",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            return null;
+        }
+
+    }
+    public class CreateOrderDto
+    {
+        public long CartId { get; set; }
+        public int AddressId { get; set; }
+        public SendBy SendBy { get; set; }
+        public OrderStatus OrderStatus { get; set; }
     }
 }

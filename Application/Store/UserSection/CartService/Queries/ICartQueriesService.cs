@@ -58,8 +58,10 @@ namespace Application.Store.UserSection.CartService.Queries
         public string UserId { get; set; }
         public CartType CartType { get; set; }
         public List<CartItemDto> CartItems { get; set; } = new List<CartItemDto>();
-        public long TotalPrice_LastKnown => CartItems.Sum(i => (i.LastKnownSpecialPrice is null ? i.LastKnownPrice : (long)i.LastKnownSpecialPrice) * i.Quantity);
-        public long TotalPrice_Now => CartItems.Sum(i => (i.NowSpecialPrice is null ? i.NowPrice : (long)i.NowSpecialPrice) * i.Quantity);
+        public long TotalAmount_LastKnown => CartItems.Sum(i => (i.Amount_LastKnown));
+        public long TotalDiscountAmount_LastKnown => CartItems.Sum(i => (i.DiscountAmount_LastKnown));
+        public long TotalAmount_Now => CartItems.Sum(i => (i.Amount_Now * i.Quantity));
+        public long TotalDiscountAmount_Now => CartItems.Sum(i => (i.DiscountAmount_Now));
         public bool AreAllThePricesUpToDate
         {
             get
@@ -91,17 +93,52 @@ namespace Application.Store.UserSection.CartService.Queries
         //
         public int Stock { get; set; }
         //
-        public long LastKnownPrice { get; set; }
-        public long? LastKnownSpecialPrice { get; set; }
+        public long Price_LastKnown { get; set; }
+        public long? SpecialPrice_LastKnown { get; set; }
+
+        public long DiscountAmount_LastKnown
+        {
+            get
+            {
+                if (SpecialPrice_LastKnown is null)
+                    return 0;
+
+                return ((Price_LastKnown - SpecialPrice_LastKnown.Value) * Quantity);
+            }
+        }
+        public long Amount_LastKnown
+        {
+            get
+            {
+                return (SpecialPrice_LastKnown is null ? Price_LastKnown * Quantity : SpecialPrice_LastKnown.Value * Quantity);
+            }
+        }
         //
-        public long NowPrice { get; set; }
-        public long? NowSpecialPrice { get; set; }
+        public long Price_Now { get; set; }
+        public long? SpecialPrice_Now { get; set; }
+        public long DiscountAmount_Now
+        {
+            get
+            {
+                if (SpecialPrice_Now is null)
+                    return 0;
+
+                return ((Price_Now - SpecialPrice_Now.Value) * Quantity);
+            }
+        }
+        public long Amount_Now
+        {
+            get
+            {
+                return (SpecialPrice_Now is null ? Price_Now * Quantity : SpecialPrice_Now.Value * Quantity);
+            }
+        }
         public bool AreThePricesUpToDate
         {
             get
             {
-                return LastKnownPrice == NowPrice
-    && Nullable.Equals(LastKnownSpecialPrice, NowSpecialPrice);
+                return Price_LastKnown == Price_Now
+    && Nullable.Equals(SpecialPrice_LastKnown, SpecialPrice_Now);
             }
         }
         public bool DoWeHaveEnoughInventory
