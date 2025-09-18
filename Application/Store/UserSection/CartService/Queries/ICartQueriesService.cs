@@ -58,10 +58,9 @@ namespace Application.Store.UserSection.CartService.Queries
         public string UserId { get; set; }
         public CartType CartType { get; set; }
         public List<CartItemDto> CartItems { get; set; } = new List<CartItemDto>();
-        public long TotalAmount_LastKnown => CartItems.Sum(i => (i.Amount_LastKnown));
-        public long TotalDiscountAmount_LastKnown => CartItems.Sum(i => (i.DiscountAmount_LastKnown));
-        public long TotalAmount_Now => CartItems.Sum(i => (i.Amount_Now * i.Quantity));
-        public long TotalDiscountAmount_Now => CartItems.Sum(i => (i.DiscountAmount_Now));
+        public long TotalAmount_Now => CartItems.Sum(i => i.Amount_Now);
+        public long TotalDiscountAmount_Now => CartItems.Sum(i => i.DiscountAmount_Now);
+        public long FinalTotalAmout_Now => CartItems.Sum(i => i.FinalAmout_Now);
         public bool AreAllThePricesUpToDate
         {
             get
@@ -95,27 +94,18 @@ namespace Application.Store.UserSection.CartService.Queries
         //
         public long Price_LastKnown { get; set; }
         public long? SpecialPrice_LastKnown { get; set; }
-
-        public long DiscountAmount_LastKnown
-        {
-            get
-            {
-                if (SpecialPrice_LastKnown is null)
-                    return 0;
-
-                return ((Price_LastKnown - SpecialPrice_LastKnown.Value) * Quantity);
-            }
-        }
-        public long Amount_LastKnown
-        {
-            get
-            {
-                return (SpecialPrice_LastKnown is null ? Price_LastKnown * Quantity : SpecialPrice_LastKnown.Value * Quantity);
-            }
-        }
         //
         public long Price_Now { get; set; }
         public long? SpecialPrice_Now { get; set; }
+        public int? PercentDiscount_Now
+        {
+            get
+            {
+                if (SpecialPrice_Now == null) return null;
+
+                return Convert.ToInt32(((Price_Now - SpecialPrice_Now * 1.0) / Price_Now) * 100);
+            }
+        }
         public long DiscountAmount_Now
         {
             get
@@ -130,7 +120,14 @@ namespace Application.Store.UserSection.CartService.Queries
         {
             get
             {
-                return (SpecialPrice_Now is null ? Price_Now * Quantity : SpecialPrice_Now.Value * Quantity);
+                return Price_Now * Quantity;
+            }
+        }
+        public long FinalAmout_Now
+        {
+            get
+            {
+                return Amount_Now - DiscountAmount_Now;
             }
         }
         public bool AreThePricesUpToDate
