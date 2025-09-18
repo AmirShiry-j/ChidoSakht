@@ -10,6 +10,7 @@ using System.Reflection.Emit;
 using Domain.SymbolicShoppingCarts;
 using Persistence.Configurations.Carts;
 using Domain.Carts;
+using Domain.Orders;
 
 namespace Persistence.Contexts
 {
@@ -52,6 +53,10 @@ namespace Persistence.Contexts
         //
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        //
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //Filters
@@ -189,6 +194,33 @@ namespace Persistence.Contexts
     .WithOne(p => p.User)
     .HasForeignKey(v => v.UserId)
     .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Domain.Users.User>()
+.HasMany <Order>()
+.WithOne(p => p.User)
+.HasForeignKey(v => v.UserId)
+.OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.Entity<Domain.Users.User>()
+.HasMany<Cart>()
+.WithOne(p => p.User)
+.HasForeignKey(v => v.UserId)
+.OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Order>()
+.HasOne(p=>p.Cart)
+.WithOne()
+.HasForeignKey<Order>(p=> p.CartId)
+.OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.Entity<Payment>()
+.HasOne(p => p.Order)
+.WithOne(p=>p.Payment)
+.HasForeignKey<Payment>(p => p.OrderId)
+.OnDelete(DeleteBehavior.NoAction);
+
 
             SetConfigurations(builder);
 

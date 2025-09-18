@@ -1,4 +1,5 @@
 ﻿using Domain.Products;
+using Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace Domain.Carts
         }
         public long Id { get; set; }
         public string UserId { get; set; }
+        public User User { get; set; }
         public ICollection<CartItem> Items { get; set; } = new List<CartItem>();
         public long TotalPrice => Items.Sum(i => (i.LastKnownSpecialPrice is null ? i.LastKnownPrice : (long)i.LastKnownSpecialPrice) * i.Quantity);
         public CartType CartType { get; set; }
