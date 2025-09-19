@@ -17,4 +17,12 @@ namespace Application.Store.UserSection.OrderService.Commands
             this.Order = Order;
         }
     }
+    public class UpdateOrderCommand : IRequest
+    {
+        public Order Order { get; set; }
+        public UpdateOrderCommand(Order Order)
+        {
+            this.Order = Order;
+        }
+    }
 }

@@ -47,6 +47,38 @@ namespace Application.Store.UserSection.OrderService.Commands
                 };
             }
 
+            //get order by id
+            var order = await _mediator.Send(new GetOrderByIdQuery(OrderId));
+
+            //checks
+            //userid
+            if (!order.UserId.Equals(UserId))
+            {
+                return new ResultDto
+                {
+                    Message = "Temp-Mes این سفارش متعلق به این کاربر نیست",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+            //status
+            if (!order.OrderStatus.Equals(OrderStatus.PendingPayment))
+            {
+                return new ResultDto()
+                {
+                    Message = "Temp-Mes با توجه به وضعیت این سفارش دیگر نمیتوان آن را لغو کرد",
+                    MessageEventType = MessageEventType.BadRequest
+                };
+            }
+
+            //change
+            order.OrderStatus = OrderStatus.CanceledByUser;
+            //update
+            await _mediator.Send(new UpdateOrderCommand(order));
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+            };
         }
 
         public async Task<ResultDto<long>> CreateOrder(string UserId, CreateOrderDto dto)

@@ -107,6 +107,11 @@ namespace WebApi.Controllers
         }
 
 
+        /// <summary>
+        /// کنسل کردن یک سفارش (Auth)
+        /// </summary>
+        /// <param name="OrderId"></param>
+        /// <returns></returns>
         [HttpDelete("{OrderId}")]
         [Authorize]
         public async Task<IActionResult> Delete([Required] long OrderId)
@@ -115,11 +120,11 @@ namespace WebApi.Controllers
             var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
 
             //Get data from service
-            var resultService = await _facadeOrderService.OrderQueriesService.GetOrderDetailsById(userId, OrderId);
+            var resultService = await _facadeOrderService.OrderCommandsService.CancelOrder(userId, OrderId);
 
             if (resultService.IsSuccess)
             {
-                return Ok(resultService.Data);
+                return NoContent();
             }
             else
             {

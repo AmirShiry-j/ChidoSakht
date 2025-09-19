@@ -674,18 +674,32 @@
             <param name="CommentId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.OrderController.Get(System.Int64)">
+            <summary>
+            برگردوندن جزئیات یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.OrderController.Get(WebApi.ModelsAndDtoes.Orders.GetOrdersByFilterApiDto)">
             <summary>
-            برگردوندن سبد خرید (Auth)
+            برگردوندن سفارش‌های یک کاربر (Auth)
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.OrderController.Post(WebApi.ModelsAndDtoes.Orders.CreateOrderApiDto)">
             <summary>
-            اضافه کردن یک آیتم به سبد خرید (Auth)
+            ایجاد سفارش (Auth)
             </summary>
             <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.OrderController.Delete(System.Int64)">
+            <summary>
+            کنسل کردن یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.ProductController.Get(WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto)">

@@ -28,4 +28,12 @@ namespace Application.Store.UserSection.OrderService.Queries
             UserId = userId;
         }
     }
+    public class GetOrderByIdQuery : IRequest<Order>
+    {
+        public long OrderId { get; set; }
+        public GetOrderByIdQuery(long OrderId)
+        {
+            this.OrderId = OrderId;
+        }
+    }
 }
