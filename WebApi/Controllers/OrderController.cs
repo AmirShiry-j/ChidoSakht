@@ -6,6 +6,7 @@ using Domain.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using WebApi.ModelsAndDtoes.Cart;
 using WebApi.ModelsAndDtoes.Orders;
 
@@ -25,7 +26,35 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// برگردوندن سبد خرید (Auth)
+        /// برگردوندن جزئیات یک سفارش (Auth)
+        /// </summary>
+        /// <param name="OrderId"></param>
+        /// <returns></returns>
+        [HttpGet("{OrderId}")]
+        [Authorize]
+        public async Task<IActionResult> Get([Required] long OrderId)
+        {
+            //get userid
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
+
+            //Get data from service
+            var resultService = await _facadeOrderService.OrderQueriesService.GetOrderDetailsById(userId, OrderId);
+
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// برگردوندن سفارش‌های یک کاربر (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -44,7 +73,7 @@ namespace WebApi.Controllers
 
 
         /// <summary>
-        /// اضافه کردن یک آیتم به سبد خرید (Auth)
+        /// ایجاد سفارش (Auth)
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -67,6 +96,30 @@ namespace WebApi.Controllers
             if (resultService.IsSuccess)
             {
                 return Created("", resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+
+        [HttpDelete("{OrderId}")]
+        [Authorize]
+        public async Task<IActionResult> Delete([Required] long OrderId)
+        {
+            //get userid
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
+
+            //Get data from service
+            var resultService = await _facadeOrderService.OrderQueriesService.GetOrderDetailsById(userId, OrderId);
+
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
             }
             else
             {

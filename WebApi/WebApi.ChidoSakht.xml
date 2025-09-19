@@ -717,7 +717,7 @@
         </member>
         <member name="M:WebApi.Controllers.RelatedProductController.GetRelatedProducts(System.Int32)">
             <summary>
-            برگردوندن اطلاعات یک محصول (کاربری)
+            برگردوندن محصولات مرتبط به یک محصول (کاربری)
             </summary>
             <param name="ProductId"></param>
             <returns></returns>

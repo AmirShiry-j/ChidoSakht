@@ -32,7 +32,7 @@ namespace WebApi.Controllers
 
 
         /// <summary>
-        /// برگردوندن اطلاعات یک محصول (کاربری)
+        /// برگردوندن محصولات مرتبط به یک محصول (کاربری)
         /// </summary>
         /// <param name="ProductId"></param>
         /// <returns></returns>

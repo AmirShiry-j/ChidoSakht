@@ -18,4 +18,14 @@ namespace Application.Store.UserSection.OrderService.Queries
             this.OrderStatus = OrderStatus;
         }
     }
+    public class GetOrderDetailsByOrderIdAndUserIdQuery : IRequest<OrderDetailsDto>
+    {
+        public long OrderId { get; set; }
+        public string UserId { get; set; }
+        public GetOrderDetailsByOrderIdAndUserIdQuery(long OrderId, string userId)
+        {
+            this.OrderId = OrderId;
+            UserId = userId;
+        }
+    }
 }

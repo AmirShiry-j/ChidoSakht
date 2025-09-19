@@ -21,6 +21,7 @@ namespace Application.Store.UserSection.OrderService.Commands
     public interface IOrderCommandsService
     {
         Task<ResultDto<long>> CreateOrder(string UserId, CreateOrderDto dto);
+        Task<ResultDto> CancelOrder(string UserId, long OrderId);
     }
     public class OrderCommandsService : IOrderCommandsService
     {
@@ -32,6 +33,20 @@ namespace Application.Store.UserSection.OrderService.Commands
             _mediator = mediator;
             _localizationService = localizationService;
             _userManager = userManager;
+        }
+
+        public async Task<ResultDto> CancelOrder(string UserId, long OrderId)
+        {
+            //get User
+            var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
+            if (user is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
         }
 
         public async Task<ResultDto<long>> CreateOrder(string UserId, CreateOrderDto dto)
