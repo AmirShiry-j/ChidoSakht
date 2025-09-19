@@ -674,6 +674,13 @@
             <param name="CommentId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.OrderController.Get(WebApi.ModelsAndDtoes.Orders.GetOrdersByFilterApiDto)">
+            <summary>
+            برگردوندن سبد خرید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.OrderController.Post(WebApi.ModelsAndDtoes.Orders.CreateOrderApiDto)">
             <summary>
             اضافه کردن یک آیتم به سبد خرید (Auth)

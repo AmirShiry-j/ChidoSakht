@@ -1,15 +1,26 @@
-﻿namespace WebApi.ModelsAndDtoes.Orders
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApi.ModelsAndDtoes.Orders
 {
     public class CreateOrderApiDto
     {
         public long CartId { get; set; }
         public int AddressId { get; set; }
+        [Required]
+        [Range(1, 2)]
         public SendByApiEnum SendBy { get; set; }
     }
+    public class GetOrdersByFilterApiDto
+    {
+        [Range(1, 7)]
+        //[Required]
+        public OrderStatusApiEnum? OrderStatus { get; set; }
+    }
+
     public enum SendByApiEnum
     {
-        Tipax=1,
-        Post=2
+        Tipax = 1,
+        Post = 2
     }
     public enum OrderStatusApiEnum
     {

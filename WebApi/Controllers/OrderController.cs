@@ -24,6 +24,23 @@ namespace WebApi.Controllers
             _localizationService = localizationService;
         }
 
+        /// <summary>
+        /// برگردوندن سبد خرید (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Get([FromQuery] GetOrdersByFilterApiDto dto)
+        {
+            //get userid
+            var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
+
+            //Get data from service
+            var resultService = await _facadeOrderService.OrderQueriesService.GetOrders(userId, dto.OrderStatus is null ? null : (Domain.Orders.OrderStatus)dto.OrderStatus);
+
+            return Ok(resultService.Data);
+        }
 
 
         /// <summary>
