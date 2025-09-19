@@ -32,8 +32,8 @@ namespace Domain.Orders
 
     public enum OrderStatus
     {
-        PendingPayment=1,//→ در انتظار پرداخت
-        Paid =2,//→ پرداخت موفق
+        PendingPayment = 1,//→ در انتظار پرداخت
+        Paid = 2,//→ پرداخت موفق
         Processing,//→ در حال آماده‌سازی
         Shipped,//→ ارسال شده
         Delivered,//→ تحویل داده شده
@@ -73,10 +73,11 @@ namespace Domain.Orders
     }
     public enum PaymentMethod
     {
-
+        BankPort = 1
     }
     public enum PaymentStatus
     {
-
-    }
+        Faild = 1,
+        Success = 2,
+    };
 }

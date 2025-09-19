@@ -95,7 +95,10 @@ namespace WebApi.Controllers
             var resultService = await _facadeOrderService.OrderCommandsService.CreateOrder(userId, inputService);
             if (resultService.IsSuccess)
             {
-                return Created("", resultService.Data);
+                //HATEOAS link for new item
+                var link = Url.Action(nameof(Get), "Order", new { OrderId = resultService.Data }, protocol: Request.Scheme);
+
+                return Created(link, null);
             }
             else
             {
