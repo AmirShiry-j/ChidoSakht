@@ -25,7 +25,6 @@
     <Folder Include="Commons\Utility\" />
     <Folder Include="Store\AdminSection\Orders\Commands\" />
     <Folder Include="Store\AdminSection\Orders\Queries\" />
-    <Folder Include="Store\UserSection\Orders\Commands\" />
     <Folder Include="Store\UserSection\Orders\Queries\" />
     <Folder Include="Store\UserSection\Payments\Commands\" />
     <Folder Include="Store\UserSection\Payments\Queries\" />

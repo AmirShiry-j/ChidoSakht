@@ -12,7 +12,8 @@ namespace Domain.Carts
     {
         Open = 1,
         Next = 2,
-        Closed = 3,
+        Ordered = 3,
+        Closed = 4,
     }
     public class Cart
     {

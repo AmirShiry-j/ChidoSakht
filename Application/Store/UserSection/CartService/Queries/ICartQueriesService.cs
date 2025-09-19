@@ -84,7 +84,7 @@ namespace Application.Store.UserSection.CartService.Queries
         public long CartItemId { get; set; }
         public int ProductId { get; set; }
         public ProductType ProductType { get; set; }
-        public int? ProductVariantId { get; set; }
+        public int ProductVariantId { get; set; }
         public string ProductName { get; set; }
         public string? NameIndexImage { get; set; }
 

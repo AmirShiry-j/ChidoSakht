@@ -5,7 +5,6 @@
         public long CartId { get; set; }
         public int AddressId { get; set; }
         public SendByApiEnum SendBy { get; set; }
-        public OrderStatusApiEnum OrderStatus  { get; set; }
     }
     public enum SendByApiEnum
     {
