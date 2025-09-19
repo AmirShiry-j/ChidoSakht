@@ -24,6 +24,11 @@ namespace WebApi.Controllers
             _localizationService = localizationService;
         }
 
+        /// <summary>
+        /// پرداخت یک سفارش (Auth)
+        /// </summary>
+        /// <param name="OrderId"></param>
+        /// <returns></returns>
         [HttpPost("{OrderId}")]
         [Authorize]
         public async Task<IActionResult> Post([Required] long OrderId)
