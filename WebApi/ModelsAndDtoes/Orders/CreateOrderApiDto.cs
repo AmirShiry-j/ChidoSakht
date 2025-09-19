@@ -22,6 +22,9 @@ namespace WebApi.ModelsAndDtoes.Orders
         Tipax = 1,
         Post = 2
     }
+    /// <summary>
+    /// 1_PendingPayment_2_Paid_3_Processing_4_Shipped_5_CanceledByUser_6_CanceledByAdmin
+    /// </summary>
     public enum OrderStatusApiEnum
     {
         PendingPayment = 1,//→ در انتظار پرداخت

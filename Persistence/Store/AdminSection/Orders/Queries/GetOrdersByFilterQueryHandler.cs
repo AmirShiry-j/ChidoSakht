@@ -1,7 +1,6 @@
 ﻿using Application.Commons.Objects.Dtoes;
-using Application.Store.UserSection.OrderService.Queries;
+using Application.Store.AdminSection.OrderService.Queries;
 using Domain.Orders;
-using Domain.Products;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
@@ -11,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Persistence.Store.UserSection.Orders.Queries
+namespace Persistence.Store.AdminSection.Orders.Queries
 {
     public class GetOrdersByFilterQueryHandler : IRequestHandler<GetOrdersByFilterQuery, List<OrderDto>>
     {
@@ -25,15 +24,14 @@ namespace Persistence.Store.UserSection.Orders.Queries
             var prOrder = PredicateBuilder.True<Order>();
 
             //filter userid
-            prOrder.And(p => p.UserId.Equals(request.UserId));
+            if (request.UserId is not null)
+                prOrder.And(p => p.UserId.Equals(request.UserId));
 
             //filter by status if it wasnot null
             if (request.OrderStatus is not null)
-            {
                 prOrder.And(p => p.OrderStatus.Equals(request.OrderStatus));
-            }
 
-            var orders = await _context.Orders.Where(prOrder).OrderByDescending(p => p.Id).Select(p => new OrderDto
+            var orders = await _context.Orders.Where(prOrder).Include(p => p.User).OrderByDescending(p => p.Id).Select(p => new OrderDto
             {
                 CartId = p.CartId,
                 CreatedAt = p.CreatedAt,
@@ -43,7 +41,10 @@ namespace Persistence.Store.UserSection.Orders.Queries
                 OrderStatus = p.OrderStatus,
                 SendBy = p.SendBy,
                 SendCost = p.SendCost,
-                TotalAmout = p.TotalAmout
+                TotalAmout = p.TotalAmout,
+                FullName = p.User.FullName,
+                UserId = p.UserId,
+                PhoneNumber = p.User.PhoneNumber
             }).ToListAsync();
 
             return orders;

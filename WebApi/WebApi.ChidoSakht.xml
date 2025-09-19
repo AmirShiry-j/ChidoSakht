@@ -65,6 +65,27 @@
             <param name="CommentId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.OrderController.Get(System.Int64)">
+            <summary>
+            برگردوندن جزئیات یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.OrderController.Get(WebApi.Areas.Admin.ModelsAndDtoes.Orders.GetOrdersByFilterAdminApiDto)">
+            <summary>
+            برگردوندن سفارش‌ها (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.OrderController.Put(System.Int64,WebApi.ModelsAndDtoes.Orders.OrderStatusApiEnum)">
+            <summary>
+            تغییر وضعیت یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.PermissionController.Get(System.String,System.String,System.String)">
             <summary>
             برگردوندن لیست دسترسی ها (Auth)
@@ -702,6 +723,13 @@
             <param name="OrderId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.PaymentController.Post(System.Int64)">
+            <summary>
+            پرداخت یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.ProductController.Get(WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto)">
             <summary>
             برگردوندن محصولات با فیلتر های مختلف (کاربری)
@@ -755,6 +783,11 @@
             ای پی آی برای تست اتنفیکشن (Auth)
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:WebApi.ModelsAndDtoes.Orders.OrderStatusApiEnum">
+            <summary>
+            1_PendingPayment_2_Paid_3_Processing_4_Shipped_5_CanceledByUser_6_CanceledByAdmin
+            </summary>
         </member>
         <member name="P:WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto.TypeOrderByForProduct">
             <summary>
