@@ -10,12 +10,10 @@ namespace Application.Store.UserSection.AddressService.Commands
 {
     public class CreateAddressCommand : IRequest<int>
     {
-        public string Name { get; set; }
-        public string UserId { get; set; }
-        public CreateAddressCommand(string Name, string userId)
+        public Address Address { get; set; }
+        public CreateAddressCommand(Address Address)
         {
-            this.Name = Name;
-            UserId = userId;
+            this.Address = Address;
         }
     }
     public class UpdateAddressCommand : IRequest

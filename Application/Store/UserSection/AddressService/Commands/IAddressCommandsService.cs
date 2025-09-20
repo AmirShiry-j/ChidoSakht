@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Application.Store.UserSection.AddressService.Commands
 {
@@ -46,8 +47,32 @@ namespace Application.Store.UserSection.AddressService.Commands
                 };
             }
 
+            //Define
+            var address = new Address()
+            {
+                Name = dto.Name,
+                CityId = dto.CityId,
+                FullAddress = dto.FullAddress,
+                Pelak = dto.Pelak,
+                PostalCode = dto.PostalCode,
+                UnitNumber = dto.UnitNumber,
+                WhoRecept = dto.WhoRecept,
+                UserId = UserId
+            };
+            if (dto.WhoRecept == WhoRecept.Me)
+            {
+                address.WhoRecept = WhoRecept.Me;
+                address.NameRecipient = null;
+                address.PhoneNumberRecipient = null;
+            }
+            else
+            {
+                address.WhoRecept = WhoRecept.Other;
+                address.NameRecipient = dto.NameRecipient;
+                address.PhoneNumberRecipient = dto.PhoneNumberRecipient;
+            }
             //Create
-            var addressId = await _mediator.Send(new CreateAddressCommand(dto.Name, UserId));
+            var addressId = await _mediator.Send(new CreateAddressCommand(address));
 
             return new ResultDto<int>
             {
@@ -140,6 +165,23 @@ namespace Application.Store.UserSection.AddressService.Commands
 
             //change
             address.Name = dto.Name;
+            address.CityId = dto.CityId;
+            address.FullAddress = dto.FullAddress;
+            address.PostalCode = dto.PostalCode;
+            address.Pelak = dto.Pelak;
+            address.UnitNumber = dto.UnitNumber;
+            if (dto.WhoRecept == WhoRecept.Me)
+            {
+                address.WhoRecept = WhoRecept.Me;
+                address.NameRecipient = null;
+                address.PhoneNumberRecipient = null;
+            }
+            else
+            {
+                address.WhoRecept = WhoRecept.Other;
+                address.NameRecipient = dto.NameRecipient;
+                address.PhoneNumberRecipient = dto.PhoneNumberRecipient;
+            }
 
             //Update
             await _mediator.Send(new UpdateAddressCommand(address));
@@ -154,10 +196,26 @@ namespace Application.Store.UserSection.AddressService.Commands
     public class CreateAddressDto
     {
         public string Name { get; set; }
+        public int CityId { get; set; }
+        public string FullAddress { get; set; }
+        public string Pelak { get; set; }
+        public string PostalCode { get; set; }
+        public string? UnitNumber { get; set; }
+        public WhoRecept WhoRecept { get; set; }
+        public string? NameRecipient { get; set; }
+        public string? PhoneNumberRecipient { get; set; }
     }
     public class UpdateAddressDto
     {
         public int AddressId { get; set; }
         public string Name { get; set; }
+        public int CityId { get; set; }
+        public string FullAddress { get; set; }
+        public string Pelak { get; set; }
+        public string PostalCode { get; set; }
+        public string? UnitNumber { get; set; }
+        public WhoRecept WhoRecept { get; set; }
+        public string? NameRecipient { get; set; }
+        public string? PhoneNumberRecipient { get; set; }
     }
 }

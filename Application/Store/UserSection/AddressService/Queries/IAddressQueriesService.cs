@@ -73,13 +73,28 @@ namespace Application.Store.UserSection.AddressService.Queries
     }
     public class AddressDto
     {
-        public int Id { get; set; }
+        public int AddressId { get; set; }
         public string Name { get; set; }
+        public string FullAddress { get; set; }
+        public string PostalCode { get; set; }
+        public string NameRecipient { get; set; }
+        public string PhoneNumberRecipient { get; set; }
     }
     public class AddressDetailsDto
     {
         public string UserId { get; set; }
         public int AddressId { get; set; }
         public string Name { get; set; }
+        public int CityId { get; set; }
+        public string CityName { get; set; }
+        public int ProvinceId { get; set; }
+        public string ProvinceName { get; set; }
+        public string FullAddress { get; set; }
+        public string Pelak { get; set; }
+        public string PostalCode { get; set; }
+        public string? UnitNumber { get; set; }
+        public WhoRecept WhoRecept { get; set; }
+        public string NameRecipient { get; set; }
+        public string PhoneNumberRecipient { get; set; }
     }
 }

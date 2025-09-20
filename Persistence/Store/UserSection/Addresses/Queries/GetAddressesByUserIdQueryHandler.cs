@@ -1,4 +1,5 @@
 ﻿using Application.Store.UserSection.AddressService.Queries;
+using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
@@ -19,11 +20,15 @@ namespace Persistence.Store.UserSection.Addresses.Queries
         }
         public async Task<List<AddressDto>> Handle(GetAddressesByUserIdQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Addresses.Where(p => p.UserId.Equals(request.UserId))
+            return await _context.Addresses.Where(p => p.UserId.Equals(request.UserId)).Include(p => p.User)
                 .Select(p => new AddressDto
                 {
-                    Id = p.Id,
-                    Name = p.Name
+                    AddressId = p.Id,
+                    Name = p.Name,
+                    FullAddress = p.FullAddress,
+                    PostalCode = p.PostalCode,
+                    NameRecipient = p.WhoRecept.Equals(WhoRecept.Me) ? p.User.FullName : p.NameRecipient,
+                    PhoneNumberRecipient = p.WhoRecept.Equals(WhoRecept.Me) ? p.User.PhoneNumber : p.PhoneNumberRecipient,
                 }).ToListAsync();
         }
     }

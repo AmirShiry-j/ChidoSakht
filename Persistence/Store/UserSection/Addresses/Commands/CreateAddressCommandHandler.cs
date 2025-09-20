@@ -19,18 +19,11 @@ namespace Persistence.Store.UserSection.Addresses.Commands
         }
         public async Task<int> Handle(CreateAddressCommand request, CancellationToken cancellationToken)
         {
-            //Define
-            var newAddress = new Address
-            {
-                Name = request.Name,
-                UserId = request.UserId,
-            };
-
             //Add and save in DB
-            await _context.Addresses.AddAsync(newAddress);
+            await _context.Addresses.AddAsync(request.Address);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return newAddress.Id;
+            return request.Address.Id;
         }
     }
 }

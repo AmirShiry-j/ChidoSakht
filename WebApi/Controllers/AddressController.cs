@@ -83,7 +83,15 @@ namespace WebApi.Controllers
             //map
             var inputService = new CreateAddressDto
             {
-                Name = dto.Name
+                Name = dto.Name,
+                CityId = dto.CityId,
+                FullAddress = dto.FullAddress,
+                NameRecipient = dto.NameRecipient,
+                Pelak = dto.Pelak,
+                PhoneNumberRecipient = dto.PhoneNumberRecipient,
+                PostalCode = dto.PostalCode,
+                UnitNumber = dto.UnitNumber,
+                WhoRecept = dto.WhoRecept
             };
 
             //run service
@@ -115,8 +123,16 @@ namespace WebApi.Controllers
             //Map
             var inputService = new UpdateAddressDto
             {
+                AddressId = dto.AddressId,
                 Name = dto.Name,
-                AddressId = dto.AddressId
+                CityId = dto.CityId,
+                FullAddress = dto.FullAddress,
+                NameRecipient = dto.NameRecipient,
+                Pelak = dto.Pelak,
+                PhoneNumberRecipient = dto.PhoneNumberRecipient,
+                PostalCode = dto.PostalCode,
+                UnitNumber = dto.UnitNumber,
+                WhoRecept = dto.WhoRecept
             };
 
             //run command
