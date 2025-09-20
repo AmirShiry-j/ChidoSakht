@@ -605,7 +605,7 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Controllers.AddressController.UpdateQuantityAnItem(WebApi.ModelsAndDtoes.Address.UpdateAddressApiDto)">
+        <member name="M:WebApi.Controllers.AddressController.Put(WebApi.ModelsAndDtoes.Address.RequiredIfWhoOtherAttribute.UpdateAddressApiDto)">
             <summary>
             ویرایش یک آدرس (Auth)
             </summary>
