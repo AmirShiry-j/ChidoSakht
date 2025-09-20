@@ -106,7 +106,7 @@ namespace WebApi.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateQuantityAnItem(UpdateAddressApiDto dto)
+        public async Task<IActionResult> Put(UpdateAddressApiDto dto)
         {
             //get userid
             var userId = User.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value;
