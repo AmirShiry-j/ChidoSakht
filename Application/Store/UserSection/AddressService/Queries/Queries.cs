@@ -39,13 +39,30 @@ namespace Application.Store.UserSection.AddressService.Queries
     {
         public GetProvincesQuery()
         {
-            
+
         }
     }
     public class GetCitiesByProvinceIdQuery : IRequest<List<CityDto>>
     {
         public int ProvinceId { get; set; }
         public GetCitiesByProvinceIdQuery(int ProvinceId)
+        {
+            this.ProvinceId = ProvinceId;
+        }
+    }
+    public class GetCityByIdQuery : IRequest<City>
+    {
+        public int CityId { get; set; }
+        public GetCityByIdQuery(int CityId)
+        {
+            this.CityId = CityId;
+        }
+    }
+
+    public class GetProvinceByIdQuery : IRequest<Province>
+    {
+        public int ProvinceId { get; set; }
+        public GetProvinceByIdQuery(int ProvinceId)
         {
             this.ProvinceId = ProvinceId;
         }

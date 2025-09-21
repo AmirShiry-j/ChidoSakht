@@ -47,6 +47,16 @@ namespace Application.Store.UserSection.AddressService.Commands
                 };
             }
 
+            //check
+            var city = await _mediator.Send(new GetCityByIdQuery(dto.CityId));
+            if (city is null)
+            {
+                return new ResultDto<int>
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
             //Define
             var address = new Address()
             {
@@ -132,6 +142,16 @@ namespace Application.Store.UserSection.AddressService.Commands
             //get User
             var user = _userManager.Users.Where(p => p.Id.Equals(UserId)).FirstOrDefault();
             if (user is null)
+            {
+                return new ResultDto
+                {
+                    MessageEventType = MessageEventType.NotFound
+                };
+            }
+
+            //check
+            var city = await _mediator.Send(new GetCityByIdQuery(dto.CityId));
+            if (city is null)
             {
                 return new ResultDto
                 {

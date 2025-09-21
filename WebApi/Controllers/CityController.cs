@@ -1,4 +1,5 @@
 ﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.MessageEventTypes;
 using Application.Store.UserSection.AddressService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +29,17 @@ namespace WebApi.Controllers
         {
             //Get data from service
             var resultService = await _facadeAddressService.AddressQueriesService.GetCitiesByProvinceId(ProvinceId);
-
-            return Ok(resultService.Data);
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
         }
     }
 }

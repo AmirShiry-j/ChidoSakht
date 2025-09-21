@@ -88,6 +88,16 @@ namespace Application.Store.UserSection.AddressService.Queries
 
         public async Task<ResultDto<List<CityDto>>> GetCitiesByProvinceId(int ProvinceId)
         {
+            //check
+            var province = await _mediator.Send(new GetProvinceByIdQuery(ProvinceId));
+            if (province is null)
+            {
+                return new ResultDto<List<CityDto>>
+                {
+                    MessageEventType = Commons.Objects.MessageEventTypes.MessageEventType.NotFound
+                };
+            }
+
             //get data from db
             var cities = await _mediator.Send(new GetCitiesByProvinceIdQuery(ProvinceId));
 
