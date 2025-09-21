@@ -15,7 +15,10 @@ namespace Application.Store.UserSection.AddressService.Queries
     {
         Task<ResultDto<List<AddressDto>>> GetAddressesByUserId(string UserId);
         Task<ResultDto<AddressDetailsDto>> GetAddressByAddressId(string UserId, int AddressId);
+        Task<ResultDto<List<ProvinceDto>>> GetProvinces();
+        Task<ResultDto<List<CityDto>>> GetCitiesByProvinceId(int ProvinceId);
     }
+
     public class AddressQueriesService : IAddressQueriesService
     {
         private readonly IMediator _mediator;
@@ -70,6 +73,30 @@ namespace Application.Store.UserSection.AddressService.Queries
                 Data = address
             };
         }
+
+        public async Task<ResultDto<List<ProvinceDto>>> GetProvinces()
+        {
+            //get data from db
+            var provinces = await _mediator.Send(new GetProvincesQuery());
+
+            return new ResultDto<List<ProvinceDto>>
+            {
+                IsSuccess = true,
+                Data = provinces
+            };
+        }
+
+        public async Task<ResultDto<List<CityDto>>> GetCitiesByProvinceId(int ProvinceId)
+        {
+            //get data from db
+            var cities = await _mediator.Send(new GetCitiesByProvinceIdQuery(ProvinceId));
+
+            return new ResultDto<List<CityDto>>()
+            {
+                IsSuccess = true,
+                Data = cities
+            };
+        }
     }
     public class AddressDto
     {
@@ -96,5 +123,16 @@ namespace Application.Store.UserSection.AddressService.Queries
         public WhoRecept WhoRecept { get; set; }
         public string NameRecipient { get; set; }
         public string PhoneNumberRecipient { get; set; }
+    }
+
+    public class ProvinceDto
+    {
+        public int ProvinceId { get; set; }
+        public string ProvinceName { get; set; }
+    }
+    public class CityDto
+    {
+        public int CityId { get; set; }
+        public string CityName { get; set; }
     }
 }

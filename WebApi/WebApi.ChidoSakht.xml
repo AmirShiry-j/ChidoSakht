@@ -674,6 +674,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.CityController.Get(System.Int32)">
+            <summary>
+            برگردوندن لیست شهرستان های یک استان
+            </summary>
+            <param name="ProvinceId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.CommentController.Get(WebApi.ModelsAndDtoes.Product.CommentFilterForUserSectionApiDto)">
             <summary>
             نمایش کامنت های یک محصول (کاربری)
@@ -754,6 +761,12 @@
         <member name="M:WebApi.Controllers.ProfileController.Get">
             <summary>
             بر گردوندن اطلاعات پروفایل (Auth)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ProvinceController.Get">
+            <summary>
+            برگردوندن لیست استان ها
             </summary>
             <returns></returns>
         </member>

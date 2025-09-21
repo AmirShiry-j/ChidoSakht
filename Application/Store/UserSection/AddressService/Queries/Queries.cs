@@ -34,4 +34,20 @@ namespace Application.Store.UserSection.AddressService.Queries
             this.Id = Id;
         }
     }
+
+    public class GetProvincesQuery : IRequest<List<ProvinceDto>>
+    {
+        public GetProvincesQuery()
+        {
+            
+        }
+    }
+    public class GetCitiesByProvinceIdQuery : IRequest<List<CityDto>>
+    {
+        public int ProvinceId { get; set; }
+        public GetCitiesByProvinceIdQuery(int ProvinceId)
+        {
+            this.ProvinceId = ProvinceId;
+        }
+    }
 }
