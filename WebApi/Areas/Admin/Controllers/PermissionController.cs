@@ -1,16 +1,12 @@
-﻿using Application.CategoryService;
-using Application.CategoryService.Commands;
-using Application.Common.AppKeyNames;
-using Application.Interfaces.Localization;
-using Application.Interfaces.Localization.AllMessageKeys;
-using Application.PermissionService.Commands;
-using Application.PermissionService.Queries;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Store.AdminSection.PermissionService;
+using Application.Store.AdminSection.PermissionService.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Roles;
 using WebApi.Filters.Permissions;
-using WebApi.ModelsAndDtoes.Categories;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -22,9 +18,9 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class PermissionController : ControllerBase
     {
-        private readonly IFacadePermissionService _FacadePermissionService;
+        private readonly IFacadeAdminPermissionService _FacadePermissionService;
         private readonly ILocalizationService _localizationService;
-        public PermissionController(IFacadePermissionService FacadePermissionService, ILocalizationService localizationService)
+        public PermissionController(IFacadeAdminPermissionService FacadePermissionService, ILocalizationService localizationService)
         {
             _FacadePermissionService = FacadePermissionService;
             _localizationService = localizationService;

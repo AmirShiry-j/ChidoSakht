@@ -4,7 +4,13 @@
         <name>WebApi</name>
     </assembly>
     <members>
-        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Get">
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.GetAllSamaple">
+            <summary>
+            برگردوندن همه دسته بندی ها به شکل ساده (Auth)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.GetAllAsTree">
             <summary>
             برگردوندن همه دسته بندی ها به شکل درخت (Auth)
             </summary>
@@ -17,14 +23,14 @@
             <param name="CategoryId"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Post(WebApi.ModelsAndDtoes.Categories.CreateCategoryApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Categories.CreateCategoryApiDto)">
             <summary>
             اضافه کردن یک دسته بندی جدید (Auth)
             </summary>
             <param name="createCategoryApiDto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Put(WebApi.ModelsAndDtoes.Categories.UpdateCategoryApiDto)">
+        <member name="M:WebApi.Areas.Admin.Controllers.CategoryController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Categories.UpdateCategoryApiDto)">
             <summary>
             آپدیت اطلاعات یک دسته بندی (Auth)
             </summary>
@@ -36,6 +42,48 @@
             حذف یک دسته بندی (Auth)
             </summary>
             <param name="CategoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CommentController.Get(WebApi.Areas.Admin.ModelsAndDtoes.Comments.CommentFilterForAdminSectionApiDto)">
+            <summary>
+            نمایش کامنت ها (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CommentController.Put(System.Int64)">
+            <summary>
+            تایید یک کامنت (Auth)
+            </summary>
+            <param name="CommentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.CommentController.Delete(System.Int64)">
+            <summary>
+            حذف یک کامنت (Auth)
+            </summary>
+            <param name="CommentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.OrderController.Get(System.Int64)">
+            <summary>
+            برگردوندن جزئیات یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.OrderController.Get(WebApi.Areas.Admin.ModelsAndDtoes.Orders.GetOrdersByFilterAdminApiDto)">
+            <summary>
+            برگردوندن سفارش‌ها (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.OrderController.Put(System.Int64,WebApi.ModelsAndDtoes.Orders.OrderStatusApiEnum)">
+            <summary>
+            تغییر وضعیت یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.PermissionController.Get(System.String,System.String,System.String)">
@@ -191,6 +239,20 @@
             <param name="ProductId"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.PublishProductIfValidate(System.Int32)">
+            <summary>
+            پابلیش محصول در صورت  (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductController.GetPublicationStatus(System.Int32)">
+            <summary>
+            برگردوندن وضعیت پابلیش بودن محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductImageController.Get(System.Int32)">
             <summary>
             برگردوندن تصاویر یک محصول (Auth)
@@ -227,6 +289,69 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationController.Get(System.Int64)">
+            <summary>
+            برگردوندن همه مشخصه های یک گروه (Auth)
+            </summary>
+            <param name="ProductSpecificationGroupId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductSpecificationApiDto)">
+            <summary>
+            ایجاد یک مشخصه (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateProductSpecificationApiDto)">
+            <summary>
+            ویرایش مشخصه (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationController.Delete(System.Int64)">
+            <summary>
+            حذف یک مشخصه (Auth)
+            </summary>
+            <param name="ProductSpecificationId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationGroupController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه گروه های مشخصات (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationGroupController.Post(WebApi.Areas.Admin.ModelsAndDtoes.Products.CreateProductSpecificationGroupApiDto)">
+            <summary>
+            ایجاد یک گروه برای ثبت مشخصات (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationGroupController.Put(WebApi.Areas.Admin.ModelsAndDtoes.Products.UpdateProductSpecificationGroupApiDto)">
+            <summary>
+            ویرایش گروه (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationGroupController.Delete(System.Int64)">
+            <summary>
+            حذف یک گروه (Auth)
+            </summary>
+            <param name="ProductSpecificationGroupId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.ProductSpecificationGroupsAndSpecificationsController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه گروه های اطلاعات با مشخصه هاشون (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Areas.Admin.Controllers.ProductVariantController.Get(System.Int32)">
             <summary>
             برگردوندن همه واریانت های یک محصول (Auth)
@@ -253,6 +378,27 @@
             حذف یک واریانت (Auth)
             </summary>
             <param name="ProductVariantId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RelatedProductController.Get(System.Int32)">
+            <summary>
+            برگدوندن محصولات مرتبط به یک محصول (Auth)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RelatedProductController.Post(WebApi.Areas.Admin.ModelsAndDtoes.RelatedProduct.AddRelatedProductsApiDto)">
+            <summary>
+            اضافه کردن محصولات مرتبط یک محصول - دو طرفه - (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Areas.Admin.Controllers.RelatedProductController.RemoveRelation(WebApi.Areas.Admin.ModelsAndDtoes.RelatedProduct.RemoveRelatedProductApiDto)">
+            <summary>
+            حذف محصولات مرتبط به یک محصول - دو طرفه (Auth)
+            </summary>
+            <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Areas.Admin.Controllers.RoleController.Get">
@@ -439,10 +585,210 @@
             <param name="user"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApi.Controllers.AddressController.Get">
+            <summary>
+            برگردوندن آدرس های ثبت شده برای یک کاربر (Auth)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AddressController.Get(System.Int32)">
+            <summary>
+            برگردوندن اطلاعات ثبت شده برای یک آدرس (Auth)
+            </summary>
+            <param name="AddressId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AddressController.Post(WebApi.ModelsAndDtoes.Address.CreateAddressApiDto)">
+            <summary>
+            ثبت یک آدرس جدید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AddressController.Put(WebApi.ModelsAndDtoes.Address.RequiredIfWhoOtherAttribute.UpdateAddressApiDto)">
+            <summary>
+            ویرایش یک آدرس (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AddressController.Delete(System.Int32)">
+            <summary>
+            حذف یک آدرس (Auth)
+            </summary>
+            <param name="AddressId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.Get(WebApi.ModelsAndDtoes.Cart.GetCartFilterApiDto)">
+            <summary>
+            برگردوندن سبد خرید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.Post(WebApi.ModelsAndDtoes.Cart.AddItemToCartApiDto)">
+            <summary>
+            اضافه کردن یک آیتم به سبد خرید (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.Delete(System.Int64)">
+            <summary>
+            حذف یک آیتم از سبد خرید (Auth)
+            </summary>
+            <param name="CartItemId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.UpdateQuantityAnItem(WebApi.ModelsAndDtoes.Cart.UpdateQuantityOfItemInCartApiDto)">
+            <summary>
+            تغییر تعداد یک آیتم (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.MoveAnItemInACartToAnotherCart(WebApi.ModelsAndDtoes.Cart.MoveAnItemInCartToAnotherCartApiDto)">
+            <summary>
+            انتقال یک آیتم به سبد خرید بعدی یا فعلی (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.UpdatePricesInCartWithUserApproval(System.Int64)">
+            <summary>
+            به‌روزرسانی قیمت‌ها در سبد خرید بر اساس قیمت های جدید - با تأیید کاربر (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CartController.UpdateNumberOfItemsWithUserApproval(System.Int64)">
+            <summary>
+            به‌روزرسانی تعداد اقلام موجود در سبد خرید بر اساس حداکثرا تعداد موجود فعلی و همچنین حذف اقلام ناموجود - با تأیید کاربر(Auth) 
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CategoryController.Get">
+            <summary>
+            برگردوندن همه دسته بندی ها به شکل درخت (کاربری)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CityController.Get(System.Int32)">
+            <summary>
+            برگردوندن لیست شهرستان های یک استان
+            </summary>
+            <param name="ProvinceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CommentController.Get(WebApi.ModelsAndDtoes.Product.CommentFilterForUserSectionApiDto)">
+            <summary>
+            نمایش کامنت های یک محصول (کاربری)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CommentController.Post(WebApi.ModelsAndDtoes.Product.CreateCommentApiDto)">
+            <summary>
+            گذاشتن یک کامنت (کاربری) (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.CommentController.Delete(System.Int64)">
+            <summary>
+            حذف یک کامنت (کاربری) (Auth)
+            </summary>
+            <param name="CommentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.OrderController.Get(System.Int64)">
+            <summary>
+            برگردوندن جزئیات یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.OrderController.Get(WebApi.ModelsAndDtoes.Orders.GetOrdersByFilterApiDto)">
+            <summary>
+            برگردوندن سفارش‌های یک کاربر (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.OrderController.Post(WebApi.ModelsAndDtoes.Orders.CreateOrderApiDto)">
+            <summary>
+            ایجاد سفارش (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.OrderController.Delete(System.Int64)">
+            <summary>
+            کنسل کردن یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.PaymentController.Post(System.Int64)">
+            <summary>
+            پرداخت یک سفارش (Auth)
+            </summary>
+            <param name="OrderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ProductController.Get(WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto)">
+            <summary>
+            برگردوندن محصولات با فیلتر های مختلف (کاربری)
+            </summary>
+            <param name="productFilterForUserSectionApiDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ProductController.Get(System.Int32)">
+            <summary>
+            برگردوندن اطلاعات یک محصول (کاربری)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ProductSpecificationGroupsAndSpecificationsController.Get(System.Int32)">
+            <summary>
+            برگردوندن همه گروه های اطلاعات با مشخصه هاشون (کاربری)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApi.Controllers.ProfileController.Get">
             <summary>
             بر گردوندن اطلاعات پروفایل (Auth)
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.ProvinceController.Get">
+            <summary>
+            برگردوندن لیست استان ها
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.RelatedProductController.GetRelatedProducts(System.Int32)">
+            <summary>
+            برگردوندن محصولات مرتبط به یک محصول (کاربری)
+            </summary>
+            <param name="ProductId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.VoteOnCommentController.Post(WebApi.ModelsAndDtoes.Product.CreateOrUpdateVoteOnCommentApiDto)">
+            <summary>
+            ثبت یا ویرایش یک رای برای کامنت (کاربری) (Auth)
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.VoteOnCommentController.Delete(System.Int64)">
+            <summary>
+            حذف یک رای (کاربری) (Auth)
+            </summary>
+            <param name="CommentId"></param>
             <returns></returns>
         </member>
         <member name="M:WebApi.Controllers.WeatherForecastController.Get">
@@ -450,6 +796,21 @@
             ای پی آی برای تست اتنفیکشن (Auth)
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:WebApi.ModelsAndDtoes.Orders.OrderStatusApiEnum">
+            <summary>
+            1_PendingPayment_2_Paid_3_Processing_4_Shipped_5_CanceledByUser_6_CanceledByAdmin
+            </summary>
+        </member>
+        <member name="P:WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto.TypeOrderByForProduct">
+            <summary>
+            1_View 2_Date 3_Sell 4_Price
+            </summary>
+        </member>
+        <member name="P:WebApi.ModelsAndDtoes.Product.ProductFilterForUserSectionApiDto.Ascending">
+            <summary>
+            Default : false
+            </summary>
         </member>
     </members>
 </doc>

@@ -38,7 +38,7 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         public int ProductAttributeId { get; set; }
         [Required]
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Value { get; set; }
     }
 
@@ -47,7 +47,7 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         public int ProductAttributeValueId { get; set; }
         [Required]
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Value { get; set; }
     }
 
@@ -59,6 +59,7 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Range(0, long.MaxValue)]
         public long Price { get; set; }
         [Range(0, long.MaxValue)]
+        [SpecialPriceValidation(nameof(Price))]
         public long? SpecialPrice { get; set; }
         [Required]
         [Range(0, int.MaxValue)]
@@ -112,6 +113,7 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Range(0, long.MaxValue)]
         public long Price { get; set; }
         [Range(0, long.MaxValue)]
+        [SpecialPriceValidation(nameof(Price))]
         public long? SpecialPrice { get; set; }
         [Required]
         [Range(0, int.MaxValue)]
@@ -127,4 +129,8 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Range(0, double.MaxValue)]
         public double? Weight { get; set; }
     }
+
+
+   
+
 }

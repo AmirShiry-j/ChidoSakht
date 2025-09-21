@@ -1,4 +1,4 @@
-﻿using Application.TokenService;
+﻿using Application.Commons.Services.TokenService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

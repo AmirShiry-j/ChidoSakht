@@ -7,8 +7,8 @@ using MimeKit;
 using System.Threading.Tasks;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Application.Interfaces.ConfigService;
-using Application.Interfaces.Messagers.EmailService;
+using Application.Commons.Interfaces.ConfigService;
+using Application.Commons.Interfaces.Messagers.EmailService;
 
 namespace Infrastructure.Messagers.EmailService
 {

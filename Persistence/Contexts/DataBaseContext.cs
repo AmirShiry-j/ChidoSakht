@@ -8,6 +8,10 @@ using Domain.Products;
 using Persistence.Configurations.Products;
 using System.Reflection.Emit;
 using Domain.SymbolicShoppingCarts;
+using Persistence.Configurations.Carts;
+using Domain.Carts;
+using Domain.Orders;
+using Persistence.Configurations.Addresses;
 
 namespace Persistence.Contexts
 {
@@ -21,6 +25,7 @@ namespace Persistence.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Token> Tokens { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         //Categories
         public DbSet<Category> Categories { get; set; }
@@ -38,8 +43,29 @@ namespace Persistence.Contexts
         public DbSet<ProductVariantTransportation> ProductVariantTransportations { get; set; }
         //
         public DbSet<SymbolicOrderOrSymbolicShoppingCartItem> SymbolicOrderOrSymbolicShoppingCartItems { get; set; }
+        //
+        public DbSet<RelatedProduct> RelatedProducts { get; set; }
+        //
+        public DbSet<ProductSpecificationGroup> ProductSpecificationGroups { get; set; }
+        public DbSet<ProductSpecification> ProductSpecifications { get; set; }
+        //
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Helpful> Helpfuls { get; set; }
+        //
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        //
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        //
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<City> Cities { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //Filters
+            builder.Entity<Product>().HasQueryFilter(p => p.IsPublished);
+
             ////Relations
             //Users
             builder.Entity<Token>()
@@ -142,6 +168,68 @@ namespace Persistence.Contexts
     .WithOne(p => p.ProductVariant)
     .HasForeignKey(p => p.ProductVariantId)
     .OnDelete(DeleteBehavior.NoAction);
+            //
+
+
+            builder.Entity<RelatedProduct>()
+    .HasKey(rp => new { rp.ProductId, rp.RelatedProductId });
+
+            builder.Entity<RelatedProduct>()
+                .HasOne(rp => rp.Product)
+                .WithMany(p => p.RelatedProducts)
+                .HasForeignKey(rp => rp.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<RelatedProduct>()
+                .HasOne(rp => rp.RelatedTo)
+                .WithMany(p => p.RelatedToProducts)
+                .HasForeignKey(rp => rp.RelatedProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+            //
+            builder.Entity<ProductSpecificationGroup>()
+                .HasMany(g => g.Specifications)
+                .WithOne(s => s.ProductSpecificationGroup)
+                .HasForeignKey(s => s.ProductSpecificationGroupId)
+                .OnDelete(DeleteBehavior.Cascade);
+            //
+
+            builder.Entity<Domain.Users.User>()
+    .HasMany<Comment>()
+    .WithOne(p => p.User)
+    .HasForeignKey(v => v.UserId)
+    .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Domain.Users.User>()
+.HasMany<Order>()
+.WithOne(p => p.User)
+.HasForeignKey(v => v.UserId)
+.OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.Entity<Domain.Users.User>()
+.HasMany<Cart>()
+.WithOne(p => p.User)
+.HasForeignKey(v => v.UserId)
+.OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Order>()
+.HasOne(p => p.Cart)
+.WithOne()
+.HasForeignKey<Order>(p => p.CartId)
+.OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.Entity<Payment>()
+.HasOne(p => p.Order)
+.WithOne(p => p.Payment)
+.HasForeignKey<Payment>(p => p.OrderId)
+.OnDelete(DeleteBehavior.NoAction);
+
+            //For Address
+            builder.Entity<Address>()
+                .HasOne(p => p.City)
+                .WithMany();
+
 
             SetConfigurations(builder);
 
@@ -163,6 +251,14 @@ namespace Persistence.Contexts
             builder.ApplyConfiguration(new ProductConfig());
             builder.ApplyConfiguration(new ProductImageConfig());
             builder.ApplyConfiguration(new ProductAttributeConfig());
+            builder.ApplyConfiguration(new CommentConfig());
+
+            //Carts
+            builder.ApplyConfiguration(new CartConfig());
+
+            //Address
+            builder.ApplyConfiguration(new ProvinceConfig());
+            builder.ApplyConfiguration(new CartConfig());
 
 
             base.OnModelCreating(builder);

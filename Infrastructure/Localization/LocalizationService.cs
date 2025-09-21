@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Localization;
+﻿using Application.Commons.Interfaces.Localization;
 using Infrastructure.Localization.AccountMessages;
 using Infrastructure.Localization.CategoryMessages;
 using Infrastructure.Localization.PermissionMessages;

@@ -22,6 +22,73 @@ namespace Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Carts.Cart", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("CartType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("Domain.Carts.CartItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CartId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("Price_LastKnown")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ProductVariantId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("SpecialPrice_LastKnown")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("Domain.Categories.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -51,6 +118,190 @@ namespace Persistence.Migrations
                     b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Domain.Orders.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("CartId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("DiscountAmout")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FinalAmout")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SendBy")
+                        .HasColumnType("int");
+
+                    b.Property<long>("SendCost")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TotalAmout")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("CartId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Domain.Orders.OrderItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ProductVariantId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("SpecialPrice")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("Domain.Orders.Payment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("Amout")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TransactionId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("Domain.Products.Comment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Confirmation")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("Star")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Domain.Products.Helpful", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CommentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("WasHelpful")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Helpfuls");
                 });
 
             modelBuilder.Entity("Domain.Products.Product", b =>
@@ -97,6 +348,9 @@ namespace Persistence.Migrations
 
                     b.Property<string>("UniqeLink")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<long>("ViewCount")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -190,6 +444,54 @@ namespace Persistence.Migrations
                     b.ToTable("ProductImages");
                 });
 
+            modelBuilder.Entity("Domain.Products.ProductSpecification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ProductSpecificationGroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductSpecificationGroupId");
+
+                    b.ToTable("ProductSpecifications");
+                });
+
+            modelBuilder.Entity("Domain.Products.ProductSpecificationGroup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductSpecificationGroups");
+                });
+
             modelBuilder.Entity("Domain.Products.ProductVariant", b =>
                 {
                     b.Property<int>("Id")
@@ -274,6 +576,21 @@ namespace Persistence.Migrations
                     b.ToTable("ProductVariantTransportations");
                 });
 
+            modelBuilder.Entity("Domain.Products.RelatedProduct", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RelatedProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "RelatedProductId");
+
+                    b.HasIndex("RelatedProductId");
+
+                    b.ToTable("RelatedProducts");
+                });
+
             modelBuilder.Entity("Domain.SymbolicShoppingCarts.SymbolicOrderOrSymbolicShoppingCartItem", b =>
                 {
                     b.Property<int>("Id")
@@ -293,6 +610,80 @@ namespace Persistence.Migrations
                     b.HasIndex("ProductVariantId");
 
                     b.ToTable("SymbolicOrderOrSymbolicShoppingCartItems");
+                });
+
+            modelBuilder.Entity("Domain.Users.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FullAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameRecipient")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Pelak")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumberRecipient")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UnitNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("WhoRecept")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Domain.Users.City", b =>
+                {
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
+
+                    b.Property<string>("CityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProvinceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CityId");
+
+                    b.HasIndex("ProvinceId");
+
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Domain.Users.Permission", b =>
@@ -318,6 +709,21 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Permissions");
+                });
+
+            modelBuilder.Entity("Domain.Users.Province", b =>
+                {
+                    b.Property<int>("ProvinceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProvinceName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ProvinceId");
+
+                    b.ToTable("Provinces");
                 });
 
             modelBuilder.Entity("Domain.Users.Role", b =>
@@ -594,6 +1000,36 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Carts.Cart", b =>
+                {
+                    b.HasOne("Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Carts.CartItem", b =>
+                {
+                    b.HasOne("Domain.Carts.Cart", "Cart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Products.ProductVariant", "ProductVariant")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("ProductVariant");
+                });
+
             modelBuilder.Entity("Domain.Categories.Category", b =>
                 {
                     b.HasOne("Domain.Categories.Category", "ParentCategory")
@@ -601,6 +1037,101 @@ namespace Persistence.Migrations
                         .HasForeignKey("ParentCategoryId");
 
                     b.Navigation("ParentCategory");
+                });
+
+            modelBuilder.Entity("Domain.Orders.Order", b =>
+                {
+                    b.HasOne("Domain.Users.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Carts.Cart", "Cart")
+                        .WithOne()
+                        .HasForeignKey("Domain.Orders.Order", "CartId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Orders.OrderItem", b =>
+                {
+                    b.HasOne("Domain.Orders.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Products.ProductVariant", "ProductVariant")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("ProductVariant");
+                });
+
+            modelBuilder.Entity("Domain.Orders.Payment", b =>
+                {
+                    b.HasOne("Domain.Orders.Order", "Order")
+                        .WithOne("Payment")
+                        .HasForeignKey("Domain.Orders.Payment", "OrderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Domain.Products.Comment", b =>
+                {
+                    b.HasOne("Domain.Products.Product", "Product")
+                        .WithMany("Comments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Products.Helpful", b =>
+                {
+                    b.HasOne("Domain.Products.Comment", "Comment")
+                        .WithMany("Helpfuls")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Products.Product", b =>
@@ -644,6 +1175,28 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Products.ProductSpecification", b =>
+                {
+                    b.HasOne("Domain.Products.ProductSpecificationGroup", "ProductSpecificationGroup")
+                        .WithMany("Specifications")
+                        .HasForeignKey("ProductSpecificationGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductSpecificationGroup");
+                });
+
+            modelBuilder.Entity("Domain.Products.ProductSpecificationGroup", b =>
+                {
+                    b.HasOne("Domain.Products.Product", "Product")
+                        .WithMany("ProductSpecificationGroups")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Domain.Products.ProductVariant", b =>
                 {
                     b.HasOne("Domain.Products.Product", "Product")
@@ -685,6 +1238,25 @@ namespace Persistence.Migrations
                     b.Navigation("ProductVariant");
                 });
 
+            modelBuilder.Entity("Domain.Products.RelatedProduct", b =>
+                {
+                    b.HasOne("Domain.Products.Product", "Product")
+                        .WithMany("RelatedProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Products.Product", "RelatedTo")
+                        .WithMany("RelatedToProducts")
+                        .HasForeignKey("RelatedProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("RelatedTo");
+                });
+
             modelBuilder.Entity("Domain.SymbolicShoppingCarts.SymbolicOrderOrSymbolicShoppingCartItem", b =>
                 {
                     b.HasOne("Domain.Products.ProductVariant", "ProductVariant")
@@ -694,6 +1266,36 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductVariant");
+                });
+
+            modelBuilder.Entity("Domain.Users.Address", b =>
+                {
+                    b.HasOne("Domain.Users.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Users.User", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Users.City", b =>
+                {
+                    b.HasOne("Domain.Users.Province", "Province")
+                        .WithMany("cities")
+                        .HasForeignKey("ProvinceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Province");
                 });
 
             modelBuilder.Entity("Domain.Users.RolePermission", b =>
@@ -777,6 +1379,11 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Carts.Cart", b =>
+                {
+                    b.Navigation("Items");
+                });
+
             modelBuilder.Entity("Domain.Categories.Category", b =>
                 {
                     b.Navigation("ChildCategories");
@@ -784,18 +1391,44 @@ namespace Persistence.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("Domain.Orders.Order", b =>
+                {
+                    b.Navigation("Items");
+
+                    b.Navigation("Payment")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Products.Comment", b =>
+                {
+                    b.Navigation("Helpfuls");
+                });
+
             modelBuilder.Entity("Domain.Products.Product", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("ProductAttributes");
 
                     b.Navigation("ProductImages");
 
+                    b.Navigation("ProductSpecificationGroups");
+
                     b.Navigation("ProductVariants");
+
+                    b.Navigation("RelatedProducts");
+
+                    b.Navigation("RelatedToProducts");
                 });
 
             modelBuilder.Entity("Domain.Products.ProductAttribute", b =>
                 {
                     b.Navigation("ProductAttributeValues");
+                });
+
+            modelBuilder.Entity("Domain.Products.ProductSpecificationGroup", b =>
+                {
+                    b.Navigation("Specifications");
                 });
 
             modelBuilder.Entity("Domain.Products.ProductVariant", b =>
@@ -806,8 +1439,15 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Users.Province", b =>
+                {
+                    b.Navigation("cities");
+                });
+
             modelBuilder.Entity("Domain.Users.User", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("Tokens");
                 });
 #pragma warning restore 612, 618

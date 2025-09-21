@@ -1,7 +1,7 @@
-﻿using Application.Common.AppKeyNames;
-using Application.Common.MessageEventTypes;
-using Application.Interfaces.Localization;
-using Application.ProductAttribute;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.ProductAttribute;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters.Permissions;
@@ -15,9 +15,9 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class ProductAttributesAndValuesController : ControllerBase
     {
-        private readonly IFacadeProductAttributeService _facadeProductAttributeService;
+        private readonly IFacadeAdminProductAttributeService _facadeProductAttributeService;
         private readonly ILocalizationService _localizationService;
-        public ProductAttributesAndValuesController(IFacadeProductAttributeService facadeProductAttributeService, ILocalizationService localizationService)
+        public ProductAttributesAndValuesController(IFacadeAdminProductAttributeService facadeProductAttributeService, ILocalizationService localizationService)
         {
             _facadeProductAttributeService = facadeProductAttributeService;
             _localizationService = localizationService;

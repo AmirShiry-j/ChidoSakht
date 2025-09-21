@@ -18,7 +18,7 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         public int ProductId { get; set; }
 
-        [MaxLength(300)]
+        [MaxLength(2000)]
         public string? Description { get; set; }
     }
 

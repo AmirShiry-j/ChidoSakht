@@ -1,10 +1,9 @@
-﻿using Application.CategoryService;
-using Application.CategoryService.Commands;
-using Application.CategoryService.Queries;
-using Application.Common.AppKeyNames;
-using Application.Common.Dtoes;
-using Application.Interfaces.Localization;
-using Application.Interfaces.Localization.AllMessageKeys;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Interfaces.Localization.AllMessageKeys;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.Dtoes;
+using Application.Store.AdminSection.CategoryService;
+using Application.Store.AdminSection.CategoryService.Commands;
 using Domain.Categories;
 using Domain.Users;
 using MediatR;
@@ -13,9 +12,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
+using WebApi.Areas.Admin.ModelsAndDtoes.Categories;
 using WebApi.Controllers;
 using WebApi.Filters.Permissions;
-using WebApi.ModelsAndDtoes.Categories;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -26,12 +25,33 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class CategoryController : ControllerBase
     {
-        private readonly IFacadeCategoryService _facadeCategoryService;
+        private readonly IFacadeAdminCategoryService _facadeCategoryService;
         private readonly ILocalizationService _localizationService;
-        public CategoryController(IFacadeCategoryService facadeCategoryService, ILocalizationService localizationService)
+        public CategoryController(IFacadeAdminCategoryService facadeCategoryService, ILocalizationService localizationService)
         {
             _facadeCategoryService = facadeCategoryService;
             _localizationService = localizationService;
+        }
+
+        /// <summary>
+        /// برگردوندن همه دسته بندی ها به شکل ساده (Auth)
+        /// </summary>
+        /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Category, KeyNameAction.View, KeyNameArea.Admin)]
+        [HttpGet(nameof(GetAllSamaple))]
+        public async Task<IActionResult> GetAllSamaple()
+        {
+            //Get by service
+            var resultService = await _facadeCategoryService.GetAllCategoriesService.Execute();
+
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                return BadRequest(resultService.Message);
+            }
         }
 
         /// <summary>
@@ -39,8 +59,8 @@ namespace WebApi.Areas.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [PermissionAuthorize(KeyNameController.Category, KeyNameAction.View, KeyNameArea.Admin)]
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet(nameof(GetAllAsTree))]
+        public async Task<IActionResult> GetAllAsTree()
         {
             //Get by service
             var resultService = await _facadeCategoryService.GetAllCategoriesAsTreeService.Execute();

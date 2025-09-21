@@ -1,0 +1,80 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.Commons.Interfaces.ConfigService
+{
+    public interface IConfigService
+    {
+        AppSettings Config { get; }
+    }
+
+    public class AppSettings
+    {
+        public DatabaseSettings DatabaseSettings { get; set; }
+        public MainJwtAuthenticationSetting MainJwtAuthenticationSetting { get; set; }
+        public IdentitySettings IdentitySettings { get; set; }
+        public EmailSetting EmailSetting { get; set; }
+        public CorsPolicy CorsPolicy { get; set; }
+        public Localization Localization { get; set; }
+        public SuperAdmins SuperAdmins { get; set; }
+    }
+    public class DatabaseSettings
+    {
+        public string Provider { get; set; }
+        public string ConnectionString { get; set; }
+    }
+    public class EmailSetting
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public int Port { get; set; }
+        public string Host { get; set; }
+        public bool EnableSsl { get; set; }
+        public int Timeout { get; set; }
+        public bool UseDefaultCredentials { get; set; }
+        public string SecureSocketOptions { get; set; }
+    }
+    public class Localization
+    {
+        public string DefaultCulture { get; set; } = "fa";
+        public string[] SupportedCultures { get; set; } = { "fa" };
+        public bool Visible_AcceptLanguageForSwagger { get; set; } = false;
+    }
+    public class IdentitySettings
+    {
+        public bool RequireDigit { get; set; }
+        public int RequiredLength { get; set; }
+        public bool RequireLowercase { get; set; }
+        public bool RequireUppercase { get; set; }
+        public bool RequireNonAlphanumeric { get; set; }
+        public int RequiredUniqueChars { get; set; }
+        public int MaxFailedAccessAttempts { get; set; }
+        public int DefaultLockoutTimeSpan { get; set; }
+        public int DefaultTokenProviderLifeSpan { get; set; }
+        public bool ReturnSecureCodesForDevelopEnvironment { get; set; }
+    }
+    public class MainJwtAuthenticationSetting
+    {
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
+        public int JWTExpires_ByDay { get; set; }
+        public int RefreshTokenExpires_ByDay { get; set; }
+        public int MaxCountUserTokensAtMoment { get; set; }
+    }
+    public class CorsPolicy
+    {
+        public bool AllowAnyOrigins { get; set; }
+        public string[] Origins { get; set; }
+        public bool AllowAnyHeaders { get; set; }
+        public string[] Headers { get; set; }
+        public bool AllowAnyMethods { get; set; }
+        public string[] Methods { get; set; }
+    }
+    public class SuperAdmins
+    {
+        public string[] UserNames { get; set; }
+    }
+}

@@ -16,7 +16,6 @@ namespace WebApi.Areas.Admin.ModelsAndDtoes.Products
         [Required]
         public int ProductId { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

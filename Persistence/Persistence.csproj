@@ -21,4 +21,9 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commons\Utility\" />
+    <Folder Include="Store\UserSection\Payments\Queries\" />
+  </ItemGroup>
+
 </Project>

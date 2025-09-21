@@ -23,6 +23,7 @@ namespace Domain.Products
         public string? UniqeLink { get; set; }
         public string? ImageAltText { get; set; }
         public string? NameIndexImage { get; set; }
+        public long ViewCount { get; set; }
 
         public DateTime CreateTime { get; set; }
         public DateTime? LastUpdateTime { get; set; }
@@ -35,6 +36,12 @@ namespace Domain.Products
         public ICollection<ProductVariant> ProductVariants { get; set; }
         public Category Category { get; set; }
         public int? CategoryId { get; set; }
+        //
+        public ICollection<RelatedProduct> RelatedProducts { get; set; } = new List<RelatedProduct>();
+        public ICollection<RelatedProduct> RelatedToProducts { get; set; } = new List<RelatedProduct>();
+        //
+        public ICollection<ProductSpecificationGroup> ProductSpecificationGroups { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 
     public enum ProductType
@@ -102,5 +109,16 @@ namespace Domain.Products
 
         public int ProductAttributeValueId { get; set; }
         public ProductAttributeValue ProductAttributeValue { get; set; }
+    }
+
+
+
+    public class RelatedProduct
+    {
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+
+        public int RelatedProductId { get; set; }
+        public Product RelatedTo { get; set; }
     }
 }

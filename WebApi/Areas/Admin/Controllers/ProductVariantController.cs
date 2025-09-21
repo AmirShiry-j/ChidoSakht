@@ -1,10 +1,8 @@
-﻿using Application.Common.AppKeyNames;
-using Application.Common.MessageEventTypes;
-using Application.Interfaces.Localization;
-using Application.ProductAttribute.Commands;
-using Application.ProductService;
-using Application.ProductVariant;
-using Application.ProductVariant.Commands;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.ProductVariant;
+using Application.Store.AdminSection.ProductVariant.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Products;
@@ -19,9 +17,9 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class ProductVariantController : ControllerBase
     {
-        private readonly IFacadeProductVariantService _facadeProductVariantService;
+        private readonly IFacadeAdminProductVariantService _facadeProductVariantService;
         private readonly ILocalizationService _localizationService;
-        public ProductVariantController(IFacadeProductVariantService facadeProductVariantService, ILocalizationService localizationService)
+        public ProductVariantController(IFacadeAdminProductVariantService facadeProductVariantService, ILocalizationService localizationService)
         {
             _facadeProductVariantService = facadeProductVariantService;
             _localizationService = localizationService;

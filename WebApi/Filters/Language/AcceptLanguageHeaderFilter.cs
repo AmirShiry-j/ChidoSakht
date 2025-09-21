@@ -1,5 +1,4 @@
-﻿using Application.Interfaces.ConfigService;
-using Application.Interfaces.Messagers.SmsService;
+﻿using Application.Commons.Interfaces.ConfigService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;

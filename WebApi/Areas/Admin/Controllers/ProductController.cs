@@ -1,20 +1,18 @@
-﻿using Application.CategoryService;
-using Application.Common.AppKeyNames;
-using Application.Common.Dtoes;
-using Application.Interfaces.Localization;
-using Application.Interfaces.Localization.AllMessageKeys;
-using Application.ProductService;
-using Application.ProductService.Commands;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Admin.ModelsAndDtoes.Products;
 using WebApi.Filters.Permissions;
-using Application.Common.MessageEventTypes;
 using Microsoft.AspNetCore.Http.Extensions;
-using Application.ProductService.Queries;
 using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
 using Domain.Products;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.Dtoes;
+using Application.Commons.Objects.MessageEventTypes;
+using Application.Commons.Interfaces.Localization;
+using Application.Store.AdminSection.ProductService;
+using Application.Store.AdminSection.ProductService.Queries;
+using Application.Store.AdminSection.ProductService.Commands;
 
 namespace WebApi.Areas.Admin.Controllers
 {
@@ -25,10 +23,10 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class ProductController : ControllerBase
     {
-        private readonly IFacadeProductService _facadeProductService;
+        private readonly IFacadeAdminProductService _facadeProductService;
         private readonly ILocalizationService _localizationService;
         private readonly IWebHostEnvironment _env;
-        public ProductController(IFacadeProductService facadeProductService, ILocalizationService localizationService, IWebHostEnvironment env)
+        public ProductController(IFacadeAdminProductService facadeProductService, ILocalizationService localizationService, IWebHostEnvironment env)
         {
             _facadeProductService = facadeProductService;
             _localizationService = localizationService;
@@ -48,6 +46,7 @@ namespace WebApi.Areas.Admin.Controllers
             var inputService = new ProductFilterDto
             {
                 Name = searchProductApiDto.Name,
+                CategoryId = searchProductApiDto.CategoryId,
                 CountInPage = searchProductApiDto.CountInPage,
                 Page = searchProductApiDto.Page,
             };
@@ -368,5 +367,55 @@ namespace WebApi.Areas.Admin.Controllers
                     return BadRequest(resultService.Message);
             }
         }
+
+
+        /// <summary>
+        /// پابلیش محصول در صورت  (Auth)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.Edit, KeyNameArea.Admin)]
+        [HttpPut("PublishProductIfValidate/{ProductId}")]
+        public async Task<IActionResult> PublishProductIfValidate(int ProductId)
+        {
+            var resultService = await _facadeProductService.ProductCommandsService.PublishProductIfValidate(ProductId);
+            if (resultService.IsSuccess)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                else //bad request
+                    return BadRequest(resultService.Message);
+            }
+        }
+
+        /// <summary>
+        /// برگردوندن وضعیت پابلیش بودن محصول (Auth)
+        /// </summary>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
+        [PermissionAuthorize(KeyNameController.Product, KeyNameAction.View, KeyNameArea.Admin)]
+        [HttpGet("GetPublicationStatus/{ProductId}")]
+        public async Task<IActionResult> GetPublicationStatus(int ProductId)
+        {
+            //Get by service
+            var resultService = await _facadeProductService.ProductQueriesService.GetPublicationStatus(ProductId);
+
+            if (resultService.IsSuccess)
+            {
+                return Ok(resultService.Data);
+            }
+            else
+            {
+                if (resultService.MessageEventType == MessageEventType.NotFound)
+                    return NotFound();
+                return
+                    BadRequest(resultService.Message);
+            }
+        }
+
     }
 }

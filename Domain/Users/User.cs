@@ -26,6 +26,7 @@ namespace Domain.Users
         public string ImageName { get; set; }
         //Navs
         public ICollection<Token> Tokens { get; set; }
+        public ICollection<Address> Addresses { get; set; }
         public DateTime TimeCreate { get; set; }
     }
 }

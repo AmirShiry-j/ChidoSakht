@@ -1,8 +1,8 @@
-﻿using Application.Common.AppKeyNames;
-using Application.Common.MessageEventTypes;
-using Application.Interfaces.Localization;
-using Application.ProductImageService;
-using Application.ProductService;
+﻿using Application.Commons.Interfaces.Localization;
+using Application.Commons.Objects.AppKeyNames;
+using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.ProductImageService;
+using Application.Store.AdminSection.ProductService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -20,10 +20,10 @@ namespace WebApi.Areas.Admin.Controllers
     [Authorize]
     public class ProductImageController : ControllerBase
     {
-        private readonly IFacadeProductImageService _facadeProductImageService;
-        private readonly IFacadeProductService _facadeProductService;
+        private readonly IFacadeAdminProductImageService _facadeProductImageService;
+        private readonly IFacadeAdminProductService _facadeProductService;
         private readonly ILocalizationService _localizationService;
-        public ProductImageController(IFacadeProductImageService facadeProductImageService, ILocalizationService localizationService, IFacadeProductService facadeProductService)
+        public ProductImageController(IFacadeAdminProductImageService facadeProductImageService, ILocalizationService localizationService, IFacadeAdminProductService facadeProductService)
         {
             _facadeProductImageService = facadeProductImageService;
             _localizationService = localizationService;
@@ -65,7 +65,7 @@ namespace WebApi.Areas.Admin.Controllers
             }
             else
             {
-                if (resultService.MessageEventType == Application.Common.MessageEventTypes.MessageEventType.NotFound)
+                if (resultService.MessageEventType == MessageEventType.NotFound)
                     return NotFound();
                 else
                     return BadRequest(resultService.Message);
@@ -128,7 +128,7 @@ namespace WebApi.Areas.Admin.Controllers
             }
             else
             {
-                if (resultService.MessageEventType == Application.Common.MessageEventTypes.MessageEventType.NotFound)
+                if (resultService.MessageEventType == MessageEventType.NotFound)
                     return NotFound();
                 else
                     return BadRequest(resultService.Message);

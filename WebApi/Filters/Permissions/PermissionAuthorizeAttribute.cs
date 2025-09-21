@@ -1,5 +1,5 @@
-﻿using Application.Common.AppKeyNames;
-using Application.Interfaces.ConfigService;
+﻿using Application.Commons.Interfaces.ConfigService;
+using Application.Commons.Objects.AppKeyNames;
 using Domain.Users;
 using Infrastructure.ConfigService;
 using Microsoft.AspNetCore.Identity;

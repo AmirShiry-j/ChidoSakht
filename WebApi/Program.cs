@@ -14,22 +14,35 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApi.Helpers;
 using WebApi.Tools.TokenValidator;
-using Application.TokenService;
-using Application.Interfaces.Localization;
 using Infrastructure.Localization;
 using WebApi.Filters.Language;
-using Persistence.Categories.Commands;
-using Application.CategoryService;
-using Application.Interfaces.ConfigService;
-using Application.Interfaces.Messagers.EmailService;
-using Application.Interfaces.Messagers.SmsService;
 using Persistence.Seeds;
-using Application.ProductService.Commands;
-using Application.ProductService;
-using Application.ProductImageService;
 using Microsoft.Extensions.FileProviders;
-using Application.ProductAttribute;
-using Application.ProductVariant;
+using Application.Commons.Interfaces.ConfigService;
+using Application.Commons.Interfaces.Localization;
+using Application.Commons.Interfaces.Messagers.EmailService;
+using Application.Commons.Interfaces.Messagers.SmsService;
+using Application.Commons.Services.TokenService;
+using Application.Store.AdminSection.ProductAttribute;
+using Application.Store.AdminSection.PermissionService;
+using Application.Store.AdminSection.ProductImageService;
+using Application.Store.AdminSection.ProductVariant;
+using Application.Store.AdminSection.ProductService;
+using Application.Commons.Services.UserService;
+using Application.Store.AdminSection.CategoryService;
+using Application.Store.UserSection.CategoryService;
+using Persistence.Store.AdminSection.Categories.Commands;
+using Application.Store.AdminSection.RelatedProduct;
+using Application.Store.AdminSection.ProductSpecificationService;
+using Application.Store.UserSection.ProductService;
+using Application.Store.UserSection.CommentService;
+using Application.Store.AdminSection.CommentService;
+using Application.Store.UserSection.ProductSpecificationService;
+using Application.Store.UserSection.CartService;
+using Application.Store.UserSection.AddressService;
+using Application.Store.UserSection.OrderService;
+using Application.Store.AdminSection.OrderService;
+using Application.Store.UserSection.PaymentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -137,21 +150,37 @@ builder.Services.AddScoped<ITokenValidator, TokenValidator>();
 
 //Authorize and token services
 builder.Services.AddScoped<IUserTokenService, UserTokenService>();
-
-//Categories
-builder.Services.AddScoped<IFacadeCategoryService, FacadeCategoryService>();
-
 //Users
 builder.Services.AddScoped<IFacadeUserService, FacadeUserService>();
 
-//Permissions
-builder.Services.AddScoped<IFacadePermissionService, FacadePermissionService>();
-
+//Admins
+//Categories
+builder.Services.AddScoped<IFacadeAdminCategoryService, FacadeAdminCategoryService>();
 //Prdoucts
+builder.Services.AddScoped<IFacadeAdminProductService, FacadeAdminProductService>();
+builder.Services.AddScoped<IFacadeAdminProductImageService, FacadeAdminProductImageService>();
+builder.Services.AddScoped<IFacadeAdminProductAttributeService, FacadeAdminProductAttributeService>();
+builder.Services.AddScoped<IFacadeAdminProductVariantService, FacadeAdminProductVariantService>();
+builder.Services.AddScoped<IFacadeAdminProductSpecificationService, FacadeAdminProductSpecificationService>();
+//Permissions
+builder.Services.AddScoped<IFacadeAdminPermissionService, FacadeAdminPermissionService>();
+//RelatedProduct
+builder.Services.AddScoped<IFacadeAdminRelatedProductService, FacadeAdminRelatedProductService>();
+//Comment
+builder.Services.AddScoped<IFacadeAdminCommentService, FacadeAdminCommentService>();
+//Order 
+builder.Services.AddScoped<IFacadeAdminOrderService, FacadeAdminOrderService>();
+
+
+//User Section
+builder.Services.AddScoped<IFacadeCategoryService, FacadeCategoryService>();
 builder.Services.AddScoped<IFacadeProductService, FacadeProductService>();
-builder.Services.AddScoped<IFacadeProductImageService, FacadeProductImageService>();
-builder.Services.AddScoped<IFacadeProductAttributeService, FacadeProductAttributeService>();
-builder.Services.AddScoped<IFacadeProductVariantService, FacadeProductVariantService>();
+builder.Services.AddScoped<IFacadeCommentService, FacadeCommentService>();
+builder.Services.AddScoped<IFacadeProductSpecificationService, FacadeProductSpecificationService>();
+builder.Services.AddScoped<IFacadeCartService, FacadeCartService>();
+builder.Services.AddScoped<IFacadeAddressService, FacadeAddressService>();
+builder.Services.AddScoped<IFacadeOrderService, FacadeOrderService>();
+builder.Services.AddScoped<IFacadePaymentService, FacadePaymentService>();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommandHandler).Assembly));
