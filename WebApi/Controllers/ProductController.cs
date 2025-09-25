@@ -43,13 +43,14 @@ namespace WebApi.Controllers
                 ToPrice = productFilterForUserSectionApiDto.ToPrice,
                 FromPrice = productFilterForUserSectionApiDto.FromPrice,
                 TypeOrderByForProduct = productFilterForUserSectionApiDto.TypeOrderByForProduct,
-                CategoryId = productFilterForUserSectionApiDto.CategoryId,
                 OnlyAvailableGoods = productFilterForUserSectionApiDto.OnlyAvailableGoods,
                 Ascending = productFilterForUserSectionApiDto.Ascending,
 
                 CountInPage = productFilterForUserSectionApiDto.CountInPage,
                 Page = productFilterForUserSectionApiDto.Page,
             };
+            if (productFilterForUserSectionApiDto.CategoryId is not null)
+                inputService.CategoryIds.Add((int)productFilterForUserSectionApiDto.CategoryId);
 
             //Get data from service
             var resultService = await _facadeProductService.ProductQueriesService.GetProducts(inputService);

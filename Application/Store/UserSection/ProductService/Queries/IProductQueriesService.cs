@@ -1,6 +1,7 @@
 ﻿using Application.Commons.Interfaces.Localization;
 using Application.Commons.Objects.Dtoes;
 using Application.Commons.Objects.MessageEventTypes;
+using Application.Store.AdminSection.CategoryService.Queries;
 using Domain.Products;
 using MediatR;
 
@@ -24,6 +25,37 @@ namespace Application.Store.UserSection.ProductService.Queries
 
         public async Task<ResultDto<ResultFilterDto>> GetProducts(ProductFilterForUserSectionDto filterDto)
         {
+            var categoryIds = new List<int>();
+
+            void LocalFunction_GetIds(BriefCategoryDto Cate)
+            {
+                if (Cate.ChildCategories is not null && Cate.ChildCategories.Any())
+                {
+                    foreach (var item in Cate.ChildCategories)
+                    {
+                        LocalFunction_GetIds(item);
+                    }
+                }
+
+                categoryIds.Add(Cate.Id);
+            }
+
+            //Get all categories from db
+            var categories = new List<BriefCategoryDto>();
+            if (filterDto.CategoryIds is not null && filterDto.CategoryIds.Any())
+            {
+                categories = await _mediator.Send(new GetAllCategoriesAsTreeQuery(filterDto.CategoryIds.First()));
+                if (categories is not null)
+                {
+                    foreach (var item in categories)
+                    {
+                        LocalFunction_GetIds(item);
+                    }
+                }
+
+                filterDto.CategoryIds = categoryIds;
+            }
+
             //get from db
             var products = await _mediator.Send(new GetProductsByFilterQuery(filterDto));
 
@@ -34,7 +66,6 @@ namespace Application.Store.UserSection.ProductService.Queries
                 Data = products
             };
         }
-
         public async Task<ResultDto<ProductWithDetailsDto>> GetOneProductWithDetails(int ProductId)
         {
             //get from db
@@ -84,7 +115,7 @@ namespace Application.Store.UserSection.ProductService.Queries
         public TypeOrderByForProduct TypeOrderByForProduct { get; set; }
         public bool Ascending { get; set; } = false;
         public string? ProductName { get; set; }
-        public int? CategoryId { get; set; }
+        public List<int>? CategoryIds { get; set; } = new List<int>();
         public bool? OnlyAvailableGoods { get; set; }
         public long? FromPrice { get; set; }
         public long? ToPrice { get; set; }

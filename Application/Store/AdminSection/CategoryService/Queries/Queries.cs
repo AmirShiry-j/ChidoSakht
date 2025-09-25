@@ -32,8 +32,10 @@ namespace Application.Store.AdminSection.CategoryService.Queries
     }
     public class GetAllCategoriesAsTreeQuery : IRequest<List<BriefCategoryDto>>
     {
-        public GetAllCategoriesAsTreeQuery()
+        public int? CategoryId { get; set; } = null;
+        public GetAllCategoriesAsTreeQuery(int? CategoryId = null)
         {
+            this.CategoryId = CategoryId;
         }
     }
     public class GetAllCategoriesQuery : IRequest<List<BriefCategorySampleDto>>

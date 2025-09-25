@@ -21,18 +21,27 @@ namespace Persistence.Store.AdminSection.Categories.Queries
         public async Task<List<BriefCategoryDto>> Handle(GetAllCategoriesAsTreeQuery request, CancellationToken cancellationToken)
         {
             //Get Categories to 
-            var allcategoriesAsTree = await GetAllCategoriesAsTreeExplicitAsync(_context);
+            var allcategoriesAsTree = await GetAllCategoriesAsTreeExplicitAsync(_context, request.CategoryId);
 
             return allcategoriesAsTree;
         }
 
-        public async Task<List<BriefCategoryDto>> GetAllCategoriesAsTreeExplicitAsync(DataBaseContext context)
+        public async Task<List<BriefCategoryDto>> GetAllCategoriesAsTreeExplicitAsync(DataBaseContext context, int? CategoryId)
         {
+            var baseCategories = new List<Category>();
             //Get main Categories
-            var baseCategories = await context.Set<Category>().IgnoreQueryFilters()
-                .Where(p => p.ParentCategoryId == null)
+            if (CategoryId is null)
+            {
+                baseCategories = await context.Set<Category>().IgnoreQueryFilters()
+                    .Where(p => p.ParentCategoryId == null)
                 .ToListAsync();
-
+            }
+            else
+            {
+                baseCategories = await context.Set<Category>()
+                    .Where(p => p.Id.Equals(CategoryId)).IgnoreQueryFilters()
+                .ToListAsync();
+            }
 
             //Check exist
             if (baseCategories == null || !baseCategories.Any())

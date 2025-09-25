@@ -57,9 +57,9 @@ namespace Persistence.Store.UserSection.Products.Queries
             }
 
             //Filter CategoryId
-            if (FilterDto.CategoryId is not null)
+            if (FilterDto.CategoryIds is not null && FilterDto.CategoryIds.Any())
             {
-                prProduct = prProduct.And(x => x.CategoryId.Equals(FilterDto.CategoryId));
+                prProduct = prProduct.And(x => x.CategoryId != null ? FilterDto.CategoryIds.Contains((int)x.CategoryId) : false);
             }
 
             //Filter OnlyAvailableGoods
