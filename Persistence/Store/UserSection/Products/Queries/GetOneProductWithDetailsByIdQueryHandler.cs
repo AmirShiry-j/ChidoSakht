@@ -27,7 +27,7 @@ namespace Persistence.Store.UserSection.Products.Queries
             if (product is null)
                 return null;
 
-            InfoPriceDto infoPrice = null;
+            InfoForSimpleProductDto infoPrice = null;
 
             await _context.Database.ExecuteSqlInterpolatedAsync(
     $"UPDATE Products SET ViewCount = ViewCount + 1 WHERE Id = {request.Id}");
@@ -46,10 +46,10 @@ namespace Persistence.Store.UserSection.Products.Queries
                 .ThenInclude(p => p.ProductVariantTransportation)
                 .FirstOrDefaultAsync();
 
-                if (product.ProductVariants.Any())
+                if (product.ProductVariants.Any(p => p.ProductType.Equals(ProductType.Sample)))
                 {
                     var sampleInfo = product.ProductVariants.SingleOrDefault();
-                    infoPrice = new InfoPriceDto();
+                    infoPrice = new InfoForSimpleProductDto();
 
                     infoPrice.Price = sampleInfo.Price;
                     infoPrice.SpecialPrice = sampleInfo.SpecialPrice;
@@ -68,24 +68,9 @@ namespace Persistence.Store.UserSection.Products.Queries
                 .ThenInclude(p => p.Specifications)
                 .Include(p => p.ProductVariants)
                 .ThenInclude(p => p.ProductVariantTransportation)
+                .Include(p => p.ProductVariants)
+                 .ThenInclude(p => p.ProductVariantAttributeValues)
                 .FirstOrDefaultAsync();
-
-                if (product.ProductVariants.Any())
-                {
-                    var sampleInfo = product.ProductVariants.FirstOrDefault();
-                    infoPrice = new InfoPriceDto();
-
-                    infoPrice.Price = sampleInfo.Price;
-                    infoPrice.SpecialPrice = sampleInfo.SpecialPrice;
-                    infoPrice.Stock = sampleInfo.Stock;
-
-                    infoPrice.HasDiscount = sampleInfo.SpecialPrice is not null;
-                    if (infoPrice.HasDiscount)
-                    {
-                        //infoPrice.PercentDiscount = int.Parse(((infoPrice.Price - infoPrice.SpecialPrice) / infoPrice.Price) * 100));
-                        infoPrice.PercentDiscount = 10;
-                    }
-                }
             }
 
             var model = new ProductWithDetailsDto
@@ -101,9 +86,6 @@ namespace Persistence.Store.UserSection.Products.Queries
                 UniCode = product.UniCode,
                 CategoryId = product?.CategoryId,
                 CategoryName = product.Category?.Name,
-                Price = infoPrice?.Price,
-                SpecialPrice = infoPrice?.SpecialPrice,
-                Stock = infoPrice?.Stock,
                 ViewCount = product.ViewCount + 1,
                 AttributeAndValues = product.ProductAttributes.Select(p => new ProductAttributeAndValuesDto
                 {
@@ -134,19 +116,25 @@ namespace Persistence.Store.UserSection.Products.Queries
                     Id = s.Id,
                     IsIndex = s.IsIndex,
                     Name = s.Name
-                }).ToList()
+                }).ToList(),
+                productVariants = !product.ProductVariants.Where(p => p.ProductType.Equals(ProductType.Variable)).Any() ? null :
+                product.ProductVariants.Where(p => p.ProductType.Equals(ProductType.Variable)).Select(s => new ProductVariantDto
+                {
+                    ProductVariantId = s.Id,
+                    Price = s.Price,
+                    SpecialPrice = s.SpecialPrice,
+                    Stock = s.Stock,
+                    ProductAttributeValues = s.ProductVariantAttributeValues.Select(v => new ProductAttributeValueDto
+                    {
+                        ProductAttributeValueId = v.ProductAttributeValueId,
+                        Value = v.ProductAttributeValue.Value
+                    }).ToList()
+                }).ToList(),
+                InfoForSimpleProduct = infoPrice
             };
 
             //Retrun It
             return model;
         }
-    }
-    public class InfoPriceDto
-    {
-        public long? Price { get; set; }
-        public long? SpecialPrice { get; set; }
-        public int? Stock { get; set; }
-        public bool HasDiscount { get; set; }
-        public int PercentDiscount { get; set; }
     }
 }

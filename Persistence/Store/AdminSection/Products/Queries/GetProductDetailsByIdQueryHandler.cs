@@ -34,7 +34,7 @@ namespace Persistence.Store.AdminSection.Products.Queries
                 .ThenInclude(p => p.ProductVariantTransportation)
                 .FirstOrDefaultAsync();
 
-                if (product.ProductVariants.Any())
+                if (product.ProductVariants.Any(p => p.ProductType.Equals(ProductType.Sample)))
                 {
                     var sampleInfo = product.ProductVariants.SingleOrDefault();
                     infoForSampleProduct = new InfoForSampleProductDto();

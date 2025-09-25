@@ -177,14 +177,11 @@ namespace Application.Store.UserSection.ProductService.Queries
         public string? CategoryName { get; set; }
         //public bool IsPublished { get; set; }
         public List<ProductAttributeAndValuesDto> AttributeAndValues { get; set; }
-        public long? Price { get; set; }
-        public long? SpecialPrice { get; set; }
-        public int? Stock { get; set; }
-        public bool HasDiscount { get; set; }
-        public int PercentDiscount { get; set; }
+        public List<ProductVariantDto> productVariants { get; set; }
         public long ViewCount { get; set; }
         public List<SpecGroupWithSpecsDto> SpecificationGroups { get; set; }
         public List<ProductImageDto> ProductImages { get; set; }
+        public InfoForSimpleProductDto InfoForSimpleProduct { get; set; }
     }
 
     public class ProductAttributeAndValuesDto
@@ -194,6 +191,39 @@ namespace Application.Store.UserSection.ProductService.Queries
         public AttributeType AttributeType { get; set; }
         public bool UseForVariant { get; set; }
         public List<ProductAttributeValueDto> Values { get; set; }
+    }
+    public class ProductVariantDto
+    {
+        public int ProductVariantId { get; set; }
+        public List<ProductAttributeValueDto> ProductAttributeValues { get; set; }
+        public long Price { get; set; }
+        public long? SpecialPrice { get; set; }
+        public int Stock { get; set; }
+
+        public int? PercentDiscount
+        {
+            get
+            {
+                if (SpecialPrice == null) return null;
+
+                if (Price == 0)
+                {
+                    return null;
+                }
+
+                return Convert.ToInt32(((Price - SpecialPrice * 1.0) / Price) * 100);
+            }
+        }
+        public bool HasDiscount
+        {
+            get
+            {
+                if (SpecialPrice == null)
+                    return false;
+                else
+                    return true;
+            }
+        }
     }
     public class ProductAttributeValueDto
     {
@@ -220,4 +250,30 @@ namespace Application.Store.UserSection.ProductService.Queries
         public string Url { get; set; }
     }
 
+    public class InfoForSimpleProductDto
+    {
+        public long Price { get; set; }
+        public long? SpecialPrice { get; set; }
+        public int Stock { get; set; }
+
+        public int? PercentDiscount
+        {
+            get
+            {
+                if (SpecialPrice == null) return null;
+
+                return Convert.ToInt32(((Price - SpecialPrice * 1.0) / Price) * 100);
+            }
+        }
+        public bool HasDiscount
+        {
+            get
+            {
+                if (SpecialPrice == null)
+                    return false;
+                else
+                    return true;
+            }
+        }
+    }
 }
