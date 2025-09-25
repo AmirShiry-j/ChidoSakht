@@ -75,6 +75,7 @@ namespace Persistence.Store.AdminSection.Products.Queries
                 CategoryName = product.Category?.Name,
                 InfoForSampleProduct = infoForSampleProduct,
                 ViewCount = product.ViewCount,
+                IsPublished = product.IsPublished
             };
 
             //Retrun It
